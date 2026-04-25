@@ -121,6 +121,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .book-card-body{padding:.9rem 1rem}
 .book-title{font-family:var(--font-display);font-size:1rem;font-weight:600;line-height:1.25;margin-bottom:.2rem;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .book-author{font-size:11.5px;color:var(--muted);margin-bottom:.5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-saga-sub{font-size:10.5px;color:var(--teal);margin-bottom:.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;font-style:italic;transition:opacity .15s}
+.card-saga-sub:hover{opacity:.75;text-decoration:underline}
 .book-tags{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.5rem}
 .tag{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
 .tag-genre{background:var(--accent-soft);color:var(--accent2);border:1px solid rgba(192,111,196,0.2)}
@@ -151,12 +153,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .modal-cover-strip::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--surface) 0%,transparent 60%)}
 .modal-cover-ph{aspect-ratio:16/7;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:4rem;color:var(--surface3)}
 .modal-body{padding:1.5rem 1.75rem 2rem}
-.modal-title{font-family:var(--font-display);font-size:2rem;font-weight:600;line-height:1.1;margin-bottom:.25rem}
-.modal-title-row{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.25rem}
-.modal-title-row .modal-title{margin-bottom:0}
-.saga-title-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;background:rgba(91,188,176,0.12);border:1px solid rgba(91,188,176,0.3);color:var(--teal);font-size:11.5px;font-family:var(--font-body);font-weight:600;cursor:pointer;transition:all .18s;white-space:nowrap;flex-shrink:0;align-self:center}
-.saga-title-badge:hover{background:rgba(91,188,176,0.25);border-color:var(--teal)}
-.saga-title-badge-arrow{opacity:.6;font-size:11px}
+.modal-title{font-family:var(--font-display);font-size:2rem;font-weight:600;line-height:1.1;margin-bottom:.1rem}
+.modal-title-row{margin-bottom:0}
+.modal-saga-sub{margin-bottom:.2rem}
+.modal-saga-link{background:none;border:none;padding:0;font-size:12.5px;color:var(--muted);font-family:var(--font-body);cursor:pointer;transition:color .15s;font-style:italic}
+.modal-saga-link:hover{color:var(--teal);text-decoration:underline}
 .modal-author{font-size:13px;color:var(--muted);margin-bottom:1rem}
 .modal-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.2rem}
 .modal-meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem .8rem;margin-bottom:1.4rem}
@@ -606,13 +607,17 @@ function renderGrid(books){
     const genreTags=(b.genres||[]).slice(0,2).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
     const tropeTags=(b.tropes||[]).slice(0,1).map(t=>`<span class="tag tag-trope">${t}</span>`).join('');
     const yearTag=b.year?`<span class="tag tag-year">${b.year}</span>`:'';
-    const formatoTag=b.formato?`<span class="tag tag-formato">${b.formato}</span>`:'';
+    const formatoTag=b.formato&&!['Saga','Dúo','Trilogía'].includes(b.formato)?`<span class="tag tag-formato">${b.formato}</span>`:'';
     const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
+    const cardSagaName=getSaga(b);
+    const cardSagaNum=b.sagaNum!=null?' #'+b.sagaNum:'';
+    const cardSagaSub=cardSagaName?`<div class="card-saga-sub" onclick="event.stopPropagation();filterBySagaFromModal('${cardSagaName.replace(/'/g,"\\'")}')">${cardSagaName}${cardSagaNum}</div>`:'';
     const voteLabel=myScore>0?`${'★'.repeat(myScore)} Mi voto`:'Valorar';
     return `<div class="book-card" onclick="openBook('${b.id}')">
       <div class="book-cover-wrap">${rankBadge}${spicyBadge}${coverEl}${avgBadge}</div>
       <div class="book-card-body">
         <div class="book-title">${b.title}</div>
+        ${cardSagaSub}
         <div class="book-author">${authorStr}</div>
         <div class="book-tags">${genreTags}${tropeTags}${yearTag}${formatoTag}${adaptTag}</div>
         <div class="book-footer">
@@ -658,16 +663,16 @@ function renderBookModal(){
   const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
   const sagaName=b.sagaName||(b.formato&&['Saga','Dúo','Trilogía'].includes(b.formato)?getSaga(b):null);
   const sagaNumStr=b.sagaNum!=null?' #'+b.sagaNum:'';
-  const sagaTitleBadge=sagaName
-    ?`<button class="saga-title-badge" onclick="filterBySagaFromModal('${sagaName.replace(/'/g,"\\'")}')" title="Ver todos los libros de esta saga">📚 ${sagaName}${sagaNumStr} <span class="saga-title-badge-arrow">→</span></button>`
+  const sagaSubtitle=sagaName
+    ?`<p class="modal-saga-sub"><button class="modal-saga-link" onclick="filterBySagaFromModal('${sagaName.replace(/'/g,"\\'")}')">${sagaName}${sagaNumStr}</button></p>`
     :'';
 
   document.getElementById('bookModalContent').innerHTML=`${coverEl}
     <div class="modal-body">
       <div class="modal-title-row">
         <h2 class="modal-title">${b.title}</h2>
-        ${sagaTitleBadge}
       </div>
+      ${sagaSubtitle}
       <p class="modal-author">por ${authorStr}</p>
       <div class="modal-tags">${genreTags}${tropeTags}${sagaTag}${spicyTag}${formatoTag}${adaptTag}</div>
       <div class="modal-meta-grid">
