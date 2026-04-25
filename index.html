@@ -733,14 +733,19 @@ async function deleteVote(){
   if(btn){btn.disabled=true;btn.textContent='Eliminando…';}
   const {error}=await sb.from('ratings').delete().eq('user_id',currentUser.id).eq('book_id',activeBook.id);
   if(error){showToast('Error al eliminar','error');if(btn){btn.disabled=false;btn.textContent='✕ Eliminar mi voto';}return;}
-  const r=ratingsMap[activeBook.id]||{avg:0,count:0};
-  const oldScore=myRatings[activeBook.id];
-  if(r.count<=1){delete ratingsMap[activeBook.id];}
-  else{const newCount=r.count-1;ratingsMap[activeBook.id]={avg:Math.round((r.avg*r.count-oldScore)/newCount*10)/10,count:newCount};}
-  delete myRatings[activeBook.id];
+  // Reload everything fresh from Supabase
+  const {data:rData}=await sb.from('ratings').select('book_id,score');
+  ratingsMap={};
+  if(rData){
+    const grouped={};
+    rData.forEach(r=>{if(!grouped[r.book_id])grouped[r.book_id]=[];grouped[r.book_id].push(r.score);});
+    Object.entries(grouped).forEach(([id,scores])=>{
+      ratingsMap[id]={avg:Math.round(scores.reduce((a,b)=>a+b,0)/scores.length*10)/10,count:scores.length};
+    });
+  }
+  await loadMyRatings();
   pendingStar=0;
   showToast('Voto eliminado','success');
-  await loadMyRatings();
   updateStats();applyFilters();renderBookModal();
 }
 
