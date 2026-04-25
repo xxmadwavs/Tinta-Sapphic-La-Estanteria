@@ -19,6 +19,8 @@
       "Enemies to Lovers"
     ],
     "spicy": 5,
+    "formato": "Único",
+    "adaptacion": "Tiene serie",
     "editions": [
       {
         "lang": "ES",
@@ -39,7 +41,7 @@
   },
   {
     "id": "b_1777138144561_pxbz2",
-    "title": "The Whale Store",
+    "title": "The Whale Store (SAGA WHALE #1)",
     "authors": [
       "Snow Leopard"
     ],
@@ -57,6 +59,8 @@
     ],
     "tropes": [],
     "spicy": 2,
+    "formato": "Trilogía",
+    "adaptacion": null,
     "editions": [
       {
         "lang": "ES",
@@ -77,7 +81,7 @@
   },
   {
     "id": "b_1777138710876_7tgwy",
-    "title": "Gap",
+    "title": "Gap (GAP #1)",
     "authors": [
       "ChaoPlanoy"
     ],
@@ -99,6 +103,8 @@
       "Rich/Poor Romance"
     ],
     "spicy": 4,
+    "formato": "Dúo",
+    "adaptacion": null,
     "editions": [
       {
         "lang": "EN",
@@ -114,6 +120,100 @@
         "lang": "TH",
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-70732-GAP--%E0%B8%97%E0%B8%A4%E0%B8%A9%E0%B8%8E%E0%B8%B5%E0%B8%AA%E0%B8%B5%E0%B8%8A%E0%B8%A1%E0%B8%9E%E0%B8%B9-%E0%B9%80%E0%B8%A5%E0%B9%88%E0%B8%A1-2"
+      }
+    ]
+  },
+  {
+    "id": "b_1777141026571_b3c54",
+    "title": "Gap Eternity (GAP #2)",
+    "authors": [
+      "ChaoPlanoy"
+    ],
+    "year": 2023,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/272312/Thumbnail/book_detail_large.gif?16",
+    "synopsis": "Cinco años habían pasado y todo había cambiado.\n\nTee conoció a su nuevo amor y decidió que era hora de sentar cabeza y casarse. No podía estar más feliz por ellos; sin embargo, esta alegría despertó los celos de Khun Sam, mi jefa y mi novia. Impulsada por ese sentimiento, Sam decidió proponerme matrimonio, a pesar de las promesas que le habíamos hecho a su difunta abuela.\n\nPero el destino parecía empeñado en poner a prueba nuestra felicidad. Algo surgió inesperadamente, amenazando con fracturar nuestro amor.\n\n¿Podríamos superar este obstáculo? Solo nuestros corazones tenían la respuesta: todo dependía de si nuestro amor era lo suficientemente fuerte. Puede que no exista el \"para siempre\", pero para nosotras... nuestro amor era, sin duda, una eternidad.",
+    "pages": 583,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "characters": [],
+    "tropes": [],
+    "spicy": 4,
+    "formato": "Dúo",
+    "adaptacion": "Sin adaptación",
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/ebook-272312-GAP-%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%99%E0%B8%B4%E0%B8%A3%E0%B8%B1%E0%B8%99%E0%B8%94%E0%B8%A3%E0%B9%8C-English-version"
+      }
+    ]
+  },
+  {
+    "id": "b_1777141218864_kc7cx",
+    "title": "Apple",
+    "authors": [
+      "ChaoPlanoy"
+    ],
+    "year": 2019,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/290406/Thumbnail/book_detail_large.gif?3",
+    "synopsis": "\"Chris\"... Ese es mi nombre.\n\nDesde mi trasplante de córnea, he tenido sueños recurrentes con alguien. Pero al despertar, no recuerdo quién es. Sin embargo, un par de ojos que veo en mis sueños me siguen rondando la cabeza. Para asegurarme de no olvidarlos, los dibujo y los miro fijamente sin cesar.\n\nUn día, mientras mi madre veía las noticias deportivas, un tono nasal de voz atrajo mi atención hacia la televisión. En ese momento conocí a \"Aontakarn\", una mujer con el mismo par de ojos que había dibujado.\n\nMi corazón se acelera incontrolablemente cuando miro esos ojos. Busco toda la información posible sobre ella y me convierto en su fan secreta. Le escribo cartas que comienzan con \"Querida tú... a quien amo\" y termino con un alias: \"APPLE\".\n\nEsta es mi historia... ¿Te interesa? Léela. Es una historia sobre el amor que una mujer siente por otra. Esta es mi historia.",
+    "pages": 657,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "characters": [],
+    "tropes": [
+      "Slow Burn",
+      "Opposites Attract"
+    ],
+    "spicy": 4,
+    "formato": "Único",
+    "adaptacion": "Tiene serie",
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-290406-Apple-%E0%B8%96%E0%B8%B6%E0%B8%87%E0%B9%80%E0%B8%98%E0%B8%AD---%E0%B8%9C%E0%B8%B9%E0%B9%89%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A3%E0%B8%B1%E0%B8%81-English-Version"
+      },
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-89041-Apple--%E0%B8%96%E0%B8%B6%E0%B8%87%E0%B9%80%E0%B8%98%E0%B8%AD---%E0%B8%9C%E0%B8%B9%E0%B9%89%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A3%E0%B8%B1%E0%B8%81"
+      }
+    ]
+  },
+  {
+    "id": "b_1777141516403_c4ym4",
+    "title": "Blank",
+    "authors": [
+      "ChaoPlanoy"
+    ],
+    "year": 2023,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/278699/Thumbnail/book_detail_large.gif?2",
+    "synopsis": "Soy \"ML Sippakorn\", o como todos llaman, \"Señorita Nueng\". Vivir sola lejos del palacio me ha hecho darme cuenta de que todavía tengo mucho que aprender. Pero, a diferencia de todos los demás, nunca he experimentado el \"amor\". Es decir, hasta que conocí a esa chica tan alegre: A-Nueng.\n\nEs una joven de 18 años con unos ojos preciosos. Me visita con frecuencia y me confiesa su amor cada vez que nos vemos. Es extraño... Normalmente me molesta que la gente se me pegue, pero con ella siento... Ah, da igual. No se irá, aunque la aleje.\n\nLa naturaleza de nuestra relación es inusual. Más tarde descubrí que yo participé en el nacimiento de esa chica: su madre era mi mejor amiga en el instituto y desapareció de repente porque estaba embarazada. No sé si el universo está en mi contra o si me está gastando una broma, pero ella llegó a mi vida para llenar mi \"espacio en blanco\".\n\nNuestra diferencia de edad es demasiado grande. \"Yo tenía 16 cuando naciste\", le digo para advertirle. Pero A-Nueng no parece interesada en mis razones.\n\n— ¿Y qué? —responde ella.\n\n— Significa que cuando tengas 20, yo tendré 36. La diferencia entre nosotros es demasiado grande.\n\n— Míralo desde otro ángulo. Cuando tengas 86, yo tendré 70. Entonces, la gente dirá que tenemos edades similares. Y podré cuidarte si te enfermas, dado que soy más joven y más fuerte. ¿No es genial?\n\nMiro a la pequeña, que discute conmigo con sus razones. Entonces uso las palabras que siempre utilizo para dejar a todos boquiabiertos:\n\n— ¿Crees que eres lo suficientemente digna?\n\n— Hoy no —me asegura—. Pero seré digna de ti algún día. Te lo prometo.",
+    "pages": 867,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "characters": [],
+    "tropes": [
+      "Age Gap"
+    ],
+    "spicy": 4,
+    "formato": "Único",
+    "adaptacion": "Tiene serie",
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-278699-Blank--English-version"
       }
     ]
   }
