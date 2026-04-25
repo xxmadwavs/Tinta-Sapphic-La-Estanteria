@@ -157,6 +157,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .meta-key{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .meta-val{font-size:13.5px;color:var(--text)}
 .modal-synopsis{font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:1.4rem}
+.buy-section{margin-bottom:1.2rem}
+.buy-title{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:.6rem}
+.buy-links{display:flex;flex-wrap:wrap;gap:.4rem}
+.buy-link{display:flex;align-items:center;gap:.4rem;padding:6px 14px;border-radius:20px;background:var(--surface2);border:1px solid var(--border2);text-decoration:none;color:var(--text);font-size:12.5px;transition:all .18s}
+.buy-link:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
+.buy-lang{font-size:10px;font-weight:700;color:var(--muted);background:var(--surface3);padding:1px 6px;border-radius:10px}
+.buy-store{font-weight:500}
+.buy-arrow{color:var(--muted);font-size:11px}
 .rating-section{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.4rem}
 .rating-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem;font-weight:600}
 .community-rating{display:flex;align-items:center;gap:1rem;margin-bottom:.8rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
@@ -229,7 +237,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="filter-top">
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input class="search-input" id="searchInput" placeholder="Buscar por título o autora…" oninput="applyFilters()">
+        <input class="search-input" id="searchInput" placeholder="Buscar por título o autora…" oninput="applyFilters()" autocomplete="off">
       </div>
       <select class="sort-select" id="sortSel" onchange="applyFilters()">
         <option value="top">🏆 Mejor valorados</option>
@@ -288,9 +296,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="auth-title" id="authTitle">Bienvenida</div>
     <p class="auth-sub" id="authSub">Entra para valorar libros y que tu voto cuente en el ranking.</p>
     <div class="auth-form">
-      <input type="text" id="authName" placeholder="Tu nombre" style="display:none" autocomplete="name">
-      <input type="email" id="authEmail" placeholder="Email" autocomplete="email">
-      <input type="password" id="authPass" placeholder="Contraseña (mín. 6 caracteres)" autocomplete="current-password">
+      <input type="text" id="authName" placeholder="Tu nombre" style="display:none" autocomplete="off">
+      <input type="email" id="authEmail" placeholder="Email" autocomplete="off">
+      <input type="password" id="authPass" placeholder="Contraseña (mín. 6 caracteres)" autocomplete="new-password">
       <button class="btn-primary" id="authBtn" onclick="handleAuth()">Entrar</button>
     </div>
     <div class="auth-error" id="authError"></div>
@@ -580,6 +588,17 @@ function renderBookModal(){
         ${b.isbn?`<div class="meta-item"><span class="meta-key">ISBN</span><span class="meta-val">${b.isbn}</span></div>`:''}
       </div>
       ${b.synopsis?`<p class="modal-synopsis">${b.synopsis}</p>`:''}
+      ${b.editions&&b.editions.length?`
+      <div class="buy-section">
+        <div class="buy-title">Dónde comprarlo</div>
+        <div class="buy-links">${b.editions.map(e=>`
+          <a class="buy-link" href="${e.url}" target="_blank" rel="noopener">
+            <span class="buy-lang">${e.lang}</span>
+            <span class="buy-store">${e.store}</span>
+            <span class="buy-arrow">↗</span>
+          </a>`).join('')}
+        </div>
+      </div>`:''}
       <div class="rating-section"><div class="rating-title">Valoración de la comunidad</div>${communityRating}${voteArea}</div>
     </div>`;
 }

@@ -112,8 +112,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .spicy-desc{font-size:11px;color:var(--muted)}
 
 /* IMPORT/EXPORT */
-.import-label{padding:6px 16px;border-radius:20px;border:1px solid var(--border2);cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text);transition:all .15s;background:transparent;font-family:'Instrument Sans',sans-serif}
-.import-label:hover{background:var(--teal-soft);border-color:var(--teal);color:var(--teal)}
+.edition-row{display:grid;grid-template-columns:110px 130px 1fr 32px;gap:.4rem;align-items:center}
+.edition-row input,.edition-row select{padding:7px 10px;border-radius:10px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:13px;font-family:'Instrument Sans',sans-serif;outline:none;transition:border-color .15s;width:100%}
+.edition-row input:focus,.edition-row select:focus{border-color:var(--accent)}
+.edition-row input::placeholder{color:var(--muted)}
+.edition-del{width:28px;height:28px;border-radius:50%;background:transparent;border:1px solid rgba(212,96,122,0.3);color:var(--rose);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.edition-del:hover{background:var(--rose-soft)}
+@media(max-width:500px){.edition-row{grid-template-columns:1fr 1fr;}.edition-row input[placeholder="https://…"]{grid-column:1/-1}}
 #importFile{display:none}
 
 .toast{position:fixed;bottom:2rem;right:2rem;padding:10px 22px;border-radius:20px;font-size:13px;font-weight:600;z-index:999;transform:translateY(80px);opacity:0;transition:all .25s;pointer-events:none}
@@ -261,6 +266,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div class="spicy-grid" id="spicyGrid"></div>
     </div>
 
+    <div class="form-section">
+      <div class="form-section-title">Dónde comprar <span style="color:var(--muted);font-size:10px;text-transform:none;letter-spacing:0">(idioma · tienda · enlace)</span></div>
+      <div id="editionsWrap" style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:.6rem"></div>
+      <button class="btn small" onclick="addEdition()" type="button">+ Añadir edición</button>
+      <div style="font-size:11px;color:var(--muted);margin-top:.5rem">Ej: ES Español en Amazon · EN English en Book Depository…</div>
+    </div>
+
     <div class="btn-row">
       <button class="btn" onclick="closeModal()">Cancelar</button>
       <button class="btn primary" id="saveBtn" onclick="saveBook()">Guardar libro</button>
@@ -293,6 +305,7 @@ const SPICY_LEVELS = [
 let books = [], editingId = null;
 let sel = {genres:[],subgenres:[],characters:[],tropes:[],spicy:0};
 let authors = []; // array of strings
+let editions = []; // array of {lang, store, url}
 
 /* ── AUTH ── */
 async function adminLogin() {
@@ -397,6 +410,7 @@ function openEditModal(id) {
   document.getElementById('fIsbn').value    =b.isbn||'';
   previewCover(b.cover||'');
   authors=[...(b.authors||[])];
+  editions=[...(b.editions||[])];
   sel.genres    =[...(b.genres||[])];
   sel.subgenres =[...(b.subgenres||[])];
   sel.characters=[...(b.characters||[])];
@@ -404,17 +418,19 @@ function openEditModal(id) {
   sel.spicy     =b.spicy||0;
   renderAuthorPills();
   renderAllChips();
+  renderEditions();
   document.getElementById('bookModal').classList.add('open');
   document.body.style.overflow='hidden';
 }
 
 function clearForm() {
   ['fTitle','fYear','fCover','fSynopsis','fPages','fIsbn'].forEach(id=>document.getElementById(id).value='');
-  authors=[];
+  authors=[];editions=[];
   sel={genres:[],subgenres:[],characters:[],tropes:[],spicy:0};
   const p=document.getElementById('coverPreview');p.style.display='none';p.src='';
   renderAuthorPills();
   renderAllChips();
+  renderEditions();
 }
 
 function closeModal(){document.getElementById('bookModal').classList.remove('open');document.body.style.overflow='';}
@@ -493,6 +509,7 @@ function saveBook() {
     characters:[...sel.characters],
     tropes:    [...sel.tropes],
     spicy:     sel.spicy,
+    editions:  editions.filter(e=>e.url).map(e=>({lang:e.lang,store:e.store,url:e.url})),
   };
 
   if(editingId){
@@ -543,6 +560,7 @@ async function importJSON(input){
       b.authors=b.author?[b.author]:[];
       delete b.author;
     }
+    if(!b.editions) b.editions=[];
     return b;
   });
 
@@ -564,6 +582,52 @@ function showToast(msg,type='success'){
   t.textContent=msg;t.className=`toast ${type}`;
   setTimeout(()=>t.classList.add('show'),10);
   setTimeout(()=>t.classList.remove('show'),3400);
+}
+
+/* ── EDITIONS ── */
+const LANGS = [
+  {code:'ES',label:'ES Español'},
+  {code:'EN',label:'EN English'},
+  {code:'FR',label:'FR Français'},
+  {code:'PT',label:'PT Português'},
+  {code:'DE',label:'DE Deutsch'},
+  {code:'IT',label:'IT Italiano'},
+  {code:'JP',label:'JP 日本語'},
+  {code:'KR',label:'KR 한국어'},
+  {code:'CN',label:'CN 中文'},
+  {code:'TH',label:'TH ภาษาไทย'},
+  {code:'AR',label:'AR العربية'},
+  {code:'OTHER',label:'Otro'},
+];
+const STORES = ['Amazon','Apple Books','Book Depository','Casa del Libro','Fnac','Google Play','Kobo','MEB','Naver','Rakuten','Sitio oficial','Otro'];
+
+function renderEditions(){
+  const wrap=document.getElementById('editionsWrap');
+  if(!editions.length){wrap.innerHTML='';return;}
+  wrap.innerHTML=editions.map((e,i)=>{
+    const langOpts=LANGS.map(l=>`<option value="${l.code}" ${e.lang===l.code?'selected':''}>${l.label}</option>`).join('');
+    const storeOpts=STORES.map(s=>`<option value="${s}" ${e.store===s?'selected':''}>${s}</option>`).join('');
+    return `<div class="edition-row">
+      <select onchange="updateEdition(${i},'lang',this.value)">${langOpts}</select>
+      <select onchange="updateEdition(${i},'store',this.value)">${storeOpts}</select>
+      <input type="url" placeholder="https://…" value="${e.url||''}" oninput="updateEdition(${i},'url',this.value)">
+      <button class="edition-del" onclick="removeEdition(${i})" type="button">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function addEdition(){
+  editions.push({lang:'ES',store:'Amazon',url:''});
+  renderEditions();
+}
+
+function updateEdition(i,key,val){
+  editions[i][key]=val;
+}
+
+function removeEdition(i){
+  editions.splice(i,1);
+  renderEditions();
 }
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
