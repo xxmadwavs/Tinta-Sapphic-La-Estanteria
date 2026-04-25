@@ -531,7 +531,7 @@ function renderActivePills(){
   const labelMap={genres:'Género',authors:'Autora',tropes:'Tropo',years:'Año',spicy:'Spicy',sagas:'Saga'};
   const pills=[];
   Object.entries(filters).forEach(([key,arr])=>{
-    if(key==='q'||key==='valoracion') return;
+    if(key==='q'||key==='valoracion'||key==='adaptacion') return;
     if(!arr.length) return;
     arr.forEach(v=>{
       const display=key==='spicy'?SPICY_LABELS[v]:v;
