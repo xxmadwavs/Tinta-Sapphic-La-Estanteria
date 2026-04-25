@@ -41,7 +41,7 @@
   },
   {
     "id": "b_1777138144561_pxbz2",
-    "title": "The Whale Store (SAGA WHALE #1)",
+    "title": "The Whale Store",
     "authors": [
       "Snow Leopard"
     ],
@@ -61,6 +61,8 @@
     "spicy": 2,
     "formato": "Trilogía",
     "adaptacion": null,
+    "sagaName": "WHALE",
+    "sagaNum": 1,
     "editions": [
       {
         "lang": "ES",
@@ -81,7 +83,7 @@
   },
   {
     "id": "b_1777138710876_7tgwy",
-    "title": "Gap (DÚO GAP #1)",
+    "title": "Gap",
     "authors": [
       "ChaoPlanoy"
     ],
@@ -105,6 +107,8 @@
     "spicy": 4,
     "formato": "Dúo",
     "adaptacion": null,
+    "sagaName": "GAP",
+    "sagaNum": 1,
     "editions": [
       {
         "lang": "EN",
@@ -125,7 +129,7 @@
   },
   {
     "id": "b_1777141026571_b3c54",
-    "title": "Gap Eternity (DÚO GAP #2)",
+    "title": "Gap Eternity",
     "authors": [
       "ChaoPlanoy"
     ],
@@ -143,6 +147,8 @@
     "spicy": 4,
     "formato": "Dúo",
     "adaptacion": "Sin adaptación",
+    "sagaName": "GAP",
+    "sagaNum": 2,
     "editions": [
       {
         "lang": "EN",
@@ -240,6 +246,8 @@
     "spicy": 3,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
+    "sagaName": "REVERSE 4 YOU",
+    "sagaNum": 1,
     "editions": [
       {
         "lang": "ES",
@@ -325,7 +333,7 @@
   },
   {
     "id": "b_1777150429279_ua3lz",
-    "title": "My Rustic Wife (SAGA Hometown Romance #1)",
+    "title": "My Rustic Wife",
     "authors": [
       "Lambo"
     ],
@@ -350,6 +358,8 @@
     "spicy": 4,
     "formato": "Dúo",
     "adaptacion": "Tiene serie",
+    "sagaName": "Hometown Romance",
+    "sagaNum": 1,
     "editions": [
       {
         "lang": "EN",
@@ -360,7 +370,7 @@
   },
   {
     "id": "b_1777150583557_qhjs8",
-    "title": "The Earth - Vows of the Land (SAGA 4 Elements #1)",
+    "title": "The Earth - Vows of the Land",
     "authors": [
       "Salmon"
     ],
@@ -383,6 +393,8 @@
     "spicy": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
+    "sagaName": "4 Elements",
+    "sagaNum": 1,
     "editions": [
       {
         "lang": "EN",
@@ -398,7 +410,7 @@
   },
   {
     "id": "b_1777150669209_w445j",
-    "title": "The Water - Waves of Deception (SAGA 4 Elements #2)",
+    "title": "The Water - Waves of Deception",
     "authors": [
       "Salmon"
     ],
@@ -423,6 +435,8 @@
     "spicy": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
+    "sagaName": "4 Elements",
+    "sagaNum": 2,
     "editions": [
       {
         "lang": "EN",
@@ -438,7 +452,7 @@
   },
   {
     "id": "b_1777150783754_yngj1",
-    "title": "The Air - Desires in the wind (SAGA 4 Elements #3)",
+    "title": "The Air - Desires in the wind",
     "authors": [
       "Salmon"
     ],
@@ -462,6 +476,8 @@
     "spicy": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
+    "sagaName": "4 Elements",
+    "sagaNum": 3,
     "editions": [
       {
         "lang": "EN",
@@ -477,7 +493,7 @@
   },
   {
     "id": "b_1777151073237_1o982",
-    "title": "The Fire - Flaming Chains of Love (SAGA 4 Elements #4)",
+    "title": "The Fire - Flaming Chains of Love",
     "authors": [
       "Salmon"
     ],
@@ -498,6 +514,8 @@
     "spicy": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
+    "sagaName": "4 Elements",
+    "sagaNum": 4,
     "editions": [
       {
         "lang": "EN",
@@ -513,7 +531,7 @@
   },
   {
     "id": "b_1777151241210_moxht",
-    "title": "Enemies with Benefits (SAGA WHALE #2)",
+    "title": "Enemies with Benefits",
     "authors": [
       "Snow Leopard"
     ],
@@ -536,6 +554,8 @@
     "spicy": 4,
     "formato": "Trilogía",
     "adaptacion": "Tiene serie",
+    "sagaName": "WHALE",
+    "sagaNum": 2,
     "editions": [
       {
         "lang": "ES",
@@ -556,7 +576,7 @@
   },
   {
     "id": "b_1777151505771_h6z1c",
-    "title": "Enemies with Benefits Special ! (SAGA WHALE #2.5)",
+    "title": "Enemies with Benefits Special !",
     "authors": [
       "Snow Leopard"
     ],
@@ -575,6 +595,8 @@
     "spicy": 3,
     "formato": "Trilogía",
     "adaptacion": "Sin adaptación",
+    "sagaName": "WHALE",
+    "sagaNum": 2.5,
     "editions": [
       {
         "lang": "ES",
