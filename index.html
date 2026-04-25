@@ -696,7 +696,7 @@ function filterBySagaFromModal(sagaName){
   if(!filters.sagas.includes(sagaName)) filters.sagas=[sagaName];
   updateDDCounts();renderActivePills();applyFilters();
 }
-document.querySelectorAll('#starInput .star-btn').forEach((b,i)=>b.style.color=i<n?'var(--gold)':'');}
+function hoverStar(n){document.querySelectorAll('#starInput .star-btn').forEach((b,i)=>b.style.color=i<n?'var(--gold)':'');}
 function unhoverStar(){document.querySelectorAll('#starInput .star-btn').forEach(b=>b.style.color='');}
 function selectStar(n){
   pendingStar=n;
