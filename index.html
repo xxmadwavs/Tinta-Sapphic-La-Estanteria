@@ -338,8 +338,11 @@ let filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],sagas:[],adap
 // Extract saga name from book
 function getSaga(b){
   if(b.sagaName) return b.sagaName;
-  const m=b.title.match(/\bSAGA\s+([^#\)]+)/i);
-  return m?m[1].trim():null;
+  if(b.formato&&['Saga','Dúo','Trilogía'].includes(b.formato)){
+    const m=b.title.match(/\bSAGA\s+([^#\)]+)/i);
+    return m?m[1].trim():null;
+  }
+  return null;
 }
 
 async function init(){
@@ -601,7 +604,8 @@ function renderGrid(books){
     const genreTags=(b.genres||[]).slice(0,2).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
     const tropeTags=(b.tropes||[]).slice(0,1).map(t=>`<span class="tag tag-trope">${t}</span>`).join('');
     const yearTag=b.year?`<span class="tag tag-year">${b.year}</span>`:'';
-    const formatoTag=b.formato?`<span class="tag tag-formato">${b.formato}</span>`:'';
+    const sagaCardTag=b.sagaName?`<span class="tag tag-formato">📚 ${b.sagaName}</span>`:(b.formato&&['Saga','Dúo','Trilogía'].includes(b.formato)?`<span class="tag tag-formato">${b.formato}</span>`:'');
+    const formatoTag=b.formato&&!['Saga','Dúo','Trilogía'].includes(b.formato)?`<span class="tag tag-formato">${b.formato}</span>`:'';
     const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
     const voteLabel=myScore>0?`${'★'.repeat(myScore)} Mi voto`:'Valorar';
     return `<div class="book-card" onclick="openBook('${b.id}')">
@@ -609,7 +613,7 @@ function renderGrid(books){
       <div class="book-card-body">
         <div class="book-title">${b.title}</div>
         <div class="book-author">${authorStr}</div>
-        <div class="book-tags">${genreTags}${tropeTags}${yearTag}${formatoTag}${adaptTag}</div>
+        <div class="book-tags">${genreTags}${tropeTags}${yearTag}${sagaCardTag}${formatoTag}${adaptTag}</div>
         <div class="book-footer">
           ${r.count>0?`<span style="color:var(--gold);font-size:11px">★ ${r.avg.toFixed(1)}</span>`:`<span class="no-ratings">Sin valoraciones</span>`}
           <button class="vote-mini-btn${myScore>0?' voted':''}" onclick="event.stopPropagation();openBook('${b.id}')">${voteLabel}</button>
