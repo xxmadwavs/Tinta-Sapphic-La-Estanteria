@@ -24,7 +24,6 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.6;min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 0%,rgba(192,111,196,0.08) 0%,transparent 55%),radial-gradient(ellipse at 85% 100%,rgba(91,188,176,0.06) 0%,transparent 55%);pointer-events:none;z-index:0}
 
-/* TOPBAR */
 .topbar{position:sticky;top:0;z-index:100;background:rgba(14,11,16,0.9);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border2);height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
 .logo{font-family:var(--font-display);font-size:21px;font-weight:300;color:var(--text);display:flex;align-items:baseline;gap:.3em;text-decoration:none}
 .logo-tinta{font-weight:700;letter-spacing:.12em;font-size:.9em;text-transform:uppercase}
@@ -41,7 +40,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-logout:hover{color:var(--rose)}
 @media(max-width:600px){.topbar{padding:0 1rem}.logo{font-size:17px}.logo-sep,.logo-sub{display:none}}
 
-/* HERO */
 .hero{position:relative;z-index:1;padding:4rem 2rem 3rem;text-align:center;overflow:hidden}
 .hero::before{content:'TS';position:absolute;right:-.02em;top:50%;transform:translateY(-52%);font-family:var(--font-display);font-size:clamp(8rem,20vw,15rem);font-weight:800;font-style:italic;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(192,111,196,0.06);pointer-events:none;user-select:none}
 .hero-eyebrow{font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
@@ -54,10 +52,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .stat-num em{font-style:italic;color:var(--accent)}
 .stat-label{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
 
-/* MAIN */
 .main{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:2rem 1.5rem 5rem}
 
-/* FILTER BAR */
+/* FILTERS */
 .filter-shell{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1.2rem 1.5rem;margin-bottom:2rem;display:flex;flex-direction:column;gap:.85rem}
 .filter-top{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
 .search-wrap{position:relative;flex:1;min-width:200px}
@@ -65,22 +62,20 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .search-input{width:100%;padding:9px 14px 9px 36px;border-radius:30px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:13.5px;font-family:var(--font-body);outline:none;transition:border-color .15s}
 .search-input:focus{border-color:var(--accent)}
 .search-input::placeholder{color:var(--muted)}
-.sort-select{padding:8px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12.5px;font-family:var(--font-body);cursor:pointer;outline:none;white-space:nowrap}
+.sort-select{padding:8px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12.5px;font-family:var(--font-body);cursor:pointer;outline:none}
 
-/* DROPDOWN FILTERS ROW */
 .filter-dropdowns{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
-.filter-label-txt{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.filter-label-txt{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
 
-/* DROPDOWN COMPONENT */
+/* DROPDOWN */
 .dd-wrap{position:relative;display:inline-block}
 .dd-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:30px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:12.5px;font-family:var(--font-body);cursor:pointer;transition:all .15s;white-space:nowrap;user-select:none}
 .dd-btn:hover{border-color:var(--accent);color:var(--accent2)}
 .dd-btn.has-sel{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
 .dd-btn svg{width:10px;height:10px;flex-shrink:0;transition:transform .2s}
 .dd-wrap.open .dd-btn svg{transform:rotate(180deg)}
-.dd-count{background:var(--accent);color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:2px}
-
-.dd-panel{position:absolute;top:calc(100% + 6px);left:0;min-width:180px;max-width:260px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,0.5);z-index:200;display:none;max-height:320px;overflow-y:auto}
+.dd-count{background:var(--accent);color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:1px 6px}
+.dd-panel{position:absolute;top:calc(100% + 6px);left:0;min-width:190px;max-width:280px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,0.5);z-index:200;display:none;max-height:320px;overflow-y:auto}
 .dd-wrap.open .dd-panel{display:block}
 .dd-search{padding:.5rem .75rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface)}
 .dd-search input{width:100%;padding:5px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12.5px;font-family:var(--font-body);outline:none}
@@ -94,29 +89,23 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .dd-empty{padding:10px 14px;font-size:12px;color:var(--muted);font-style:italic}
 .dd-clear{padding:6px 14px;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--rose);cursor:pointer;transition:background .12s}
 .dd-clear:hover{background:var(--rose-soft)}
-
-/* SPICY DROPDOWN specific */
 .spicy-dd-item{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;transition:background .12s}
 .spicy-dd-item:hover{background:var(--surface2)}
 .spicy-dd-item input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0}
-.spicy-dd-item label{cursor:pointer;font-size:12.5px;color:var(--text);display:flex;flex-direction:column;gap:1px}
+.spicy-dd-item label{cursor:pointer;font-size:12.5px;color:var(--text);display:flex;flex-direction:column}
 .spicy-dd-item label small{font-size:10.5px;color:var(--muted)}
 
 .filter-bottom{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-.clear-all-btn{padding:5px 14px;border-radius:30px;border:1px solid rgba(212,96,122,0.3);background:transparent;color:var(--rose);font-size:12px;font-family:var(--font-body);cursor:pointer;transition:all .15s}
-.clear-all-btn:hover{background:var(--rose-soft)}
-.results-count{font-size:12px;color:var(--muted);margin-left:auto}
-
-/* ACTIVE FILTERS PILLS */
 .active-filters{display:flex;flex-wrap:wrap;gap:.35rem}
 .af-pill{display:flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;background:var(--accent-soft);border:1px solid rgba(192,111,196,0.25);font-size:11.5px;color:var(--accent2)}
 .af-pill button{background:transparent;border:none;color:var(--accent);cursor:pointer;font-size:13px;padding:0;line-height:1;opacity:.7}
 .af-pill button:hover{opacity:1}
+.clear-all-btn{padding:5px 14px;border-radius:30px;border:1px solid rgba(212,96,122,0.3);background:transparent;color:var(--rose);font-size:12px;font-family:var(--font-body);cursor:pointer;transition:all .15s;margin-left:auto}
+.clear-all-btn:hover{background:var(--rose-soft)}
+.results-count{font-size:12px;color:var(--muted)}
 
 /* GRID */
 .books-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem}
-
-/* BOOK CARD */
 .book-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:all .22s;position:relative}
 .book-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,0.5)}
 .book-cover-wrap{position:relative;aspect-ratio:2/3;overflow:hidden;background:var(--surface2)}
@@ -130,7 +119,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .avg-badge{position:absolute;bottom:10px;right:10px;background:rgba(14,11,16,0.85);backdrop-filter:blur(8px);border:1px solid var(--border2);border-radius:20px;padding:3px 9px;display:flex;align-items:center;gap:4px;z-index:2}
 .spicy-badge{position:absolute;top:10px;right:10px;background:rgba(14,11,16,0.82);border-radius:20px;padding:2px 7px;font-size:10px;z-index:2;border:1px solid rgba(201,151,90,0.2);line-height:1.6}
 .book-card-body{padding:.9rem 1rem}
-.book-title{font-family:var(--font-display);font-size:1rem;font-weight:600;line-height:1.25;margin-bottom:.3rem;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.book-title{font-family:var(--font-display);font-size:1rem;font-weight:600;line-height:1.25;margin-bottom:.2rem;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .book-author{font-size:11.5px;color:var(--muted);margin-bottom:.5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .book-tags{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.5rem}
 .tag{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
@@ -143,7 +132,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .vote-mini-btn.voted{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
 .no-ratings{font-size:11px;color:var(--muted);font-style:italic}
 
-/* LOADING */
 .loading{text-align:center;padding:4rem 2rem;color:var(--muted)}
 .spinner{width:32px;height:32px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -161,7 +149,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .modal-cover-strip::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--surface) 0%,transparent 60%)}
 .modal-cover-ph{aspect-ratio:16/7;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:4rem;color:var(--surface3)}
 .modal-body{padding:1.5rem 1.75rem 2rem}
-.modal-title{font-family:var(--font-display);font-size:2rem;font-weight:600;line-height:1.1;margin-bottom:.3rem}
+.modal-title{font-family:var(--font-display);font-size:2rem;font-weight:600;line-height:1.1;margin-bottom:.25rem}
 .modal-author{font-size:13px;color:var(--muted);margin-bottom:1rem}
 .modal-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.2rem}
 .modal-meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem .8rem;margin-bottom:1.4rem}
@@ -169,8 +157,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .meta-key{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .meta-val{font-size:13.5px;color:var(--text)}
 .modal-synopsis{font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:1.4rem}
-
-/* RATING */
 .rating-section{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.4rem}
 .rating-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem;font-weight:600}
 .community-rating{display:flex;align-items:center;gap:1rem;margin-bottom:.8rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
@@ -207,7 +193,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .auth-toggle{font-size:12.5px;color:var(--muted);margin-top:.75rem}
 .auth-toggle a{color:var(--accent2);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit;font-size:inherit}
 
-/* TOAST */
 .toast{position:fixed;bottom:2rem;right:2rem;padding:10px 22px;border-radius:20px;font-size:13px;font-weight:600;z-index:999;transform:translateY(80px);opacity:0;transition:all .25s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
 .toast.success{background:var(--teal);color:var(--bg)}
@@ -255,69 +240,35 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <option value="year_asc">Más antiguos</option>
       </select>
     </div>
-
     <div class="filter-dropdowns">
       <span class="filter-label-txt">Filtrar por</span>
-      <!-- Género -->
       <div class="dd-wrap" id="ddGenre">
-        <button class="dd-btn" onclick="toggleDD('ddGenre')">
-          Género <span class="dd-count" id="cntGenre" style="display:none">0</span>
-          <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-        <div class="dd-panel">
-          <div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDDList('ddGenre',this.value)"></div>
-          <div class="dd-list" id="listGenre"></div>
-        </div>
+        <button class="dd-btn" onclick="toggleDD('ddGenre')">Género <span class="dd-count" id="cntGenre" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('genres','listGenre',this.value)"></div><div class="dd-list" id="listGenre"></div></div>
       </div>
-      <!-- Autora -->
       <div class="dd-wrap" id="ddAuthor">
-        <button class="dd-btn" onclick="toggleDD('ddAuthor')">
-          Autora <span class="dd-count" id="cntAuthor" style="display:none">0</span>
-          <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-        <div class="dd-panel">
-          <div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDDList('ddAuthor',this.value)"></div>
-          <div class="dd-list" id="listAuthor"></div>
-        </div>
+        <button class="dd-btn" onclick="toggleDD('ddAuthor')">Autora <span class="dd-count" id="cntAuthor" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('authors','listAuthor',this.value)"></div><div class="dd-list" id="listAuthor"></div></div>
       </div>
-      <!-- Tropo -->
       <div class="dd-wrap" id="ddTrope">
-        <button class="dd-btn" onclick="toggleDD('ddTrope')">
-          Tropo <span class="dd-count" id="cntTrope" style="display:none">0</span>
-          <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-        <div class="dd-panel">
-          <div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDDList('ddTrope',this.value)"></div>
-          <div class="dd-list" id="listTrope"></div>
-        </div>
+        <button class="dd-btn" onclick="toggleDD('ddTrope')">Tropo <span class="dd-count" id="cntTrope" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('tropes','listTrope',this.value)"></div><div class="dd-list" id="listTrope"></div></div>
       </div>
-      <!-- Año -->
       <div class="dd-wrap" id="ddYear">
-        <button class="dd-btn" onclick="toggleDD('ddYear')">
-          Año <span class="dd-count" id="cntYear" style="display:none">0</span>
-          <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-        <div class="dd-panel">
-          <div class="dd-list" id="listYear"></div>
-        </div>
+        <button class="dd-btn" onclick="toggleDD('ddYear')">Año <span class="dd-count" id="cntYear" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="dd-panel"><div class="dd-list" id="listYear"></div></div>
       </div>
-      <!-- Spicy -->
       <div class="dd-wrap" id="ddSpicy">
-        <button class="dd-btn" onclick="toggleDD('ddSpicy')">
-          Spicy 🌶 <span class="dd-count" id="cntSpicy" style="display:none">0</span>
-          <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
+        <button class="dd-btn" onclick="toggleDD('ddSpicy')">Spicy 🌶 <span class="dd-count" id="cntSpicy" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel" id="listSpicy"></div>
       </div>
     </div>
-
     <div class="filter-bottom">
       <div class="active-filters" id="activeFilters"></div>
       <button class="clear-all-btn" id="clearAllBtn" onclick="clearAllFilters()" style="display:none">✕ Limpiar todo</button>
       <span class="results-count" id="resultsCount"></span>
     </div>
   </div>
-
   <div id="booksContainer"><div class="loading"><div class="spinner"></div>Cargando la estantería…</div></div>
 </main>
 
@@ -352,6 +303,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <script>
 const SUPABASE_URL = 'https://fteitflirsmabcasmwij.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_2xi9ELv252qAXY_Fx3ADZg_nuWtgcUA';
+const DATA_URL     = 'books_data.json';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const SPICY_LABELS = ['0/5 Sin Steam','1/5 Mini Steam','2/5 Soft Steam','3/5 Spicy Light','4/5 Spicy','5/5 Infernal 🔥'];
@@ -361,7 +313,6 @@ let allBooks=[], ratingsMap={}, myRatings={}, currentUser=null, activeBook=null;
 let authMode='login', pendingStar=0;
 let filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[]};
 
-/* ── INIT ── */
 async function init(){
   const {data:{session}}=await sb.auth.getSession();
   if(session) currentUser=session.user;
@@ -376,15 +327,24 @@ async function init(){
     if(currentUser) loadMyRatings().then(()=>{applyFilters();if(activeBook)renderBookModal();});
     else{myRatings={};applyFilters();}
   });
-  // Close dropdowns on outside click
-  document.addEventListener('click',e=>{
-    if(!e.target.closest('.dd-wrap')) closeAllDD();
-  });
+  document.addEventListener('click',e=>{if(!e.target.closest('.dd-wrap'))closeAllDD();});
 }
 
 async function loadBooks(){
-  const {data}=await sb.from('books').select('*').order('title');
-  allBooks=data||[];
+  try{
+    const res=await fetch(DATA_URL);
+    if(!res.ok) throw new Error();
+    const data=await res.json();
+    // Support both old (author: string) and new (authors: array) format
+    allBooks=data.map(b=>{
+      if(!b.authors) b.authors=b.author?[b.author]:[];
+      return b;
+    });
+  }catch(e){
+    allBooks=[];
+    document.getElementById('booksContainer').innerHTML=`<div class="empty-state"><div class="empty-big">Sin libros</div><p>No se encontró el archivo books_data.json.</p></div>`;
+    return;
+  }
   const {data:rData}=await sb.from('ratings').select('book_id,score');
   ratingsMap={};
   if(rData){
@@ -411,29 +371,26 @@ function updateStats(){
 
 /* ── DROPDOWNS ── */
 function buildDropdowns(){
-  const genres  = [...new Set(allBooks.flatMap(b=>b.genres||[]))].sort();
-  const authors = [...new Set(allBooks.map(b=>b.author).filter(Boolean))].sort();
-  const tropes  = [...new Set(allBooks.flatMap(b=>b.tropes||[]))].sort();
-  const years   = [...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a);
-
-  buildDDList('listGenre',  genres,  'genres');
-  buildDDList('listAuthor', authors, 'authors');
-  buildDDList('listTrope',  tropes,  'tropes');
-  buildDDList('listYear',   years.map(String), 'years');
+  const genres  =[...new Set(allBooks.flatMap(b=>b.genres||[]))].sort();
+  const authors =[...new Set(allBooks.flatMap(b=>b.authors||[]))].sort();
+  const tropes  =[...new Set(allBooks.flatMap(b=>b.tropes||[]))].sort();
+  const years   =[...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String);
+  buildDDList('listGenre', genres,  'genres');
+  buildDDList('listAuthor',authors, 'authors');
+  buildDDList('listTrope', tropes,  'tropes');
+  buildDDList('listYear',  years,   'years');
   buildSpicyDD();
   updateDDCounts();
 }
 
-function buildDDList(listId, values, key, searchVal=''){
+function buildDDList(listId,values,key,search=''){
   const el=document.getElementById(listId);
-  const filtered = searchVal ? values.filter(v=>v.toLowerCase().includes(searchVal.toLowerCase())) : values;
+  const filtered=search?values.filter(v=>v.toLowerCase().includes(search.toLowerCase())):values;
   if(!filtered.length){el.innerHTML='<div class="dd-empty">Sin resultados</div>';return;}
-  const hasSel = filters[key].length>0;
-  el.innerHTML=(hasSel?`<div class="dd-clear" onclick="clearDDFilter('${key}')">✕ Limpiar selección</div>`:'')+
+  el.innerHTML=(filters[key].length?`<div class="dd-clear" onclick="clearDDFilter('${key}')">✕ Limpiar selección</div>`:'')+
     filtered.map(v=>{
-      const id=`dd_${key}_${v.replace(/\W/g,'_')}`;
-      const checked=filters[key].includes(v)?'checked':'';
-      return `<div class="dd-item"><input type="checkbox" id="${id}" ${checked} onchange="toggleDDFilter('${key}','${v.replace(/'/g,"\\'")}')"><label for="${id}">${v}</label></div>`;
+      const sid='dd_'+key+'_'+v.replace(/\W/g,'_');
+      return `<div class="dd-item"><input type="checkbox" id="${sid}" ${filters[key].includes(v)?'checked':''} onchange="toggleDDFilter('${key}','${v.replace(/'/g,"\\'")}')"><label for="${sid}">${v}</label></div>`;
     }).join('');
 }
 
@@ -441,67 +398,58 @@ function buildSpicyDD(){
   const el=document.getElementById('listSpicy');
   el.innerHTML=(filters.spicy.length?`<div class="dd-clear" onclick="clearDDFilter('spicy')">✕ Limpiar</div>`:'')+
     SPICY_LABELS.map((lbl,i)=>{
-      const id=`ddsp_${i}`;
-      const checked=filters.spicy.includes(i)?'checked':'';
-      return `<div class="spicy-dd-item"><input type="checkbox" id="${id}" ${checked} onchange="toggleDDFilter('spicy',${i})"><label for="${id}">${SPICY_ICONS[i]?SPICY_ICONS[i]+' ':''}<span>${lbl}</span></label></div>`;
+      const sid='ddsp_'+i;
+      return `<div class="spicy-dd-item"><input type="checkbox" id="${sid}" ${filters.spicy.includes(i)?'checked':''} onchange="toggleDDFilter('spicy',${i})"><label for="${sid}">${SPICY_ICONS[i]?SPICY_ICONS[i]+' ':''}<span>${lbl}</span><small>${['Sin escenas','Besos y miraditas','0–1 escena light','1–2 escenas explícitas','3–4 escenas explícitas','5+ escenas'][i]}</small></label></div>`;
     }).join('');
 }
 
-function filterDDList(ddId, searchVal){
-  const keyMap={ddGenre:'genres',ddAuthor:'authors',ddTrope:'tropes',ddYear:'years'};
-  const key=keyMap[ddId];
-  if(!key) return;
-  const vals = key==='years'
-    ? [...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String)
-    : [...new Set(allBooks.flatMap(b=>b[key==='authors'?'author':key]||[]).filter(Boolean))].sort();
-  buildDDList('list'+ddId.replace('dd',''), vals, key, searchVal);
+function filterDD(key,listId,search){
+  const vals=key==='authors'
+    ?[...new Set(allBooks.flatMap(b=>b.authors||[]))].sort()
+    :key==='years'
+      ?[...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String)
+      :[...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
+  buildDDList(listId,vals,key,search);
 }
 
-function toggleDDFilter(key, val){
+function toggleDDFilter(key,val){
   if(key==='spicy') val=parseInt(val);
-  const arr=filters[key], idx=arr.indexOf(val);
+  const arr=filters[key],idx=arr.indexOf(val);
   idx>=0?arr.splice(idx,1):arr.push(val);
   if(key==='spicy') buildSpicyDD();
-  else {
-    const keyMap={genres:'Genre',authors:'Author',tropes:'Trope',years:'Year'};
-    const k=keyMap[key];
-    if(k){
-      const vals = key==='years'
-        ? [...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String)
-        : [...new Set(allBooks.flatMap(b=>b[key==='authors'?'author':key]||[]).filter(Boolean))].sort();
-      buildDDList('list'+k, vals, key);
-    }
+  else{
+    const listMap={genres:'listGenre',authors:'listAuthor',tropes:'listTrope',years:'listYear'};
+    const vals=key==='authors'
+      ?[...new Set(allBooks.flatMap(b=>b.authors||[]))].sort()
+      :key==='years'
+        ?[...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String)
+        :[...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
+    buildDDList(listMap[key],vals,key);
   }
-  updateDDCounts();
-  renderActivePills();
-  applyFilters();
+  updateDDCounts();renderActivePills();applyFilters();
 }
 
 function clearDDFilter(key){
   filters[key]=[];
   if(key==='spicy') buildSpicyDD();
-  else {
-    const keyMap={genres:'Genre',authors:'Author',tropes:'Trope',years:'Year'};
-    const k=keyMap[key];
-    if(k){
-      const vals = key==='years'
-        ? [...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String)
-        : [...new Set(allBooks.flatMap(b=>b[key==='authors'?'author':key]||[]).filter(Boolean))].sort();
-      buildDDList('list'+k, vals, key);
-    }
+  else{
+    const listMap={genres:'listGenre',authors:'listAuthor',tropes:'listTrope',years:'listYear'};
+    const vals=key==='authors'
+      ?[...new Set(allBooks.flatMap(b=>b.authors||[]))].sort()
+      :key==='years'
+        ?[...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String)
+        :[...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
+    buildDDList(listMap[key],vals,key);
   }
-  updateDDCounts();
-  renderActivePills();
-  applyFilters();
+  updateDDCounts();renderActivePills();applyFilters();
 }
 
 function updateDDCounts(){
-  const pairs=[['Genre','genres'],['Author','authors'],['Trope','tropes'],['Year','years'],['Spicy','spicy']];
-  pairs.forEach(([k,fk])=>{
+  [['Genre','genres'],['Author','authors'],['Trope','tropes'],['Year','years'],['Spicy','spicy']].forEach(([k,fk])=>{
     const cnt=document.getElementById('cnt'+k);
-    const btn=document.querySelector(`#dd${k} .dd-btn`);
+    const btn=document.querySelector('#dd'+k+' .dd-btn');
     const n=filters[fk].length;
-    cnt.textContent=n; cnt.style.display=n?'':'none';
+    cnt.textContent=n;cnt.style.display=n?'':'none';
     btn.classList.toggle('has-sel',n>0);
   });
 }
@@ -512,33 +460,28 @@ function toggleDD(id){
   closeAllDD();
   if(!wasOpen) wrap.classList.add('open');
 }
-
-function closeAllDD(){
-  document.querySelectorAll('.dd-wrap.open').forEach(w=>w.classList.remove('open'));
-}
+function closeAllDD(){document.querySelectorAll('.dd-wrap.open').forEach(w=>w.classList.remove('open'));}
 
 function renderActivePills(){
   const af=document.getElementById('activeFilters');
-  const pills=[];
   const labelMap={genres:'Género',authors:'Autora',tropes:'Tropo',years:'Año',spicy:'Spicy'};
+  const pills=[];
   Object.entries(filters).forEach(([key,arr])=>{
     if(key==='q'||!arr.length) return;
     arr.forEach(v=>{
-      const display = key==='spicy' ? SPICY_LABELS[v] : v;
-      pills.push(`<span class="af-pill">${labelMap[key]}: ${display}<button onclick="toggleDDFilter('${key}',${typeof v==='number'?v:`'${v}'`})">×</button></span>`);
+      const display=key==='spicy'?SPICY_LABELS[v]:v;
+      const removeCall=key==='spicy'?`toggleDDFilter('spicy',${v})`:`toggleDDFilter('${key}','${v}')`;
+      pills.push(`<span class="af-pill">${labelMap[key]}: ${display}<button onclick="${removeCall}">×</button></span>`);
     });
   });
   af.innerHTML=pills.join('');
-  const hasAny=pills.length>0||filters.q;
-  document.getElementById('clearAllBtn').style.display=hasAny?'':'none';
+  document.getElementById('clearAllBtn').style.display=(pills.length||filters.q)?'':'none';
 }
 
 function clearAllFilters(){
   filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[]};
   document.getElementById('searchInput').value='';
-  buildDropdowns();
-  renderActivePills();
-  applyFilters();
+  buildDropdowns();renderActivePills();applyFilters();
 }
 
 /* ── FILTER & RENDER ── */
@@ -546,9 +489,9 @@ function applyFilters(){
   filters.q=document.getElementById('searchInput').value.toLowerCase().trim();
   renderActivePills();
   let books=[...allBooks];
-  if(filters.q) books=books.filter(b=>(b.title+' '+(b.author||'')).toLowerCase().includes(filters.q));
+  if(filters.q) books=books.filter(b=>(b.title+' '+(b.authors||[]).join(' ')).toLowerCase().includes(filters.q));
   if(filters.genres.length) books=books.filter(b=>filters.genres.every(g=>(b.genres||[]).includes(g)));
-  if(filters.authors.length) books=books.filter(b=>filters.authors.includes(b.author));
+  if(filters.authors.length) books=books.filter(b=>filters.authors.some(a=>(b.authors||[]).includes(a)));
   if(filters.tropes.length) books=books.filter(b=>filters.tropes.every(t=>(b.tropes||[]).includes(t)));
   if(filters.years.length) books=books.filter(b=>filters.years.includes(String(b.year)));
   if(filters.spicy.length) books=books.filter(b=>filters.spicy.includes(b.spicy));
@@ -567,12 +510,12 @@ function renderGrid(books){
   const c=document.getElementById('booksContainer');
   if(!books.length){c.innerHTML=`<div class="empty-state"><div class="empty-big">¿Dónde están?</div><p>Ningún libro coincide.</p></div>`;return;}
   const sortedR=[...books].sort((a,b)=>(ratingsMap[b.id]?.avg||0)-(ratingsMap[a.id]?.avg||0));
-  const rankMap={};
-  sortedR.forEach((b,i)=>{if(ratingsMap[b.id]?.count>0)rankMap[b.id]=i+1;});
+  const rankMap={};sortedR.forEach((b,i)=>{if(ratingsMap[b.id]?.count>0)rankMap[b.id]=i+1;});
   c.innerHTML=`<div class="books-grid">${books.map(b=>{
     const r=ratingsMap[b.id]||{avg:0,count:0};
     const rank=rankMap[b.id];
     const myScore=myRatings[b.id]||0;
+    const authorStr=(b.authors||[]).join(', ')||'—';
     const coverEl=b.cover?`<img class="book-cover" src="${b.cover}" alt="${b.title}" onerror="this.outerHTML='<div class=book-cover-ph>📖</div>'">`:`<div class="book-cover-ph">📖</div>`;
     const rankBadge=rank&&rank<=3?`<div class="rank-badge rank-${rank}">${rank}</div>`:'';
     const avgBadge=r.count>0?`<div class="avg-badge"><span style="color:var(--gold);font-size:11px">★</span><span style="font-size:11.5px;font-weight:600;color:var(--text)">${r.avg.toFixed(1)}</span><span style="font-size:10px;color:var(--muted)">(${r.count})</span></div>`:'';
@@ -585,7 +528,7 @@ function renderGrid(books){
       <div class="book-cover-wrap">${rankBadge}${spicyBadge}${coverEl}${avgBadge}</div>
       <div class="book-card-body">
         <div class="book-title">${b.title}</div>
-        <div class="book-author">${b.author||'—'}</div>
+        <div class="book-author">${authorStr}</div>
         <div class="book-tags">${genreTags}${tropeTags}${yearTag}</div>
         <div class="book-footer">
           ${r.count>0?`<span style="color:var(--gold);font-size:11px">★ ${r.avg.toFixed(1)}</span>`:`<span class="no-ratings">Sin valoraciones</span>`}
@@ -611,6 +554,7 @@ function renderBookModal(){
   const b=activeBook;
   const r=ratingsMap[b.id]||{avg:0,count:0};
   const myScore=myRatings[b.id]||0;
+  const authorStr=(b.authors||[]).join(', ')||'—';
   const coverEl=b.cover?`<div class="modal-cover-strip"><img src="${b.cover}" alt="${b.title}"></div>`:`<div class="modal-cover-ph">📖</div>`;
   const stars=avg=>[1,2,3,4,5].map(i=>`<span class="star ${i<=Math.round(avg)?'on':'off'}">★</span>`).join('');
   const communityRating=r.count>0
@@ -628,7 +572,7 @@ function renderBookModal(){
   document.getElementById('bookModalContent').innerHTML=`${coverEl}
     <div class="modal-body">
       <h2 class="modal-title">${b.title}</h2>
-      <p class="modal-author">por ${b.author||'—'}</p>
+      <p class="modal-author">por ${authorStr}</p>
       <div class="modal-tags">${genreTags}${tropeTags}${spicyTag}</div>
       <div class="modal-meta-grid">
         ${b.year?`<div class="meta-item"><span class="meta-key">Año</span><span class="meta-val">${b.year}</span></div>`:''}
@@ -673,11 +617,10 @@ function renderAuthUI(){
   if(currentUser){
     const name=currentUser.user_metadata?.name||currentUser.email.split('@')[0];
     el.innerHTML=`<div class="user-chip"><div class="user-avatar">${name.slice(0,2).toUpperCase()}</div><span class="user-name">${name}</span><button class="btn-logout" onclick="logout()">salir</button></div>`;
-  } else {
+  }else{
     el.innerHTML=`<button class="btn-login" onclick="openAuthModal()">Entrar para votar</button>`;
   }
 }
-
 function openAuthModal(){authMode='login';updateAuthUI();document.getElementById('authModal').classList.add('open');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('authEmail').focus(),100);}
 function closeAuthModal(){document.getElementById('authModal').classList.remove('open');document.body.style.overflow='';document.getElementById('authError').textContent='';}
 function toggleAuthMode(){authMode=authMode==='login'?'register':'login';updateAuthUI();}
@@ -697,13 +640,13 @@ async function handleAuth(){
   const btn=document.getElementById('authBtn');
   if(!email||!pass){setAuthError('Rellena email y contraseña.');return;}
   if(authMode==='register'&&!name){setAuthError('Escribe tu nombre.');return;}
-  if(pass.length<6){setAuthError('La contraseña debe tener al menos 6 caracteres.');return;}
+  if(pass.length<6){setAuthError('Mínimo 6 caracteres.');return;}
   btn.disabled=true;btn.textContent='…';
   let error;
   if(authMode==='register'){
     ({error}=await sb.auth.signUp({email,password:pass,options:{data:{name}}}));
-    if(!error){closeAuthModal();showToast('¡Cuenta creada! Revisa tu email para confirmarla.','success');}
-  } else {
+    if(!error){closeAuthModal();showToast('¡Cuenta creada! Revisa tu email.','success');}
+  }else{
     ({error}=await sb.auth.signInWithPassword({email,password:pass}));
     if(!error){await loadMyRatings();closeAuthModal();showToast('¡Bienvenida de vuelta! 🌹','success');applyFilters();}
   }
