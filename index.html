@@ -152,6 +152,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .modal-cover-ph{aspect-ratio:16/7;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:4rem;color:var(--surface3)}
 .modal-body{padding:1.5rem 1.75rem 2rem}
 .modal-title{font-family:var(--font-display);font-size:2rem;font-weight:600;line-height:1.1;margin-bottom:.25rem}
+.modal-title-row{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.25rem}
+.modal-title-row .modal-title{margin-bottom:0}
+.saga-title-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;background:rgba(91,188,176,0.12);border:1px solid rgba(91,188,176,0.3);color:var(--teal);font-size:11.5px;font-family:var(--font-body);font-weight:600;cursor:pointer;transition:all .18s;white-space:nowrap;flex-shrink:0;align-self:center}
+.saga-title-badge:hover{background:rgba(91,188,176,0.25);border-color:var(--teal)}
+.saga-title-badge-arrow{opacity:.6;font-size:11px}
 .modal-author{font-size:13px;color:var(--muted);margin-bottom:1rem}
 .modal-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.2rem}
 .modal-meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem .8rem;margin-bottom:1.4rem}
@@ -338,11 +343,8 @@ let filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],sagas:[],adap
 // Extract saga name from book
 function getSaga(b){
   if(b.sagaName) return b.sagaName;
-  if(b.formato&&['Saga','Dúo','Trilogía'].includes(b.formato)){
-    const m=b.title.match(/\bSAGA\s+([^#\)]+)/i);
-    return m?m[1].trim():null;
-  }
-  return null;
+  const m=b.title.match(/\bSAGA\s+([^#\)]+)/i);
+  return m?m[1].trim():null;
 }
 
 async function init(){
@@ -604,8 +606,7 @@ function renderGrid(books){
     const genreTags=(b.genres||[]).slice(0,2).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
     const tropeTags=(b.tropes||[]).slice(0,1).map(t=>`<span class="tag tag-trope">${t}</span>`).join('');
     const yearTag=b.year?`<span class="tag tag-year">${b.year}</span>`:'';
-    const sagaCardTag=b.sagaName?`<span class="tag tag-formato">📚 ${b.sagaName}</span>`:(b.formato&&['Saga','Dúo','Trilogía'].includes(b.formato)?`<span class="tag tag-formato">${b.formato}</span>`:'');
-    const formatoTag=b.formato&&!['Saga','Dúo','Trilogía'].includes(b.formato)?`<span class="tag tag-formato">${b.formato}</span>`:'';
+    const formatoTag=b.formato?`<span class="tag tag-formato">${b.formato}</span>`:'';
     const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
     const voteLabel=myScore>0?`${'★'.repeat(myScore)} Mi voto`:'Valorar';
     return `<div class="book-card" onclick="openBook('${b.id}')">
@@ -613,7 +614,7 @@ function renderGrid(books){
       <div class="book-card-body">
         <div class="book-title">${b.title}</div>
         <div class="book-author">${authorStr}</div>
-        <div class="book-tags">${genreTags}${tropeTags}${yearTag}${sagaCardTag}${formatoTag}${adaptTag}</div>
+        <div class="book-tags">${genreTags}${tropeTags}${yearTag}${formatoTag}${adaptTag}</div>
         <div class="book-footer">
           ${r.count>0?`<span style="color:var(--gold);font-size:11px">★ ${r.avg.toFixed(1)}</span>`:`<span class="no-ratings">Sin valoraciones</span>`}
           <button class="vote-mini-btn${myScore>0?' voted':''}" onclick="event.stopPropagation();openBook('${b.id}')">${voteLabel}</button>
@@ -655,10 +656,18 @@ function renderBookModal(){
   const spicyTag=b.spicy>0?`<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_ICONS[b.spicy]} ${SPICY_LABELS[b.spicy]}</span>`:'';
   const formatoTag=b.formato?`<span class="tag tag-formato">${b.formato}</span>`:'';
   const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
+  const sagaName=b.sagaName||(b.formato&&['Saga','Dúo','Trilogía'].includes(b.formato)?getSaga(b):null);
+  const sagaNumStr=b.sagaNum!=null?' #'+b.sagaNum:'';
+  const sagaTitleBadge=sagaName
+    ?`<button class="saga-title-badge" onclick="filterBySagaFromModal('${sagaName.replace(/'/g,"\\'")}')" title="Ver todos los libros de esta saga">📚 ${sagaName}${sagaNumStr} <span class="saga-title-badge-arrow">→</span></button>`
+    :'';
 
   document.getElementById('bookModalContent').innerHTML=`${coverEl}
     <div class="modal-body">
-      <h2 class="modal-title">${b.title}</h2>
+      <div class="modal-title-row">
+        <h2 class="modal-title">${b.title}</h2>
+        ${sagaTitleBadge}
+      </div>
       <p class="modal-author">por ${authorStr}</p>
       <div class="modal-tags">${genreTags}${tropeTags}${sagaTag}${spicyTag}${formatoTag}${adaptTag}</div>
       <div class="modal-meta-grid">
@@ -682,7 +691,12 @@ function renderBookModal(){
     </div>`;
 }
 
-function hoverStar(n){document.querySelectorAll('#starInput .star-btn').forEach((b,i)=>b.style.color=i<n?'var(--gold)':'');}
+function filterBySagaFromModal(sagaName){
+  closeBookModal();
+  if(!filters.sagas.includes(sagaName)) filters.sagas=[sagaName];
+  updateDDCounts();renderActivePills();applyFilters();
+}
+document.querySelectorAll('#starInput .star-btn').forEach((b,i)=>b.style.color=i<n?'var(--gold)':'');}
 function unhoverStar(){document.querySelectorAll('#starInput .star-btn').forEach(b=>b.style.color='');}
 function selectStar(n){
   pendingStar=n;
