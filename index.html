@@ -272,6 +272,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <button class="dd-btn" onclick="toggleDD('ddSpicy')">Spicy 🌶 <span class="dd-count" id="cntSpicy" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel" id="listSpicy"></div>
       </div>
+      <div id="valoracionFilter" style="display:none">
+        <button class="dd-btn" id="btnValorado" onclick="toggleValoracion('valorado')" title="Mostrar solo libros que ya valoré">★ Valorados</button>
+        <button class="dd-btn" id="btnNoValorado" onclick="toggleValoracion('no_valorado')" title="Mostrar libros que aún no he valorado">☆ Sin valorar</button>
+      </div>
     </div>
     <div class="filter-bottom">
       <div class="active-filters" id="activeFilters"></div>
@@ -321,7 +325,7 @@ const SPICY_ICONS  = ['','🌶','🌶🌶','🌶🌶🌶','🌶🌶🌶🌶','�
 
 let allBooks=[], ratingsMap={}, myRatings={}, currentUser=null, activeBook=null;
 let authMode='login', pendingStar=0;
-let filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[]};
+let filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],valoracion:null};
 
 async function init(){
   const {data:{session}}=await sb.auth.getSession();
@@ -464,6 +468,21 @@ function updateDDCounts(){
   });
 }
 
+function toggleValoracion(val){
+  filters.valoracion = filters.valoracion===val ? null : val;
+  updateValoracionBtns();
+  renderActivePills();
+  applyFilters();
+}
+
+function updateValoracionBtns(){
+  const bV=document.getElementById('btnValorado');
+  const bN=document.getElementById('btnNoValorado');
+  if(!bV||!bN) return;
+  bV.classList.toggle('has-sel', filters.valoracion==='valorado');
+  bN.classList.toggle('has-sel', filters.valoracion==='no_valorado');
+}
+
 function toggleDD(id){
   const wrap=document.getElementById(id);
   const wasOpen=wrap.classList.contains('open');
@@ -477,20 +496,26 @@ function renderActivePills(){
   const labelMap={genres:'Género',authors:'Autora',tropes:'Tropo',years:'Año',spicy:'Spicy'};
   const pills=[];
   Object.entries(filters).forEach(([key,arr])=>{
-    if(key==='q'||!arr.length) return;
+    if(key==='q'||key==='valoracion') return;
+    if(!arr.length) return;
     arr.forEach(v=>{
       const display=key==='spicy'?SPICY_LABELS[v]:v;
       const removeCall=key==='spicy'?`toggleDDFilter('spicy',${v})`:`toggleDDFilter('${key}','${v}')`;
       pills.push(`<span class="af-pill">${labelMap[key]}: ${display}<button onclick="${removeCall}">×</button></span>`);
     });
   });
+  if(filters.valoracion){
+    const label=filters.valoracion==='valorado'?'★ Mis valorados':'☆ Sin valorar';
+    pills.push(`<span class="af-pill">${label}<button onclick="toggleValoracion('${filters.valoracion}')">×</button></span>`);
+  }
   af.innerHTML=pills.join('');
   document.getElementById('clearAllBtn').style.display=(pills.length||filters.q)?'':'none';
 }
 
 function clearAllFilters(){
-  filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[]};
+  filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],valoracion:null};
   document.getElementById('searchInput').value='';
+  updateValoracionBtns();
   buildDropdowns();renderActivePills();applyFilters();
 }
 
@@ -505,6 +530,8 @@ function applyFilters(){
   if(filters.tropes.length) books=books.filter(b=>filters.tropes.every(t=>(b.tropes||[]).includes(t)));
   if(filters.years.length) books=books.filter(b=>filters.years.includes(String(b.year)));
   if(filters.spicy.length) books=books.filter(b=>filters.spicy.includes(b.spicy));
+  if(filters.valoracion==='valorado') books=books.filter(b=>!!myRatings[b.id]);
+  if(filters.valoracion==='no_valorado') books=books.filter(b=>!myRatings[b.id]);
   const sort=document.getElementById('sortSel').value;
   if(sort==='top') books.sort((a,b)=>(ratingsMap[b.id]?.avg||0)-(ratingsMap[a.id]?.avg||0));
   else if(sort==='votes') books.sort((a,b)=>(ratingsMap[b.id]?.count||0)-(ratingsMap[a.id]?.count||0));
@@ -642,8 +669,13 @@ function renderAuthUI(){
   if(currentUser){
     const name=currentUser.user_metadata?.name||currentUser.email.split('@')[0];
     el.innerHTML=`<div class="user-chip"><div class="user-avatar">${name.slice(0,2).toUpperCase()}</div><span class="user-name">${name}</span><button class="btn-logout" onclick="logout()">salir</button></div>`;
+    document.getElementById('valoracionFilter').style.display='flex';
+    document.getElementById('valoracionFilter').style.gap='.4rem';
   }else{
     el.innerHTML=`<button class="btn-login" onclick="openAuthModal()">Entrar para votar</button>`;
+    document.getElementById('valoracionFilter').style.display='none';
+    filters.valoracion=null;
+    updateValoracionBtns();
   }
 }
 function openAuthModal(){authMode='login';updateAuthUI();document.getElementById('authModal').classList.add('open');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('authEmail').focus(),100);}
