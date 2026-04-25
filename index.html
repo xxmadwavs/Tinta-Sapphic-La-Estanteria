@@ -181,6 +181,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .vote-submit{padding:8px 22px;border-radius:20px;background:var(--accent);border:none;color:#fff;font-size:12.5px;font-weight:600;font-family:var(--font-body);cursor:pointer;transition:all .18s}
 .vote-submit:hover{background:var(--accent2)}
 .vote-submit:disabled{opacity:.45;cursor:not-allowed}
+.vote-delete{padding:8px 16px;border-radius:20px;background:transparent;border:1px solid rgba(212,96,122,0.35);color:var(--rose);font-size:12px;font-weight:500;font-family:var(--font-body);cursor:pointer;transition:all .18s}
+.vote-delete:hover{background:var(--rose-soft);border-color:var(--rose)}
+.vote-delete:disabled{opacity:.45;cursor:not-allowed}
 .login-to-vote{font-size:12.5px;color:var(--muted);font-style:italic}
 .login-to-vote a{color:var(--accent2);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit;font-size:inherit;font-style:inherit}
 
@@ -272,6 +275,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <button class="dd-btn" onclick="toggleDD('ddSpicy')">Spicy 🌶 <span class="dd-count" id="cntSpicy" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel" id="listSpicy"></div>
       </div>
+      <div class="dd-wrap" id="ddSaga">
+        <button class="dd-btn" onclick="toggleDD('ddSaga')">Saga 📚 <span class="dd-count" id="cntSaga" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('sagas','listSaga',this.value)"></div><div class="dd-list" id="listSaga"></div></div>
+      </div>
       <div id="valoracionFilter" style="display:none">
         <button class="dd-btn" id="btnValorado" onclick="toggleValoracion('valorado')" title="Mostrar solo libros que ya valoré">★ Valorados</button>
         <button class="dd-btn" id="btnNoValorado" onclick="toggleValoracion('no_valorado')" title="Mostrar libros que aún no he valorado">☆ Sin valorar</button>
@@ -325,7 +332,14 @@ const SPICY_ICONS  = ['','🌶','🌶🌶','🌶🌶🌶','🌶🌶🌶🌶','�
 
 let allBooks=[], ratingsMap={}, myRatings={}, currentUser=null, activeBook=null;
 let authMode='login', pendingStar=0;
-let filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],valoracion:null};
+let filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],sagas:[],valoracion:null};
+
+// Extract saga name from book
+function getSaga(b){
+  if(b.saga) return b.saga;
+  const m=b.title.match(/\bSAGA\s+([^#\)]+)/i);
+  return m?m[1].trim():null;
+}
 
 async function init(){
   const {data:{session}}=await sb.auth.getSession();
@@ -389,10 +403,12 @@ function buildDropdowns(){
   const authors =[...new Set(allBooks.flatMap(b=>b.authors||[]))].sort();
   const tropes  =[...new Set(allBooks.flatMap(b=>b.tropes||[]))].sort();
   const years   =[...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String);
+  const sagas   =[...new Set(allBooks.map(b=>getSaga(b)).filter(Boolean))].sort();
   buildDDList('listGenre', genres,  'genres');
   buildDDList('listAuthor',authors, 'authors');
   buildDDList('listTrope', tropes,  'tropes');
   buildDDList('listYear',  years,   'years');
+  buildDDList('listSaga',  sagas,   'sagas');
   buildSpicyDD();
   updateDDCounts();
 }
@@ -422,7 +438,9 @@ function filterDD(key,listId,search){
     ?[...new Set(allBooks.flatMap(b=>b.authors||[]))].sort()
     :key==='years'
       ?[...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String)
-      :[...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
+      :key==='sagas'
+        ?[...new Set(allBooks.map(b=>getSaga(b)).filter(Boolean))].sort()
+        :[...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
   buildDDList(listId,vals,key,search);
 }
 
@@ -432,12 +450,14 @@ function toggleDDFilter(key,val){
   idx>=0?arr.splice(idx,1):arr.push(val);
   if(key==='spicy') buildSpicyDD();
   else{
-    const listMap={genres:'listGenre',authors:'listAuthor',tropes:'listTrope',years:'listYear'};
+    const listMap={genres:'listGenre',authors:'listAuthor',tropes:'listTrope',years:'listYear',sagas:'listSaga'};
     const vals=key==='authors'
       ?[...new Set(allBooks.flatMap(b=>b.authors||[]))].sort()
       :key==='years'
         ?[...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String)
-        :[...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
+        :key==='sagas'
+          ?[...new Set(allBooks.map(b=>getSaga(b)).filter(Boolean))].sort()
+          :[...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
     buildDDList(listMap[key],vals,key);
   }
   updateDDCounts();renderActivePills();applyFilters();
@@ -447,19 +467,21 @@ function clearDDFilter(key){
   filters[key]=[];
   if(key==='spicy') buildSpicyDD();
   else{
-    const listMap={genres:'listGenre',authors:'listAuthor',tropes:'listTrope',years:'listYear'};
+    const listMap={genres:'listGenre',authors:'listAuthor',tropes:'listTrope',years:'listYear',sagas:'listSaga'};
     const vals=key==='authors'
       ?[...new Set(allBooks.flatMap(b=>b.authors||[]))].sort()
       :key==='years'
         ?[...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String)
-        :[...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
+        :key==='sagas'
+          ?[...new Set(allBooks.map(b=>getSaga(b)).filter(Boolean))].sort()
+          :[...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
     buildDDList(listMap[key],vals,key);
   }
   updateDDCounts();renderActivePills();applyFilters();
 }
 
 function updateDDCounts(){
-  [['Genre','genres'],['Author','authors'],['Trope','tropes'],['Year','years'],['Spicy','spicy']].forEach(([k,fk])=>{
+  [['Genre','genres'],['Author','authors'],['Trope','tropes'],['Year','years'],['Spicy','spicy'],['Saga','sagas']].forEach(([k,fk])=>{
     const cnt=document.getElementById('cnt'+k);
     const btn=document.querySelector('#dd'+k+' .dd-btn');
     const n=filters[fk].length;
@@ -493,7 +515,7 @@ function closeAllDD(){document.querySelectorAll('.dd-wrap.open').forEach(w=>w.cl
 
 function renderActivePills(){
   const af=document.getElementById('activeFilters');
-  const labelMap={genres:'Género',authors:'Autora',tropes:'Tropo',years:'Año',spicy:'Spicy'};
+  const labelMap={genres:'Género',authors:'Autora',tropes:'Tropo',years:'Año',spicy:'Spicy',sagas:'Saga'};
   const pills=[];
   Object.entries(filters).forEach(([key,arr])=>{
     if(key==='q'||key==='valoracion') return;
@@ -513,7 +535,7 @@ function renderActivePills(){
 }
 
 function clearAllFilters(){
-  filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],valoracion:null};
+  filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],sagas:[],valoracion:null};
   document.getElementById('searchInput').value='';
   updateValoracionBtns();
   buildDropdowns();renderActivePills();applyFilters();
@@ -524,12 +546,13 @@ function applyFilters(){
   filters.q=document.getElementById('searchInput').value.toLowerCase().trim();
   renderActivePills();
   let books=[...allBooks];
-  if(filters.q) books=books.filter(b=>(b.title+' '+(b.authors||[]).join(' ')).toLowerCase().includes(filters.q));
+  if(filters.q) books=books.filter(b=>(b.title+' '+(b.authors||[]).join(' ')+(getSaga(b)||'')).toLowerCase().includes(filters.q));
   if(filters.genres.length) books=books.filter(b=>filters.genres.every(g=>(b.genres||[]).includes(g)));
   if(filters.authors.length) books=books.filter(b=>filters.authors.some(a=>(b.authors||[]).includes(a)));
   if(filters.tropes.length) books=books.filter(b=>filters.tropes.every(t=>(b.tropes||[]).includes(t)));
   if(filters.years.length) books=books.filter(b=>filters.years.includes(String(b.year)));
   if(filters.spicy.length) books=books.filter(b=>filters.spicy.includes(b.spicy));
+  if(filters.sagas.length) books=books.filter(b=>filters.sagas.includes(getSaga(b)));
   if(filters.valoracion==='valorado') books=books.filter(b=>!!myRatings[b.id]);
   if(filters.valoracion==='no_valorado') books=books.filter(b=>!myRatings[b.id]);
   const sort=document.getElementById('sortSel').value;
@@ -602,7 +625,7 @@ function renderBookModal(){
   const starInput=[1,2,3,4,5].map(i=>`<button class="star-btn${i<=(pendingStar||myScore)?' selected':''}" onmouseover="hoverStar(${i})" onmouseout="unhoverStar()" onclick="selectStar(${i})">★</button>`).join('');
   let voteArea='';
   if(!currentUser) voteArea=`<p class="login-to-vote"><a onclick="closeBookModal();openAuthModal()">Inicia sesión</a> para valorar este libro.</p>`;
-  else voteArea=`<div><p class="vote-prompt">${myScore>0?`Tu valoración: ${'★'.repeat(myScore)} — puedes cambiarla`:'¿Qué te pareció?'}</p><div class="stars-input" id="starInput">${starInput}</div><button class="vote-submit" id="voteBtn" onclick="submitVote()" ${!pendingStar?'disabled':''}>${pendingStar>0?`Guardar ${pendingStar} ★`:myScore>0?'Actualizar':'Guardar'}</button></div>`;
+  else voteArea=`<div><p class="vote-prompt">${myScore>0?`Tu valoración: ${'★'.repeat(myScore)} — puedes cambiarla`:'¿Qué te pareció?'}</p><div class="stars-input" id="starInput">${starInput}</div><div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center"><button class="vote-submit" id="voteBtn" onclick="submitVote()" ${!pendingStar?'disabled':''}>${pendingStar>0?`Guardar ${pendingStar} ★`:myScore>0?'Actualizar':'Guardar'}</button>${myScore>0?`<button class="vote-delete" id="deleteBtn" onclick="deleteVote()">✕ Eliminar mi voto</button>`:''}</div></div>`;
 
   const genreTags=(b.genres||[]).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
   const tropeTags=(b.tropes||[]).map(t=>`<span class="tag tag-trope">${t}</span>`).join('');
@@ -660,6 +683,22 @@ async function submitVote(){
   ratingsMap[activeBook.id]={avg:Math.round(newAvg*10)/10,count:newCount};
   myRatings[activeBook.id]=pendingStar;
   showToast('¡Valoración guardada! ✓','success');
+  updateStats();applyFilters();renderBookModal();
+}
+
+async function deleteVote(){
+  if(!currentUser||!activeBook||!myRatings[activeBook.id]) return;
+  const btn=document.getElementById('deleteBtn');
+  if(btn){btn.disabled=true;btn.textContent='Eliminando…';}
+  const {error}=await sb.from('ratings').delete().eq('user_id',currentUser.id).eq('book_id',activeBook.id);
+  if(error){showToast('Error al eliminar','error');if(btn){btn.disabled=false;btn.textContent='✕ Eliminar mi voto';}return;}
+  const r=ratingsMap[activeBook.id]||{avg:0,count:0};
+  const oldScore=myRatings[activeBook.id];
+  if(r.count<=1){delete ratingsMap[activeBook.id];}
+  else{const newCount=r.count-1;ratingsMap[activeBook.id]={avg:Math.round((r.avg*r.count-oldScore)/newCount*10)/10,count:newCount};}
+  delete myRatings[activeBook.id];
+  pendingStar=0;
+  showToast('Voto eliminado','success');
   updateStats();applyFilters();renderBookModal();
 }
 
