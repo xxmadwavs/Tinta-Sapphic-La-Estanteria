@@ -283,6 +283,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <button class="dd-btn" id="btnValorado" onclick="toggleValoracion('valorado')" title="Mostrar solo libros que ya valoré">★ Valorados</button>
         <button class="dd-btn" id="btnNoValorado" onclick="toggleValoracion('no_valorado')" title="Mostrar libros que aún no he valorado">☆ Sin valorar</button>
       </div>
+      <button class="dd-btn" id="btnConSerie" onclick="toggleAdaptacion('serie')" title="Solo libros con serie de televisión">📺 Con serie</button>
     </div>
     <div class="filter-bottom">
       <div class="active-filters" id="activeFilters"></div>
@@ -332,11 +333,11 @@ const SPICY_ICONS  = ['','🌶','🌶🌶','🌶🌶🌶','🌶🌶🌶🌶','�
 
 let allBooks=[], ratingsMap={}, myRatings={}, currentUser=null, activeBook=null;
 let authMode='login', pendingStar=0;
-let filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],sagas:[],valoracion:null};
+let filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],sagas:[],adaptacion:null,valoracion:null};
 
 // Extract saga name from book
 function getSaga(b){
-  if(b.saga) return b.saga;
+  if(b.sagaName) return b.sagaName;
   const m=b.title.match(/\bSAGA\s+([^#\)]+)/i);
   return m?m[1].trim():null;
 }
@@ -497,6 +498,18 @@ function toggleValoracion(val){
   applyFilters();
 }
 
+function toggleAdaptacion(val){
+  filters.adaptacion = filters.adaptacion===val ? null : val;
+  updateAdaptacionBtn();
+  renderActivePills();
+  applyFilters();
+}
+
+function updateAdaptacionBtn(){
+  const btn=document.getElementById('btnConSerie');
+  if(btn) btn.classList.toggle('has-sel', filters.adaptacion==='serie');
+}
+
 function updateValoracionBtns(){
   const bV=document.getElementById('btnValorado');
   const bN=document.getElementById('btnNoValorado');
@@ -530,14 +543,18 @@ function renderActivePills(){
     const label=filters.valoracion==='valorado'?'★ Mis valorados':'☆ Sin valorar';
     pills.push(`<span class="af-pill">${label}<button onclick="toggleValoracion('${filters.valoracion}')">×</button></span>`);
   }
+  if(filters.adaptacion==='serie'){
+    pills.push(`<span class="af-pill">📺 Con serie<button onclick="toggleAdaptacion('serie')">×</button></span>`);
+  }
   af.innerHTML=pills.join('');
   document.getElementById('clearAllBtn').style.display=(pills.length||filters.q)?'':'none';
 }
 
 function clearAllFilters(){
-  filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],sagas:[],valoracion:null};
+  filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],sagas:[],adaptacion:null,valoracion:null};
   document.getElementById('searchInput').value='';
   updateValoracionBtns();
+  updateAdaptacionBtn();
   buildDropdowns();renderActivePills();applyFilters();
 }
 
@@ -553,6 +570,7 @@ function applyFilters(){
   if(filters.years.length) books=books.filter(b=>filters.years.includes(String(b.year)));
   if(filters.spicy.length) books=books.filter(b=>filters.spicy.includes(b.spicy));
   if(filters.sagas.length) books=books.filter(b=>filters.sagas.includes(getSaga(b)));
+  if(filters.adaptacion==='serie') books=books.filter(b=>b.adaptacion==='Tiene serie');
   if(filters.valoracion==='valorado') books=books.filter(b=>!!myRatings[b.id]);
   if(filters.valoracion==='no_valorado') books=books.filter(b=>!myRatings[b.id]);
   const sort=document.getElementById('sortSel').value;
@@ -629,6 +647,7 @@ function renderBookModal(){
 
   const genreTags=(b.genres||[]).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
   const tropeTags=(b.tropes||[]).map(t=>`<span class="tag tag-trope">${t}</span>`).join('');
+  const sagaTag=b.sagaName?`<span class="tag" style="background:rgba(91,188,176,0.12);color:var(--teal);border:1px solid rgba(91,188,176,0.25)">📚 ${b.sagaName}${b.sagaNum!=null?' #'+b.sagaNum:''}</span>`:'';
   const spicyTag=b.spicy>0?`<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_ICONS[b.spicy]} ${SPICY_LABELS[b.spicy]}</span>`:'';
   const formatoTag=b.formato?`<span class="tag tag-formato">${b.formato}</span>`:'';
   const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
@@ -637,7 +656,7 @@ function renderBookModal(){
     <div class="modal-body">
       <h2 class="modal-title">${b.title}</h2>
       <p class="modal-author">por ${authorStr}</p>
-      <div class="modal-tags">${genreTags}${tropeTags}${spicyTag}${formatoTag}${adaptTag}</div>
+      <div class="modal-tags">${genreTags}${tropeTags}${sagaTag}${spicyTag}${formatoTag}${adaptTag}</div>
       <div class="modal-meta-grid">
         ${b.year?`<div class="meta-item"><span class="meta-key">Año</span><span class="meta-val">${b.year}</span></div>`:''}
         ${b.pages?`<div class="meta-item"><span class="meta-key">Páginas</span><span class="meta-val">${b.pages}</span></div>`:''}
