@@ -18,7 +18,24 @@
     "tropes": [
       "Enemies to Lovers"
     ],
-    "spicy": 5
+    "spicy": 5,
+    "editions": [
+      {
+        "lang": "ES",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/?action=book_details&book_id=353321"
+      },
+      {
+        "lang": "EN",
+        "store": "Amazon",
+        "url": "https://www.amazon.es/Cranium-English-Nalan-ebook/dp/B0DM1NXY4F"
+      },
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/ebook-331090-Cranium-English-Version"
+      }
+    ]
   },
   {
     "id": "b_1777138144561_pxbz2",
@@ -39,7 +56,24 @@
       "Abogada"
     ],
     "tropes": [],
-    "spicy": 2
+    "spicy": 2,
+    "editions": [
+      {
+        "lang": "ES",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/?action=book_details&book_id=348741"
+      },
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-347291-The-Whale-Store-%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B8%A7%E0%B8%B2%E0%B8%AC%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%8A%E0%B8%B3-English-Version"
+      },
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-169299-%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B8%A7%E0%B8%B2%E0%B8%AC%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%8A%E0%B8%B3-The-Whale-Store-%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%99%E0%B8%B5%E0%B9%89%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%A1%E0%B8%B5%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%82%E0%B8%B2%E0%B8%A2"
+      }
+    ]
   },
   {
     "id": "b_1777138710876_7tgwy",
@@ -64,6 +98,23 @@
       "Boss/Employee",
       "Rich/Poor Romance"
     ],
-    "spicy": 4
+    "spicy": 4,
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/?action=book_details&book_id=181426"
+      },
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-70724-GAP--%E0%B8%97%E0%B8%A4%E0%B8%A9%E0%B8%8E%E0%B8%B5%E0%B8%AA%E0%B8%B5%E0%B8%8A%E0%B8%A1%E0%B8%9E%E0%B8%B9-%E0%B9%80%E0%B8%A5%E0%B9%88%E0%B8%A1-1"
+      },
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-70732-GAP--%E0%B8%97%E0%B8%A4%E0%B8%A9%E0%B8%8E%E0%B8%B5%E0%B8%AA%E0%B8%B5%E0%B8%8A%E0%B8%A1%E0%B8%9E%E0%B8%B9-%E0%B9%80%E0%B8%A5%E0%B9%88%E0%B8%A1-2"
+      }
+    ]
   }
 ]
