@@ -101,6 +101,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .chip-opt:hover{border-color:var(--accent);color:var(--accent2)}
 .chip-opt.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
 .chip-opt.rose.active{background:var(--rose-soft);border-color:var(--rose);color:#e0909e}
+.chip-opt.teal.active{background:rgba(91,188,176,0.15);border-color:var(--teal);color:var(--teal)}
+.chip-opt.lavender.active{background:rgba(155,130,201,0.15);border-color:#9b82c9;color:#c4b0e8}
 
 /* SPICY */
 .spicy-grid{display:flex;flex-direction:column;gap:.4rem;margin-top:.4rem}
@@ -267,6 +269,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
 
     <div class="form-section">
+      <div class="form-section-title">Formato</div>
+      <div class="chip-group" id="formatoChips"></div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Adaptación</div>
+      <div class="chip-group" id="adaptacionChips"></div>
+    </div>
+
+    <div class="form-section">
       <div class="form-section-title">Dónde comprar <span style="color:var(--muted);font-size:10px;text-transform:none;letter-spacing:0">(idioma · tienda · enlace)</span></div>
       <div id="editionsWrap" style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:.6rem"></div>
       <button class="btn small" onclick="addEdition()" type="button">+ Añadir edición</button>
@@ -303,7 +315,7 @@ const SPICY_LEVELS = [
 
 // Books stored in memory (from JSON), votes in Supabase
 let books = [], editingId = null;
-let sel = {genres:[],subgenres:[],characters:[],tropes:[],spicy:0};
+let sel = {genres:[],subgenres:[],characters:[],tropes:[],spicy:0,formato:null,adaptacion:null};
 let authors = []; // array of strings
 let editions = []; // array of {lang, store, url}
 
@@ -416,6 +428,8 @@ function openEditModal(id) {
   sel.characters=[...(b.characters||[])];
   sel.tropes    =[...(b.tropes||[])];
   sel.spicy     =b.spicy||0;
+  sel.formato   =b.formato||null;
+  sel.adaptacion=b.adaptacion||null;
   renderAuthorPills();
   renderAllChips();
   renderEditions();
@@ -426,7 +440,7 @@ function openEditModal(id) {
 function clearForm() {
   ['fTitle','fYear','fCover','fSynopsis','fPages','fIsbn'].forEach(id=>document.getElementById(id).value='');
   authors=[];editions=[];
-  sel={genres:[],subgenres:[],characters:[],tropes:[],spicy:0};
+  sel={genres:[],subgenres:[],characters:[],tropes:[],spicy:0,formato:null,adaptacion:null};
   const p=document.getElementById('coverPreview');p.style.display='none';p.src='';
   renderAuthorPills();
   renderAllChips();
@@ -456,11 +470,16 @@ function renderAuthorPills() {
 function removeAuthor(name){authors=authors.filter(a=>a!==name);renderAuthorPills();}
 
 /* ── CHIPS ── */
+const FORMATOS    = ['Único','Dúo','Trilogía','Saga'];
+const ADAPTACIONES= ['Sin adaptación','Tiene serie','Tiene película'];
+
 function renderAllChips() {
   renderChipGroup('genreChips',    GENRES,     'genres',    false);
   renderChipGroup('subgenreChips', SUBGENRES,  'subgenres', false);
   renderChipGroup('characterChips',CHARACTERS, 'characters',true);
   renderChipGroup('tropeChips',    TROPES,     'tropes',    false);
+  renderSingleChips('formatoChips',    FORMATOS,    'formato',    'teal');
+  renderSingleChips('adaptacionChips', ADAPTACIONES,'adaptacion', 'lavender');
   renderSpicy();
 }
 
@@ -470,6 +489,18 @@ function renderChipGroup(cId,list,key,isRose){
     const cls=active?(isRose?'chip-opt rose active':'chip-opt active'):'chip-opt';
     return `<button class="${cls}" onclick="toggleChip('${key}','${v.replace(/'/g,"\\'")}',${isRose})">${v}</button>`;
   }).join('');
+}
+
+function renderSingleChips(cId,list,key,color){
+  document.getElementById(cId).innerHTML=list.map(v=>{
+    const active=sel[key]===v;
+    return `<button class="chip-opt${active?' active '+color:''}" onclick="toggleSingle('${key}','${v.replace(/'/g,"\\'")}','${color}')">${v}</button>`;
+  }).join('');
+}
+
+function toggleSingle(key,val){
+  sel[key]=sel[key]===val?null:val;
+  renderAllChips();
 }
 
 function toggleChip(key,val,isRose){
@@ -509,6 +540,8 @@ function saveBook() {
     characters:[...sel.characters],
     tropes:    [...sel.tropes],
     spicy:     sel.spicy,
+    formato:   sel.formato,
+    adaptacion:sel.adaptacion,
     editions:  editions.filter(e=>e.url).map(e=>({lang:e.lang,store:e.store,url:e.url})),
   };
 

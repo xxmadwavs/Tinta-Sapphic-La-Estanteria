@@ -126,6 +126,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tag-genre{background:var(--accent-soft);color:var(--accent2);border:1px solid rgba(192,111,196,0.2)}
 .tag-trope{background:var(--rose-soft);color:#e0909e;border:1px solid rgba(212,96,122,0.2)}
 .tag-year{background:var(--surface3);color:var(--muted);border:1px solid var(--border)}
+.tag-formato{background:rgba(91,188,176,0.12);color:var(--teal);border:1px solid rgba(91,188,176,0.25)}
+.tag-adaptacion{background:rgba(155,130,201,0.12);color:#c4b0e8;border:1px solid rgba(155,130,201,0.3)}
 .book-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.4rem}
 .vote-mini-btn{padding:4px 12px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:11px;font-family:var(--font-body);cursor:pointer;transition:all .18s}
 .vote-mini-btn:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
@@ -531,13 +533,15 @@ function renderGrid(books){
     const genreTags=(b.genres||[]).slice(0,2).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
     const tropeTags=(b.tropes||[]).slice(0,1).map(t=>`<span class="tag tag-trope">${t}</span>`).join('');
     const yearTag=b.year?`<span class="tag tag-year">${b.year}</span>`:'';
+    const formatoTag=b.formato?`<span class="tag tag-formato">${b.formato}</span>`:'';
+    const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
     const voteLabel=myScore>0?`${'★'.repeat(myScore)} Mi voto`:'Valorar';
     return `<div class="book-card" onclick="openBook('${b.id}')">
       <div class="book-cover-wrap">${rankBadge}${spicyBadge}${coverEl}${avgBadge}</div>
       <div class="book-card-body">
         <div class="book-title">${b.title}</div>
         <div class="book-author">${authorStr}</div>
-        <div class="book-tags">${genreTags}${tropeTags}${yearTag}</div>
+        <div class="book-tags">${genreTags}${tropeTags}${yearTag}${formatoTag}${adaptTag}</div>
         <div class="book-footer">
           ${r.count>0?`<span style="color:var(--gold);font-size:11px">★ ${r.avg.toFixed(1)}</span>`:`<span class="no-ratings">Sin valoraciones</span>`}
           <button class="vote-mini-btn${myScore>0?' voted':''}" onclick="event.stopPropagation();openBook('${b.id}')">${voteLabel}</button>
@@ -576,12 +580,14 @@ function renderBookModal(){
   const genreTags=(b.genres||[]).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
   const tropeTags=(b.tropes||[]).map(t=>`<span class="tag tag-trope">${t}</span>`).join('');
   const spicyTag=b.spicy>0?`<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_ICONS[b.spicy]} ${SPICY_LABELS[b.spicy]}</span>`:'';
+  const formatoTag=b.formato?`<span class="tag tag-formato">${b.formato}</span>`:'';
+  const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
 
   document.getElementById('bookModalContent').innerHTML=`${coverEl}
     <div class="modal-body">
       <h2 class="modal-title">${b.title}</h2>
       <p class="modal-author">por ${authorStr}</p>
-      <div class="modal-tags">${genreTags}${tropeTags}${spicyTag}</div>
+      <div class="modal-tags">${genreTags}${tropeTags}${spicyTag}${formatoTag}${adaptTag}</div>
       <div class="modal-meta-grid">
         ${b.year?`<div class="meta-item"><span class="meta-key">Año</span><span class="meta-val">${b.year}</span></div>`:''}
         ${b.pages?`<div class="meta-item"><span class="meta-key">Páginas</span><span class="meta-val">${b.pages}</span></div>`:''}
