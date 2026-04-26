@@ -230,15 +230,32 @@
     "pages": 867,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "Contemporánea"
     ],
     "subgenres": [],
+    "identidades": [
+      "Lesbiana",
+      "Sunshine",
+      "Ice Queen"
+    ],
     "characters": [
-      "Estudiante"
+      "Estudiante",
+      "Artista"
+    ],
+    "dinamicas": [
+      "Femme × Femme",
+      "Ice Queen × Sunshine",
+      "Ice Queen × Softie",
+      "Fría × Cálida"
     ],
     "tropes": [
-      "Age Gap"
+      "Age Gap",
+      "Strangers to Lovers",
+      "Slow Burn",
+      "Unrequited Love"
     ],
+    "ambientacion": [],
     "spicy": 4,
     "formato": "Único",
     "adaptacion": "Tiene serie",
@@ -250,11 +267,7 @@
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-278699-Blank--English-version"
       }
-    ],
-    "dinamicas": [
-      "Femme × Femme"
-    ],
-    "ambientacion": []
+    ]
   },
   {
     "id": "b_1777149654761_42p0w",
@@ -269,19 +282,39 @@
     "isbn": null,
     "genres": [
       "Fantasía",
-      "Romance"
+      "Romance",
+      "Contemporánea"
     ],
     "subgenres": [
       "Universidad",
-      "Viaje en el Tiempo"
+      "Viaje en el Tiempo",
+      "Sobrenatural"
+    ],
+    "identidades": [
+      "Lesbiana",
+      "Queer"
     ],
     "characters": [
       "Abogada",
       "Empresaria",
       "Estudiante"
     ],
-    "tropes": [],
-    "spicy": 3,
+    "dinamicas": [
+      "Femme × Femme",
+      "Grumpy × Sunshine",
+      "Ice Queen × Softie",
+      "Fría × Cálida"
+    ],
+    "tropes": [
+      "Slow Burn",
+      "Strangers to Lovers",
+      "Forbidden Love",
+      "Lesbian Awakening",
+      "Destined Lovers",
+      "Forced Proximity"
+    ],
+    "ambientacion": [],
+    "spicy": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
     "sagaName": "REVERSE 4 YOU",
@@ -302,11 +335,7 @@
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-97335-Reverse-4-you-%E0%B8%94%E0%B8%B2%E0%B8%A7%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%A7%E0%B8%B2%E0%B8%A3"
       }
-    ],
-    "dinamicas": [
-      "Femme × Femme"
-    ],
-    "ambientacion": []
+    ]
   },
   {
     "id": "b_1777150185357_zntjy",
@@ -453,20 +482,33 @@
     "pages": 353,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "Contemporánea"
     ],
-    "subgenres": [],
-    "identidades": [],
+    "subgenres": [
+      "Small Town",
+      "Crimen"
+    ],
+    "identidades": [
+      "Lesbiana",
+      "Masc",
+      "Femme"
+    ],
     "characters": [
-      "Granjera"
+      "Granjera",
+      "Florista",
+      "Empresaria"
     ],
     "dinamicas": [
       "Masc × Femme",
-      "Protectora × Delicada"
+      "Protectora × Delicada",
+      "Fría × Cálida"
     ],
     "tropes": [
       "Childhood Friends",
-      "Marriage of Convenience"
+      "Marriage of Convenience",
+      "Forbidden Love",
+      "Slow Burn"
     ],
     "ambientacion": [],
     "spicy": 2,
@@ -1525,6 +1567,151 @@
         "lang": "TH",
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-26011-%E0%B9%83%E0%B8%88%E0%B8%8B%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B8%A3%E0%B8%B1%E0%B8%81"
+      }
+    ]
+  },
+  {
+    "id": "b_1777223268111_70xer",
+    "title": "Pluto",
+    "authors": [
+      "ChaoPlanoy"
+    ],
+    "year": 2023,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/260047/Thumbnail/book_detail_large.gif?2",
+    "synopsis": "No hay razón cuando se trata de amor. Si la hubiera, no sería amor.\n\n¿Qué debo hacer? Metavee me ama, pero entiende que soy su gemela. Si este amor se revela, ambos tendremos que terminar, y yo seré solo un planeta enano en el sistema solar.\n\nExistió una vez, pero se desvaneció en el olvido. Y ser olvidado es equivalente a...\n\nNunca haber existido.",
+    "pages": 607,
+    "isbn": null,
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Masc",
+      "Femme"
+    ],
+    "characters": [
+      "Abogada",
+      "Millonaria / Billonaria"
+    ],
+    "dinamicas": [
+      "Masc × Femme",
+      "Rich × Poor"
+    ],
+    "tropes": [
+      "Love Triangle",
+      "Slow Burn",
+      "Rich / Poor Romance"
+    ],
+    "ambientacion": [],
+    "spicy": 4,
+    "formato": "Único",
+    "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/ebook-260047-Pluto--English-version"
+      }
+    ]
+  },
+  {
+    "id": "b_1777223529625_1v10j",
+    "title": "Mate 1",
+    "authors": [
+      "ChaoPlanoy"
+    ],
+    "year": 2023,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/230854/Thumbnail/book_detail_large.gif?2",
+    "synopsis": "Soy Genlong, una mujer que nació con belleza, riqueza y un gran cerebro. Todo en mí tiene que ser perfecto, especialmente mi \"alguien especial\". Nada me perturbó, hasta que conocí a mi amiga de la infancia, una niña inocente como Aoey que me contagió piojos cuando",
+    "pages": 416,
+    "isbn": null,
+    "genres": [
+      "Romance",
+      "Drama"
+    ],
+    "subgenres": [
+      "Autodescubrimiento"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Millonaria / Billonaria"
+    ],
+    "dinamicas": [
+      "Femme × Femme",
+      "Rich × Poor"
+    ],
+    "tropes": [
+      "Rich / Poor Romance",
+      "Forced Proximity",
+      "Slow Burn",
+      "Secret Relationship",
+      "Unrequited Love"
+    ],
+    "ambientacion": [],
+    "spicy": 4,
+    "formato": "Dúo",
+    "adaptacion": "Tiene serie",
+    "sagaName": "MATE",
+    "sagaNum": 1,
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-230854-MATE-1-%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B8%A3%E0%B8%B1%E0%B8%81-English-version"
+      }
+    ]
+  },
+  {
+    "id": "b_1777223637714_mnxlb",
+    "title": "MATE 2",
+    "authors": [
+      "ChaoPlanoy"
+    ],
+    "year": 2023,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/230855/Thumbnail/book_detail_large.gif?2",
+    "synopsis": "Soy Genlong, una mujer que nació con belleza, riqueza y un gran cerebro. Todo en mí tiene que ser perfecto, especialmente mi \"alguien especial\". Nada me perturbó, hasta que conocí a mi amiga de la infancia, una niña inocente como Aoey que me contagió piojos cuando",
+    "pages": 368,
+    "isbn": null,
+    "genres": [
+      "Romance",
+      "Drama"
+    ],
+    "subgenres": [
+      "Autodescubrimiento"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Millonaria / Billonaria"
+    ],
+    "dinamicas": [
+      "Femme × Femme",
+      "Rich × Poor"
+    ],
+    "tropes": [
+      "Rich / Poor Romance",
+      "Slow Burn",
+      "Secret Relationship",
+      "Unrequited Love",
+      "Forced Proximity"
+    ],
+    "ambientacion": [],
+    "spicy": 4,
+    "formato": "Dúo",
+    "adaptacion": "Tiene serie",
+    "sagaName": "MATE",
+    "sagaNum": 2,
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/ebook-230855-Mate-2--English-version"
       }
     ]
   }
