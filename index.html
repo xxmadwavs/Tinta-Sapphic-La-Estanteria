@@ -78,34 +78,20 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .dd-count{background:var(--accent);color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:1px 6px}
 .dd-panel{position:absolute;top:calc(100% + 6px);left:0;min-width:190px;max-width:280px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,0.5);z-index:200;display:none;max-height:320px;overflow-y:auto}
 .dd-wrap.open .dd-panel{display:block}
-/* Mobile: dropdown as full bottom sheet overlay */
-@media(max-width:700px){
-  .dd-panel{
-    position:fixed;bottom:0;left:0;right:0;
-    max-width:100%;min-width:100%;
-    border-radius:var(--radius-lg) var(--radius-lg) 0 0;
-    max-height:70vh;
-    box-shadow:0 -8px 40px rgba(0,0,0,0.6);
-    z-index:500;
-    border-left:none;border-right:none;border-bottom:none;
-  }
-  .dd-wrap.open .dd-panel{display:flex;flex-direction:column}
-  .dd-list{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
-  .dd-item{padding:11px 18px;font-size:14px}
-  .dd-item input[type=checkbox]{width:18px;height:18px}
-  .spicy-dd-item{padding:11px 18px}
-  .spicy-dd-item label{font-size:14px}
-  /* Dim overlay behind sheet */
-  .dd-wrap.open::before{
-    content:'';position:fixed;inset:0;background:rgba(8,5,10,0.6);z-index:499;
-    animation:fadeInBg .18s ease;
-  }
-  /* Sheet handle */
-  .dd-panel::before{
-    content:'';display:block;width:36px;height:4px;border-radius:2px;
-    background:var(--surface3);margin:10px auto 6px;flex-shrink:0;
-  }
-}
+/* Mobile bottom-sheet overlay — rendered via JS into body */
+.dd-mobile-overlay{display:none;position:fixed;inset:0;background:rgba(8,5,10,0.6);z-index:499;animation:fadeInBg .18s ease}
+.dd-mobile-overlay.open{display:block}
+.dd-mobile-sheet{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg) var(--radius-lg) 0 0;max-height:70vh;z-index:500;display:none;flex-direction:column;box-shadow:0 -8px 40px rgba(0,0,0,0.6);overflow:hidden}
+.dd-mobile-sheet.open{display:flex;animation:slideUpMobile .22s cubic-bezier(.22,.68,0,1.1)}
+.dd-mobile-sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--surface3);margin:10px auto 6px;flex-shrink:0}
+.dd-mobile-sheet-title{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:0 18px 10px;flex-shrink:0;border-bottom:1px solid var(--border)}
+.dd-mobile-sheet .dd-search{padding:.5rem .75rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);flex-shrink:0}
+.dd-mobile-sheet .dd-list{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:.4rem 0}
+.dd-mobile-sheet .dd-item{padding:12px 18px;font-size:14px}
+.dd-mobile-sheet .dd-item input[type=checkbox]{width:18px;height:18px}
+.dd-mobile-sheet .spicy-dd-item{padding:12px 18px}
+.dd-mobile-sheet .spicy-dd-item label{font-size:14px}
+.dd-mobile-sheet .dd-clear{padding:10px 18px;font-size:13px}
 .dd-search{padding:.5rem .75rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface)}
 .dd-search input{width:100%;padding:5px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12.5px;font-family:var(--font-body);outline:none}
 .dd-search input::placeholder{color:var(--muted)}
@@ -399,6 +385,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 </div>
 
+<!-- Mobile dropdown overlay -->
+<div class="dd-mobile-overlay" id="ddMobileOverlay" onclick="closeMobileSheet()"></div>
+<div class="dd-mobile-sheet" id="ddMobileSheet">
+  <div class="dd-mobile-sheet-handle"></div>
+  <div class="dd-mobile-sheet-title" id="ddMobileSheetTitle"></div>
+  <div id="ddMobileSheetBody" style="display:flex;flex-direction:column;flex:1;overflow:hidden"></div>
+</div>
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">↑</button>
 <div class="toast" id="toast"></div>
 
@@ -603,13 +596,51 @@ function toggleDD(id){
   const wasOpen=wrap.classList.contains('open');
   closeAllDD();
   if(!wasOpen){
-    wrap.classList.add('open');
-    if(window.innerWidth<=700) document.body.style.overflow='hidden';
+    if(window.innerWidth<=700){
+      openMobileSheet(id);
+    } else {
+      wrap.classList.add('open');
+    }
   }
 }
 function closeAllDD(){
   document.querySelectorAll('.dd-wrap.open').forEach(w=>w.classList.remove('open'));
+  closeMobileSheet();
+}
+
+/* ── MOBILE SHEET ── */
+let mobileSheetDDId=null;
+function openMobileSheet(ddId){
+  mobileSheetDDId=ddId;
+  const srcPanel=document.querySelector('#'+ddId+' .dd-panel');
+  if(!srcPanel) return;
+  const overlay=document.getElementById('ddMobileOverlay');
+  const sheet=document.getElementById('ddMobileSheet');
+  const body=document.getElementById('ddMobileSheetBody');
+  // Copy panel content into sheet
+  body.innerHTML=srcPanel.innerHTML;
+  // Title from button text
+  const btnTxt=document.querySelector('#'+ddId+' .dd-btn')?.childNodes[0]?.textContent?.trim()||'';
+  document.getElementById('ddMobileSheetTitle').textContent=btnTxt;
+  overlay.classList.add('open');
+  sheet.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeMobileSheet(){
+  const overlay=document.getElementById('ddMobileOverlay');
+  const sheet=document.getElementById('ddMobileSheet');
+  if(overlay) overlay.classList.remove('open');
+  if(sheet) sheet.classList.remove('open');
   document.body.style.overflow='';
+  mobileSheetDDId=null;
+}
+// Re-render sheet content after filter change (so checkboxes stay in sync)
+const _origBuildDDList=window.buildDDList;
+function rebuildMobileSheetIfOpen(){
+  if(!mobileSheetDDId) return;
+  const srcPanel=document.querySelector('#'+mobileSheetDDId+' .dd-panel');
+  const body=document.getElementById('ddMobileSheetBody');
+  if(srcPanel&&body) body.innerHTML=srcPanel.innerHTML;
 }
 
 function renderActivePills(){
@@ -669,6 +700,7 @@ function applyFilters(){
   else if(sort==='year_asc') books.sort((a,b)=>(a.year||0)-(b.year||0));
   document.getElementById('resultsCount').textContent=`${books.length} de ${allBooks.length} libros`;
   renderGrid(books);
+  rebuildMobileSheetIfOpen();
 }
 
 function renderGrid(books){
