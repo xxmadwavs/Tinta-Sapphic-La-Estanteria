@@ -634,7 +634,7 @@
     ],
     "year": 2024,
     "cover": "https://cdn-local.mebmarket.com/meb/server1/342572/Thumbnail/book_detail_large.gif?2",
-    "synopsis": null,
+    "synopsis": "De personas que no se llevaban bien entre sí Pero debido a un evento inesperado, accidentalmente tuvimos una relación profunda e inolvidable. Se hizo un acuerdo secreto entre nosotros.\n\nY estoy segura que nunca me enamoraré de ti. Porque las relaciones surgen del deseo, no hay manera de que puedan convertirse en amor.",
     "pages": 459,
     "isbn": null,
     "genres": [
@@ -823,7 +823,7 @@
     ],
     "year": 2025,
     "cover": "https://cdn-local.mebmarket.com/meb/server1/400824/Thumbnail/book_detail_large.gif?5",
-    "synopsis": null,
+    "synopsis": "Mucha gente piensa que el matrimonio es el final, cuando llega el día de vestirse de novia y participar en una gran ceremonia nupcial con la que muchos sueñan. Estos momentos se consideran la culminación de una vida matrimonial perfecta.\nSin embargo, si piensas así, estás muy equivocado.\n\nPara Pakinee y Panapsorn, este matrimonio podría ser el comienzo de una nueva oportunidad para demostrar su amor...",
     "pages": 265,
     "isbn": null,
     "genres": [
@@ -967,7 +967,7 @@
     ],
     "year": null,
     "cover": "https://cdn-local.mebmarket.com/meb/server1/351465/Thumbnail/book_detail_large.gif?7",
-    "synopsis": null,
+    "synopsis": "Aunque la luna se ponga en el horizonte, nunca desaparece del cielo. Al igual que la luna en mi pecho, nunca se va ni se desvanece…",
     "pages": null,
     "isbn": null,
     "genres": [
@@ -1211,6 +1211,55 @@
         "lang": "TH",
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-301657-%E0%B8%82%E0%B9%88%E0%B8%A1%E0%B8%82%E0%B8%A5%E0%B8%B1%E0%B8%87"
+      }
+    ]
+  },
+  {
+    "id": "b_1777216733646_mpnxr",
+    "title": "My Only Sunshine",
+    "authors": [
+      "Flower of Memory"
+    ],
+    "year": 2025,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/211350/Thumbnail/book_detail_large.gif?11",
+    "synopsis": "Como el sol, brillante y deslumbrante, en el cielo...\nLa única e inigualable, siempre destacando dentro de mí corazón.",
+    "pages": 382,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [
+      "CEO",
+      "Actriz"
+    ],
+    "dinamicas": [],
+    "tropes": [
+      "Age Gap",
+      "Jealousy Trope"
+    ],
+    "ambientacion": [],
+    "spicy": 4,
+    "formato": "Único",
+    "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
+    "editions": [
+      {
+        "lang": "ES",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-352957-My-Only-Sunshine-Spanish-Version"
+      },
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-340414-My-Only-Sunshine-%E0%B8%95%E0%B8%B0%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%A3%E0%B8%B0%E0%B8%9F%E0%B9%89%E0%B8%B2-English-Version"
+      },
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-211350-My-only-sunshine-%E0%B8%95%E0%B8%B0%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%A3%E0%B8%B0%E0%B8%9F%E0%B9%89%E0%B8%B2"
       }
     ]
   }
