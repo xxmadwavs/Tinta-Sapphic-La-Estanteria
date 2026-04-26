@@ -1714,5 +1714,190 @@
         "url": "https://en.mebmarket.com/ebook-230855-Mate-2--English-version"
       }
     ]
+  },
+  {
+    "id": "b_1777224471798_x7jmq",
+    "title": "Petrichor - Rust in the Rain Volume 1",
+    "authors": [
+      "SIXTEENSEVEN"
+    ],
+    "year": 2024,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1741021704i/228676145.jpg",
+    "synopsis": "El primer despliegue de la teniente Tul, una oficial novata asignada al Departamento de Investigación Criminal, la pone inesperadamente frente a frente con la Dra. Cherran, una médica del Instituto de Ciencias Forenses. Sus diferentes enfoques laborales crean una brecha considerable entre ellas, dificultando que encuentren puntos en común.\n\nEn medio de escenas del crimen que reflejan problemas sociales, la detective Tul también lidia con las presiones de un sistema que favorece a grupos influyentes dentro del país. Debe sortear las interferencias destinadas a proteger a sus aliados y las corrientes sociales que podrían influir significativamente en el resultado del caso.\n\nAl menos, la integridad de Tul permanece intacta en medio de estos desafíos. Cuando se une a Cherran, una médica forense, analizan metódicamente las pruebas encontradas en las escenas del crimen, acercándose así a la identificación de los culpables en cada caso. Con el tiempo, tanto Tul como Cherran desarrollan una mayor confianza mutua, trabajando incansablemente para proteger la vida de los inocentes y, en última instancia, hacer justicia a las familias de las víctimas.",
+    "pages": 458,
+    "isbn": null,
+    "genres": [
+      "Romance",
+      "Misterio"
+    ],
+    "subgenres": [
+      "Crimen"
+    ],
+    "identidades": [
+      "Masc",
+      "Femme",
+      "Sunshine",
+      "Grumpy"
+    ],
+    "characters": [
+      "Policía",
+      "Científica"
+    ],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
+    "tropes": [
+      "Enemies to Lovers",
+      "Workplace Romance",
+      "Slow Burn"
+    ],
+    "ambientacion": [],
+    "spicy": 2,
+    "formato": "Dúo",
+    "adaptacion": "Tiene serie",
+    "sagaName": "Petrichor - Rust in the Rain",
+    "sagaNum": 1,
+    "editions": []
+  },
+  {
+    "id": "b_1777224594114_dsaog",
+    "title": "Petrichor - Rust in the Rain Volume 2",
+    "authors": [
+      "SIXTEENSEVEN"
+    ],
+    "year": 2024,
+    "cover": "https://preview.redd.it/upcoming-series-petrichor-v0-5djprmimuaxa1.jpg?width=554&format=pjpg&auto=webp&s=24fe2138c0bb4c39929e98dc2f6752552110e8fd",
+    "synopsis": "La teniente Tul descubrió irregularidades en una serie de asesinatos de prostitutas, uno de ellos relacionado con la madre del Dr. Cherran. Su padre, entonces investigador principal, había arrestado a un hombre que muchos creían inocente. Años después, tras la muerte de ese sospechoso, un nuevo asesinato idéntico reabre el caso. ¿Fue un imitador, o el verdadero Asesino de la Noche Lluviosa nunca desapareció?",
+    "pages": null,
+    "isbn": null,
+    "genres": [
+      "Romance",
+      "Misterio"
+    ],
+    "subgenres": [
+      "Crimen"
+    ],
+    "identidades": [
+      "Femme",
+      "Masc"
+    ],
+    "characters": [
+      "Científica",
+      "Policía"
+    ],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
+    "tropes": [
+      "Enemies to Lovers",
+      "Workplace Romance",
+      "Slow Burn"
+    ],
+    "ambientacion": [],
+    "spicy": 3,
+    "formato": "Dúo",
+    "adaptacion": "Tiene serie",
+    "sagaName": "Petrichor - Rust in the Rain",
+    "sagaNum": 2,
+    "editions": []
+  },
+  {
+    "id": "b_1777224833419_k96vi",
+    "title": "Kassatithan",
+    "authors": [
+      "Ace"
+    ],
+    "year": 2024,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/341249/Thumbnail/book_detail_large.gif?2",
+    "synopsis": "Su esperanza era como una vela en medio de una tormenta, parpadeó y se apagó. Probablemente nunca volvería a ver a P’Kassakorn. La mujer le dejó en claro que no quería verla. Atithan era consciente de que solo se trataba de un momento agradable y amistoso durante la cena, no era realista esperar que durara. Incluso si lo supiera, todavía sentía que su corazón se enfurruñaba y se marchitaba por ello.",
+    "pages": 264,
+    "isbn": null,
+    "genres": [
+      "Histórica",
+      "Romance"
+    ],
+    "subgenres": [
+      "Reencarnación"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [],
+    "ambientacion": [],
+    "spicy": 3,
+    "formato": "Único",
+    "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
+    "editions": [
+      {
+        "lang": "ES",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-358801-Kassatithan-Spanish-Version"
+      },
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-341249-Kassatithan-%E0%B8%81%E0%B8%B1%E0%B8%A9%E0%B8%98%E0%B8%B4%E0%B8%A9%E0%B8%90%E0%B8%B2%E0%B8%99-English-Version"
+      }
+    ]
+  },
+  {
+    "id": "b_1777225294442_nujkv",
+    "title": "Reverse with Me",
+    "authors": [
+      "Zezeho"
+    ],
+    "year": 2024,
+    "cover": "https://m.media-amazon.com/images/I/71iXC+Y3nUL._SL1500_.jpg",
+    "synopsis": "“Así que, mi respuesta a tu pregunta es…\nMe he enamorado de ti después de todo este tiempo. Ha sido un amor duradero. No puedo vivir una larga vida sin ti a mi lado.”\n\nEn medio del intrincado vals del tiempo, la vida de Kliao Khluen fue salvada hace siete años por un misterioso estudiante de medicina, 'Karan', que posee el extraordinario poder de manipular el tiempo. Salvada del borde de la muerte, Kliao Khluen encontró el propósito de su vida, pero el único vestigio de su salvador era un nombre.\n\nAtormentada por una conexión inconclusa, Kliao Khluen se embarca en una búsqueda incansable de Karan. Busca un título de medicina para seguir los pasos de su enigmático salvador hasta que el destino da un giro inesperado cuando, en medio de la frenética urgencia de la sala de emergencias, sus caminos convergen una vez más. Karan emerge, no como un compañero de estudios, sino como un cirujano cardiotorácico frío y distante. Kliao Khluen, ahora una experimentada estudiante de sexto año de medicina, lucha por superar la brecha, anhelando reconocimiento y comprensión.\n\nA medida que los límites entre el pasado y el presente se desdibujan, los secretos salen a la luz, revelando un complejo accidente ocurrido años atrás y la gélida actitud de la mujer que tiene la clave para las preguntas sin respuesta de Kliao Khluen. ¿Permanecerá Karan indiferente, negándose a reconocer su singular habilidad para controlar el tiempo, o sus destinos entrelazados finalmente se desvelarán?",
+    "pages": 513,
+    "isbn": null,
+    "genres": [
+      "Fantasía",
+      "Romance",
+      "Misterio"
+    ],
+    "subgenres": [
+      "Viaje en el Tiempo"
+    ],
+    "identidades": [
+      "Sunshine",
+      "Grumpy"
+    ],
+    "characters": [
+      "Doctora / Médica"
+    ],
+    "dinamicas": [
+      "Mentora × Aprendiz"
+    ],
+    "tropes": [
+      "Destined Lovers",
+      "Workplace Romance",
+      "Slow Burn",
+      "Forced Proximity"
+    ],
+    "ambientacion": [],
+    "spicy": 3,
+    "formato": "Saga",
+    "adaptacion": "Tiene serie",
+    "sagaName": "REVERSE WITH ME",
+    "sagaNum": 3,
+    "editions": [
+      {
+        "lang": "ES",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-344508-Spanish-Version-Reverse-with-me-Across-Millions-of-Orbits"
+      },
+      {
+        "lang": "EN",
+        "store": "Amazon",
+        "url": "https://www.amazon.es/Reverse-Across-Millions-Orbits-English-ebook/dp/B0DJPNBRNN"
+      }
+    ]
   }
 ]
