@@ -2154,5 +2154,72 @@
         "url": "https://www.mebmarket.com/ebook-135902-%E0%B8%9E%E0%B8%B4%E0%B8%A9%E0%B8%A3%E0%B8%B1%E0%B8%81-5th-ANNIVERSARY"
       }
     ]
+  },
+  {
+    "id": "b_1777229073790_d4z1t",
+    "title": "Somewhere Somehow Vol.1",
+    "authors": [
+      "Monmaw"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/I/71EuaVKiJYL._SL1500_.jpg",
+    "synopsis": "Yo... Kiran\n\nSoy simplemente una mujer orgullosa y segura de sí misma, llena de dignidad, que ha estado enamorada de la misma mujer toda mi vida: desde la secundaria, pasando por la universidad, hasta mi carrera profesional. Para complicar aún más las cosas, ella es la hija del presidente de la empresa donde trabajo.\n\nEn cuanto a ella... Pheemanas\n\nUna mujer que siempre ha sido clara y segura de sus sentimientos. Pero... cuando decide que no le interesa, ahí se acaba todo.\n\nPuede que parezca que nunca terminaremos juntos... pero créeme, aunque uno de nosotros sea testarudo y el otro emocionalmente reservado, somos la pareja perfecta en tres mundos:\nel mundo de Kiran, el mundo de Pheemanas y nuestro mundo.",
+    "pages": 515,
+    "isbn": null,
+    "genres": [
+      "Romance",
+      "Comedia Romántica"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "ambientacion": [],
+    "spicy": 4,
+    "formato": "Dúo",
+    "adaptacion": "Tiene serie",
+    "sagaName": "Somewhere Somehow",
+    "sagaNum": 1,
+    "editions": []
+  },
+  {
+    "id": "b_1777229152473_onst9",
+    "title": "Somewhere Somehow Vol.2",
+    "authors": [
+      "Monmaw"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/I/71Dec-KK0ZL._SL1500_.jpg",
+    "synopsis": "Yo... Kiran\n\nSoy simplemente una mujer orgullosa y segura de sí misma, llena de dignidad, que ha estado enamorada de la misma mujer toda mi vida: desde la secundaria, pasando por la universidad, hasta mi carrera profesional. Para complicar aún más las cosas, ella es la hija del presidente de la empresa donde trabajo.\n\nEn cuanto a ella... Pheemanas\n\nUna mujer que siempre ha sido clara y segura de sus sentimientos. Pero... cuando decide que no le interesa, ahí se acaba todo.\n\nPuede que parezca que nunca terminaremos juntos... pero créeme, aunque uno de nosotros sea testarudo y el otro emocionalmente reservado, somos la pareja perfecta en tres mundos:\nel mundo de Kiran, el mundo de Pheemanas y nuestro mundo.",
+    "pages": 550,
+    "isbn": null,
+    "genres": [
+      "Comedia Romántica",
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "ambientacion": [],
+    "spicy": 5,
+    "formato": "Dúo",
+    "adaptacion": "Tiene serie",
+    "sagaName": "Somewhere Somehow",
+    "sagaNum": 2,
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/?action=book_details&book_id=361134"
+      },
+      {
+        "lang": "EN",
+        "store": "Amazon",
+        "url": "https://www.amazon.com/Somewhere-Somehow-Vol-2-Mon-Maw-ebook/dp/B0FD8LFM58"
+      }
+    ]
   }
 ]
