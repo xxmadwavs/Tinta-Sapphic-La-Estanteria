@@ -218,8 +218,43 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .toast.show{transform:translateY(0);opacity:1}
 .toast.success{background:var(--teal);color:var(--bg)}
 .toast.error{background:var(--rose);color:#fff}
-
-@media(max-width:700px){.books-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:1rem}.modal-body{padding:1.25rem}.hero{padding:2.5rem 1.25rem 2rem}}
+.modal-bg.open{animation:fadeInBg .18s ease}
+@keyframes fadeInBg{from{opacity:0}to{opacity:1}}
+.modal{animation:slideUp .22s cubic-bezier(.22,.68,0,1.15)}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.search-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:var(--surface3);border:none;color:var(--muted);cursor:pointer;width:18px;height:18px;border-radius:50%;font-size:11px;display:none;align-items:center;justify-content:center;line-height:1;transition:all .15s}
+.search-clear:hover{background:var(--rose-soft);color:var(--rose)}
+.search-clear.visible{display:flex}
+.back-top{position:fixed;bottom:2rem;left:2rem;width:38px;height:38px;border-radius:50%;background:var(--surface2);border:1px solid var(--border2);color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;transform:translateY(12px);transition:all .25s;pointer-events:none}
+.back-top.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.back-top:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
+.filter-toggle-btn{display:none;align-items:center;gap:6px;padding:7px 16px;border-radius:30px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:12.5px;font-family:var(--font-body);cursor:pointer;transition:all .15s;white-space:nowrap}
+.filter-toggle-btn.has-active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
+.filter-toggle-btn svg{width:12px;height:12px;flex-shrink:0;transition:transform .2s}
+.filter-toggle-btn.open svg{transform:rotate(180deg)}
+.filter-dropdowns-wrap{overflow:hidden;transition:max-height .3s ease,opacity .3s ease;max-height:400px;opacity:1}
+.filter-dropdowns-wrap.collapsed{max-height:0;opacity:0;pointer-events:none}
+.modal-swipe-bar{display:none;width:36px;height:4px;border-radius:2px;background:var(--surface3);margin:10px auto -4px}
+.book-card::after{content:'';position:absolute;inset:0;background:rgba(192,111,196,0);transition:background .18s;pointer-events:none;z-index:1}
+.book-card:active::after{background:rgba(192,111,196,0.06)}
+.results-count{font-size:12px;color:var(--muted);background:var(--surface2);padding:3px 10px;border-radius:20px;border:1px solid var(--border)}
+.synopsis-collapsed{-webkit-line-clamp:4;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+.synopsis-expand-btn{background:none;border:none;color:var(--accent2);font-size:12px;cursor:pointer;font-family:var(--font-body);padding:4px 0;display:block;margin-bottom:.6rem;transition:opacity .15s}
+.synopsis-expand-btn:hover{opacity:.75}
+.modal{max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+@media(max-width:700px){
+  .books-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:1rem}
+  .modal-body{padding:1.25rem}
+  .hero{padding:2.5rem 1.25rem 2rem}
+  .filter-toggle-btn{display:flex}
+  .modal-swipe-bar{display:block}
+  .back-top,.toast{bottom:5.5rem}
+  .toast{right:1rem}
+  .modal-bg{padding:.5rem .5rem 0;align-items:flex-end}
+  .modal{border-radius:var(--radius-lg) var(--radius-lg) 0 0;margin:0;max-height:88vh;animation:slideUpMobile .25s cubic-bezier(.22,.68,0,1.1)}
+  .modal-close{top:12px;right:12px}
+}
+@keyframes slideUpMobile{from{transform:translateY(100%)}to{transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -250,7 +285,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="filter-top">
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input class="search-input" id="searchInput" placeholder="Buscar por título o autora…" oninput="applyFilters()" autocomplete="off">
+        <input class="search-input" id="searchInput" placeholder="Buscar por título o autora…" oninput="applyFilters();toggleSearchClear()" autocomplete="off">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Borrar búsqueda">✕</button>
       </div>
       <select class="sort-select" id="sortSel" onchange="applyFilters()">
         <option value="top">🏆 Mejor valorados</option>
@@ -261,6 +297,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <option value="year_asc">Más antiguos</option>
       </select>
     </div>
+    <button class="filter-toggle-btn" id="filterToggleBtn" onclick="toggleFilterPanel()">
+        <svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1h10M3 5h6M5 9h2"/></svg>
+        Filtros <span id="filterToggleCount" style="display:none;background:var(--accent);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:2px">0</span>
+      </button>
+    <div class="filter-dropdowns-wrap" id="filterDropdownsWrap">
     <div class="filter-dropdowns">
       <span class="filter-label-txt">Filtrar por</span>
       <div class="dd-wrap" id="ddGenre">
@@ -293,6 +334,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
       <button class="dd-btn" id="btnConSerie" onclick="toggleAdaptacion('serie')" title="Solo libros con serie de televisión">📺 Con serie</button>
     </div>
+    </div><!-- /filter-dropdowns-wrap -->
     <div class="filter-bottom">
       <div class="active-filters" id="activeFilters"></div>
       <button class="clear-all-btn" id="clearAllBtn" onclick="clearAllFilters()" style="display:none">✕ Limpiar todo</button>
@@ -305,6 +347,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- BOOK MODAL -->
 <div class="modal-bg" id="bookModal">
   <div class="modal">
+    <div class="modal-swipe-bar"></div>
     <button class="modal-close" onclick="closeBookModal()">✕</button>
     <div id="bookModalContent"></div>
   </div>
@@ -328,6 +371,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 </div>
 
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">↑</button>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -556,6 +600,7 @@ function renderActivePills(){
   }
   af.innerHTML=pills.join('');
   document.getElementById('clearAllBtn').style.display=(pills.length||filters.q)?'':'none';
+  updateFilterToggleCount();
 }
 
 function clearAllFilters(){
@@ -681,7 +726,7 @@ function renderBookModal(){
         ${b.pages?`<div class="meta-item"><span class="meta-key">Páginas</span><span class="meta-val">${b.pages}</span></div>`:''}
         ${b.isbn?`<div class="meta-item"><span class="meta-key">ISBN</span><span class="meta-val">${b.isbn}</span></div>`:''}
       </div>
-      ${b.synopsis?`<p class="modal-synopsis">${b.synopsis}</p>`:''}
+      ${b.synopsis?(b.synopsis.length>280?`<p class="modal-synopsis synopsis-collapsed" id="synopsisText">${b.synopsis}</p><button class="synopsis-expand-btn" onclick="toggleSynopsis(this)">Leer más ↓</button>`:`<p class="modal-synopsis">${b.synopsis}</p>`):''}
       ${b.editions&&b.editions.length?`
       <div class="buy-section">
         <div class="buy-title">Dónde comprarlo</div>
@@ -804,11 +849,86 @@ async function logout(){await sb.auth.signOut();myRatings={};showToast('Hasta pr
 
 function showToast(msg,type='success'){const t=document.getElementById('toast');t.textContent=msg;t.className=`toast ${type}`;setTimeout(()=>t.classList.add('show'),10);setTimeout(()=>t.classList.remove('show'),3200);}
 
+/* ── EXTRA UX ── */
+function toggleSearchClear(){
+  const v=document.getElementById('searchInput').value;
+  document.getElementById('searchClear').classList.toggle('visible',v.length>0);
+}
+function clearSearch(){
+  document.getElementById('searchInput').value='';
+  document.getElementById('searchClear').classList.remove('visible');
+  applyFilters();
+}
+
+let filterPanelOpen=true;
+function toggleFilterPanel(){
+  filterPanelOpen=!filterPanelOpen;
+  const wrap=document.getElementById('filterDropdownsWrap');
+  const btn=document.getElementById('filterToggleBtn');
+  wrap.classList.toggle('collapsed',!filterPanelOpen);
+  btn.classList.toggle('open',filterPanelOpen);
+  // On mobile, start collapsed by default
+}
+function updateFilterToggleCount(){
+  const total=Object.values(filters).reduce((s,v)=>{
+    if(Array.isArray(v)) return s+v.length;
+    if(v&&v!=='' ) return s+1;
+    return s;
+  },0);
+  const badge=document.getElementById('filterToggleCount');
+  const btn=document.getElementById('filterToggleBtn');
+  if(badge){badge.textContent=total;badge.style.display=total?'':'none';}
+  if(btn) btn.classList.toggle('has-active',total>0);
+}
+
+// Collapse filter panel on mobile by default
+function initFilterPanel(){
+  if(window.innerWidth<=700){
+    filterPanelOpen=false;
+    const wrap=document.getElementById('filterDropdownsWrap');
+    const btn=document.getElementById('filterToggleBtn');
+    if(wrap) wrap.classList.add('collapsed');
+    if(btn) btn.classList.remove('open');
+  }
+}
+
+// Back to top scroll watcher
+window.addEventListener('scroll',()=>{
+  document.getElementById('backTop').classList.toggle('visible',window.scrollY>400);
+},{ passive:true });
+
+// Synopsis expand/collapse in modal
+function toggleSynopsis(btn){
+  const p=document.getElementById('synopsisText');
+  if(!p) return;
+  const expanded=p.classList.toggle('synopsis-collapsed');
+  // toggle returns true if added (collapsed), false if removed (expanded)
+  btn.textContent = p.classList.contains('synopsis-collapsed') ? 'Leer más ↓' : 'Leer menos ↑';
+}
+
+// Touch swipe to close modal
+let touchStartY=0;
+document.getElementById('bookModal').addEventListener('touchstart',e=>{touchStartY=e.touches[0].clientY;},{passive:true});
+document.getElementById('bookModal').addEventListener('touchmove',e=>{
+  const modal=document.querySelector('#bookModal .modal');
+  if(!modal) return;
+  const diff=e.touches[0].clientY - touchStartY;
+  if(diff>0 && modal.scrollTop===0) modal.style.transform=`translateY(${Math.min(diff*.4,60)}px)`;
+},{passive:true});
+document.getElementById('bookModal').addEventListener('touchend',e=>{
+  const modal=document.querySelector('#bookModal .modal');
+  if(!modal) return;
+  const diff=e.changedTouches[0].clientY - touchStartY;
+  modal.style.transform='';
+  if(diff>80) closeBookModal();
+},{passive:true});
+
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeBookModal();closeAuthModal();closeAllDD();}});
 document.getElementById('bookModal').addEventListener('click',e=>{if(e.target.id==='bookModal')closeBookModal();});
 document.getElementById('authModal').addEventListener('click',e=>{if(e.target.id==='authModal')closeAuthModal();});
 
 init();
+initFilterPanel();
 </script>
 </body>
 </html>
