@@ -78,20 +78,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .dd-count{background:var(--accent);color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:1px 6px}
 .dd-panel{position:absolute;top:calc(100% + 6px);left:0;min-width:190px;max-width:280px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,0.5);z-index:200;display:none;max-height:320px;overflow-y:auto}
 .dd-wrap.open .dd-panel{display:block}
-/* Mobile bottom-sheet overlay — rendered via JS into body */
-.dd-mobile-overlay{display:none;position:fixed;inset:0;background:rgba(8,5,10,0.6);z-index:499;animation:fadeInBg .18s ease}
-.dd-mobile-overlay.open{display:block}
-.dd-mobile-sheet{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg) var(--radius-lg) 0 0;max-height:70vh;z-index:500;display:none;flex-direction:column;box-shadow:0 -8px 40px rgba(0,0,0,0.6);overflow:hidden}
-.dd-mobile-sheet.open{display:flex;animation:slideUpMobile .22s cubic-bezier(.22,.68,0,1.1)}
-.dd-mobile-sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--surface3);margin:10px auto 6px;flex-shrink:0}
-.dd-mobile-sheet-title{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:0 18px 10px;flex-shrink:0;border-bottom:1px solid var(--border)}
-.dd-mobile-sheet .dd-search{padding:.5rem .75rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);flex-shrink:0}
-.dd-mobile-sheet .dd-list{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:.4rem 0}
-.dd-mobile-sheet .dd-item{padding:12px 18px;font-size:14px}
-.dd-mobile-sheet .dd-item input[type=checkbox]{width:18px;height:18px}
-.dd-mobile-sheet .spicy-dd-item{padding:12px 18px}
-.dd-mobile-sheet .spicy-dd-item label{font-size:14px}
-.dd-mobile-sheet .dd-clear{padding:10px 18px;font-size:13px}
 .dd-search{padding:.5rem .75rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface)}
 .dd-search input{width:100%;padding:5px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12.5px;font-family:var(--font-body);outline:none}
 .dd-search input::placeholder{color:var(--muted)}
@@ -143,6 +129,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tag{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
 .tag-genre{background:var(--accent-soft);color:var(--accent2);border:1px solid rgba(192,111,196,0.2)}
 .tag-trope{background:var(--rose-soft);color:#e0909e;border:1px solid rgba(212,96,122,0.2)}
+.tag-dinamica{background:rgba(212,96,122,0.15);color:#f0a0b0;border:1px solid rgba(212,96,122,0.35);font-weight:600}
+.tag-identidad{background:rgba(155,130,201,0.14);color:#c8b8f0;border:1px solid rgba(155,130,201,0.3)}
+.tag-subgenre{background:rgba(91,188,176,0.1);color:var(--teal);border:1px solid rgba(91,188,176,0.22)}
+.tag-character{background:var(--surface3);color:var(--muted);border:1px solid var(--border)}
 .tag-year{background:var(--surface3);color:var(--muted);border:1px solid var(--border)}
 .tag-formato{background:rgba(91,188,176,0.12);color:var(--teal);border:1px solid rgba(91,188,176,0.25)}
 .tag-adaptacion{background:rgba(155,130,201,0.12);color:#c4b0e8;border:1px solid rgba(155,130,201,0.3)}
@@ -232,43 +222,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .toast.show{transform:translateY(0);opacity:1}
 .toast.success{background:var(--teal);color:var(--bg)}
 .toast.error{background:var(--rose);color:#fff}
-.modal-bg.open{animation:fadeInBg .18s ease}
-@keyframes fadeInBg{from{opacity:0}to{opacity:1}}
-.modal{animation:slideUp .22s cubic-bezier(.22,.68,0,1.15)}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-.search-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:var(--surface3);border:none;color:var(--muted);cursor:pointer;width:18px;height:18px;border-radius:50%;font-size:11px;display:none;align-items:center;justify-content:center;line-height:1;transition:all .15s}
-.search-clear:hover{background:var(--rose-soft);color:var(--rose)}
-.search-clear.visible{display:flex}
-.back-top{position:fixed;bottom:2rem;left:2rem;width:38px;height:38px;border-radius:50%;background:var(--surface2);border:1px solid var(--border2);color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;transform:translateY(12px);transition:all .25s;pointer-events:none}
-.back-top.visible{opacity:1;transform:translateY(0);pointer-events:auto}
-.back-top:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
-.filter-toggle-btn{display:none;align-items:center;gap:6px;padding:7px 16px;border-radius:30px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:12.5px;font-family:var(--font-body);cursor:pointer;transition:all .15s;white-space:nowrap}
-.filter-toggle-btn.has-active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
-.filter-toggle-btn svg{width:12px;height:12px;flex-shrink:0;transition:transform .2s}
-.filter-toggle-btn.open svg{transform:rotate(180deg)}
-.filter-dropdowns-wrap{transition:opacity .25s ease,visibility .25s;opacity:1;visibility:visible}
-.filter-dropdowns-wrap.collapsed{opacity:0;visibility:hidden;pointer-events:none;height:0;overflow:hidden}
-.modal-swipe-bar{display:none;width:36px;height:4px;border-radius:2px;background:var(--surface3);margin:10px auto -4px}
-.book-card::after{content:'';position:absolute;inset:0;background:rgba(192,111,196,0);transition:background .18s;pointer-events:none;z-index:1}
-.book-card:active::after{background:rgba(192,111,196,0.06)}
-.results-count{font-size:12px;color:var(--muted);background:var(--surface2);padding:3px 10px;border-radius:20px;border:1px solid var(--border)}
-.synopsis-collapsed{-webkit-line-clamp:4;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
-.synopsis-expand-btn{background:none;border:none;color:var(--accent2);font-size:12px;cursor:pointer;font-family:var(--font-body);padding:4px 0;display:block;margin-bottom:.6rem;transition:opacity .15s}
-.synopsis-expand-btn:hover{opacity:.75}
-.modal{max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
-@media(max-width:700px){
-  .books-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:1rem}
-  .modal-body{padding:1.25rem}
-  .hero{padding:2.5rem 1.25rem 2rem}
-  .filter-toggle-btn{display:flex}
-  .modal-swipe-bar{display:block}
-  .back-top,.toast{bottom:5.5rem}
-  .toast{right:1rem}
-  .modal-bg{padding:.5rem .5rem 0;align-items:flex-end}
-  .modal{border-radius:var(--radius-lg) var(--radius-lg) 0 0;margin:0;max-height:88vh;animation:slideUpMobile .25s cubic-bezier(.22,.68,0,1.1)}
-  .modal-close{top:12px;right:12px}
-}
-@keyframes slideUpMobile{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+@media(max-width:700px){.books-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:1rem}.modal-body{padding:1.25rem}.hero{padding:2.5rem 1.25rem 2rem}}
 </style>
 </head>
 <body>
@@ -299,8 +254,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="filter-top">
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input class="search-input" id="searchInput" placeholder="Buscar por título o autora…" oninput="applyFilters();toggleSearchClear()" autocomplete="off">
-        <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Borrar búsqueda">✕</button>
+        <input class="search-input" id="searchInput" placeholder="Buscar por título o autora…" oninput="applyFilters()" autocomplete="off">
       </div>
       <select class="sort-select" id="sortSel" onchange="applyFilters()">
         <option value="top">🏆 Mejor valorados</option>
@@ -311,24 +265,31 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <option value="year_asc">Más antiguos</option>
       </select>
     </div>
-    <button class="filter-toggle-btn" id="filterToggleBtn" onclick="toggleFilterPanel()">
-        <svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1h10M3 5h6M5 9h2"/></svg>
-        Filtros <span id="filterToggleCount" style="display:none;background:var(--accent);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:2px">0</span>
-      </button>
-    <div class="filter-dropdowns-wrap" id="filterDropdownsWrap">
     <div class="filter-dropdowns">
       <span class="filter-label-txt">Filtrar por</span>
       <div class="dd-wrap" id="ddGenre">
         <button class="dd-btn" onclick="toggleDD('ddGenre')">Género <span class="dd-count" id="cntGenre" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('genres','listGenre',this.value)"></div><div class="dd-list" id="listGenre"></div></div>
       </div>
-      <div class="dd-wrap" id="ddAuthor">
-        <button class="dd-btn" onclick="toggleDD('ddAuthor')">Autora <span class="dd-count" id="cntAuthor" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
-        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('authors','listAuthor',this.value)"></div><div class="dd-list" id="listAuthor"></div></div>
+      <div class="dd-wrap" id="ddSubgenre">
+        <button class="dd-btn" onclick="toggleDD('ddSubgenre')">Temática <span class="dd-count" id="cntSubgenre" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('subgenres','listSubgenre',this.value)"></div><div class="dd-list" id="listSubgenre"></div></div>
+      </div>
+      <div class="dd-wrap" id="ddDinamica">
+        <button class="dd-btn" onclick="toggleDD('ddDinamica')">Dinámica 💞 <span class="dd-count" id="cntDinamica" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('dinamicas','listDinamica',this.value)"></div><div class="dd-list" id="listDinamica"></div></div>
       </div>
       <div class="dd-wrap" id="ddTrope">
         <button class="dd-btn" onclick="toggleDD('ddTrope')">Tropo <span class="dd-count" id="cntTrope" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('tropes','listTrope',this.value)"></div><div class="dd-list" id="listTrope"></div></div>
+      </div>
+      <div class="dd-wrap" id="ddCharacter">
+        <button class="dd-btn" onclick="toggleDD('ddCharacter')">Personaje <span class="dd-count" id="cntCharacter" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('characters','listCharacter',this.value)"></div><div class="dd-list" id="listCharacter"></div></div>
+      </div>
+      <div class="dd-wrap" id="ddAuthor">
+        <button class="dd-btn" onclick="toggleDD('ddAuthor')">Autora <span class="dd-count" id="cntAuthor" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('authors','listAuthor',this.value)"></div><div class="dd-list" id="listAuthor"></div></div>
       </div>
       <div class="dd-wrap" id="ddYear">
         <button class="dd-btn" onclick="toggleDD('ddYear')">Año <span class="dd-count" id="cntYear" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
@@ -348,7 +309,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
       <button class="dd-btn" id="btnConSerie" onclick="toggleAdaptacion('serie')" title="Solo libros con serie de televisión">📺 Con serie</button>
     </div>
-    </div><!-- /filter-dropdowns-wrap -->
     <div class="filter-bottom">
       <div class="active-filters" id="activeFilters"></div>
       <button class="clear-all-btn" id="clearAllBtn" onclick="clearAllFilters()" style="display:none">✕ Limpiar todo</button>
@@ -361,7 +321,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- BOOK MODAL -->
 <div class="modal-bg" id="bookModal">
   <div class="modal">
-    <div class="modal-swipe-bar"></div>
     <button class="modal-close" onclick="closeBookModal()">✕</button>
     <div id="bookModalContent"></div>
   </div>
@@ -385,14 +344,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 </div>
 
-<!-- Mobile dropdown overlay -->
-<div class="dd-mobile-overlay" id="ddMobileOverlay" onclick="closeMobileSheet()"></div>
-<div class="dd-mobile-sheet" id="ddMobileSheet">
-  <div class="dd-mobile-sheet-handle"></div>
-  <div class="dd-mobile-sheet-title" id="ddMobileSheetTitle"></div>
-  <div id="ddMobileSheetBody" style="display:flex;flex-direction:column;flex:1;overflow:hidden"></div>
-</div>
-<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">↑</button>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -406,7 +357,7 @@ const SPICY_ICONS  = ['','🌶','🌶🌶','🌶🌶🌶','🌶🌶🌶🌶','�
 
 let allBooks=[], ratingsMap={}, myRatings={}, currentUser=null, activeBook=null;
 let authMode='login', pendingStar=0;
-let filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],sagas:[],adaptacion:null,valoracion:null};
+let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],sagas:[],adaptacion:null,valoracion:null};
 
 // Extract saga name from book
 function getSaga(b){
@@ -472,17 +423,25 @@ function updateStats(){
 }
 
 /* ── DROPDOWNS ── */
+// Helper to get sorted unique values from a book field
+function uniqVals(key){
+  if(key==='authors') return [...new Set(allBooks.flatMap(b=>b.authors||[]))].sort();
+  if(key==='years')   return [...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String);
+  if(key==='sagas')   return [...new Set(allBooks.map(b=>getSaga(b)).filter(Boolean))].sort();
+  return [...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
+}
+
+const DD_MAP = {
+  genres:'listGenre', subgenres:'listSubgenre', dinamicas:'listDinamica',
+  tropes:'listTrope', characters:'listCharacter', authors:'listAuthor',
+  years:'listYear', sagas:'listSaga'
+};
+
 function buildDropdowns(){
-  const genres  =[...new Set(allBooks.flatMap(b=>b.genres||[]))].sort();
-  const authors =[...new Set(allBooks.flatMap(b=>b.authors||[]))].sort();
-  const tropes  =[...new Set(allBooks.flatMap(b=>b.tropes||[]))].sort();
-  const years   =[...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String);
-  const sagas   =[...new Set(allBooks.map(b=>getSaga(b)).filter(Boolean))].sort();
-  buildDDList('listGenre', genres,  'genres');
-  buildDDList('listAuthor',authors, 'authors');
-  buildDDList('listTrope', tropes,  'tropes');
-  buildDDList('listYear',  years,   'years');
-  buildDDList('listSaga',  sagas,   'sagas');
+  Object.entries(DD_MAP).forEach(([key,listId])=>{
+    if(listId==='listYear') buildDDList(listId, uniqVals('years'), 'years');
+    else buildDDList(listId, uniqVals(key), key);
+  });
   buildSpicyDD();
   updateDDCounts();
 }
@@ -508,14 +467,7 @@ function buildSpicyDD(){
 }
 
 function filterDD(key,listId,search){
-  const vals=key==='authors'
-    ?[...new Set(allBooks.flatMap(b=>b.authors||[]))].sort()
-    :key==='years'
-      ?[...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String)
-      :key==='sagas'
-        ?[...new Set(allBooks.map(b=>getSaga(b)).filter(Boolean))].sort()
-        :[...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
-  buildDDList(listId,vals,key,search);
+  buildDDList(listId, uniqVals(key), key, search);
 }
 
 function toggleDDFilter(key,val){
@@ -523,41 +475,24 @@ function toggleDDFilter(key,val){
   const arr=filters[key],idx=arr.indexOf(val);
   idx>=0?arr.splice(idx,1):arr.push(val);
   if(key==='spicy') buildSpicyDD();
-  else{
-    const listMap={genres:'listGenre',authors:'listAuthor',tropes:'listTrope',years:'listYear',sagas:'listSaga'};
-    const vals=key==='authors'
-      ?[...new Set(allBooks.flatMap(b=>b.authors||[]))].sort()
-      :key==='years'
-        ?[...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String)
-        :key==='sagas'
-          ?[...new Set(allBooks.map(b=>getSaga(b)).filter(Boolean))].sort()
-          :[...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
-    buildDDList(listMap[key],vals,key);
-  }
+  else buildDDList(DD_MAP[key], uniqVals(key), key);
   updateDDCounts();renderActivePills();applyFilters();
 }
 
 function clearDDFilter(key){
   filters[key]=[];
   if(key==='spicy') buildSpicyDD();
-  else{
-    const listMap={genres:'listGenre',authors:'listAuthor',tropes:'listTrope',years:'listYear',sagas:'listSaga'};
-    const vals=key==='authors'
-      ?[...new Set(allBooks.flatMap(b=>b.authors||[]))].sort()
-      :key==='years'
-        ?[...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String)
-        :key==='sagas'
-          ?[...new Set(allBooks.map(b=>getSaga(b)).filter(Boolean))].sort()
-          :[...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
-    buildDDList(listMap[key],vals,key);
-  }
+  else buildDDList(DD_MAP[key], uniqVals(key), key);
   updateDDCounts();renderActivePills();applyFilters();
 }
 
 function updateDDCounts(){
-  [['Genre','genres'],['Author','authors'],['Trope','tropes'],['Year','years'],['Spicy','spicy'],['Saga','sagas']].forEach(([k,fk])=>{
+  [['Genre','genres'],['Subgenre','subgenres'],['Dinamica','dinamicas'],
+   ['Trope','tropes'],['Character','characters'],['Author','authors'],
+   ['Year','years'],['Spicy','spicy'],['Saga','sagas']].forEach(([k,fk])=>{
     const cnt=document.getElementById('cnt'+k);
     const btn=document.querySelector('#dd'+k+' .dd-btn');
+    if(!cnt||!btn) return;
     const n=filters[fk].length;
     cnt.textContent=n;cnt.style.display=n?'':'none';
     btn.classList.toggle('has-sel',n>0);
@@ -595,64 +530,24 @@ function toggleDD(id){
   const wrap=document.getElementById(id);
   const wasOpen=wrap.classList.contains('open');
   closeAllDD();
-  if(!wasOpen){
-    if(window.innerWidth<=700){
-      openMobileSheet(id);
-    } else {
-      wrap.classList.add('open');
-    }
-  }
+  if(!wasOpen) wrap.classList.add('open');
 }
-function closeAllDD(){
-  document.querySelectorAll('.dd-wrap.open').forEach(w=>w.classList.remove('open'));
-  closeMobileSheet();
-}
-
-/* ── MOBILE SHEET ── */
-let mobileSheetDDId=null;
-function openMobileSheet(ddId){
-  mobileSheetDDId=ddId;
-  const srcPanel=document.querySelector('#'+ddId+' .dd-panel');
-  if(!srcPanel) return;
-  const overlay=document.getElementById('ddMobileOverlay');
-  const sheet=document.getElementById('ddMobileSheet');
-  const body=document.getElementById('ddMobileSheetBody');
-  // Copy panel content into sheet
-  body.innerHTML=srcPanel.innerHTML;
-  // Title from button text
-  const btnTxt=document.querySelector('#'+ddId+' .dd-btn')?.childNodes[0]?.textContent?.trim()||'';
-  document.getElementById('ddMobileSheetTitle').textContent=btnTxt;
-  overlay.classList.add('open');
-  sheet.classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeMobileSheet(){
-  const overlay=document.getElementById('ddMobileOverlay');
-  const sheet=document.getElementById('ddMobileSheet');
-  if(overlay) overlay.classList.remove('open');
-  if(sheet) sheet.classList.remove('open');
-  document.body.style.overflow='';
-  mobileSheetDDId=null;
-}
-// Re-render sheet content after filter change (so checkboxes stay in sync)
-const _origBuildDDList=window.buildDDList;
-function rebuildMobileSheetIfOpen(){
-  if(!mobileSheetDDId) return;
-  const srcPanel=document.querySelector('#'+mobileSheetDDId+' .dd-panel');
-  const body=document.getElementById('ddMobileSheetBody');
-  if(srcPanel&&body) body.innerHTML=srcPanel.innerHTML;
-}
+function closeAllDD(){document.querySelectorAll('.dd-wrap.open').forEach(w=>w.classList.remove('open'));}
 
 function renderActivePills(){
   const af=document.getElementById('activeFilters');
-  const labelMap={genres:'Género',authors:'Autora',tropes:'Tropo',years:'Año',spicy:'Spicy',sagas:'Saga'};
+  const labelMap={
+    genres:'Género', subgenres:'Temática', dinamicas:'Dinámica',
+    tropes:'Tropo', characters:'Personaje', authors:'Autora',
+    years:'Año', spicy:'Spicy', sagas:'Saga'
+  };
   const pills=[];
   Object.entries(filters).forEach(([key,arr])=>{
     if(key==='q'||key==='valoracion'||key==='adaptacion') return;
     if(!arr.length) return;
     arr.forEach(v=>{
       const display=key==='spicy'?SPICY_LABELS[v]:v;
-      const removeCall=key==='spicy'?`toggleDDFilter('spicy',${v})`:`toggleDDFilter('${key}','${v}')`;
+      const removeCall=key==='spicy'?`toggleDDFilter('spicy',${v})`:`toggleDDFilter('${key}','${v.replace(/'/g,"\\'")}')`;
       pills.push(`<span class="af-pill">${labelMap[key]}: ${display}<button onclick="${removeCall}">×</button></span>`);
     });
   });
@@ -665,11 +560,10 @@ function renderActivePills(){
   }
   af.innerHTML=pills.join('');
   document.getElementById('clearAllBtn').style.display=(pills.length||filters.q)?'':'none';
-  updateFilterToggleCount();
 }
 
 function clearAllFilters(){
-  filters={q:'',genres:[],authors:[],tropes:[],years:[],spicy:[],sagas:[],adaptacion:null,valoracion:null};
+  filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],sagas:[],adaptacion:null,valoracion:null};
   document.getElementById('searchInput').value='';
   updateValoracionBtns();
   updateAdaptacionBtn();
@@ -682,12 +576,15 @@ function applyFilters(){
   renderActivePills();
   let books=[...allBooks];
   if(filters.q) books=books.filter(b=>(b.title+' '+(b.authors||[]).join(' ')+(getSaga(b)||'')).toLowerCase().includes(filters.q));
-  if(filters.genres.length) books=books.filter(b=>filters.genres.every(g=>(b.genres||[]).includes(g)));
-  if(filters.authors.length) books=books.filter(b=>filters.authors.some(a=>(b.authors||[]).includes(a)));
-  if(filters.tropes.length) books=books.filter(b=>filters.tropes.every(t=>(b.tropes||[]).includes(t)));
-  if(filters.years.length) books=books.filter(b=>filters.years.includes(String(b.year)));
-  if(filters.spicy.length) books=books.filter(b=>filters.spicy.includes(b.spicy));
-  if(filters.sagas.length) books=books.filter(b=>filters.sagas.includes(getSaga(b)));
+  if(filters.genres.length)    books=books.filter(b=>filters.genres.every(g=>(b.genres||[]).includes(g)));
+  if(filters.subgenres.length) books=books.filter(b=>filters.subgenres.every(s=>(b.subgenres||[]).includes(s)));
+  if(filters.dinamicas.length) books=books.filter(b=>filters.dinamicas.every(d=>(b.dinamicas||[]).includes(d)));
+  if(filters.tropes.length)    books=books.filter(b=>filters.tropes.every(t=>(b.tropes||[]).includes(t)));
+  if(filters.characters.length) books=books.filter(b=>filters.characters.every(c=>(b.characters||[]).includes(c)));
+  if(filters.authors.length)   books=books.filter(b=>filters.authors.some(a=>(b.authors||[]).includes(a)));
+  if(filters.years.length)     books=books.filter(b=>filters.years.includes(String(b.year)));
+  if(filters.spicy.length)     books=books.filter(b=>filters.spicy.includes(b.spicy));
+  if(filters.sagas.length)     books=books.filter(b=>filters.sagas.includes(getSaga(b)));
   if(filters.adaptacion==='serie') books=books.filter(b=>b.adaptacion==='Tiene serie');
   if(filters.valoracion==='valorado') books=books.filter(b=>!!myRatings[b.id]);
   if(filters.valoracion==='no_valorado') books=books.filter(b=>!myRatings[b.id]);
@@ -700,7 +597,6 @@ function applyFilters(){
   else if(sort==='year_asc') books.sort((a,b)=>(a.year||0)-(b.year||0));
   document.getElementById('resultsCount').textContent=`${books.length} de ${allBooks.length} libros`;
   renderGrid(books);
-  rebuildMobileSheetIfOpen();
 }
 
 function renderGrid(books){
@@ -718,10 +614,11 @@ function renderGrid(books){
     const avgBadge=r.count>0?`<div class="avg-badge"><span style="color:var(--gold);font-size:11px">★</span><span style="font-size:11.5px;font-weight:600;color:var(--text)">${r.avg.toFixed(1)}</span><span style="font-size:10px;color:var(--muted)">(${r.count})</span></div>`:'';
     const spicyBadge=b.spicy>0?`<div class="spicy-badge">${SPICY_ICONS[b.spicy]}</div>`:'';
     const genreTags=(b.genres||[]).slice(0,2).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
-    const tropeTags=(b.tropes||[]).slice(0,1).map(t=>`<span class="tag tag-trope">${t}</span>`).join('');
+    const dinamicaTag=(b.dinamicas||[]).slice(0,1).map(d=>`<span class="tag tag-dinamica">${d}</span>`).join('');
+    const tropeTags=!dinamicaTag?(b.tropes||[]).slice(0,1).map(t=>`<span class="tag tag-trope">${t}</span>`).join(''):'';
     const yearTag=b.year?`<span class="tag tag-year">${b.year}</span>`:'';
     const formatoTag=b.formato&&!['Saga','Dúo','Trilogía'].includes(b.formato)?`<span class="tag tag-formato">${b.formato}</span>`:'';
-    const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
+    const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'`';
     const cardSagaName=getSaga(b);
     const cardSagaNum=b.sagaNum!=null?' #'+b.sagaNum:'';
     const cardSagaSub=cardSagaName?`<div class="card-saga-sub" onclick="event.stopPropagation();event.preventDefault();filterBySagaFromModal(decodeURIComponent('${encodeURIComponent(cardSagaName)}'))">${cardSagaName}${cardSagaNum}</div>`:'';
@@ -732,7 +629,7 @@ function renderGrid(books){
         <div class="book-title">${b.title}</div>
         ${cardSagaSub}
         <div class="book-author">${authorStr}</div>
-        <div class="book-tags">${genreTags}${tropeTags}${yearTag}${formatoTag}${adaptTag}</div>
+        <div class="book-tags">${genreTags}${dinamicaTag}${tropeTags}${yearTag}${formatoTag}${adaptTag}</div>
         <div class="book-footer">
           ${r.count>0?`<span style="color:var(--gold);font-size:11px">★ ${r.avg.toFixed(1)}</span>`:`<span class="no-ratings">Sin valoraciones</span>`}
           <button class="vote-mini-btn${myScore>0?' voted':''}" onclick="event.stopPropagation();openBook('${b.id}')">${voteLabel}</button>
@@ -769,7 +666,11 @@ function renderBookModal(){
   else voteArea=`<div><p class="vote-prompt">${myScore>0?`Tu valoración: ${'★'.repeat(myScore)} — puedes cambiarla`:'¿Qué te pareció?'}</p><div class="stars-input" id="starInput">${starInput}</div><div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center"><button class="vote-submit" id="voteBtn" onclick="submitVote()" ${!pendingStar?'disabled':''}>${pendingStar>0?`Guardar ${pendingStar} ★`:myScore>0?'Actualizar':'Guardar'}</button>${myScore>0?`<button class="vote-delete" id="deleteBtn" onclick="deleteVote()">✕ Eliminar mi voto</button>`:''}</div></div>`;
 
   const genreTags=(b.genres||[]).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
+  const subgenreTags=(b.subgenres||[]).map(s=>`<span class="tag tag-subgenre">${s}</span>`).join('');
+  const dinamicaTags=(b.dinamicas||[]).map(d=>`<span class="tag tag-dinamica">${d}</span>`).join('');
   const tropeTags=(b.tropes||[]).map(t=>`<span class="tag tag-trope">${t}</span>`).join('');
+  const identidadTags=(b.identidades||[]).map(i=>`<span class="tag tag-identidad">${i}</span>`).join('');
+  const characterTags=(b.characters||[]).map(c=>`<span class="tag tag-character">${c}</span>`).join('');
   const spicyTag=b.spicy>0?`<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_ICONS[b.spicy]} ${SPICY_LABELS[b.spicy]}</span>`:'';
   const formatoTag=b.formato&&!['Saga','Dúo','Trilogía'].includes(b.formato)?`<span class="tag tag-formato">${b.formato}</span>`:'';
   const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
@@ -786,13 +687,15 @@ function renderBookModal(){
       </div>
       ${sagaSubtitle}
       <p class="modal-author">por ${authorStr}</p>
-      <div class="modal-tags">${genreTags}${tropeTags}${spicyTag}${formatoTag}${adaptTag}</div>
+      <div class="modal-tags">${genreTags}${subgenreTags}${spicyTag}${formatoTag}${adaptTag}</div>
+      ${dinamicaTags?`<div class="modal-tags" style="margin-top:.3rem">${dinamicaTags}</div>`:''}
+      ${(tropeTags||identidadTags||characterTags)?`<div class="modal-tags" style="margin-top:.3rem">${tropeTags}${identidadTags}${characterTags}</div>`:''}
       <div class="modal-meta-grid">
         ${b.year?`<div class="meta-item"><span class="meta-key">Año</span><span class="meta-val">${b.year}</span></div>`:''}
         ${b.pages?`<div class="meta-item"><span class="meta-key">Páginas</span><span class="meta-val">${b.pages}</span></div>`:''}
         ${b.isbn?`<div class="meta-item"><span class="meta-key">ISBN</span><span class="meta-val">${b.isbn}</span></div>`:''}
       </div>
-      ${b.synopsis?(b.synopsis.length>280?`<p class="modal-synopsis synopsis-collapsed" id="synopsisText">${b.synopsis}</p><button class="synopsis-expand-btn" onclick="toggleSynopsis(this)">Leer más ↓</button>`:`<p class="modal-synopsis">${b.synopsis}</p>`):''}
+      ${b.synopsis?`<p class="modal-synopsis">${b.synopsis}</p>`:''}
       ${b.editions&&b.editions.length?`
       <div class="buy-section">
         <div class="buy-title">Dónde comprarlo</div>
@@ -915,86 +818,11 @@ async function logout(){await sb.auth.signOut();myRatings={};showToast('Hasta pr
 
 function showToast(msg,type='success'){const t=document.getElementById('toast');t.textContent=msg;t.className=`toast ${type}`;setTimeout(()=>t.classList.add('show'),10);setTimeout(()=>t.classList.remove('show'),3200);}
 
-/* ── EXTRA UX ── */
-function toggleSearchClear(){
-  const v=document.getElementById('searchInput').value;
-  document.getElementById('searchClear').classList.toggle('visible',v.length>0);
-}
-function clearSearch(){
-  document.getElementById('searchInput').value='';
-  document.getElementById('searchClear').classList.remove('visible');
-  applyFilters();
-}
-
-let filterPanelOpen=true;
-function toggleFilterPanel(){
-  filterPanelOpen=!filterPanelOpen;
-  const wrap=document.getElementById('filterDropdownsWrap');
-  const btn=document.getElementById('filterToggleBtn');
-  wrap.classList.toggle('collapsed',!filterPanelOpen);
-  btn.classList.toggle('open',filterPanelOpen);
-  // On mobile, start collapsed by default
-}
-function updateFilterToggleCount(){
-  const total=Object.values(filters).reduce((s,v)=>{
-    if(Array.isArray(v)) return s+v.length;
-    if(v&&v!=='' ) return s+1;
-    return s;
-  },0);
-  const badge=document.getElementById('filterToggleCount');
-  const btn=document.getElementById('filterToggleBtn');
-  if(badge){badge.textContent=total;badge.style.display=total?'':'none';}
-  if(btn) btn.classList.toggle('has-active',total>0);
-}
-
-// Collapse filter panel on mobile by default
-function initFilterPanel(){
-  if(window.innerWidth<=700){
-    filterPanelOpen=false;
-    const wrap=document.getElementById('filterDropdownsWrap');
-    const btn=document.getElementById('filterToggleBtn');
-    if(wrap) wrap.classList.add('collapsed');
-    if(btn) btn.classList.remove('open');
-  }
-}
-
-// Back to top scroll watcher
-window.addEventListener('scroll',()=>{
-  document.getElementById('backTop').classList.toggle('visible',window.scrollY>400);
-},{ passive:true });
-
-// Synopsis expand/collapse in modal
-function toggleSynopsis(btn){
-  const p=document.getElementById('synopsisText');
-  if(!p) return;
-  const expanded=p.classList.toggle('synopsis-collapsed');
-  // toggle returns true if added (collapsed), false if removed (expanded)
-  btn.textContent = p.classList.contains('synopsis-collapsed') ? 'Leer más ↓' : 'Leer menos ↑';
-}
-
-// Touch swipe to close modal
-let touchStartY=0;
-document.getElementById('bookModal').addEventListener('touchstart',e=>{touchStartY=e.touches[0].clientY;},{passive:true});
-document.getElementById('bookModal').addEventListener('touchmove',e=>{
-  const modal=document.querySelector('#bookModal .modal');
-  if(!modal) return;
-  const diff=e.touches[0].clientY - touchStartY;
-  if(diff>0 && modal.scrollTop===0) modal.style.transform=`translateY(${Math.min(diff*.4,60)}px)`;
-},{passive:true});
-document.getElementById('bookModal').addEventListener('touchend',e=>{
-  const modal=document.querySelector('#bookModal .modal');
-  if(!modal) return;
-  const diff=e.changedTouches[0].clientY - touchStartY;
-  modal.style.transform='';
-  if(diff>80) closeBookModal();
-},{passive:true});
-
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeBookModal();closeAuthModal();closeAllDD();}});
 document.getElementById('bookModal').addEventListener('click',e=>{if(e.target.id==='bookModal')closeBookModal();});
 document.getElementById('authModal').addEventListener('click',e=>{if(e.target.id==='authModal')closeAuthModal();});
 
 init();
-initFilterPanel();
 </script>
 </body>
 </html>

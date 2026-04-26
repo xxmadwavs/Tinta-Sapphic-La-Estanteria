@@ -249,17 +249,27 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
 
     <div class="form-section">
-      <div class="form-section-title">Subgéneros</div>
+      <div class="form-section-title">Subgéneros / Temáticas</div>
       <div class="chip-group" id="subgenreChips"></div>
     </div>
 
     <div class="form-section">
-      <div class="form-section-title">Personajes / Arquetipos</div>
+      <div class="form-section-title">Identidad y expresión de género <span style="color:var(--muted);font-size:10px;text-transform:none;letter-spacing:0">(de las protagonistas)</span></div>
+      <div class="chip-group" id="identidadChips"></div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Personajes / Profesiones</div>
       <div class="chip-group" id="characterChips"></div>
     </div>
 
     <div class="form-section">
-      <div class="form-section-title">Tropos <span style="color:var(--muted);font-size:10px;text-transform:none;letter-spacing:0">(puedes seleccionar varios)</span></div>
+      <div class="form-section-title">Dinámica de pareja <span style="color:var(--muted);font-size:10px;text-transform:none;letter-spacing:0">(cómo son ellas juntas)</span></div>
+      <div class="chip-group" id="dinamicaChips"></div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Tropos narrativos <span style="color:var(--muted);font-size:10px;text-transform:none;letter-spacing:0">(cómo se desarrolla la trama)</span></div>
       <div class="chip-group" id="tropeChips"></div>
     </div>
 
@@ -314,29 +324,102 @@ const SUPABASE_KEY = 'sb_publishable_2xi9ELv252qAXY_Fx3ADZg_nuWtgcUA';
 const ADMIN_EMAIL  = 'xxalittledreamxx@gmail.com';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const GENRES    = ['Acción','Aventura','Biografía','Ciencia Ficción','Comedia Romántica','Contemporánea','Dark Academia','Drama','Distopía','Ensayo','Fantasía','Fantasía Urbana','Filosofía','Gótico','Histórica','Horror','Juvenil','Misterio','No Ficción','New Adult','Paranormal','Psicológico','Romance','Thriller','YA'];
-const SUBGENRES = ['Amnesia','Autodescubrimiento','Baihee 🇨🇳','BDSM','Bisexual','Bullying','Celebridad','Coming of Age','Coming Out','Crimen','Dark Romance','Deporte','Erótica','Familia','Feminismo','GL Thai 🇹🇭','Interracial','Mafia','Mitología','Música','Navidad','No Binarie','Omegaverse','Paranormal','Poesía','Poliamor','Reality Show','Reencarnación','Segunda Oportunidad','Small Town','Sobrenatural','Trans','Universidad','Viaje en el Tiempo','Wattpad','WhyChoose'];
-const CHARACTERS= [
-  // Profesiones
-  'Abogada','Actriz','Arqueóloga','Artista','Azafata','Bailarina','Bombera','Cantante','CEO','Chef','Científica','Deportista','Detective','Doctora / Médica','Editora','Empresaria','Enfermera','Escritora','Estudiante','Farmacéutica','Florista','Fotógrafa','Futbolista','Granjera','Guardaespaldas','Hacker','Inspectora','Investigadora','Jardinera','Modelo','Música','Piloto','Pirata','Policía','Política','Profesora','Psicóloga','Reportera / Periodista','Tatuadora','Veterinaria',
-  // Arquetipos de género y expresión
-  'Butch','Femme','Masc','Stud','Soft Butch','Chapera / Stem','Ice Queen','Nerd','Introvertida','Sunshine','Grumpy',
-  // Identidades y representación
-  'Asexual','Bisexual','Lesbiana','No Binarie','Pansexual','Trans','Queer',
-  // Criatura / Paranormal
-  'Ángel','Bruja','Cambiaformas','Demonio','Diosa','Espíritu / Fantasma','Hada','Mujer Lobo','Sirena','Vampira','Zombie',
-  // Roles familiares / vitales
-  'Madre Soltera','Realeza','Famosa','Millonaria / Billonaria'
+// ── 1. GÉNEROS ──────────────────────────────────────────────────────────
+const GENRES = [
+  'Acción','Aventura','Biografía','Ciencia Ficción','Comedia Romántica',
+  'Contemporánea','Dark Academia','Drama','Distopía','Ensayo',
+  'Fantasía','Fantasía Urbana','Filosofía','Gótico','Histórica',
+  'Horror','Juvenil','Misterio','No Ficción','New Adult',
+  'Paranormal','Psicológico','Romance','Thriller','YA'
 ];
-const TROPES    = [
-  // Clásicos del romance
-  'Age Gap','Boss/Employee','Childhood Friends','Enemies to Lovers','Fake Relationship','Forbidden Love','Forced Proximity','Friends to Lovers','Friends with Benefits','Grumpy/Sunshine','Jealousy Trope','Love Triangle','Marriage of Convenience','Opposites Attract','Revenge Romance','Rich/Poor Romance','Roommates','Secret Relationship','Second Chance Romance','Slow Burn','Student/Teacher','Unrequited Love','Workplace Romance',
-  // Tropas sapphic populares
-  'Ice Queen','Butch/Femme','Femme/Femme','Masc/Masc','Best Friend\'s Sister','Awakening / Lesbian Awakening','Toaster Oven (la convence)','Bi Awakening','Coming Out tardío','Found Family',
+
+// ── 2. SUBGÉNEROS / TEMÁTICAS ────────────────────────────────────────────
+const SUBGENRES = [
+  // Temáticas identitarias
+  'Autodescubrimiento','Coming of Age','Coming Out','Bisexual','No Binarie','Trans','Queer',
+  // Subgéneros narrativos
+  'Amnesia','BDSM','Bullying','Celebridad','Crimen','Dark Romance','Deporte',
+  'Erótica','Familia','Feminismo','Interracial','Mafia','Mitología','Música',
+  'Navidad','Omegaverse','Poesía','Poliamor','Reality Show','Reencarnación',
+  'Segunda Oportunidad','Small Town','Sobrenatural','Universidad','Viaje en el Tiempo',
+  'WhyChoose',
+  // Orígenes / tradiciones literarias
+  'Baihee 🇨🇳','GL Thai 🇹🇭','Wattpad'
+];
+
+// ── 3. PERSONAJES · Profesiones ──────────────────────────────────────────
+const CHARACTERS = [
+  'Abogada','Actriz','Arqueóloga','Artista','Azafata','Bailarina','Bombera',
+  'Cantante','CEO','Chef','Científica','Deportista','Detective','Doctora / Médica',
+  'Editora','Empresaria','Enfermera','Escritora','Estudiante','Farmacéutica',
+  'Florista','Fotógrafa','Futbolista','Granjera','Guardaespaldas','Hacker',
+  'Inspectora','Investigadora','Jardinera','Modelo','Música','Piloto','Pirata',
+  'Policía','Política','Profesora','Psicóloga','Reportera / Periodista',
+  'Tatuadora','Veterinaria',
+  // Paranormal / Fantástico
+  'Ángel','Bruja','Cambiaformas','Demonio','Diosa','Espíritu / Fantasma',
+  'Hada','Mujer Lobo','Sirena','Vampira','Zombie',
+  // Roles vitales
+  'Famosa','Madre Soltera','Millonaria / Billonaria','Realeza'
+];
+
+// ── 4. IDENTIDAD Y EXPRESIÓN DE GÉNERO ──────────────────────────────────
+const IDENTIDADES = [
+  // Expresión de género
+  'Butch','Femme','Masc','Soft Butch','Stud','Chapera / Stem','Andrógina',
+  // Arquetipos de energía
+  'Ice Queen','Nerd','Introvertida','Sunshine','Grumpy','Caos','Control',
+  // Identidades sexuales / de género
+  'Asexual','Bisexual','Lesbiana','No Binarie','Pansexual','Trans','Queer'
+];
+
+// ── 5. DINÁMICA DE PAREJA ────────────────────────────────────────────────
+const DINAMICAS = [
+  // Por expresión de género
+  'Butch × Femme','Soft Butch × Femme','Butch × Butch','Femme × Femme',
+  'Masc × Femme','Masc × Masc','Masc × Soft Butch',
+  'Stud × Femme','Chapera × Femme','Chapera × Butch',
+  'Andrógina × Femme','Andrógina × Butch','Andrógina × Andrógina',
+  // Por energía / personalidad
+  'Grumpy × Sunshine','Ice Queen × Sunshine','Ice Queen × Softie',
+  'Introvertida × Extrovertida','Dark × Light','Caos × Control',
+  'Nerd × Popular','Nerd × Jock','Seria × Divertida',
+  'Protectora × Delicada','Feroz × Tierna','Fría × Cálida',
+  'Dominante × Sumisa','Top × Bottom','Switch × Switch',
+  // Por poder / estatus
+  'Boss × Employee','Rich × Poor','Famosa × Anónima',
+  'Realeza × Plebeya','Mentora × Aprendiz','Veterana × Novata',
+  'Jefa × Subordinada','Bodyguard × VIP',
+  'Detective × Sospechosa','Cazadora × Presa',
+  // Paranormal / fantástica
+  'Vampira × Humana','Bruja × Mortal','Cazadora × Monstruo',
+  'Diosa × Devota','Hada × Humana','Sirena × Marinera','Alfa × Omega'
+];
+
+// ── 6. TROPOS NARRATIVOS ─────────────────────────────────────────────────
+const TROPES = [
+  // Cómo se enamoran
+  'Enemies to Lovers','Rivals to Lovers','Friends to Lovers','Friends with Benefits',
+  'Strangers to Lovers','Fake Relationship','Second Chance Romance',
+  'Childhood Friends','Forbidden Love','Slow Burn','Unrequited Love',
+  'One Night Stand → More',
+  // Obstáculos / tensión
+  'Age Gap','Love Triangle','Secret Relationship','Jealousy Trope',
+  'Forbidden Love','Revenge Romance','Opposites Attract',
   // Situacionales
-  'Only One Bed','Bodyguard/VIP','Stranded Together','Road Trip','Rivals to Lovers','Amnesia','Hurt/Comfort','Protector/Protected','Vacation Romance','One Night Stand → More',
-  // Otros
-  'Alpha/Beta/Omega','Soulmates','Destined Lovers','Reencarnación','Conexión Mental / Bond','May-December Romance'
+  'Forced Proximity','Only One Bed','Roommates','Stranded Together',
+  'Road Trip','Vacation Romance',
+  // Roles / contexto
+  'Workplace Romance','Student × Teacher','Marriage of Convenience',
+  'Arranged Marriage','Bodyguard / VIP','Rich / Poor Romance',
+  // Sapphic específicos
+  'Lesbian Awakening','Bi Awakening','Coming Out tardío',
+  'Toaster Oven','Ice Queen × Toaster Oven','May-December Romance',
+  "Best Friend's Sister",
+  // Vínculos especiales
+  'Found Family','Hurt/Comfort','Soulmates','Destined Lovers',
+  'Conexión Mental / Bond','Reencarnación','Alpha/Beta/Omega',
+  'WhyChoose'
 ];
 const SPICY_LEVELS = [
   {v:0,label:'0/5 · Cero Steam',desc:'Sin escenas',icon:''},
@@ -349,7 +432,7 @@ const SPICY_LEVELS = [
 
 // Books stored in memory (from JSON), votes in Supabase
 let books = [], editingId = null;
-let sel = {genres:[],subgenres:[],characters:[],tropes:[],spicy:0,formato:null,adaptacion:null,sagaName:'',sagaNum:''};
+let sel = {genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:0,formato:null,adaptacion:null,sagaName:'',sagaNum:''};
 let authors = []; // array of strings
 let editions = []; // array of {lang, store, url}
 
@@ -458,10 +541,12 @@ function openEditModal(id) {
   previewCover(b.cover||'');
   authors=[...(b.authors||[])];
   editions=[...(b.editions||[])];
-  sel.genres    =[...(b.genres||[])];
-  sel.subgenres =[...(b.subgenres||[])];
-  sel.characters=[...(b.characters||[])];
-  sel.tropes    =[...(b.tropes||[])];
+  sel.genres      =[...(b.genres||[])];
+  sel.subgenres   =[...(b.subgenres||[])];
+  sel.identidades =[...(b.identidades||[])];
+  sel.characters  =[...(b.characters||[])];
+  sel.dinamicas   =[...(b.dinamicas||[])];
+  sel.tropes      =[...(b.tropes||[])];
   sel.spicy     =b.spicy||0;
   sel.formato   =b.formato||null;
   sel.adaptacion=b.adaptacion||null;
@@ -480,7 +565,7 @@ function openEditModal(id) {
 function clearForm() {
   ['fTitle','fYear','fCover','fSynopsis','fPages','fIsbn','fSagaName','fSagaNum'].forEach(id=>document.getElementById(id).value='');
   authors=[];editions=[];
-  sel={genres:[],subgenres:[],characters:[],tropes:[],spicy:0,formato:null,adaptacion:null,sagaName:'',sagaNum:''};
+  sel={genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:0,formato:null,adaptacion:null,sagaName:'',sagaNum:''};
   const p=document.getElementById('coverPreview');p.style.display='none';p.src='';
   document.getElementById('sagaSection').style.display='none';
   renderAuthorPills();
@@ -515,10 +600,12 @@ const FORMATOS    = ['Único','Dúo','Trilogía','Saga'];
 const ADAPTACIONES= ['Sin adaptación','Tiene serie','Tiene película'];
 
 function renderAllChips() {
-  renderChipGroup('genreChips',    GENRES,     'genres',    false);
-  renderChipGroup('subgenreChips', SUBGENRES,  'subgenres', false);
-  renderChipGroup('characterChips',CHARACTERS, 'characters',true);
-  renderChipGroup('tropeChips',    TROPES,     'tropes',    false);
+  renderChipGroup('genreChips',      GENRES,      'genres',      false);
+  renderChipGroup('subgenreChips',   SUBGENRES,   'subgenres',   false);
+  renderChipGroup('identidadChips',  IDENTIDADES, 'identidades', false);
+  renderChipGroup('characterChips',  CHARACTERS,  'characters',  true);
+  renderChipGroup('dinamicaChips',   DINAMICAS,   'dinamicas',   false);
+  renderChipGroup('tropeChips',      TROPES,      'tropes',      false);
   renderSingleChips('formatoChips',    FORMATOS,    'formato',    'teal');
   renderSingleChips('adaptacionChips', ADAPTACIONES,'adaptacion', 'lavender');
   renderSpicy();
@@ -582,10 +669,13 @@ function saveBook() {
     synopsis:  document.getElementById('fSynopsis').value.trim()||null,
     pages:     parseInt(document.getElementById('fPages').value)||null,
     isbn:      document.getElementById('fIsbn').value.trim()||null,
-    genres:    [...sel.genres],
-    subgenres: [...sel.subgenres],
-    characters:[...sel.characters],
-    tropes:    [...sel.tropes],
+    genres:      [...sel.genres],
+    subgenres:   [...sel.subgenres],
+    identidades: [...sel.identidades],
+    characters:  [...sel.characters],
+    dinamicas:   [...sel.dinamicas],
+    tropes:      [...sel.tropes],
+    ambientacion:[...(sel.ambientacion||[])],
     spicy:     sel.spicy,
     formato:   sel.formato,
     adaptacion:sel.adaptacion,
