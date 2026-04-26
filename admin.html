@@ -145,6 +145,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .login-error{font-size:12px;color:var(--rose);margin-top:.5rem;min-height:16px}
 
 @media(max-width:650px){.container{padding:1.25rem 1rem 3rem}.topbar{padding:0 1rem}.form-row-half{grid-template-columns:1fr}}
+
+/* paste autofill */
+.paste-bar{background:linear-gradient(135deg,rgba(192,111,196,0.08) 0%,rgba(91,188,176,0.06) 100%);border:1.5px solid rgba(192,111,196,0.25);border-radius:var(--radius);padding:14px 16px;margin-bottom:1.25rem;}
+.paste-bar-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent2);font-weight:600;margin-bottom:6px;}
+.paste-bar-row{display:flex;gap:7px;align-items:flex-start}
+.paste-bar-textarea{flex:1;padding:9px 13px;border-radius:10px;border:1px solid rgba(192,111,196,0.3);background:var(--surface2);color:var(--text);font-size:12px;font-family:'Instrument Sans',sans-serif;outline:none;resize:vertical;min-height:68px;line-height:1.4;}
+.paste-bar-textarea:focus{border-color:var(--accent)}
+.paste-bar-textarea::placeholder{color:var(--muted)}
+.paste-bar-btn{padding:9px 15px;border-radius:10px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--accent) 0%,var(--teal) 100%);color:#fff;font-size:12.5px;font-weight:600;font-family:'Instrument Sans',sans-serif;white-space:nowrap;flex-shrink:0;}
+.paste-bar-btn:hover{opacity:.85}
+.paste-bar-status{font-size:12px;margin-top:7px;color:var(--muted);min-height:16px}
+.paste-bar-status.ok{color:var(--teal)}
+.paste-bar-status.err{color:var(--rose)}
 </style>
 </head>
 <body>
@@ -194,6 +207,15 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="modal-title" id="modalTitle">Nuevo libro</div>
+
+    <div class="paste-bar">
+      <div class="paste-bar-label">Autocompletar</div>
+      <div class="paste-bar-row" style="margin-bottom:0">
+        <textarea class="paste-bar-textarea" id="pasteInput" placeholder="Pega aqui la info del libro (Titulo, Autora, Genero, Sinopsis...)"></textarea>
+        <button class="paste-bar-btn" onclick="runBookPaste()">Rellenar</button>
+      </div>
+      <div class="paste-bar-status" id="pasteStatus"></div>
+    </div>
 
     <div class="form-section">
       <div class="form-section-title">Datos básicos</div>
@@ -800,6 +822,104 @@ function updateEdition(i,key,val){
 function removeEdition(i){
   editions.splice(i,1);
   renderEditions();
+}
+
+
+/* PASTE AUTOFILL */
+function normalizeBold(str){
+  var out='',i=0;
+  while(i<str.length){
+    var cp=str.codePointAt(i);
+    if(cp>0xFFFF)i++;
+    if(cp>=0x1D400&&cp<=0x1D419)out+=String.fromCharCode(cp-0x1D400+65);
+    else if(cp>=0x1D41A&&cp<=0x1D433)out+=String.fromCharCode(cp-0x1D41A+97);
+    else out+=str[i];
+    i++;
+  }
+  return out;
+}
+function cleanStr(s){
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]/g,'').toLowerCase();
+}
+function matchTagsToList(lineText, list, target){
+  /* Solo coge los hashtags de la linea y los compara exactamente contra la lista */
+  var tags=(lineText.match(/#[\w]+/g)||[]).map(function(t){return cleanStr(t.slice(1));});
+  list.forEach(function(item){
+    var ci=cleanStr(item);
+    tags.forEach(function(tag){
+      /* El tag debe ser igual o contenerse mutuamente (sin subcadenas cortas) */
+      if(tag.length>=3 && (tag===ci || ci===tag) && target.indexOf(item)<0) target.push(item);
+    });
+  });
+}
+function matchTagsLoose(lineText, list, target){
+  /* Version mas permisiva: el tag puede ser parte del item o viceversa, si tiene 4+ chars */
+  var tags=(lineText.match(/#[\w]+/g)||[]).map(function(t){return cleanStr(t.slice(1));});
+  list.forEach(function(item){
+    var ci=cleanStr(item);
+    tags.forEach(function(tag){
+      var minLen = (tag===tag.toUpperCase()&&tag.length>=2) ? 2 : 4;
+      if(tag.length>=minLen && (ci===tag || ci.indexOf(tag)>=0 || tag.indexOf(ci)>=0) && target.indexOf(item)<0) target.push(item);
+    });
+  });
+}
+function getLine(text, label){
+  var m=text.match(new RegExp(label+'\\s*:\\s*([^\\n]+)','i'));
+  return m ? m[1] : '';
+}
+function runBookPaste(){
+  var ta=document.getElementById('pasteInput');
+  var status=document.getElementById('pasteStatus');
+  var raw=ta?ta.value.trim():'';
+  if(!raw){status.className='paste-bar-status err';status.textContent='Pega primero el texto.';return;}
+  var text=normalizeBold(raw);
+  var filled=0,m;
+
+  /* Campos de texto simples */
+  m=text.match(/Titulo\s*:\s*([^\n]+)/i);
+  if(m){var t=m[1].replace(/[#*]/g,'').trim();if(t){document.getElementById('fTitle').value=t;filled++;}}
+
+  m=text.match(/Autora?\s*:\s*([^\n]+)/i);
+  if(m){var a=m[1].replace(/[#*]/g,'').trim().split(/[,\/]/)[0].trim();if(a){authors=[a];renderAuthorPills();filled++;}}
+
+  m=text.match(/A[n\u00f1]o\s*:\s*(\d{4})/i);
+  if(m){document.getElementById('fYear').value=m[1];filled++;}
+
+  m=text.match(/Pag(?:ina)?s?\s*:\s*(\d+)/i);
+  if(m){document.getElementById('fPages').value=m[1];filled++;}
+
+  m=text.match(/Spicy[^\d]*(\d)/i)||text.match(/(\d)\/5/);
+  if(m){var sp=parseInt(m[1]);if(sp>=0&&sp<=5){sel.spicy=sp;filled++;}}
+
+  m=text.match(/Sinopsis\s*:\s*\n?([\s\S]+)/i);
+  if(m){var syn=m[1].trim();if(syn){document.getElementById('fSynopsis').value=syn;filled++;}}
+
+  /* Listas: SOLO buscar en la linea especifica de cada campo */
+  var lineGenero     = getLine(text,'Genero');
+  var lineSubgenero  = getLine(text,'Subgenero');
+  var linePersonajes = getLine(text,'Personajes');
+  var lineTropes     = getLine(text,'Tropes');
+  var lineDinamica   = getLine(text,'Dinamica');
+  var lineIdentidad  = getLine(text,'Identidad');
+
+  if(lineGenero)    matchTagsLoose(lineGenero,    GENRES,      sel.genres);
+  if(lineSubgenero) matchTagsLoose(lineSubgenero, SUBGENRES,   sel.subgenres);
+  if(linePersonajes)matchTagsLoose(linePersonajes,CHARACTERS,  sel.characters);
+  if(lineTropes)    matchTagsLoose(lineTropes,    TROPES,      sel.tropes);
+  if(lineDinamica)  matchTagsLoose(lineDinamica,  DINAMICAS,   sel.dinamicas);
+  if(lineIdentidad) matchTagsLoose(lineIdentidad, IDENTIDADES, sel.identidades);
+
+  var anyChips=sel.genres.length||sel.subgenres.length||sel.characters.length||sel.tropes.length||sel.dinamicas.length||sel.identidades.length;
+  if(anyChips){renderAllChips();filled++;}
+
+  if(filled>0){
+    status.className='paste-bar-status ok';
+    status.textContent='Rellenados '+filled+' campo(s). Revisa y completa lo que falte.';
+    ta.value='';
+  }else{
+    status.className='paste-bar-status err';
+    status.textContent='No se encontraron datos. Incluye etiquetas como Titulo:, Autora:, Genero:, etc.';
+  }
 }
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
