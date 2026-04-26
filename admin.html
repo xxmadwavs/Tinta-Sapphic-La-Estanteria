@@ -314,10 +314,30 @@ const SUPABASE_KEY = 'sb_publishable_2xi9ELv252qAXY_Fx3ADZg_nuWtgcUA';
 const ADMIN_EMAIL  = 'xxalittledreamxx@gmail.com';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const GENRES    = ['Acción','Aventura','Biografía','Ciencia Ficción','Comedia','Contemporánea','Drama','Distopía','Ensayo','Fantasía','Filosofía','Histórica','Horror','Juvenil','No Ficción','Psicológico','Romance','Thriller','YA'];
-const SUBGENRES = ['Autodescubrimiento','Baihee 🇨🇳','BDSM','Bisexual','Bullying','Celebridad','Crimen','Dark Romance','Deporte','Erótica','Familia','Feminismo','GL Thai 🇹🇭','Mafia','Mitología','Música','Navidad','Omegaverse','Paranormal','Poesía','Poliamor','Reality Show','Reencarnación','Sobrenatural','Universidad','Viaje en el Tiempo','Wattpad'];
-const CHARACTERS= ['Abogada','Actriz','Ángel','Asexual','Azafata','Bailarina','Bisexual','Brujas','Cambiaformas','Cantante','CEO','Demonio','Deportista','Empresaria','Escritora','Espíritus','Estudiantes','Famosa','Futbolista','Granjera','Guardaespaldas','Ice Queen','Madre Soltera','Médico','Militar','Mujer Lobo','Nerd','Piloto','Piratas','Policía','Política','Realeza','Vampiras','Zombie'];
-const TROPES    = ['Age Gap','Boss/Employee','Childhood Friends','Enemies to Lovers','Fake Relationship','Forbidden Love','Forced Proximity','Friends to Lovers','Friends with Benefits','Grumpy/Sunshine','Jealousy Trope','Love Triangle','Marriage of Convenience','Opposites Attract','Revenge Romance','Rich/Poor Romance','Roommates','Secret Relationship','Second Chance Romance','Slow Burn','Student/Teacher','Unrequited Love','Workplace Romance'];
+const GENRES    = ['Acción','Aventura','Biografía','Ciencia Ficción','Comedia Romántica','Contemporánea','Dark Academia','Drama','Distopía','Ensayo','Fantasía','Fantasía Urbana','Filosofía','Gótico','Histórica','Horror','Juvenil','Misterio','No Ficción','New Adult','Paranormal','Psicológico','Romance','Thriller','YA'];
+const SUBGENRES = ['Amnesia','Autodescubrimiento','Baihee 🇨🇳','BDSM','Bisexual','Bullying','Celebridad','Coming of Age','Coming Out','Crimen','Dark Romance','Deporte','Erótica','Familia','Feminismo','GL Thai 🇹🇭','Interracial','Mafia','Mitología','Música','Navidad','No Binarie','Omegaverse','Paranormal','Poesía','Poliamor','Reality Show','Reencarnación','Segunda Oportunidad','Small Town','Sobrenatural','Trans','Universidad','Viaje en el Tiempo','Wattpad','WhyChoose'];
+const CHARACTERS= [
+  // Profesiones
+  'Abogada','Actriz','Arqueóloga','Artista','Azafata','Bailarina','Bombera','Cantante','CEO','Chef','Científica','Deportista','Detective','Doctora / Médica','Editora','Empresaria','Enfermera','Escritora','Estudiante','Farmacéutica','Florista','Fotógrafa','Futbolista','Granjera','Guardaespaldas','Hacker','Inspectora','Investigadora','Jardinera','Modelo','Música','Piloto','Pirata','Policía','Política','Profesora','Psicóloga','Reportera / Periodista','Tatuadora','Veterinaria',
+  // Arquetipos de género y expresión
+  'Butch','Femme','Masc','Stud','Soft Butch','Chapera / Stem','Ice Queen','Nerd','Introvertida','Sunshine','Grumpy',
+  // Identidades y representación
+  'Asexual','Bisexual','Lesbiana','No Binarie','Pansexual','Trans','Queer',
+  // Criatura / Paranormal
+  'Ángel','Bruja','Cambiaformas','Demonio','Diosa','Espíritu / Fantasma','Hada','Mujer Lobo','Sirena','Vampira','Zombie',
+  // Roles familiares / vitales
+  'Madre Soltera','Realeza','Famosa','Millonaria / Billonaria'
+];
+const TROPES    = [
+  // Clásicos del romance
+  'Age Gap','Boss/Employee','Childhood Friends','Enemies to Lovers','Fake Relationship','Forbidden Love','Forced Proximity','Friends to Lovers','Friends with Benefits','Grumpy/Sunshine','Jealousy Trope','Love Triangle','Marriage of Convenience','Opposites Attract','Revenge Romance','Rich/Poor Romance','Roommates','Secret Relationship','Second Chance Romance','Slow Burn','Student/Teacher','Unrequited Love','Workplace Romance',
+  // Tropas sapphic populares
+  'Ice Queen','Butch/Femme','Femme/Femme','Masc/Masc','Best Friend\'s Sister','Awakening / Lesbian Awakening','Toaster Oven (la convence)','Bi Awakening','Coming Out tardío','Found Family',
+  // Situacionales
+  'Only One Bed','Bodyguard/VIP','Stranded Together','Road Trip','Rivals to Lovers','Amnesia','Hurt/Comfort','Protector/Protected','Vacation Romance','One Night Stand → More',
+  // Otros
+  'Alpha/Beta/Omega','Soulmates','Destined Lovers','Reencarnación','Conexión Mental / Bond','May-December Romance'
+];
 const SPICY_LEVELS = [
   {v:0,label:'0/5 · Cero Steam',desc:'Sin escenas',icon:''},
   {v:1,label:'1/5 · Mini Steam',desc:'Besos y miraditas',icon:'🌶'},

@@ -650,5 +650,77 @@
         "url": "https://www.mebmarket.com/ebook-354792-%E0%B8%A7%E0%B8%B2%E0%B8%94%E0%B8%9D%E0%B8%B1%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%B2%E0%B8%AB%E0%B9%8C"
       }
     ]
+  },
+  {
+    "id": "b_1777211820815_xrr9v",
+    "title": "Pls Love",
+    "authors": [
+      "Reverse"
+    ],
+    "year": 2025,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/374428/Thumbnail/book_detail_large.gif?13",
+    "synopsis": "Cuando la escort del club nocturno número uno, apodada \"El Ángel\", se le asigna un trabajo importante a una empresaria condescendiente y despreciada, las circunstancias inesperadamente los llevan a la cama juntas. ¿Cómo\nterminará esta relación tan íntima...?\n\n¿ Podemos amar?\n\nEs la misma pregunta, formulada en diferentes contextos. Pakinee pregunta porque no está segura de si una mujer como Panapsorn podría sentar cabeza con ella, mientras que Panapsorn pregunta porque no sabe si alguien de su bajo estatus tiene derecho a amar a otra persona ...",
+    "pages": 427,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "characters": [
+      "CEO"
+    ],
+    "tropes": [
+      "Grumpy/Sunshine",
+      "Opposites Attract",
+      "Rich/Poor Romance"
+    ],
+    "spicy": 5,
+    "formato": "Dúo",
+    "adaptacion": "Tiene serie",
+    "sagaName": "Pls Love",
+    "sagaNum": 1,
+    "editions": [
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-374428-PLS-LOVE-%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B9%84%E0%B8%94%E0%B9%89%E0%B9%84%E0%B8%AB%E0%B8%A1"
+      }
+    ]
+  },
+  {
+    "id": "b_1777211908582_gbplw",
+    "title": "PLS LOVE Especiales",
+    "authors": [
+      "Reverse"
+    ],
+    "year": 2025,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/400824/Thumbnail/book_detail_large.gif?5",
+    "synopsis": null,
+    "pages": 265,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "characters": [
+      "CEO"
+    ],
+    "tropes": [
+      "Grumpy/Sunshine",
+      "Opposites Attract",
+      "Rich/Poor Romance"
+    ],
+    "spicy": 5,
+    "formato": "Dúo",
+    "adaptacion": null,
+    "sagaName": "Pls Love",
+    "sagaNum": 1.5,
+    "editions": [
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-400824-PLS-LOVE-%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B9%84%E0%B8%94%E0%B9%89%E0%B9%84%E0%B8%AB%E0%B8%A1-%E0%B8%89%E0%B8%9A%E0%B8%B1%E0%B8%9A%E0%B8%9E%E0%B8%B4%E0%B9%80%E0%B8%A8%E0%B8%A9"
+      }
+    ]
   }
 ]
