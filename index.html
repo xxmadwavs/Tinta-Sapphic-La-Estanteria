@@ -78,6 +78,34 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .dd-count{background:var(--accent);color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:1px 6px}
 .dd-panel{position:absolute;top:calc(100% + 6px);left:0;min-width:190px;max-width:280px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,0.5);z-index:200;display:none;max-height:320px;overflow-y:auto}
 .dd-wrap.open .dd-panel{display:block}
+/* Mobile: dropdown as full bottom sheet overlay */
+@media(max-width:700px){
+  .dd-panel{
+    position:fixed;bottom:0;left:0;right:0;
+    max-width:100%;min-width:100%;
+    border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+    max-height:70vh;
+    box-shadow:0 -8px 40px rgba(0,0,0,0.6);
+    z-index:500;
+    border-left:none;border-right:none;border-bottom:none;
+  }
+  .dd-wrap.open .dd-panel{display:flex;flex-direction:column}
+  .dd-list{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .dd-item{padding:11px 18px;font-size:14px}
+  .dd-item input[type=checkbox]{width:18px;height:18px}
+  .spicy-dd-item{padding:11px 18px}
+  .spicy-dd-item label{font-size:14px}
+  /* Dim overlay behind sheet */
+  .dd-wrap.open::before{
+    content:'';position:fixed;inset:0;background:rgba(8,5,10,0.6);z-index:499;
+    animation:fadeInBg .18s ease;
+  }
+  /* Sheet handle */
+  .dd-panel::before{
+    content:'';display:block;width:36px;height:4px;border-radius:2px;
+    background:var(--surface3);margin:10px auto 6px;flex-shrink:0;
+  }
+}
 .dd-search{padding:.5rem .75rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface)}
 .dd-search input{width:100%;padding:5px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12.5px;font-family:var(--font-body);outline:none}
 .dd-search input::placeholder{color:var(--muted)}
@@ -232,8 +260,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .filter-toggle-btn.has-active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
 .filter-toggle-btn svg{width:12px;height:12px;flex-shrink:0;transition:transform .2s}
 .filter-toggle-btn.open svg{transform:rotate(180deg)}
-.filter-dropdowns-wrap{overflow:hidden;transition:max-height .3s ease,opacity .3s ease;max-height:400px;opacity:1}
-.filter-dropdowns-wrap.collapsed{max-height:0;opacity:0;pointer-events:none}
+.filter-dropdowns-wrap{transition:opacity .25s ease,visibility .25s;opacity:1;visibility:visible}
+.filter-dropdowns-wrap.collapsed{opacity:0;visibility:hidden;pointer-events:none;height:0;overflow:hidden}
 .modal-swipe-bar{display:none;width:36px;height:4px;border-radius:2px;background:var(--surface3);margin:10px auto -4px}
 .book-card::after{content:'';position:absolute;inset:0;background:rgba(192,111,196,0);transition:background .18s;pointer-events:none;z-index:1}
 .book-card:active::after{background:rgba(192,111,196,0.06)}
@@ -574,9 +602,15 @@ function toggleDD(id){
   const wrap=document.getElementById(id);
   const wasOpen=wrap.classList.contains('open');
   closeAllDD();
-  if(!wasOpen) wrap.classList.add('open');
+  if(!wasOpen){
+    wrap.classList.add('open');
+    if(window.innerWidth<=700) document.body.style.overflow='hidden';
+  }
 }
-function closeAllDD(){document.querySelectorAll('.dd-wrap.open').forEach(w=>w.classList.remove('open'));}
+function closeAllDD(){
+  document.querySelectorAll('.dd-wrap.open').forEach(w=>w.classList.remove('open'));
+  document.body.style.overflow='';
+}
 
 function renderActivePills(){
   const af=document.getElementById('activeFilters');
