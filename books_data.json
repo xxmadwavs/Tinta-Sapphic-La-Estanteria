@@ -14,13 +14,18 @@
       "Romance"
     ],
     "subgenres": [],
+    "identidades": [],
     "characters": [
       "Arqueóloga",
       "Femme"
     ],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Enemies to Lovers"
     ],
+    "ambientacion": [],
     "spicy": 5,
     "formato": "Único",
     "adaptacion": "Tiene serie",
@@ -42,11 +47,7 @@
         "store": "MEB",
         "url": "https://en.mebmarket.com/ebook-331090-Cranium-English-Version"
       }
-    ],
-    "dinamicas": [
-      "Femme × Femme"
-    ],
-    "ambientacion": []
+    ]
   },
   {
     "id": "b_1777138144561_pxbz2",
@@ -371,10 +372,15 @@
       "Romance"
     ],
     "subgenres": [],
+    "identidades": [],
     "characters": [
       "Modelo",
       "Femme",
       "Empresaria"
+    ],
+    "dinamicas": [
+      "Grumpy × Sunshine",
+      "Femme × Femme"
     ],
     "tropes": [
       "Forced Proximity",
@@ -384,17 +390,13 @@
       "Enemies to Lovers",
       "Opposites Attract"
     ],
+    "ambientacion": [],
     "spicy": 3,
     "formato": "Único",
     "adaptacion": "Tiene serie",
     "sagaName": null,
     "sagaNum": null,
-    "editions": [],
-    "dinamicas": [
-      "Grumpy × Sunshine",
-      "Femme × Femme"
-    ],
-    "ambientacion": []
+    "editions": []
   },
   {
     "id": "b_1777150429279_ua3lz",
@@ -412,15 +414,20 @@
       "Romance"
     ],
     "subgenres": [],
+    "identidades": [],
     "characters": [
       "Granjera",
       "Empresaria"
+    ],
+    "dinamicas": [
+      "Masc × Femme"
     ],
     "tropes": [
       "Forced Proximity",
       "Marriage of Convenience",
       "Opposites Attract"
     ],
+    "ambientacion": [],
     "spicy": 4,
     "formato": "Dúo",
     "adaptacion": "Tiene serie",
@@ -432,9 +439,7 @@
         "store": "Amazon",
         "url": "https://amzn.eu/d/08JTsKyv"
       }
-    ],
-    "dinamicas": [],
-    "ambientacion": []
+    ]
   },
   {
     "id": "b_1777150583557_qhjs8",
@@ -451,13 +456,19 @@
       "Romance"
     ],
     "subgenres": [],
+    "identidades": [],
     "characters": [
       "Granjera"
+    ],
+    "dinamicas": [
+      "Masc × Femme",
+      "Protectora × Delicada"
     ],
     "tropes": [
       "Childhood Friends",
       "Marriage of Convenience"
     ],
+    "ambientacion": [],
     "spicy": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
@@ -474,9 +485,7 @@
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-249145-THE-EARTH-%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%B2%E0%B8%AB%E0%B9%8C%E0%B8%9B%E0%B8%90%E0%B8%9E%E0%B8%B5"
       }
-    ],
-    "dinamicas": [],
-    "ambientacion": []
+    ]
   },
   {
     "id": "b_1777150669209_w445j",
@@ -493,14 +502,21 @@
       "Romance"
     ],
     "subgenres": [],
+    "identidades": [],
     "characters": [
       "Empresaria",
       "Ice Queen"
     ],
+    "dinamicas": [
+      "Boss × Employee",
+      "Masc × Femme"
+    ],
     "tropes": [
       "Forced Proximity",
-      "Enemies to Lovers"
+      "Enemies to Lovers",
+      "Slow Burn"
     ],
+    "ambientacion": [],
     "spicy": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
@@ -517,11 +533,7 @@
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-253894-THE-WATER-%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B8%A3%E0%B9%89%E0%B8%AD%E0%B8%A2%E0%B9%80%E0%B8%A5%E0%B9%88%E0%B8%AB%E0%B9%8C"
       }
-    ],
-    "dinamicas": [
-      "Boss × Employee"
-    ],
-    "ambientacion": []
+    ]
   },
   {
     "id": "b_1777150783754_yngj1",
@@ -539,13 +551,21 @@
       "Romance"
     ],
     "subgenres": [],
+    "identidades": [],
     "characters": [
       "Guardaespaldas",
       "Realeza"
     ],
-    "tropes": [
-      "Forced Proximity"
+    "dinamicas": [
+      "Masc × Femme",
+      "Realeza × Plebeya",
+      "Bodyguard × VIP"
     ],
+    "tropes": [
+      "Forced Proximity",
+      "Slow Burn"
+    ],
+    "ambientacion": [],
     "spicy": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
@@ -562,9 +582,7 @@
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-259296-THE-AIR-%E0%B9%80%E0%B8%AA%E0%B8%99%E0%B9%88%E0%B8%AB%E0%B8%B2%E0%B8%A7%E0%B8%B2%E0%B9%82%E0%B8%A2"
       }
-    ],
-    "dinamicas": [],
-    "ambientacion": []
+    ]
   },
   {
     "id": "b_1777151073237_1o982",
@@ -581,11 +599,15 @@
       "Romance"
     ],
     "subgenres": [],
+    "identidades": [],
     "characters": [],
+    "dinamicas": [],
     "tropes": [
       "Forced Proximity",
-      "Enemies to Lovers"
+      "Rivals to Lovers",
+      "Slow Burn"
     ],
+    "ambientacion": [],
     "spicy": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
@@ -602,9 +624,7 @@
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-265834-THE-FIRE-%E0%B9%82%E0%B8%8B%E0%B9%88%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%AD%E0%B8%B1%E0%B8%84%E0%B8%99%E0%B8%B5"
       }
-    ],
-    "dinamicas": [],
-    "ambientacion": []
+    ]
   },
   {
     "id": "b_1777151241210_moxht",
@@ -622,11 +642,22 @@
       "Romance"
     ],
     "subgenres": [],
+    "identidades": [
+      "Sunshine",
+      "Grumpy"
+    ],
     "characters": [],
+    "dinamicas": [
+      "Grumpy × Sunshine",
+      "Femme × Femme"
+    ],
     "tropes": [
       "Enemies to Lovers",
-      "Workplace Romance"
+      "Workplace Romance",
+      "Secret Relationship",
+      "Friends with Benefits"
     ],
+    "ambientacion": [],
     "spicy": 4,
     "formato": "Trilogía",
     "adaptacion": "Tiene serie",
@@ -648,11 +679,7 @@
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-189157-%E0%B8%A5%E0%B8%B1%E0%B8%A5%E0%B8%A5%E0%B9%8C%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%8A%E0%B8%AD%E0%B8%9A%E0%B9%84%E0%B8%A7%E0%B8%99%E0%B9%8C-Enemies-With-Benefits"
       }
-    ],
-    "dinamicas": [
-      "Grumpy × Sunshine"
-    ],
-    "ambientacion": []
+    ]
   },
   {
     "id": "b_1777151505771_h6z1c",
@@ -667,11 +694,15 @@
     "isbn": null,
     "genres": [
       "Comedia",
-      "Romance"
+      "Romance",
+      "Comedia Romántica"
     ],
     "subgenres": [],
+    "identidades": [],
     "characters": [],
+    "dinamicas": [],
     "tropes": [],
+    "ambientacion": [],
     "spicy": 3,
     "formato": "Trilogía",
     "adaptacion": "Sin adaptación",
@@ -688,9 +719,7 @@
         "store": "MEB",
         "url": "https://en.mebmarket.com/?action=book_details&book_id=362858"
       }
-    ],
-    "dinamicas": [],
-    "ambientacion": []
+    ]
   },
   {
     "id": "b_1777151620612_s2wzo",
@@ -705,16 +734,26 @@
     "isbn": null,
     "genres": [
       "Comedia",
-      "Drama"
+      "Drama",
+      "Romance"
     ],
     "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
     "characters": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Second Chance Romance"
     ],
+    "ambientacion": [],
     "spicy": 3,
     "formato": "Único",
     "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
     "editions": [
       {
         "lang": "ES",
@@ -731,9 +770,7 @@
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-354792-%E0%B8%A7%E0%B8%B2%E0%B8%94%E0%B8%9D%E0%B8%B1%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%B2%E0%B8%AB%E0%B9%8C"
       }
-    ],
-    "dinamicas": [],
-    "ambientacion": []
+    ]
   },
   {
     "id": "b_1777211820815_xrr9v",
@@ -749,14 +786,22 @@
     "genres": [
       "Romance"
     ],
-    "subgenres": [],
+    "subgenres": [
+      "Erótica"
+    ],
+    "identidades": [],
     "characters": [
       "CEO"
+    ],
+    "dinamicas": [
+      "Grumpy × Sunshine",
+      "Femme × Femme"
     ],
     "tropes": [
       "Opposites Attract",
       "Rich/Poor Romance"
     ],
+    "ambientacion": [],
     "spicy": 5,
     "formato": "Dúo",
     "adaptacion": "Tiene serie",
@@ -768,11 +813,7 @@
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-374428-PLS-LOVE-%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B9%84%E0%B8%94%E0%B9%89%E0%B9%84%E0%B8%AB%E0%B8%A1"
       }
-    ],
-    "dinamicas": [
-      "Grumpy × Sunshine"
-    ],
-    "ambientacion": []
+    ]
   },
   {
     "id": "b_1777211908582_gbplw",
@@ -789,13 +830,19 @@
       "Romance"
     ],
     "subgenres": [],
+    "identidades": [],
     "characters": [
       "CEO"
+    ],
+    "dinamicas": [
+      "Grumpy × Sunshine",
+      "Femme × Femme"
     ],
     "tropes": [
       "Opposites Attract",
       "Rich/Poor Romance"
     ],
+    "ambientacion": [],
     "spicy": 5,
     "formato": "Dúo",
     "adaptacion": null,
@@ -807,10 +854,364 @@
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-400824-PLS-LOVE-%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B9%84%E0%B8%94%E0%B9%89%E0%B9%84%E0%B8%AB%E0%B8%A1-%E0%B8%89%E0%B8%9A%E0%B8%B1%E0%B8%9A%E0%B8%9E%E0%B8%B4%E0%B9%80%E0%B8%A8%E0%B8%A9"
       }
+    ]
+  },
+  {
+    "id": "b_1777214380692_13wf1",
+    "title": "Built in Love",
+    "authors": [
+      "Salmon"
     ],
+    "year": 2024,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/305897/Thumbnail/book_detail_large.gif?11",
+    "synopsis": "Tantiya, una arquitecta experta, se topó con el archienemigo de su profesión.\nRenita, una exitosa maestra de Feng Shui, especializada en traer prosperidad a los residentes.\nY así comenzó la batalla, como el gato y el perro, el agua y el fuego, el yin y el yang.\nCon sus personalidades tan opuestas y la casa, tuvieron que construir…\n¿Habría un espacio vacío en sus corazones para que floreciera el amor?",
+    "pages": 635,
+    "isbn": null,
+    "genres": [],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [
+      "Enemies to Lovers"
+    ],
+    "ambientacion": [],
+    "spicy": 3,
+    "formato": "Único",
+    "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
+    "editions": [
+      {
+        "lang": "ES",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-305897-BUILT-IN-LOVE-Spanish-Version"
+      },
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-301332-BUILT-IN-LOVE-%E0%B8%81%E0%B9%88%E0%B8%AD%E0%B8%A3%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87%E0%B9%80%E0%B8%A5%E0%B8%B4%E0%B8%9F-English-version"
+      },
+      {
+        "lang": "PT",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-321031-BUILT-IN-LOVE-Portuguese-Version"
+      },
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-229005-BUILT-IN-LOVE-%E0%B8%81%E0%B9%88%E0%B8%AD%E0%B8%A3%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87%E0%B9%80%E0%B8%A5%E0%B8%B4%E0%B8%9F"
+      },
+      {
+        "lang": "OTHER",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-304713-BUILT-IN-LOVE-Indonesian-Version"
+      }
+    ]
+  },
+  {
+    "id": "b_1777214685968_zuext",
+    "title": "Chasing Love",
+    "authors": [
+      "Peony"
+    ],
+    "year": 2025,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/344632/Thumbnail/book_detail_large.gif?8",
+    "synopsis": "Sadanun, apasionada investigadora culinaria, organiza una aventura de una noche con una mujer misteriosa bajo la estricta condición de no compromiso. Pero cuando ella rompe las reglas, pidiendo una conexión emocional, Sadanun pone fin al encuentro y se marcha.\n\nEl destino tiene otros planes: la mujer resulta ser Piengrawin, la hija del presidente de la empresa donde trabaja Sadanun. Con un encanto travieso y persistente, Piengrawin irrumpe en su vida, desafiando su rutina y su corazón, incluso inventando nombres para sus futuros hijos. Entre devoción, travesuras y emociones inesperadas, Sadanun descubre que algunas conexiones no se pueden ignorar ni controlar.",
+    "pages": 936,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme",
+      "Sunshine",
+      "Grumpy"
+    ],
+    "characters": [
+      "Empresaria",
+      "Investigadora"
+    ],
+    "dinamicas": [
+      "Femme × Femme",
+      "Grumpy × Sunshine"
+    ],
+    "tropes": [
+      "Forbidden Love"
+    ],
+    "ambientacion": [],
+    "spicy": 4,
+    "formato": "Único",
+    "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-382259-Chasing-Love-%E0%B8%9E%E0%B8%B5%E0%B9%88%E0%B9%80%E0%B8%AD%E0%B8%87%E0%B8%81%E0%B9%87%E0%B8%A5%E0%B8%B3%E0%B8%9A%E0%B8%B2%E0%B8%81-English-version"
+      },
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-344632-Chasing-Love-%E0%B8%9E%E0%B8%B5%E0%B9%88%E0%B9%80%E0%B8%AD%E0%B8%87%E0%B8%81%E0%B9%87%E0%B8%A5%E0%B8%B3%E0%B8%9A%E0%B8%B2%E0%B8%81"
+      }
+    ]
+  },
+  {
+    "id": "b_1777214867470_fkv04",
+    "title": "Moon shadow",
+    "authors": [
+      "Flower of Memory"
+    ],
+    "year": null,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/351465/Thumbnail/book_detail_large.gif?7",
+    "synopsis": null,
+    "pages": null,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Masc",
+      "Femme"
+    ],
+    "characters": [
+      "Cantante",
+      "Empresaria"
+    ],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
+    "tropes": [
+      "Workplace Romance"
+    ],
+    "ambientacion": [],
+    "spicy": 4,
+    "formato": "Único",
+    "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-351465-Moon-Shadow-%E0%B9%80%E0%B8%87%E0%B8%B2%E0%B9%83%E0%B8%95%E0%B9%89%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%88%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B9%8C-English-version"
+      },
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-224179-%E0%B9%80%E0%B8%87%E0%B8%B2%E0%B9%83%E0%B8%95%E0%B9%89%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%88%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B9%8C"
+      }
+    ]
+  },
+  {
+    "id": "b_1777215180922_rhoy0",
+    "title": "Buy My Boss",
+    "authors": [
+      "FoxyFox"
+    ],
+    "year": 2025,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/343259/Thumbnail/book_detail_large.gif?5",
+    "synopsis": "Aunque era su subordinada en el trabajo, yo era quien mandaba en la cama.\n\n¿Quién hubiera pensado que esto me pasaría? «Araya», que siempre era tan atractiva y me dejaba sin aliento, resultó ser la Sra. «Isara», mi nueva jefa.",
+    "pages": 432,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [
+      "Erótica"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Empresaria"
+    ],
+    "dinamicas": [
+      "Femme × Femme",
+      "Dominante × Sumisa",
+      "Top × Bottom",
+      "Ice Queen × Sunshine"
+    ],
+    "tropes": [
+      "Workplace Romance",
+      "Secret Relationship"
+    ],
+    "ambientacion": [],
+    "spicy": 5,
+    "formato": "Único",
+    "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-343259-Buy-My-Boss-%E0%B8%89%E0%B8%B1%E0%B8%99%E0%B8%8B%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B9%80%E0%B8%88%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%B2%E0%B8%A2%E0%B8%81%E0%B8%B4%E0%B8%99-English-version"
+      },
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-95857-Buy-My-Boss-%E0%B8%89%E0%B8%B1%E0%B8%99%E0%B8%8B%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B9%80%E0%B8%88%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%B2%E0%B8%A2%E0%B8%81%E0%B8%B4%E0%B8%99"
+      }
+    ]
+  },
+  {
+    "id": "b_1777215436834_pe91i",
+    "title": "Ditto",
+    "authors": [
+      "Zezeho"
+    ],
+    "year": 2025,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/409971/Thumbnail/book_detail_large.gif?2",
+    "synopsis": "Dos mujeres. Dos vidas. Un nombre: \"Rafah\". El destino las golpea con crueldad, arrastrándolas del cielo de maneras que jamás imaginaron.\n\nRafah, bailarina de ballet, estuvo al borde de Broadway hasta que un trágico incidente lo destruyó todo. Rafah, azafata, una vez gobernó los cielos con confianza, hasta que el caos en pleno vuelo la obligó a renunciar a su nombre, su orgullo, sus alas.\n\nEse día, sus caminos se cruzaron. Una se alejó, la otra cayó. Pronto, ambas compartirían el mismo destino: sueños destrozados por manos despiadadas.\n\nEste es un viaje a través de la ira, la esperanza y la resiliencia. Cuando la venganza las llame, ¿elegirán el perdón... o la retribución?",
+    "pages": 362,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme",
+      "Grumpy"
+    ],
+    "characters": [
+      "Azafata",
+      "Bailarina"
+    ],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Opposites Attract"
+    ],
+    "ambientacion": [],
+    "spicy": 3,
+    "formato": "Trilogía",
+    "adaptacion": "Tiene serie",
+    "sagaName": "Smitten, Ditto & Visual",
+    "sagaNum": 2,
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-409971-Ditto-Rafah-Fallen-from-Heaven-Ditto-%E0%B8%A3%E0%B8%B0%E0%B8%9F%E0%B9%89%E0%B8%B2%E0%B8%AB%E0%B8%A5%E0%B9%88%E0%B8%99%E0%B8%AA%E0%B8%A7%E0%B8%A3%E0%B8%A3%E0%B8%84%E0%B9%8C-English-Version"
+      },
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-345614-Ditto-%E0%B8%A3%E0%B8%B0%E0%B8%9F%E0%B9%89%E0%B8%B2%E0%B8%AB%E0%B8%A5%E0%B9%88%E0%B8%99%E0%B8%AA%E0%B8%A7%E0%B8%A3%E0%B8%A3%E0%B8%84%E0%B9%8C"
+      }
+    ]
+  },
+  {
+    "id": "b_1777215928418_a6bcp",
+    "title": "Bake Love Feeling",
+    "authors": [
+      "Snow Leopard"
+    ],
+    "year": 2025,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/410048/Thumbnail/book_detail_large.gif?2",
+    "synopsis": "—Khun Noey, ¿Qué tal mi nueva receta de pan?\nPuede que al principio empezáramos con el pie izquierdo, pero esperaba que nos volviéramos más cercanas y trabajaramos juntas sin problemas.\nNo tenía ni idea de si era porque nos habíamos vuelto cercanas o no, pero el corazón se me aceleraba.\nTenía que recordarme que era amable conmigo simplemente porque era su trabajo. Que nunca debía pensar que había algo más.",
+    "pages": 777,
+    "isbn": null,
+    "genres": [
+      "Romance",
+      "Comedia Romántica"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Grumpy",
+      "Sunshine"
+    ],
+    "characters": [
+      "Abogada",
+      "Chef"
+    ],
+    "dinamicas": [
+      "Femme × Femme",
+      "Grumpy × Sunshine"
+    ],
+    "tropes": [
+      "Forced Proximity",
+      "Opposites Attract",
+      "Unrequited Love"
+    ],
+    "ambientacion": [],
+    "spicy": 3,
+    "formato": "Trilogía",
+    "adaptacion": "Tiene serie",
+    "sagaName": "WHALE",
+    "sagaNum": 3,
+    "editions": [
+      {
+        "lang": "ES",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/?action=book_details&book_id=410048"
+      },
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/?action=book_details&book_id=392846"
+      },
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-239464-%E0%B8%82%E0%B8%99%E0%B8%A1%E0%B8%9B%E0%B8%B1%E0%B8%87%E0%B8%8A%E0%B8%B5%E0%B8%AA%E0%B9%80%E0%B8%99%E0%B8%A2-Bake-love-feelings"
+      }
+    ]
+  },
+  {
+    "id": "b_1777216114475_m587p",
+    "title": "Formidable eyes",
+    "authors": [
+      "Luxurious.W"
+    ],
+    "year": 2024,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/364040/Thumbnail/book_detail_large.gif?2",
+    "synopsis": "“Si no vienes a verme esta noche, no esperes dormir en paz.”\n\n*****\n\nEncaje tatuado en su pecho y encaje metálico en su vestido;\n\nTodo para cautivar y hechizar, para que su amor por ella sea su fe.\n\nEn su flanco, dos urracas y un loto moran,\n\nRealzando su encanto, reinando sobre cualquier hombre y mujer.\n\nLoto celestial oculto bajo su ombligo.\n\nSu nombre: Mae Kru Bulan.\n\n*****\n\nLa policía… estaba a punto de perder la fe en la bondad porque la ley no podía castigar a los practicantes de magia, lo que casi la hizo perder a otra persona que amaba.",
+    "pages": 419,
+    "isbn": null,
+    "genres": [
+      "Romance",
+      "Horror"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
     "dinamicas": [
       "Grumpy × Sunshine"
     ],
-    "ambientacion": []
+    "tropes": [
+      "Forbidden Love",
+      "Opposites Attract",
+      "Slow Burn"
+    ],
+    "ambientacion": [],
+    "spicy": 2,
+    "formato": "Único",
+    "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
+    "editions": [
+      {
+        "lang": "ES",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/?action=book_details&book_id=364040"
+      },
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/?action=book_details&book_id=332990"
+      },
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-301657-%E0%B8%82%E0%B9%88%E0%B8%A1%E0%B8%82%E0%B8%A5%E0%B8%B1%E0%B8%87"
+      }
+    ]
   }
 ]
