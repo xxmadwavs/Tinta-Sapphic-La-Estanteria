@@ -14,13 +14,19 @@
       "Romance"
     ],
     "subgenres": [],
-    "characters": [],
+    "characters": [
+      "Arqueóloga",
+      "Femme"
+    ],
     "tropes": [
-      "Enemies to Lovers"
+      "Enemies to Lovers",
+      "Femme/Femme"
     ],
     "spicy": 5,
     "formato": "Único",
     "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
     "editions": [
       {
         "lang": "ES",
@@ -55,9 +61,12 @@
     ],
     "subgenres": [],
     "characters": [
-      "Abogada"
+      "Abogada",
+      "Femme"
     ],
-    "tropes": [],
+    "tropes": [
+      "Femme/Femme"
+    ],
     "spicy": 2,
     "formato": "Trilogía",
     "adaptacion": null,
@@ -102,7 +111,10 @@
     "tropes": [
       "Age Gap",
       "Boss/Employee",
-      "Rich/Poor Romance"
+      "Rich/Poor Romance",
+      "Femme/Femme",
+      "Grumpy/Sunshine",
+      "Awakening / Lesbian Awakening"
     ],
     "spicy": 4,
     "formato": "Dúo",
@@ -208,13 +220,18 @@
       "Romance"
     ],
     "subgenres": [],
-    "characters": [],
+    "characters": [
+      "Estudiante"
+    ],
     "tropes": [
-      "Age Gap"
+      "Age Gap",
+      "Femme/Femme"
     ],
     "spicy": 4,
     "formato": "Único",
     "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
     "editions": [
       {
         "lang": "EN",
@@ -238,11 +255,18 @@
       "Fantasía",
       "Romance"
     ],
-    "subgenres": [],
-    "characters": [
-      "Abogada"
+    "subgenres": [
+      "Universidad",
+      "Viaje en el Tiempo"
     ],
-    "tropes": [],
+    "characters": [
+      "Abogada",
+      "Empresaria",
+      "Estudiante"
+    ],
+    "tropes": [
+      "Femme/Femme"
+    ],
     "spicy": 3,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
@@ -281,17 +305,24 @@
       "Drama",
       "Romance"
     ],
-    "subgenres": [],
+    "subgenres": [
+      "Universidad"
+    ],
     "characters": [
-      "Estudiantes"
+      "Estudiantes",
+      "Estudiante"
     ],
     "tropes": [
       "Age Gap",
-      "Slow Burn"
+      "Slow Burn",
+      "Femme/Femme",
+      "Awakening / Lesbian Awakening"
     ],
     "spicy": 5,
     "formato": "Único",
     "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
     "editions": [
       {
         "lang": "EN",
@@ -320,15 +351,26 @@
       "Romance"
     ],
     "subgenres": [],
-    "characters": [],
+    "characters": [
+      "Modelo",
+      "Femme",
+      "Empresaria"
+    ],
     "tropes": [
       "Forced Proximity",
       "Second Chance Romance",
-      "Workplace Romance"
+      "Workplace Romance",
+      "Love Triangle",
+      "Grumpy/Sunshine",
+      "Enemies to Lovers",
+      "Opposites Attract",
+      "Femme/Femme"
     ],
     "spicy": 3,
     "formato": "Único",
     "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
     "editions": []
   },
   {
@@ -348,7 +390,8 @@
     ],
     "subgenres": [],
     "characters": [
-      "Granjera"
+      "Granjera",
+      "Empresaria"
     ],
     "tropes": [
       "Forced Proximity",
