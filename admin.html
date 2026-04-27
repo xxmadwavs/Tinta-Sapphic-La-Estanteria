@@ -108,6 +108,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .spicy-grid{display:flex;flex-direction:column;gap:.4rem;margin-top:.4rem}
 .spicy-row{display:flex;align-items:center;gap:.6rem;padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;transition:all .14s}
 .spicy-row:hover{border-color:var(--gold)}
+.spicy-row.unknown:hover{border-color:var(--muted)}
+.spicy-row.unknown.active{border-color:var(--muted);background:rgba(138,120,152,0.12)}
 .spicy-row.active{border-color:var(--gold);background:var(--gold-soft)}
 .spicy-row input[type=radio]{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0}
 .spicy-label{font-size:13px;color:var(--text);flex:1}
@@ -458,6 +460,7 @@ const TROPES = [
   'WhyChoose'
 ];
 const SPICY_LEVELS = [
+  {v:null,label:'? · Sin datos',desc:'Nivel desconocido o sin información',icon:'❓'},
   {v:0,label:'0/5 · Cero Steam',desc:'Sin escenas',icon:''},
   {v:1,label:'1/5 · Mini Steam',desc:'Besos y miraditas',icon:'🌶'},
   {v:2,label:'2/5 · Soft Steam',desc:'0–1 escena muy light',icon:'🌶🌶'},
@@ -468,7 +471,7 @@ const SPICY_LEVELS = [
 
 // Books stored in memory (from JSON), votes in Supabase
 let books = [], editingId = null;
-let sel = {genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:0,formato:null,adaptacion:null,sagaName:'',sagaNum:''};
+let sel = {genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:null,formato:null,adaptacion:null,sagaName:'',sagaNum:''};
 let authors = []; // array of strings
 let editions = []; // array of {lang, store, url}
 
@@ -536,7 +539,7 @@ function renderBookList() {
   list.innerHTML=`<div class="book-list">${books.map(b=>{
     const cover=b.cover?`<img class="book-thumb" src="${b.cover}" alt="" onerror="this.outerHTML='<div class=book-thumb-ph>📖</div>'">`:`<div class="book-thumb-ph">📖</div>`;
     const genreBadges=(b.genres||[]).slice(0,2).map(g=>`<span class="badge badge-genre">${g}</span>`).join('');
-    const spicyLabel=b.spicy>0?`<span class="badge" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.2)">${'🌶'.repeat(b.spicy)}</span>`:'';
+    const spicyLabel=(b.spicy==null||b.spicy===undefined)?`<span class="badge" style="background:rgba(138,120,152,0.15);color:var(--muted);border:1px solid rgba(138,120,152,0.3)" title="Nivel spicy sin datos">❓</span>`:b.spicy>0?`<span class="badge" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.2)">${'🌶'.repeat(b.spicy)}</span>`:'';
     const authorStr=(b.authors||[]).join(', ')||'—';
     const votes=vc[b.id]||0;
     const sagaStr=b.sagaName?` · ${b.sagaName}${b.sagaNum!=null?' #'+b.sagaNum:''}`:'';
@@ -584,7 +587,7 @@ function openEditModal(id) {
   sel.characters  =[...(b.characters||[])];
   sel.dinamicas   =[...(b.dinamicas||[])];
   sel.tropes      =[...(b.tropes||[])];
-  sel.spicy     =b.spicy||0;
+  sel.spicy     =(b.spicy!=null)?b.spicy:null;
   sel.formato   =b.formato||null;
   sel.adaptacion=b.adaptacion||null;
   sel.sagaName  =b.sagaName||'';
@@ -604,7 +607,7 @@ function clearForm() {
   document.getElementById('dupWarning').classList.remove('show');
   document.getElementById('dupOk').classList.remove('show');
   authors=[];editions=[];
-  sel={genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:0,formato:null,adaptacion:null,sagaName:'',sagaNum:''};
+  sel={genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:null,formato:null,adaptacion:null,sagaName:'',sagaNum:''};
   const p=document.getElementById('coverPreview');p.style.display='none';p.src='';
   document.getElementById('sagaSection').style.display='none';
   renderAuthorPills();
@@ -726,15 +729,19 @@ function toggleChip(key,val,isRose){
 }
 
 function renderSpicy(){
-  document.getElementById('spicyGrid').innerHTML=SPICY_LEVELS.map(s=>`
-    <label class="spicy-row${sel.spicy===s.v?' active':''}" onclick="setSp(${s.v})">
-      <input type="radio" name="spicy" value="${s.v}" ${sel.spicy===s.v?'checked':''}>
+  document.getElementById('spicyGrid').innerHTML=SPICY_LEVELS.map(s=>{
+    const isActive = s.v===null ? sel.spicy===null : sel.spicy===s.v;
+    const vStr = s.v===null ? 'null' : s.v;
+    const unknownCls = s.v===null ? ' unknown' : '';
+    return `<label class="spicy-row${unknownCls}${isActive?' active':''}" onclick="setSp(${vStr})">
+      <input type="radio" name="spicy" value="${vStr}" ${isActive?'checked':''}>
       <span class="spicy-label">${s.icon?s.icon+' ':''}<strong>${s.label}</strong></span>
       <span class="spicy-desc">${s.desc}</span>
-    </label>`).join('');
+    </label>`;
+  }).join('');
 }
 
-function setSp(v){sel.spicy=v;renderSpicy();}
+function setSp(v){sel.spicy=(v===null||v==='null')?null:v;renderSpicy();}
 
 /* ── SAVE / DELETE ── */
 function saveBook() {
@@ -758,7 +765,7 @@ function saveBook() {
     dinamicas:   [...sel.dinamicas],
     tropes:      [...sel.tropes],
     ambientacion:[...(sel.ambientacion||[])],
-    spicy:     sel.spicy,
+    spicy:     sel.spicy!=null?sel.spicy:null,
     formato:   sel.formato,
     adaptacion:sel.adaptacion,
     sagaName:  document.getElementById('fSagaName').value.trim()||null,
