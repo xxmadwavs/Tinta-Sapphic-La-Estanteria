@@ -2221,5 +2221,99 @@
         "url": "https://www.amazon.com/Somewhere-Somehow-Vol-2-Mon-Maw-ebook/dp/B0FD8LFM58"
       }
     ]
+  },
+  {
+    "id": "b_1777276648894_ss9s5",
+    "title": "23.5 When the Earth is Spinning Around",
+    "authors": [
+      "Tulip"
+    ],
+    "year": 2023,
+    "cover": "https://m.media-amazon.com/images/I/81POdC0YPcL._SL1500_.jpg",
+    "synopsis": "El eje de la Tierra se inclina\ny el amor también\n\nAl principio, 'Ongsa' nunca esperó sentir algo tan profundo por 'Sun'.\n¿Qué puede hacer ahora que se ha dado cuenta?\nPor mucho que Ongsa esté enamorada de Sun, no puede revelar sus sentimientos.\nOngsa es tímida y poco valiente.\nAdemás, Ongsa es una chica. ¿Cómo puede confesárselo… cuando Sun…\n…también es una chica?",
+    "pages": 370,
+    "isbn": null,
+    "genres": [
+      "Romance",
+      "YA"
+    ],
+    "subgenres": [
+      "Small Town"
+    ],
+    "identidades": [
+      "Masc",
+      "Femme",
+      "Introvertida",
+      "Sunshine"
+    ],
+    "characters": [
+      "Estudiante"
+    ],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
+    "tropes": [
+      "Lesbian Awakening"
+    ],
+    "ambientacion": [],
+    "spicy": 1,
+    "formato": "Único",
+    "adaptacion": "Tiene serie",
+    "sagaName": null,
+    "sagaNum": null,
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "Amazon",
+        "url": "https://www.amazon.es/23-5-Earth-Spinning-Around-English-ebook/dp/B0C1JKLC9Q"
+      }
+    ]
+  },
+  {
+    "id": "b_1777276779547_2n6lv",
+    "title": "Stuck with Me (Saga Reverse 9)",
+    "authors": [
+      "Zezeho"
+    ],
+    "year": 2023,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/233783/Thumbnail/book_detail_large.gif?6",
+    "synopsis": "Soy Mai Tri, abogada brillante con una habilidad secreta: puedo detener el tiempo diez minutos al día. Siempre he confiado solo en mí… hasta que apareció Man Mek, una fiscal imperturbable que logró derrotarme en un caso y dejó mi orgullo por los suelos.\n\nEl destino nos une de nuevo cuando Man Mek entra a mi oficina como asistente legal. Rodeada de girasoles y misterio, empieza a desmontar mis barreras con su calma, su amabilidad y su mirada sin juicio.\n\nPero entonces, una advertencia: mi hermana, que ve el futuro, me dice que alguien quiere manipularme para usar mi poder... y que me costará la vida.\n\n¿Y si la culpable fuera justamente ella? ¿La mujer de la que, sin querer, empiezo a enamorarme?",
+    "pages": 308,
+    "isbn": null,
+    "genres": [
+      "Fantasía",
+      "Fantasía Urbana",
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [
+      "Abogada"
+    ],
+    "dinamicas": [],
+    "tropes": [],
+    "ambientacion": [],
+    "spicy": 3,
+    "formato": "Saga",
+    "adaptacion": "Tiene serie",
+    "sagaName": "REVERSE WITH ME",
+    "sagaNum": 6,
+    "editions": [
+      {
+        "lang": "ES",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/?action=book_details&book_id=391312"
+      },
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://en.mebmarket.com/ebook-377569-Stuck-with-Me-You-My-Third-Blessing-From-Paradise-English-Version"
+      },
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-233783-Stuck-with-Me-%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B8%84%E0%B8%B7%E0%B8%AD%E0%B8%9E%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%AA%E0%B8%B2%E0%B8%A1"
+      }
+    ]
   }
 ]
