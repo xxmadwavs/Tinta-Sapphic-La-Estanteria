@@ -354,10 +354,12 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const SPICY_LABELS = ['0/5 Sin Steam','1/5 Mini Steam','2/5 Soft Steam','3/5 Spicy Light','4/5 Spicy','5/5 Infernal 🔥'];
 const SPICY_ICONS  = ['','🌶','🌶🌶','🌶🌶🌶','🌶🌶🌶🌶','🌶🌶🌶🌶🌶'];
+const SPICY_UNKNOWN_LABEL = '? Nivel desconocido';
+const SPICY_UNKNOWN_ICON  = '❓';
 
 let allBooks=[], ratingsMap={}, myRatings={}, currentUser=null, activeBook=null;
 let authMode='login', pendingStar=0;
-let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],sagas:[],adaptacion:null,valoracion:null};
+let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],adaptacion:null,valoracion:null};
 
 // Extract saga name from book
 function getSaga(b){
@@ -459,7 +461,8 @@ function buildDDList(listId,values,key,search=''){
 
 function buildSpicyDD(){
   const el=document.getElementById('listSpicy');
-  el.innerHTML=(filters.spicy.length?`<div class="dd-clear" onclick="clearDDFilter('spicy')">✕ Limpiar</div>`:'')+
+  el.innerHTML=(filters.spicy.length||filters.spicyUnknown?`<div class="dd-clear" onclick="clearDDFilter('spicy')">✕ Limpiar</div>`:'')+
+    `<div class="spicy-dd-item"><input type="checkbox" id="ddsp_unknown" ${filters.spicyUnknown?'checked':''} onchange="toggleSpicyUnknown()"><label for="ddsp_unknown">${SPICY_UNKNOWN_ICON} <span>${SPICY_UNKNOWN_LABEL}</span><small>Sin información de nivel</small></label></div>`+
     SPICY_LABELS.map((lbl,i)=>{
       const sid='ddsp_'+i;
       return `<div class="spicy-dd-item"><input type="checkbox" id="${sid}" ${filters.spicy.includes(i)?'checked':''} onchange="toggleDDFilter('spicy',${i})"><label for="${sid}">${SPICY_ICONS[i]?SPICY_ICONS[i]+' ':''}<span>${lbl}</span><small>${['Sin escenas','Besos y miraditas','0–1 escena light','1–2 escenas explícitas','3–4 escenas explícitas','5+ escenas'][i]}</small></label></div>`;
@@ -479,8 +482,15 @@ function toggleDDFilter(key,val){
   updateDDCounts();renderActivePills();applyFilters();
 }
 
+function toggleSpicyUnknown(){
+  filters.spicyUnknown=!filters.spicyUnknown;
+  buildSpicyDD();
+  updateDDCounts();renderActivePills();applyFilters();
+}
+
 function clearDDFilter(key){
   filters[key]=[];
+  if(key==='spicy') filters.spicyUnknown=false;
   if(key==='spicy') buildSpicyDD();
   else buildDDList(DD_MAP[key], uniqVals(key), key);
   updateDDCounts();renderActivePills();applyFilters();
@@ -489,7 +499,7 @@ function clearDDFilter(key){
 function updateDDCounts(){
   [['Genre','genres'],['Subgenre','subgenres'],['Dinamica','dinamicas'],
    ['Trope','tropes'],['Character','characters'],['Author','authors'],
-   ['Year','years'],['Spicy','spicy'],['Saga','sagas']].forEach(([k,fk])=>{
+   ['Year','years'],['Saga','sagas']].forEach(([k,fk])=>{
     const cnt=document.getElementById('cnt'+k);
     const btn=document.querySelector('#dd'+k+' .dd-btn');
     if(!cnt||!btn) return;
@@ -497,6 +507,14 @@ function updateDDCounts(){
     cnt.textContent=n;cnt.style.display=n?'':'none';
     btn.classList.toggle('has-sel',n>0);
   });
+  // Spicy special (includes unknown)
+  const spicyCnt=document.getElementById('cntSpicy');
+  const spicyBtn=document.querySelector('#ddSpicy .dd-btn');
+  if(spicyCnt&&spicyBtn){
+    const n=filters.spicy.length+(filters.spicyUnknown?1:0);
+    spicyCnt.textContent=n;spicyCnt.style.display=n?'':'none';
+    spicyBtn.classList.toggle('has-sel',n>0);
+  }
 }
 
 function toggleValoracion(val){
@@ -555,6 +573,9 @@ function renderActivePills(){
     const label=filters.valoracion==='valorado'?'★ Mis valorados':'☆ Sin valorar';
     pills.push(`<span class="af-pill">${label}<button onclick="toggleValoracion('${filters.valoracion}')">×</button></span>`);
   }
+  if(filters.spicyUnknown){
+    pills.push(`<span class="af-pill">Spicy: ${SPICY_UNKNOWN_LABEL}<button onclick="toggleSpicyUnknown()">×</button></span>`);
+  }
   if(filters.adaptacion==='serie'){
     pills.push(`<span class="af-pill">📺 Con serie<button onclick="toggleAdaptacion('serie')">×</button></span>`);
   }
@@ -563,7 +584,7 @@ function renderActivePills(){
 }
 
 function clearAllFilters(){
-  filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],sagas:[],adaptacion:null,valoracion:null};
+  filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],adaptacion:null,valoracion:null};
   document.getElementById('searchInput').value='';
   updateValoracionBtns();
   updateAdaptacionBtn();
@@ -583,7 +604,15 @@ function applyFilters(){
   if(filters.characters.length) books=books.filter(b=>filters.characters.every(c=>(b.characters||[]).includes(c)));
   if(filters.authors.length)   books=books.filter(b=>filters.authors.some(a=>(b.authors||[]).includes(a)));
   if(filters.years.length)     books=books.filter(b=>filters.years.includes(String(b.year)));
-  if(filters.spicy.length)     books=books.filter(b=>filters.spicy.includes(b.spicy));
+  if(filters.spicy.length||filters.spicyUnknown){
+    books=books.filter(b=>{
+      const s=b.spicy;
+      const isUnknown=(s==null||s===undefined||s==='');
+      if(filters.spicyUnknown&&isUnknown) return true;
+      if(filters.spicy.length&&!isUnknown&&filters.spicy.includes(s)) return true;
+      return false;
+    });
+  }
   if(filters.sagas.length)     books=books.filter(b=>filters.sagas.includes(getSaga(b)));
   if(filters.adaptacion==='serie') books=books.filter(b=>b.adaptacion==='Tiene serie');
   if(filters.valoracion==='valorado') books=books.filter(b=>!!myRatings[b.id]);
@@ -612,7 +641,7 @@ function renderGrid(books){
     const coverEl=b.cover?`<img class="book-cover" src="${b.cover}" alt="${b.title}" onerror="this.outerHTML='<div class=book-cover-ph>📖</div>'">`:`<div class="book-cover-ph">📖</div>`;
     const rankBadge=rank&&rank<=3?`<div class="rank-badge rank-${rank}">${rank}</div>`:'';
     const avgBadge=r.count>0?`<div class="avg-badge"><span style="color:var(--gold);font-size:11px">★</span><span style="font-size:11.5px;font-weight:600;color:var(--text)">${r.avg.toFixed(1)}</span><span style="font-size:10px;color:var(--muted)">(${r.count})</span></div>`:'';
-    const spicyBadge=b.spicy>0?`<div class="spicy-badge">${SPICY_ICONS[b.spicy]}</div>`:'';
+    const spicyBadge=(b.spicy>0)?`<div class="spicy-badge">${SPICY_ICONS[b.spicy]}</div>`:(b.spicy==null||b.spicy===undefined||b.spicy==='')?`<div class="spicy-badge" title="Nivel spicy desconocido" style="opacity:.65">${SPICY_UNKNOWN_ICON}</div>`:'';
     const genreTags=(b.genres||[]).slice(0,2).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
     const dinamicaTag=(b.dinamicas||[]).slice(0,1).map(d=>`<span class="tag tag-dinamica">${d}</span>`).join('');
     const tropeTags=!dinamicaTag?(b.tropes||[]).slice(0,1).map(t=>`<span class="tag tag-trope">${t}</span>`).join(''):'';
@@ -671,7 +700,11 @@ function renderBookModal(){
   const tropeTags=(b.tropes||[]).map(t=>`<span class="tag tag-trope">${t}</span>`).join('');
   const identidadTags=(b.identidades||[]).map(i=>`<span class="tag tag-identidad">${i}</span>`).join('');
   const characterTags=(b.characters||[]).map(c=>`<span class="tag tag-character">${c}</span>`).join('');
-  const spicyTag=b.spicy>0?`<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_ICONS[b.spicy]} ${SPICY_LABELS[b.spicy]}</span>`:'';
+  const spicyIsUnknown=(b.spicy==null||b.spicy===undefined||b.spicy==='');
+  const spicyTag=spicyIsUnknown
+    ?`<span class="tag" style="background:rgba(138,120,152,0.15);color:var(--muted);border:1px solid rgba(138,120,152,0.3)">${SPICY_UNKNOWN_ICON} ${SPICY_UNKNOWN_LABEL}</span>`
+    :(b.spicy>0?`<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_ICONS[b.spicy]} ${SPICY_LABELS[b.spicy]}</span>`:
+    `<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_LABELS[0]}</span>`);
   const formatoTag=b.formato&&!['Saga','Dúo','Trilogía'].includes(b.formato)?`<span class="tag tag-formato">${b.formato}</span>`:'';
   const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
   const sagaName=b.sagaName||(b.formato&&['Saga','Dúo','Trilogía'].includes(b.formato)?getSaga(b):null);
