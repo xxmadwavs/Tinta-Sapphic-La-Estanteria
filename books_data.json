@@ -4617,5 +4617,75 @@
         "url": "https://www.mebmarket.com/ebook-372450-Lunar-Queen--Omegaverse-"
       }
     ]
+  },
+  {
+    "id": "b_1777362716821_p3x0y",
+    "title": "Linda, When Will Your Heart Be Mine?",
+    "authors": [
+      "artis"
+    ],
+    "year": 2025,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/368662/Thumbnail/book_detail_large.gif?2",
+    "synopsis": "\"Linda, ¿cuándo será mío tu corazón?\"\nAmor Yuri con diferencia de edad.\n\n\nUna confesión en estado de ebriedad, una caricia tierna y un amor que espera ser reclamado.\n\nCuando Kunjaesol se encuentra cuidando a Linda, una chica más joven, testaruda e irresistiblemente encantadora, una conversación sincera convierte su amistad en algo más. Pero con diez años de diferencia y un futuro incierto, ¿realmente vale la pena arriesgarse en el amor?",
+    "pages": 93,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": "Único",
+    "adaptacion": "Sin adaptación",
+    "sagaName": null,
+    "sagaNum": null,
+    "editions": [
+      {
+        "lang": "ES",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-368662-SPANISH-VER--Linda-When-Will-Your-Heart-Be-Mine"
+      }
+    ]
+  },
+  {
+    "id": "b_1777362846761_v9rmq",
+    "title": "Last Christmas",
+    "authors": [
+      "Peony"
+    ],
+    "year": 2024,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/339823/Thumbnail/book_detail_large.gif?2",
+    "synopsis": "Por pedir un deseo en un árbol de Navidad, Prannirun vivió una experiencia fantástica: conocer a la mujer de sus sueños y enamorarse a primera vista. «Rose», una mujer hermosa y elegante con un gato, le hizo sentir que había encontrado el amor verdadero.\n\nPero el destino intervino; debido a su alergia al alcohol, Prannirun vomitó sobre la mujer que le gustaba, provocando que ella lo odiara y se alejara con indiferencia. ¡Luego se desmayó y despertó la Navidad siguiente!\n\nY para colmo, ¡se encontró persiguiendo a Rose durante casi un año !\n\"¿Te interesaría adoptarme?\"",
+    "pages": 154,
+    "isbn": null,
+    "genres": [
+      "Fantasía",
+      "Fantasía Urbana",
+      "Romance"
+    ],
+    "subgenres": [
+      "Navidad"
+    ],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "ambientacion": [],
+    "spicy": 1,
+    "formato": "Trilogía",
+    "adaptacion": "Sin adaptación",
+    "sagaName": "Trilogía Christmas",
+    "sagaNum": 1,
+    "editions": [
+      {
+        "lang": "TH",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-339823-Last-Christmas-%E0%B8%A3%E0%B8%B0%E0%B8%A2%E0%B8%B0%E0%B8%A5%E0%B8%AD%E0%B8%87%E0%B8%A3%E0%B8%B1%E0%B8%81"
+      }
+    ]
   }
 ]
