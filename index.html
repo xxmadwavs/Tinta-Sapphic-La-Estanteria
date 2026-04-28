@@ -465,6 +465,8 @@ const SPICY_UNKNOWN_ICON  = '❓';
 let allBooks=[], ratingsMap={}, myRatings={}, currentUser=null, activeBook=null;
 let authMode='login', pendingStar=0;
 let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],adaptacion:null,valoracion:null};
+let currentPage=1;
+const PAGE_SIZE=24;
 
 // Extract saga name from book
 function getSaga(b){
@@ -698,7 +700,8 @@ function clearAllFilters(){
 }
 
 /* ── FILTER & RENDER ── */
-function applyFilters(){
+function applyFilters(resetPage=true){
+  if(resetPage) currentPage=1;
   filters.q=document.getElementById('searchInput').value.toLowerCase().trim();
   renderActivePills();
   let books=[...allBooks];
@@ -730,16 +733,20 @@ function applyFilters(){
   else if(sort==='za') books.sort((a,b)=>b.title.localeCompare(a.title,'es'));
   else if(sort==='year_desc') books.sort((a,b)=>(b.year||0)-(a.year||0));
   else if(sort==='year_asc') books.sort((a,b)=>(a.year||0)-(b.year||0));
-  document.getElementById('resultsCount').textContent=`${books.length} de ${allBooks.length} libros`;
-  renderGrid(books);
+  const total=books.length;
+  const totalPages=Math.max(1,Math.ceil(total/PAGE_SIZE));
+  if(currentPage>totalPages) currentPage=totalPages;
+  document.getElementById('resultsCount').textContent=`${total} de ${allBooks.length} libros`;
+  const start=(currentPage-1)*PAGE_SIZE;
+  renderGrid(books.slice(start,start+PAGE_SIZE), total, totalPages);
 }
 
-function renderGrid(books){
+function renderGrid(books, total, totalPages){
   const c=document.getElementById('booksContainer');
-  if(!books.length){c.innerHTML=`<div class="empty-state"><div class="empty-big">¿Dónde están?</div><p>Ningún libro coincide.</p></div>`;return;}
-  const sortedR=[...books].sort((a,b)=>(ratingsMap[b.id]?.avg||0)-(ratingsMap[a.id]?.avg||0));
-  const rankMap={};sortedR.forEach((b,i)=>{if(ratingsMap[b.id]?.count>0)rankMap[b.id]=i+1;});
-  c.innerHTML=`<div class="books-grid">${books.map(b=>{
+  if(!total){c.innerHTML=`<div class="empty-state"><div class="empty-big">¿Dónde están?</div><p>Ningún libro coincide.</p></div>`;return;}
+  const sortedR=[...allBooks].filter(b=>ratingsMap[b.id]?.count>0).sort((a,b)=>(ratingsMap[b.id]?.avg||0)-(ratingsMap[a.id]?.avg||0));
+  const rankMap={};sortedR.forEach((b,i)=>{rankMap[b.id]=i+1;});
+  let html=`<div class="books-grid">${books.map(b=>{
     const r=ratingsMap[b.id]||{avg:0,count:0};
     const rank=rankMap[b.id];
     const myScore=myRatings[b.id]||0;
@@ -772,6 +779,32 @@ function renderGrid(books){
       </div>
     </div>`;
   }).join('')}</div>`;
+
+  if(totalPages>1){
+    const p=currentPage;
+    const show=new Set([1,totalPages,p,p-1,p+1].filter(n=>n>=1&&n<=totalPages));
+    const sorted=[...show].sort((a,b)=>a-b);
+    let btns='';let prev=-1;
+    for(const n of sorted){
+      if(prev!==-1&&n-prev>1) btns+=`<span class="pg-dots">…</span>`;
+      btns+=`<button class="pg-btn${n===p?' active':''}" onclick="goToPage(${n})">${n}</button>`;
+      prev=n;
+    }
+    html+=`<p class="pg-info">Página ${p} de ${totalPages} · ${total} libros</p>
+    <div class="pagination">
+      <button class="pg-btn pg-arrow" onclick="goToPage(${p-1})" ${p<=1?'disabled':''}>‹</button>
+      ${btns}
+      <button class="pg-btn pg-arrow" onclick="goToPage(${p+1})" ${p>=totalPages?'disabled':''}>›</button>
+    </div>`;
+  }
+
+  c.innerHTML=html;
+}
+
+function goToPage(n){
+  currentPage=n;
+  applyFilters(false);
+  document.querySelector('.main').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 /* ── BOOK MODAL ── */
@@ -853,7 +886,8 @@ function renderBookModal(){
 function filterBySagaFromModal(sagaName){
   closeBookModal();
   if(!filters.sagas.includes(sagaName)) filters.sagas=[sagaName];
-  updateDDCounts();renderActivePills();applyFilters();
+  currentPage=1;
+  updateDDCounts();renderActivePills();applyFilters(false);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function hoverStar(n){document.querySelectorAll('#starInput .star-btn').forEach((b,i)=>b.style.color=i<n?'var(--gold)':'');}
