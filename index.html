@@ -917,7 +917,7 @@ async function submitVote(){
   ratingsMap[activeBook.id]={avg:Math.round(newAvg*10)/10,count:newCount};
   myRatings[activeBook.id]=pendingStar;
   showToast('¡Valoración guardada! ✓','success');
-  updateStats();applyFilters();renderBookModal();
+  updateStats();applyFilters(false);renderBookModal();
 }
 
 async function deleteVote(){
@@ -939,7 +939,7 @@ async function deleteVote(){
   await loadMyRatings();
   pendingStar=0;
   showToast('Voto eliminado','success');
-  updateStats();applyFilters();renderBookModal();
+  updateStats();applyFilters(false);renderBookModal();
 }
 
 /* ── AUTH ── */
