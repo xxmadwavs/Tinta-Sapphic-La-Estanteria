@@ -229,6 +229,86 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .toast.error{background:var(--rose);color:#fff}
 
 @media(max-width:700px){.books-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:1rem}.modal-body{padding:1.25rem}.hero{padding:2.5rem 1.25rem 2rem}}
+
+/* ── PAGINACIÓN ── */
+.pagination{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:2.5rem 0 1rem;flex-wrap:wrap}
+.pg-btn{min-width:36px;height:36px;padding:0 10px;border-radius:10px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:13px;font-family:var(--font-body);font-weight:500;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.pg-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent2);background:var(--accent-soft)}
+.pg-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.pg-btn:disabled{opacity:.3;cursor:not-allowed}
+.pg-btn.pg-arrow{font-size:16px}
+.pg-dots{color:var(--muted);font-size:13px;padding:0 4px;user-select:none}
+.pg-info{font-size:12px;color:var(--muted);text-align:center;padding-bottom:.5rem}
+
+/* ── TABS ── */
+.tab-bar{display:flex;gap:.5rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border2);padding-bottom:0}
+.tab-btn{padding:10px 22px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:14px;font-weight:500;font-family:var(--font-body);cursor:pointer;transition:all .18s;margin-bottom:-1px;border-radius:8px 8px 0 0}
+.tab-btn:hover{color:var(--accent2)}
+.tab-btn.active{color:var(--accent2);border-bottom-color:var(--accent);background:var(--accent-soft)}
+
+/* ── TOP 10 ── */
+.top10-wrap{display:flex;flex-direction:column;gap:1.25rem;max-width:780px;margin:0 auto;padding-bottom:4rem}
+
+/* Puesto 1 — grande y centrado */
+.top10-gold{background:linear-gradient(135deg,rgba(201,151,90,0.18) 0%,rgba(201,151,90,0.06) 100%);border:1.5px solid rgba(201,151,90,0.45);border-radius:var(--radius-lg);padding:2rem;display:flex;gap:1.75rem;align-items:flex-start;position:relative;overflow:hidden}
+.top10-gold::before{content:'1';position:absolute;right:-.02em;top:50%;transform:translateY(-50%);font-family:var(--font-display);font-size:clamp(6rem,14vw,10rem);font-weight:800;font-style:italic;color:transparent;-webkit-text-stroke:2px rgba(201,151,90,0.12);pointer-events:none;line-height:1}
+.top10-gold .t10-cover{width:90px;height:136px;border-radius:10px;object-fit:cover;border:2px solid rgba(201,151,90,0.4);flex-shrink:0;box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+.top10-gold .t10-cover-ph{width:90px;height:136px;border-radius:10px;background:var(--surface3);border:2px solid rgba(201,151,90,0.3);display:flex;align-items:center;justify-content:center;font-size:2.5rem;flex-shrink:0}
+.top10-gold .t10-body{flex:1;min-width:0;position:relative;z-index:1}
+.top10-gold .t10-pos{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.top10-gold .t10-title{font-family:var(--font-display);font-size:clamp(1.4rem,4vw,2.2rem);font-weight:600;line-height:1.1;margin-bottom:.3rem;cursor:pointer}
+.top10-gold .t10-title:hover{color:var(--accent2)}
+.top10-gold .t10-author{font-size:13px;color:var(--muted);margin-bottom:.75rem}
+.top10-gold .t10-score{display:flex;align-items:baseline;gap:.4rem;margin-bottom:.5rem}
+.top10-gold .t10-avg{font-family:var(--font-display);font-size:2.5rem;font-weight:300;color:var(--gold);line-height:1}
+.top10-gold .t10-stars{font-size:16px;color:var(--gold);letter-spacing:1px}
+.top10-gold .t10-votes{font-size:12px;color:var(--muted)}
+.top10-gold .t10-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.6rem}
+
+/* Puestos 2-3 — medios en fila */
+.top10-silver-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.top10-silver{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1.25rem;display:flex;gap:1rem;align-items:flex-start;position:relative;overflow:hidden;transition:border-color .18s;cursor:pointer}
+.top10-silver:hover{border-color:var(--accent)}
+.top10-silver::before{content:attr(data-pos);position:absolute;right:-.01em;bottom:-.1em;font-family:var(--font-display);font-size:5rem;font-weight:800;font-style:italic;color:transparent;-webkit-text-stroke:1.5px rgba(180,120,200,0.1);pointer-events:none;line-height:1}
+.top10-silver .t10-cover{width:58px;height:88px;border-radius:8px;object-fit:cover;border:1px solid var(--border2);flex-shrink:0}
+.top10-silver .t10-cover-ph{width:58px;height:88px;border-radius:8px;background:var(--surface3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.top10-silver .t10-body{flex:1;min-width:0;position:relative;z-index:1}
+.top10-silver .t10-pos{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.top10-silver .t10-pos.pos2{color:#c0c8d0}
+.top10-silver .t10-pos.pos3{color:#b08060}
+.top10-silver .t10-title{font-family:var(--font-display);font-size:1.05rem;font-weight:600;line-height:1.2;margin-bottom:.2rem}
+.top10-silver .t10-author{font-size:11.5px;color:var(--muted);margin-bottom:.4rem}
+.top10-silver .t10-score{display:flex;align-items:baseline;gap:.3rem}
+.top10-silver .t10-avg{font-family:var(--font-display);font-size:1.5rem;font-weight:300;color:var(--text)}
+.top10-silver .t10-stars{font-size:11px;color:var(--gold)}
+.top10-silver .t10-votes{font-size:11px;color:var(--muted)}
+
+/* Puestos 4-10 — filas compactas */
+.top10-rest{display:flex;flex-direction:column;gap:.5rem}
+.top10-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.85rem 1.1rem;display:flex;align-items:center;gap:1rem;cursor:pointer;transition:all .15s}
+.top10-row:hover{border-color:var(--border2);background:var(--surface2)}
+.top10-row .t10-num{font-family:var(--font-display);font-size:1.5rem;font-weight:300;color:var(--muted);width:28px;text-align:center;flex-shrink:0;font-style:italic}
+.top10-row .t10-cover{width:36px;height:54px;border-radius:6px;object-fit:cover;border:1px solid var(--border);flex-shrink:0}
+.top10-row .t10-cover-ph{width:36px;height:54px;border-radius:6px;background:var(--surface3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.top10-row .t10-info{flex:1;min-width:0}
+.top10-row .t10-title{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top10-row .t10-author{font-size:12px;color:var(--muted);margin-top:1px}
+.top10-row .t10-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0}
+.top10-row .t10-avg{font-family:var(--font-display);font-size:1.3rem;font-weight:300;color:var(--text);line-height:1}
+.top10-row .t10-votes{font-size:11px;color:var(--muted)}
+
+/* separador de grupos */
+.top10-divider{height:1px;background:var(--border);margin:.25rem 0}
+
+.top10-empty{text-align:center;padding:3rem;color:var(--muted);font-style:italic}
+
+@media(max-width:600px){
+  .top10-silver-row{grid-template-columns:1fr}
+  .top10-gold{flex-direction:column;align-items:center;text-align:center}
+  .top10-gold .t10-tags{justify-content:center}
+  .top10-gold .t10-score{justify-content:center}
+  .tab-btn{padding:8px 14px;font-size:13px}
+}
 </style>
 </head>
 <body>
@@ -255,6 +335,15 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </section>
 
 <main class="main">
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tabEstanteria" onclick="switchTab('estanteria')">📚 Estantería</button>
+    <button class="tab-btn" id="tabTop10" onclick="switchTab('top10')">🏆 Top 10</button>
+  </div>
+
+  <!-- PANEL ESTANTERÍA -->
+  <div id="panelEstanteria">
   <div class="filter-shell">
     <div class="filter-top">
       <div class="search-wrap">
@@ -321,6 +410,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
   </div>
   <div id="booksContainer"><div class="loading"><div class="spinner"></div>Cargando la estantería…</div></div>
+  </div><!-- /panelEstanteria -->
+
+  <!-- PANEL TOP 10 -->
+  <div id="panelTop10" style="display:none">
+    <div id="top10Container"></div>
+  </div>
+
 </main>
 
 <!-- BOOK MODAL -->
@@ -431,6 +527,7 @@ async function loadMyRatings(){
 function updateStats(){
   document.getElementById('statBooks').innerHTML=`<em>${allBooks.length}</em>`;
   document.getElementById('statVotes').innerHTML=`<em>${Object.values(ratingsMap).reduce((s,r)=>s+r.count,0)}</em>`;
+  if(activeTab==='top10') renderTop10();
 }
 
 /* ── DROPDOWNS ── */
@@ -860,6 +957,125 @@ function setAuthError(msg){document.getElementById('authError').textContent=msg;
 async function logout(){await sb.auth.signOut();myRatings={};showToast('Hasta pronto 🌹','success');applyFilters();}
 
 function showToast(msg,type='success'){const t=document.getElementById('toast');t.textContent=msg;t.className=`toast ${type}`;setTimeout(()=>t.classList.add('show'),10);setTimeout(()=>t.classList.remove('show'),3200);}
+
+/* ── TABS ── */
+let activeTab='estanteria';
+function switchTab(tab){
+  activeTab=tab;
+  document.getElementById('tabEstanteria').classList.toggle('active',tab==='estanteria');
+  document.getElementById('tabTop10').classList.toggle('active',tab==='top10');
+  document.getElementById('panelEstanteria').style.display=tab==='estanteria'?'':'none';
+  document.getElementById('panelTop10').style.display=tab==='top10'?'':'none';
+  if(tab==='top10') renderTop10();
+}
+
+/* ── TOP 10 ── */
+function renderTop10(){
+  const c=document.getElementById('top10Container');
+  // ordenar por avg desc, solo libros con al menos 1 valoración
+  const ranked=[...allBooks]
+    .filter(b=>ratingsMap[b.id]?.count>0)
+    .sort((a,b)=>{
+      const da=ratingsMap[a.id],db=ratingsMap[b.id];
+      if(db.avg!==da.avg) return db.avg-da.avg;
+      return db.count-da.count; // desempate por número de votos
+    })
+    .slice(0,10);
+
+  if(!ranked.length){
+    c.innerHTML=`<div class="top10-empty">Aún no hay valoraciones. ¡Sé la primera en votar! 🌹</div>`;
+    return;
+  }
+
+  function coverEl(b,cls){
+    return b.cover
+      ?`<img class="${cls}" src="${b.cover}" alt="${b.title}" onerror="this.outerHTML='<div class=\\'${cls}-ph\\'>📖</div>'">`
+      :`<div class="${cls}-ph">📖</div>`;
+  }
+  function starsHtml(avg){
+    return [1,2,3,4,5].map(i=>i<=Math.round(avg)?'★':'☆').join('');
+  }
+  function tags(b){
+    return (b.genres||[]).slice(0,2).map(g=>`<span class="tag tag-genre">${g}</span>`).join('')
+      +((b.dinamicas||[]).slice(0,1).map(d=>`<span class="tag tag-dinamica">${d}</span>`).join(''));
+  }
+
+  let html='<div class="top10-wrap">';
+
+  // ── PUESTO 1 ──
+  if(ranked[0]){
+    const b=ranked[0],r=ratingsMap[b.id];
+    html+=`<div class="top10-gold">
+      ${coverEl(b,'t10-cover')}
+      <div class="t10-body">
+        <div class="t10-pos">🥇 Primer puesto</div>
+        <div class="t10-title" onclick="openBook('${b.id}')">${b.title}</div>
+        <div class="t10-author">${(b.authors||[]).join(', ')||'—'}</div>
+        <div class="t10-score">
+          <span class="t10-avg">${r.avg.toFixed(1)}</span>
+          <span class="t10-stars">${starsHtml(r.avg)}</span>
+          <span class="t10-votes">${r.count} voto${r.count!==1?'s':''}</span>
+        </div>
+        <div class="t10-tags">${tags(b)}</div>
+      </div>
+    </div>`;
+  }
+
+  // ── PUESTOS 2 Y 3 ──
+  const p2=ranked[1],p3=ranked[2];
+  if(p2||p3){
+    html+=`<div class="top10-silver-row">`;
+    [p2,p3].forEach((b,i)=>{
+      if(!b) return;
+      const pos=i+2,r=ratingsMap[b.id];
+      const medal=pos===2?'🥈':'🥉';
+      const posClass=pos===2?'pos2':'pos3';
+      html+=`<div class="top10-silver" data-pos="${pos}" onclick="openBook('${b.id}')">
+        ${coverEl(b,'t10-cover')}
+        <div class="t10-body">
+          <div class="t10-pos ${posClass}">${medal} Puesto ${pos}</div>
+          <div class="t10-title">${b.title}</div>
+          <div class="t10-author">${(b.authors||[]).join(', ')||'—'}</div>
+          <div class="t10-score">
+            <span class="t10-avg">${r.avg.toFixed(1)}</span>
+            <span class="t10-stars">${starsHtml(r.avg)}</span>
+          </div>
+          <div class="t10-votes">${r.count} voto${r.count!==1?'s':''}</div>
+        </div>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  // ── PUESTOS 4-5, 6-7, 8-9-10 ──
+  const groups=[[3,4],[5,6],[7,8,9]];
+  groups.forEach(idxs=>{
+    const slice=idxs.map(i=>ranked[i]).filter(Boolean);
+    if(!slice.length) return;
+    html+=`<div class="top10-rest">`;
+    slice.forEach((b,gi)=>{
+      const pos=idxs[gi]+1,r=ratingsMap[b.id];
+      html+=`<div class="top10-row" onclick="openBook('${b.id}')">
+        <div class="t10-num">${pos}</div>
+        ${coverEl(b,'t10-cover')}
+        <div class="t10-info">
+          <div class="t10-title">${b.title}</div>
+          <div class="t10-author">${(b.authors||[]).join(', ')||'—'}</div>
+        </div>
+        <div class="t10-right">
+          <div class="t10-avg">${r.avg.toFixed(1)} <span style="color:var(--gold);font-size:13px">★</span></div>
+          <div class="t10-votes">${r.count} voto${r.count!==1?'s':''}</div>
+        </div>
+      </div>`;
+      // separador entre filas del mismo grupo (no tras la última)
+      if(gi<slice.length-1) html+=`<div class="top10-divider"></div>`;
+    });
+    html+=`</div>`;
+  });
+
+  html+=`</div>`;
+  c.innerHTML=html;
+}
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeBookModal();closeAuthModal();closeAllDD();}});
 document.getElementById('bookModal').addEventListener('click',e=>{if(e.target.id==='bookModal')closeBookModal();});
