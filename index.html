@@ -217,6 +217,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .auth-error{font-size:12px;color:var(--rose);text-align:center;margin-top:.4rem;min-height:16px}
 .auth-toggle{font-size:12.5px;color:var(--muted);margin-top:.75rem}
 .auth-toggle a{color:var(--accent2);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit;font-size:inherit}
+.tg-input-wrap{display:flex;align-items:center;border-radius:10px;border:1px solid var(--border2);background:var(--surface2);overflow:hidden;transition:border-color .15s}
+.tg-input-wrap:focus-within{border-color:var(--accent)}
+.tg-at{padding:10px 4px 10px 14px;font-size:15px;color:var(--accent2);font-weight:600;line-height:1;user-select:none}
+.tg-input-wrap input{flex:1;padding:10px 14px 10px 2px;border:none;background:transparent;color:var(--text);font-size:13.5px;font-family:var(--font-body);outline:none}
+.tg-input-wrap input::placeholder{color:var(--muted)}
 
 .toast{position:fixed;bottom:2rem;right:2rem;padding:10px 22px;border-radius:20px;font-size:13px;font-weight:600;z-index:999;transform:translateY(80px);opacity:0;transition:all .25s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
@@ -332,11 +337,15 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <button class="auth-close" onclick="closeAuthModal()">✕</button>
     <div class="auth-logo">Tinta <em>Sapphic</em></div>
     <div class="auth-title" id="authTitle">Bienvenida</div>
-    <p class="auth-sub" id="authSub">Entra para valorar libros y que tu voto cuente en el ranking.</p>
+    <p class="auth-sub" id="authSub">Entra para votar y que tu valoración cuente en el ranking.</p>
     <div class="auth-form">
-      <input type="text" id="authName" placeholder="Tu nombre" style="display:none" autocomplete="off">
-      <input type="email" id="authEmail" placeholder="Email" autocomplete="off">
-      <input type="password" id="authPass" placeholder="Contraseña (mín. 6 caracteres)" autocomplete="new-password">
+      <!-- Solo registro: campo Telegram -->
+      <div class="tg-input-wrap" id="authTelegramWrap">
+        <span class="tg-at">@</span>
+        <input type="text" id="authTelegram" placeholder="usuario_telegram" autocomplete="off" autocapitalize="none" spellcheck="false" oninput="this.value=this.value.replace(/[^a-zA-Z0-9_]/g,'')">
+      </div>
+      <input type="email" id="authEmail" placeholder="Email" autocomplete="email">
+      <input type="password" id="authPass" placeholder="Contraseña (mín. 6 caracteres)" autocomplete="current-password" onkeydown="if(event.key==='Enter')handleAuth()">
       <button class="btn-primary" id="authBtn" onclick="handleAuth()">Entrar</button>
     </div>
     <div class="auth-error" id="authError"></div>
@@ -803,8 +812,8 @@ async function deleteVote(){
 function renderAuthUI(){
   const el=document.getElementById('authArea');
   if(currentUser){
-    const name=currentUser.user_metadata?.name||currentUser.email.split('@')[0];
-    el.innerHTML=`<div class="user-chip"><div class="user-avatar">${name.slice(0,2).toUpperCase()}</div><span class="user-name">${name}</span><button class="btn-logout" onclick="logout()">salir</button></div>`;
+    const tg=currentUser.user_metadata?.telegram_username||currentUser.email.split('@')[0];
+    el.innerHTML=`<div class="user-chip"><div class="user-avatar">${tg.slice(0,2).toUpperCase()}</div><span class="user-name">@${tg}</span><button class="btn-logout" onclick="logout()">salir</button></div>`;
     document.getElementById('valoracionFilter').style.display='flex';
     document.getElementById('valoracionFilter').style.gap='.4rem';
   }else{
@@ -820,8 +829,8 @@ function toggleAuthMode(){authMode=authMode==='login'?'register':'login';updateA
 function updateAuthUI(){
   const isReg=authMode==='register';
   document.getElementById('authTitle').textContent=isReg?'Crear cuenta':'Bienvenida';
-  document.getElementById('authSub').textContent=isReg?'Únete y empieza a valorar libros sapphic.':'Entra para valorar libros y que tu voto cuente en el ranking.';
-  document.getElementById('authName').style.display=isReg?'':'none';
+  document.getElementById('authSub').textContent=isReg?'Únete con tu usuario de Telegram y empieza a valorar.':'Entra para valorar libros y que tu voto cuente en el ranking.';
+  document.getElementById('authTelegramWrap').style.display=isReg?'flex':'none';
   document.getElementById('authBtn').textContent=isReg?'Registrarse':'Entrar';
   document.getElementById('authToggle').innerHTML=isReg?'¿Ya tienes cuenta? <a onclick="toggleAuthMode()">Inicia sesión</a>':'¿No tienes cuenta? <a onclick="toggleAuthMode()">Regístrate aquí</a>';
   document.getElementById('authError').textContent='';
@@ -829,16 +838,17 @@ function updateAuthUI(){
 async function handleAuth(){
   const email=document.getElementById('authEmail').value.trim();
   const pass=document.getElementById('authPass').value;
-  const name=document.getElementById('authName').value.trim();
+  const tg=document.getElementById('authTelegram').value.trim().replace(/^@/,'');
   const btn=document.getElementById('authBtn');
   if(!email||!pass){setAuthError('Rellena email y contraseña.');return;}
-  if(authMode==='register'&&!name){setAuthError('Escribe tu nombre.');return;}
   if(pass.length<6){setAuthError('Mínimo 6 caracteres.');return;}
+  if(authMode==='register'&&!tg){setAuthError('Escribe tu usuario de Telegram.');return;}
+  if(authMode==='register'&&tg.length<3){setAuthError('El usuario de Telegram debe tener al menos 3 caracteres.');return;}
   btn.disabled=true;btn.textContent='…';
   let error;
   if(authMode==='register'){
-    ({error}=await sb.auth.signUp({email,password:pass,options:{data:{name}}}));
-    if(!error){closeAuthModal();showToast('¡Cuenta creada! Revisa tu email.','success');}
+    ({error}=await sb.auth.signUp({email,password:pass,options:{data:{telegram_username:tg}}}));
+    if(!error){closeAuthModal();showToast('¡Cuenta creada! Revisa tu email 🌹','success');}
   }else{
     ({error}=await sb.auth.signInWithPassword({email,password:pass}));
     if(!error){await loadMyRatings();closeAuthModal();showToast('¡Bienvenida de vuelta! 🌹','success');applyFilters();}
