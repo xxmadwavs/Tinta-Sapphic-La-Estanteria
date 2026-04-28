@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TINTA SAPPHIC ~ La Estantería</title>
+<meta name="sb-url" content="https://fteitflirsmabcasmwij.supabase.co">
+<meta name="sb-key" content="sb_publishable_2xi9ELv252qAXY_Fx3ADZg_nuWtgcUA">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -455,8 +457,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="toast" id="toast"></div>
 
 <script>
-const SUPABASE_URL = 'https://fteitflirsmabcasmwij.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_2xi9ELv252qAXY_Fx3ADZg_nuWtgcUA';
+const SUPABASE_URL = document.querySelector('meta[name="sb-url"]').content;
+const SUPABASE_KEY = document.querySelector('meta[name="sb-key"]').content;
 const DATA_URL     = 'books_data.json';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -470,6 +472,37 @@ let authMode='login', pendingStar=0;
 let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],adaptacion:null,valoracion:null};
 let currentPage=1;
 const PAGE_SIZE=24;
+
+/* ── UTILIDADES ── */
+function debounce(fn,ms){let t;return(...args)=>{clearTimeout(t);t=setTimeout(()=>fn(...args),ms);};}
+
+/* ── URL STATE ── */
+function pushState(){
+  const params=new URLSearchParams();
+  if(currentPage>1) params.set('page',currentPage);
+  if(filters.q) params.set('q',filters.q);
+  ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas'].forEach(k=>{
+    if(filters[k].length) params.set(k,filters[k].join('|'));
+  });
+  if(filters.spicy.length) params.set('spicy',filters.spicy.join('|'));
+  if(filters.spicyUnknown) params.set('spicyUnknown','1');
+  if(filters.adaptacion) params.set('adaptacion',filters.adaptacion);
+  if(filters.valoracion) params.set('valoracion',filters.valoracion);
+  const url=params.toString()?'?'+params.toString():location.pathname;
+  history.replaceState(null,'',url);
+}
+function loadState(){
+  const params=new URLSearchParams(location.search);
+  if(params.get('page')) currentPage=parseInt(params.get('page'))||1;
+  if(params.get('q')){filters.q=params.get('q');document.getElementById('searchInput').value=filters.q;}
+  ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas'].forEach(k=>{
+    if(params.get(k)) filters[k]=params.get(k).split('|');
+  });
+  if(params.get('spicy')) filters.spicy=params.get('spicy').split('|').map(Number);
+  if(params.get('spicyUnknown')) filters.spicyUnknown=true;
+  if(params.get('adaptacion')) filters.adaptacion=params.get('adaptacion');
+  if(params.get('valoracion')) filters.valoracion=params.get('valoracion');
+}
 
 // Extract saga name from book
 function getSaga(b){
@@ -485,12 +518,17 @@ async function init(){
   await loadBooks();
   if(currentUser) await loadMyRatings();
   buildDropdowns();
-  applyFilters();
+  loadState();   // restaurar filtros y página desde la URL
+  applyFilters(false);
+  updateDDCounts();renderActivePills();
+  const debouncedLoadRatings=debounce(()=>{
+    if(currentUser) loadMyRatings().then(()=>{applyFilters(false);if(activeBook)renderBookModal();});
+    else{myRatings={};applyFilters(false);}
+  },300);
   sb.auth.onAuthStateChange((_e,session)=>{
     currentUser=session?.user||null;
     renderAuthUI();
-    if(currentUser) loadMyRatings().then(()=>{applyFilters();if(activeBook)renderBookModal();});
-    else{myRatings={};applyFilters();}
+    debouncedLoadRatings();
   });
   document.addEventListener('click',e=>{if(!e.target.closest('.dd-wrap'))closeAllDD();});
 }
@@ -742,6 +780,7 @@ function applyFilters(resetPage=true){
   document.getElementById('resultsCount').textContent=`${total} de ${allBooks.length} libros`;
   const start=(currentPage-1)*PAGE_SIZE;
   renderGrid(books.slice(start,start+PAGE_SIZE), total, totalPages);
+  pushState();
 }
 
 function renderGrid(books, total, totalPages){
@@ -816,6 +855,7 @@ function openBook(id){
   if(!activeBook) return;
   pendingStar=myRatings[id]||0;
   renderBookModal();
+  attachStarTouch();
   document.getElementById('bookModal').classList.add('open');
   document.body.style.overflow='hidden';
 }
@@ -831,7 +871,7 @@ function renderBookModal(){
   const communityRating=r.count>0
     ?`<div class="community-rating"><div class="avg-big">${r.avg.toFixed(1)}</div><div><div class="avg-stars-row">${stars(r.avg)}</div><div class="avg-votes">${r.count} valoración${r.count!==1?'es':''}</div></div></div>`
     :`<p style="font-size:13px;color:var(--muted);font-style:italic;margin-bottom:.8rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)">Aún sin valoraciones. ¡Sé la primera!</p>`;
-  const starInput=[1,2,3,4,5].map(i=>`<button class="star-btn${i<=(pendingStar||myScore)?' selected':''}" onmouseover="hoverStar(${i})" onmouseout="unhoverStar()" onclick="selectStar(${i})">★</button>`).join('');
+  const starInput=[1,2,3,4,5].map(i=>`<button class="star-btn${i<=(pendingStar||myScore)?' selected':''}" data-n="${i}">★</button>`).join('');
   let voteArea='';
   if(!currentUser) voteArea=`<p class="login-to-vote"><a onclick="closeBookModal();openAuthModal()">Inicia sesión</a> para valorar este libro.</p>`;
   else voteArea=`<div><p class="vote-prompt">${myScore>0?`Tu valoración: ${'★'.repeat(myScore)} — puedes cambiarla`:'¿Qué te pareció?'}</p><div class="stars-input" id="starInput">${starInput}</div><div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center"><button class="vote-submit" id="voteBtn" onclick="submitVote()" ${!pendingStar?'disabled':''}>${pendingStar>0?`Guardar ${pendingStar} ★`:myScore>0?'Actualizar':'Guardar'}</button>${myScore>0?`<button class="vote-delete" id="deleteBtn" onclick="deleteVote()">✕ Eliminar mi voto</button>`:''}</div></div>`;
@@ -882,8 +922,44 @@ function renderBookModal(){
           </a>`).join('')}
         </div>
       </div>`:''}
-      <div class="rating-section"><div class="rating-title">Valoración de la comunidad</div>${communityRating}${voteArea}</div>
+      <div class="rating-section" id="modalRatingSection"><div class="rating-title">Valoración de la comunidad</div>${communityRating}${voteArea}</div>
     </div>`;
+}
+
+/* Actualiza solo el bloque de valoración sin rerenderizar todo el modal */
+function buildRatingHTML(){
+  const b=activeBook;
+  const r=ratingsMap[b.id]||{avg:0,count:0};
+  const myScore=myRatings[b.id]||0;
+  const stars=avg=>[1,2,3,4,5].map(i=>
+    `<span class="star ${i<=Math.round(avg)?'on':'off'}">★</span>`).join('');
+  const communityRating=r.count>0
+    ?`<div class="community-rating"><div class="avg-big">${r.avg.toFixed(1)}</div><div><div class="avg-stars-row">${stars(r.avg)}</div><div class="avg-votes">${r.count} valoración${r.count!==1?'es':''}</div></div></div>`
+    :`<p style="font-size:13px;color:var(--muted);font-style:italic;margin-bottom:.8rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)">Aún sin valoraciones. ¡Sé la primera!</p>`;
+  const starInput=[1,2,3,4,5].map(i=>
+    `<button class="star-btn${i<=(pendingStar||myScore)?' selected':''}" data-n="${i}">★</button>`).join('');
+  let voteArea='';
+  if(!currentUser) voteArea=`<p class="login-to-vote"><a onclick="closeBookModal();openAuthModal()">Inicia sesión</a> para valorar este libro.</p>`;
+  else voteArea=`<div><p class="vote-prompt">${myScore>0?`Tu valoración: ${'★'.repeat(myScore)} — puedes cambiarla`:'¿Qué te pareció?'}</p><div class="stars-input" id="starInput">${starInput}</div><div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center"><button class="vote-submit" id="voteBtn" onclick="submitVote()" ${!pendingStar?'disabled':''}>${pendingStar>0?`Guardar ${pendingStar} ★`:myScore>0?'Actualizar':'Guardar'}</button>${myScore>0?`<button class="vote-delete" id="deleteBtn" onclick="deleteVote()">✕ Eliminar mi voto</button>`:''}</div></div>`;
+  return `<div class="rating-title">Valoración de la comunidad</div>${communityRating}${voteArea}`;
+}
+function renderVoteSection(){
+  const el=document.getElementById('modalRatingSection');
+  if(!el) return;
+  el.innerHTML=buildRatingHTML();
+  attachStarTouch();
+}
+/* Estrellas con soporte táctil real para móvil */
+function attachStarTouch(){
+  const btns=document.querySelectorAll('#starInput .star-btn');
+  btns.forEach(btn=>{
+    const n=parseInt(btn.dataset.n);
+    btn.addEventListener('mouseover',()=>hoverStar(n));
+    btn.addEventListener('mouseout',()=>unhoverStar());
+    btn.addEventListener('click',()=>selectStar(n));
+    btn.addEventListener('touchstart',e=>{e.preventDefault();hoverStar(n);},{passive:false});
+    btn.addEventListener('touchend',e=>{e.preventDefault();selectStar(n);unhoverStar();},{passive:false});
+  });
 }
 
 function filterBySagaFromModal(sagaName){
@@ -917,7 +993,7 @@ async function submitVote(){
   ratingsMap[activeBook.id]={avg:Math.round(newAvg*10)/10,count:newCount};
   myRatings[activeBook.id]=pendingStar;
   showToast('¡Valoración guardada! ✓','success');
-  updateStats();applyFilters(false);renderBookModal();
+  updateStats();applyFilters(false);renderVoteSection();
 }
 
 async function deleteVote(){
@@ -926,20 +1002,20 @@ async function deleteVote(){
   if(btn){btn.disabled=true;btn.textContent='Eliminando…';}
   const {error}=await sb.from('ratings').delete().eq('user_id',currentUser.id).eq('book_id',activeBook.id);
   if(error){showToast('Error al eliminar','error');if(btn){btn.disabled=false;btn.textContent='✕ Eliminar mi voto';}return;}
-  // Reload everything fresh from Supabase
-  const {data:rData}=await sb.from('ratings').select('book_id,score');
-  ratingsMap={};
-  if(rData){
-    const grouped={};
-    rData.forEach(r=>{if(!grouped[r.book_id])grouped[r.book_id]=[];grouped[r.book_id].push(r.score);});
-    Object.entries(grouped).forEach(([id,scores])=>{
-      ratingsMap[id]={avg:Math.round(scores.reduce((a,b)=>a+b,0)/scores.length*10)/10,count:scores.length};
-    });
+  // Actualizar localmente igual que submitVote (sin recargar todo de Supabase)
+  const oldScore=myRatings[activeBook.id];
+  const r=ratingsMap[activeBook.id]||{avg:0,count:0};
+  if(r.count<=1){
+    delete ratingsMap[activeBook.id];
+  } else {
+    const newCount=r.count-1;
+    const newAvg=(r.avg*r.count-oldScore)/newCount;
+    ratingsMap[activeBook.id]={avg:Math.round(newAvg*10)/10,count:newCount};
   }
-  await loadMyRatings();
+  delete myRatings[activeBook.id];
   pendingStar=0;
   showToast('Voto eliminado','success');
-  updateStats();applyFilters(false);renderBookModal();
+  updateStats();applyFilters(false);renderVoteSection();
 }
 
 /* ── AUTH ── */
