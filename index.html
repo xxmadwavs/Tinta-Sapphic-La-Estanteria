@@ -347,8 +347,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="filter-shell">
     <div class="filter-top">
       <div class="search-wrap">
+        <!-- trampa para el autocompletado del navegador -->
+        <input type="text" style="display:none" name="username" autocomplete="username">
+        <input type="password" style="display:none" name="password" autocomplete="current-password">
         <span class="search-icon">🔍</span>
-        <input class="search-input" id="searchInput" placeholder="Buscar por título o autora…" oninput="applyFilters()" autocomplete="off">
+        <input class="search-input" id="searchInput" type="search" placeholder="Buscar por título o autora…" oninput="applyFilters()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="q" readonly onfocus="this.removeAttribute('readonly')">
       </div>
       <select class="sort-select" id="sortSel" onchange="applyFilters()">
         <option value="top">🏆 Mejor valorados</option>
