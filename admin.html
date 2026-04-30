@@ -300,6 +300,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div style="display:flex;gap:.5rem">
           <button class="btn small" onclick="renderAdminSolicitudes()">↻ Actualizar</button>
           <button class="btn small teal" onclick="exportarSolicitudesAdmin()">⬇ Exportar CSV</button>
+          <select id="solAdminOrden" onchange="renderAdminSolicitudes()" style="padding:4px 10px;border-radius:20px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12px;font-family:'Instrument Sans',sans-serif;cursor:pointer;outline:none">
+            <option value="asc">Más antiguas primero</option>
+            <option value="desc">Más recientes primero</option>
+          </select>
         </div>
       </div>
 
@@ -366,6 +370,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           <button class="btn primary small" onclick="admAddSol()">+ Añadir solicitud</button>
           <span class="sol-msg" id="adm_sol_msg" style="font-size:12px"></span>
         </div>
+      </div>
+
+      <!-- Búsqueda -->
+      <div style="margin-bottom:.75rem;display:flex;gap:.5rem;align-items:center">
+        <input type="search" id="solAdminBusqueda" placeholder="Buscar por título, autor o @usuario…" oninput="renderAdminSolicitudes()" style="flex:1;padding:7px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12.5px;font-family:'Instrument Sans',sans-serif;outline:none">
       </div>
 
       <!-- Kanban -->
@@ -739,11 +748,19 @@ async function renderAdminSolicitudes(){
   const grid=document.getElementById('solAdminGrid');
   grid.innerHTML='<div class="sol-adm-empty">Cargando…</div>';
 
-  const {data:lista, error}=await sb.from('solicitudes').select('*').order('fecha',{ascending:false});
+  const orden = document.getElementById('solAdminOrden')?.value || 'asc';
+  const {data:raw, error}=await sb.from('solicitudes').select('*').order('fecha',{ascending: orden==='asc'});
   if(error){grid.innerHTML='<div class="sol-adm-empty">Error al cargar</div>';return;}
 
-  const pend=(lista||[]).filter(s=>s.subido==='NO');
-  const sub=(lista||[]).filter(s=>s.subido==='SI');
+  const q = (document.getElementById('solAdminBusqueda')?.value||'').toLowerCase().trim();
+  const lista = q ? (raw||[]).filter(s=>
+    s.titulo.toLowerCase().includes(q) ||
+    (s.autor||'').toLowerCase().includes(q) ||
+    (s.telegram||'').toLowerCase().includes(q)
+  ) : (raw||[]);
+
+  const pend=lista.filter(s=>s.subido==='NO');
+  const sub=lista.filter(s=>s.subido==='SI');
 
   function cardHtml(s){
     const saficoTag=s.safico==='SI'?'<span class="sol-adm-tag safico">Sáfico 🌹</span>':'';

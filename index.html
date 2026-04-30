@@ -378,6 +378,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sol-login-notice a{color:var(--accent2);cursor:pointer;background:none;border:none;font:inherit;text-decoration:underline}
 .sol-kanban-locked{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:13px}
 .sol-kanban-locked a{color:var(--accent2);cursor:pointer;background:none;border:none;font:inherit;text-decoration:underline}
+.sol-pg{display:flex;align-items:center;justify-content:space-between;padding:.6rem .8rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+.sol-pg-btns{display:flex;gap:.3rem}
+.sol-pg-btn{padding:3px 10px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:11.5px;font-family:var(--font-body);cursor:pointer;transition:all .14s}
+.sol-pg-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent2)}
+.sol-pg-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.sol-pg-btn:disabled{opacity:.35;cursor:not-allowed}
+.sol-card-tag.votos{background:rgba(192,111,196,0.12);color:var(--accent2);border:1px solid rgba(192,111,196,0.2)}
 </style>
 </head>
 <body>
@@ -674,7 +681,7 @@ async function init(){
   applyFilters(false);
   updateDDCounts();renderActivePills();
   const debouncedLoadRatings=debounce(()=>{
-    if(currentUser) loadMyRatings().then(()=>{applyFilters(false);if(activeBook)renderBookModal();});
+    if(currentUser) loadMyRatings().then(()=>{applyFilters(false);if(activeBook)renderBookModal();checkSolicitudesNotif();});
     else{myRatings={};applyFilters(false);}
   },300);
   sb.auth.onAuthStateChange((_e,session)=>{
@@ -921,7 +928,14 @@ function applyFilters(resetPage=true){
   if(filters.valoracion==='valorado') books=books.filter(b=>!!myRatings[b.id]);
   if(filters.valoracion==='no_valorado') books=books.filter(b=>!myRatings[b.id]);
   const sort=document.getElementById('sortSel').value;
-  if(sort==='top') books.sort((a,b)=>(ratingsMap[b.id]?.avg||0)-(ratingsMap[a.id]?.avg||0));
+  if(sort==='top'){
+    books.sort((a,b)=>{
+      const ra=ratingsMap[a.id], rb=ratingsMap[b.id];
+      const avgA=ra?.avg||0, avgB=rb?.avg||0;
+      if(avgB!==avgA) return avgB-avgA;
+      return (rb?.count||0)-(ra?.count||0);
+    });
+  }
   else if(sort==='votes') books.sort((a,b)=>(ratingsMap[b.id]?.count||0)-(ratingsMap[a.id]?.count||0));
   else if(sort==='az') books.sort((a,b)=>a.title.localeCompare(b.title,'es'));
   else if(sort==='za') books.sort((a,b)=>b.title.localeCompare(a.title,'es'));
@@ -1444,37 +1458,85 @@ async function renderSolicitudes(){
   renderMisSolicitudes(lista||[], currentUser.id);
 }
 
+const SOL_PAGE_SIZE = 8;
+let solPages = {pend:1, sub:1};
+let solListas = {pend:[], sub:[]};
+
+function agruparDuplicados(lista){
+  // agrupar por título normalizado, quedarnos con la entrada más antigua y contar votos
+  const norm = t => t.toLowerCase().replace(/[^a-z0-9]/g,'');
+  const map = {};
+  lista.forEach(s=>{
+    const k = norm(s.titulo);
+    if(!map[k]){ map[k] = {...s, votos:1}; }
+    else { map[k].votos++; if(new Date(s.fecha)<new Date(map[k].fecha)) map[k].fecha=s.fecha; }
+  });
+  return Object.values(map);
+}
+
 function renderKanban(lista){
   const wrap = document.getElementById('solKanbanWrap');
   if(!currentUser){
     wrap.innerHTML='<div class="sol-kanban-wrap" style="padding:2rem;text-align:center"><span class="sol-kanban-locked">Inicia sesión para ver todas las solicitudes. <a onclick="openAuthModal()">Entrar</a></span></div>';
     return;
   }
-  const pendientes = lista.filter(s=>s.subido==='NO');
-  const subidos = lista.filter(s=>s.subido==='SI');
+  solListas.pend = agruparDuplicados(lista.filter(s=>s.subido==='NO'));
+  solListas.sub  = agruparDuplicados(lista.filter(s=>s.subido==='SI'));
+
+  wrap.innerHTML='<div class="sol-kanban-wrap">'
+    +'<div class="sol-kanban-tabs">'
+    +'<button class="sol-kanban-tab active pend" data-panel="kpPend" onclick="switchKanbanTab(this)">⏳ Pendientes <span class="sol-kanban-count pend">'+solListas.pend.length+'</span></button>'
+    +'<button class="sol-kanban-tab sub" data-panel="kpSub" onclick="switchKanbanTab(this)">✓ Subidos <span class="sol-kanban-count sub">'+solListas.sub.length+'</span></button>'
+    +'</div>'
+    +'<div class="sol-kanban-panel active" id="kpPend"></div>'
+    +'<div class="sol-kanban-panel" id="kpSub"></div>'
+    +'</div>';
+
+  renderKanbanPage('pend');
+  renderKanbanPage('sub');
+}
+
+function renderKanbanPage(tipo){
+  const lista = solListas[tipo];
+  const page = solPages[tipo];
+  const total = lista.length;
+  const totalPages = Math.max(1, Math.ceil(total/SOL_PAGE_SIZE));
+  const slice = lista.slice((page-1)*SOL_PAGE_SIZE, page*SOL_PAGE_SIZE);
+  const panelId = tipo==='pend' ? 'kpPend' : 'kpSub';
+  const panel = document.getElementById(panelId);
+  if(!panel) return;
 
   function cardHtml(s){
     const saficoTag = s.safico==='SI' ? '<span class="sol-card-tag safico">Sáfico 🌹</span>' : '';
     const autorStr = s.autor ? '<div class="sol-card-author">'+escHtml(s.autor)+'</div>' : '';
+    const votosTag = s.votos>1 ? '<span class="sol-card-tag votos">+'+s.votos+' la piden</span>' : '';
     return '<div class="sol-card">'
       +'<div class="sol-card-title">'+escHtml(s.titulo)+'</div>'
       +autorStr
       +'<div class="sol-card-tags">'
-      +saficoTag
+      +saficoTag+votosTag
       +'<span class="sol-card-tag tipo">'+escHtml(s.tipo)+'</span>'
       +'<span class="sol-card-tag idioma">'+escHtml(s.idioma)+'</span>'
-      +'<span class="sol-card-tag tg">@'+escHtml(s.telegram)+'</span>'
       +'</div></div>';
   }
 
-  wrap.innerHTML='<div class="sol-kanban-wrap">'
-    +'<div class="sol-kanban-tabs">'
-    +'<button class="sol-kanban-tab active pend" data-panel="kpPend" onclick="switchKanbanTab(this)">⏳ Pendientes <span class="sol-kanban-count pend">'+pendientes.length+'</span></button>'
-    +'<button class="sol-kanban-tab sub" data-panel="kpSub" onclick="switchKanbanTab(this)">✓ Subidos <span class="sol-kanban-count sub">'+subidos.length+'</span></button>'
-    +'</div>'
-    +'<div class="sol-kanban-panel active" id="kpPend">'+(pendientes.length ? pendientes.map(cardHtml).join('') : '<div class="sol-empty-col">Sin solicitudes pendientes 🌸</div>')+'</div>'
-    +'<div class="sol-kanban-panel" id="kpSub">'+(subidos.length ? subidos.map(cardHtml).join('') : '<div class="sol-empty-col">Aún no hay nada subido 🌸</div>')+'</div>'
-    +'</div>';
+  const emptyMsg = tipo==='pend' ? 'Sin solicitudes pendientes 🌸' : 'Aún no hay nada subido 🌸';
+  let html = slice.length ? slice.map(cardHtml).join('') : '<div class="sol-empty-col">'+emptyMsg+'</div>';
+
+  if(totalPages>1){
+    const pgBtns = Array.from({length:totalPages},(_,i)=>{
+      const n=i+1;
+      return '<button class="sol-pg-btn'+(n===page?' active':'')+'" data-tipo="'+tipo+'" data-page="'+n+'" onclick="goSolPage(this)">'+n+'</button>';
+    }).join('');
+    html += '<div class="sol-pg"><span>'+((page-1)*SOL_PAGE_SIZE+1)+'-'+Math.min(page*SOL_PAGE_SIZE,total)+' de '+total+'</span><div class="sol-pg-btns">'+pgBtns+'</div></div>';
+  }
+
+  panel.innerHTML = html;
+}
+
+function goSolPage(btn){
+  solPages[btn.dataset.tipo] = parseInt(btn.dataset.page);
+  renderKanbanPage(btn.dataset.tipo);
 }
 
 function switchKanbanTab(btn){
@@ -1490,6 +1552,23 @@ function renderMisSolicitudes(lista, userId){
   const mias = lista.filter(s=>s.user_id===userId);
   if(!mias.length){misCard.style.display='none';return;}
   misCard.style.display='';
+
+  // notificación: detectar solicitudes que pasaron a Subido desde la última visita
+  const NOTIF_KEY = 'ts_sol_notif_'+userId;
+  const yaVistas = JSON.parse(localStorage.getItem(NOTIF_KEY)||'[]');
+  const nuevasSubidas = mias.filter(s=>s.subido==='SI' && !yaVistas.includes(s.id));
+  if(nuevasSubidas.length){
+    const titulos = nuevasSubidas.map(s=>s.titulo).join(', ');
+    showToast('¡'+nuevasSubidas.length+' solicitud'+(nuevasSubidas.length>1?'es':'')+(nuevasSubidas.length>1?' están':' está')+' subida'+(nuevasSubidas.length>1?'s':'')+': '+titulos+' 🌹', 'success');
+    // marcar todas las subidas como vistas
+    const todasSubidas = mias.filter(s=>s.subido==='SI').map(s=>s.id);
+    localStorage.setItem(NOTIF_KEY, JSON.stringify(todasSubidas));
+  } else {
+    // actualizar lista de vistas con las subidas actuales
+    const todasSubidas = mias.filter(s=>s.subido==='SI').map(s=>s.id);
+    localStorage.setItem(NOTIF_KEY, JSON.stringify(todasSubidas));
+  }
+
   misLista.innerHTML = mias.map(s=>{
     const fecha = new Date(s.fecha).toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'});
     const esSubido = s.subido==='SI';
@@ -1506,6 +1585,21 @@ function renderMisSolicitudes(lista, userId){
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeBookModal();closeAuthModal();closeAllDD();}});
 document.getElementById('bookModal').addEventListener('click',e=>{if(e.target.id==='bookModal')closeBookModal();});
 document.getElementById('authModal').addEventListener('click',e=>{if(e.target.id==='authModal')closeAuthModal();});
+
+async function checkSolicitudesNotif(){
+  if(!currentUser) return;
+  const {data:lista} = await sb.from('solicitudes').select('id,titulo,subido,user_id').eq('user_id',currentUser.id);
+  if(!lista?.length) return;
+  const NOTIF_KEY = 'ts_sol_notif_'+currentUser.id;
+  const yaVistas = JSON.parse(localStorage.getItem(NOTIF_KEY)||'[]');
+  const nuevasSubidas = lista.filter(s=>s.subido==='SI' && !yaVistas.includes(s.id));
+  if(nuevasSubidas.length){
+    const titulos = nuevasSubidas.map(s=>escHtml(s.titulo)).join(', ');
+    showToast('¡'+nuevasSubidas.length+' solicitud'+(nuevasSubidas.length>1?'es están':' está')+' subida'+(nuevasSubidas.length>1?'s':'')+': '+titulos+' 🌹','success');
+    const todasSubidas = lista.filter(s=>s.subido==='SI').map(s=>s.id);
+    localStorage.setItem(NOTIF_KEY, JSON.stringify(todasSubidas));
+  }
+}
 
 init();
 </script>
