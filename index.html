@@ -953,15 +953,12 @@ function applyFilters(resetPage=true){
 function renderGrid(books, total, totalPages){
   const c=document.getElementById('booksContainer');
   if(!total){c.innerHTML=`<div class="empty-state"><div class="empty-big">¿Dónde están?</div><p>Ningún libro coincide.</p></div>`;return;}
-  const sortedR=[...allBooks].filter(b=>ratingsMap[b.id]?.count>0).sort((a,b)=>(ratingsMap[b.id]?.avg||0)-(ratingsMap[a.id]?.avg||0));
-  const rankMap={};sortedR.forEach((b,i)=>{rankMap[b.id]=i+1;});
+
   let html=`<div class="books-grid">${books.map(b=>{
     const r=ratingsMap[b.id]||{avg:0,count:0};
-    const rank=rankMap[b.id];
     const myScore=myRatings[b.id]||0;
     const authorStr=(b.authors||[]).join(', ')||'—';
     const coverEl=b.cover?`<img class="book-cover" src="${b.cover}" alt="${b.title}" onerror="this.outerHTML='<div class=book-cover-ph>📖</div>'">`:`<div class="book-cover-ph">📖</div>`;
-    const rankBadge=rank&&rank<=3?`<div class="rank-badge rank-${rank}">${rank}</div>`:'';
     const avgBadge=r.count>0?`<div class="avg-badge"><span style="color:var(--gold);font-size:11px">★</span><span style="font-size:11.5px;font-weight:600;color:var(--text)">${r.avg.toFixed(1)}</span><span style="font-size:10px;color:var(--muted)">(${r.count})</span></div>`:'';
     const spicyBadge=(b.spicy>0)?`<div class="spicy-badge">${SPICY_ICONS[b.spicy]}</div>`:(b.spicy==null||b.spicy===undefined||b.spicy==='')?`<div class="spicy-badge" title="Nivel spicy desconocido" style="opacity:.65">${SPICY_UNKNOWN_ICON}</div>`:'';
     const genreTags=(b.genres||[]).slice(0,2).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
@@ -975,7 +972,7 @@ function renderGrid(books, total, totalPages){
     const cardSagaSub=cardSagaName?`<div class="card-saga-sub" onclick="event.stopPropagation();event.preventDefault();filterBySagaFromModal(decodeURIComponent('${encodeURIComponent(cardSagaName)}'))">${cardSagaName}${cardSagaNum}</div>`:'';
     const voteLabel=myScore>0?`${'★'.repeat(myScore)} Mi voto`:'Valorar';
     return `<div class="book-card" onclick="openBook('${b.id}')">
-      <div class="book-cover-wrap">${rankBadge}${spicyBadge}${coverEl}${avgBadge}</div>
+      <div class="book-cover-wrap">${spicyBadge}${coverEl}${avgBadge}</div>
       <div class="book-card-body">
         <div class="book-title">${b.title}</div>
         ${cardSagaSub}
