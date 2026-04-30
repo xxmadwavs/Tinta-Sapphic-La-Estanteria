@@ -169,6 +169,68 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .paste-bar-status{font-size:12px;margin-top:7px;color:var(--muted);min-height:16px}
 .paste-bar-status.ok{color:var(--teal)}
 .paste-bar-status.err{color:var(--rose)}
+
+/* USERS TABLE */
+.users-table{width:100%;border-collapse:collapse;font-size:13px}
+.users-table th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;padding:.5rem .75rem;border-bottom:1px solid var(--border2)}
+.users-table td{padding:.65rem .75rem;border-bottom:1px solid var(--border);vertical-align:middle}
+.users-table tr:last-child td{border-bottom:none}
+.users-table tr:hover td{background:var(--surface2)}
+.tg-link{color:var(--teal);text-decoration:none;font-weight:500}
+.tg-link:hover{text-decoration:underline}
+.no-tg{color:var(--muted);font-style:italic;font-size:12px}
+.vote-count{display:inline-block;padding:2px 9px;border-radius:20px;background:var(--accent-soft);color:var(--accent2);font-size:11px;font-weight:600;border:1px solid rgba(192,111,196,0.2)}
+.vote-count.zero{background:var(--surface3);color:var(--muted);border-color:var(--border)}
+.tab-bar{display:flex;gap:.5rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border2);padding-bottom:.75rem}
+.tab-btn{padding:6px 18px;border-radius:20px;border:1px solid transparent;background:transparent;color:var(--muted);font-size:13px;font-family:'Instrument Sans',sans-serif;cursor:pointer;transition:all .15s}
+.tab-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2);font-weight:500}
+.section-panel{display:none}
+.section-panel.active{display:block}
+
+/* solicitudes admin */
+.sol-admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:680px){.sol-admin-grid{grid-template-columns:1fr}}
+.sol-admin-col{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.sol-admin-col-hdr{padding:.7rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.sol-admin-col-title{font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+.sol-admin-col-title.pend{color:var(--gold)}
+.sol-admin-col-title.sub{color:var(--teal)}
+.sol-admin-col-body{padding:.5rem;display:flex;flex-direction:column;gap:.35rem;min-height:60px}
+.sol-adm-card{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:.7rem .9rem;display:flex;align-items:flex-start;gap:.6rem}
+.sol-adm-info{flex:1;min-width:0}
+.sol-adm-title{font-size:13px;font-weight:500;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sol-adm-meta{font-size:11px;color:var(--muted);margin-bottom:.3rem}
+.sol-adm-tags{display:flex;flex-wrap:wrap;gap:.2rem}
+.sol-adm-tag{font-size:10px;padding:1px 6px;border-radius:10px;font-weight:500}
+.sol-adm-tag.tipo{background:var(--accent-soft);color:var(--accent2);border:1px solid rgba(192,111,196,0.2)}
+.sol-adm-tag.idioma{background:rgba(91,188,176,0.1);color:var(--teal);border:1px solid rgba(91,188,176,0.2)}
+.sol-adm-tag.safico{background:var(--rose-soft);color:#e0909e;border:1px solid rgba(212,96,122,0.2)}
+.sol-adm-tag.tg{background:var(--surface3);color:var(--muted);border:1px solid var(--border)}
+.sol-adm-actions{display:flex;flex-direction:column;gap:.3rem;flex-shrink:0}
+.sol-adm-btn{padding:3px 10px;border-radius:20px;border:1px solid var(--border2);background:transparent;font-size:11px;font-family:'Instrument Sans',sans-serif;cursor:pointer;transition:all .14s;white-space:nowrap}
+.sol-adm-btn.mark-sub{color:var(--teal);border-color:rgba(91,188,176,0.3)}
+.sol-adm-btn.mark-sub:hover{background:rgba(91,188,176,0.15)}
+.sol-adm-btn.mark-pend{color:var(--gold);border-color:rgba(201,151,90,0.3)}
+.sol-adm-btn.mark-pend:hover{background:var(--gold-soft)}
+.sol-adm-btn.del{color:var(--rose);border-color:rgba(212,96,122,0.3)}
+.sol-adm-btn.del:hover{background:var(--rose-soft)}
+.sol-adm-empty{text-align:center;padding:1.5rem;color:var(--muted);font-style:italic;font-size:12.5px}
+.sol-add-form{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:1rem}
+.sol-add-title{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);font-weight:600;margin-bottom:.8rem}
+.sol-add-row{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.5rem}
+@media(max-width:600px){.sol-add-row{grid-template-columns:1fr}}
+.sol-add-input{padding:7px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:12.5px;font-family:'Instrument Sans',sans-serif;outline:none;transition:border-color .15s;width:100%}
+.sol-add-input:focus{border-color:var(--accent)}
+.sol-add-input::placeholder{color:var(--muted)}
+.sol-chips{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.2rem}
+.sol-chip{padding:4px 10px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:11px;font-family:'Instrument Sans',sans-serif;cursor:pointer;transition:all .13s;white-space:nowrap}
+.sol-chip:hover{border-color:var(--accent);color:var(--accent2)}
+.sol-chip.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
+.sol-chip.active.rose{background:var(--rose-soft);border-color:var(--rose);color:#e0909e}
+.sol-add-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:.3rem;display:block}
+.sol-add-field{margin-bottom:.5rem}
+.sol-otro-wrap{display:none;margin-top:.3rem}
+.sol-otro-wrap.visible{display:block}
 </style>
 </head>
 <body>
@@ -197,7 +259,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </nav>
 
 <div class="container" id="mainContainer" style="display:none">
-  <h1 class="page-title">Panel de <em>libros</em></h1>
+  <h1 class="page-title">Panel de <em>administración</em></h1>
   <p class="page-sub">Los libros se guardan en JSON. Los votos y usuarios van a Supabase. Exporta siempre una copia de seguridad.</p>
 
   <div class="stats-grid">
@@ -205,11 +267,112 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="stat-card"><div class="stat-num" id="sVotes"><em>—</em></div><div class="stat-label">Valoraciones</div></div>
     <div class="stat-card"><div class="stat-num" id="sGenres"><em>0</em></div><div class="stat-label">Géneros únicos</div></div>
     <div class="stat-card"><div class="stat-num" id="sAuthors"><em>0</em></div><div class="stat-label">Autoras</div></div>
+    <div class="stat-card"><div class="stat-num" id="sUsers"><em>—</em></div><div class="stat-label">Usuarias</div></div>
   </div>
 
-  <div class="card">
-    <div class="card-title">Catálogo</div>
-    <div id="bookList"><div class="empty">Cargando…</div></div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('libros')">📚 Libros</button>
+    <button class="tab-btn" onclick="switchTab('usuarias')">👥 Usuarias</button>
+    <button class="tab-btn" onclick="switchTab('solicitudes')">📬 Solicitudes</button>
+  </div>
+
+  <div class="section-panel active" id="panelLibros">
+    <div class="card">
+      <div class="card-title">Catálogo</div>
+      <div id="bookList"><div class="empty">Cargando…</div></div>
+    </div>
+  </div>
+
+  <div class="section-panel" id="panelUsuarias">
+    <div class="card">
+      <div class="card-title" style="display:flex;align-items:center;justify-content:space-between">
+        Usuarias registradas
+        <button class="btn small" onclick="loadUsers()">↻ Actualizar</button>
+      </div>
+      <div id="userList"><div class="empty">Cargando…</div></div>
+    </div>
+  </div>
+
+  <div class="section-panel" id="panelSolicitudes">
+    <div class="card">
+      <div class="card-title" style="display:flex;align-items:center;justify-content:space-between">
+        Gestión de solicitudes
+        <div style="display:flex;gap:.5rem">
+          <button class="btn small" onclick="renderAdminSolicitudes()">↻ Actualizar</button>
+          <button class="btn small teal" onclick="exportarSolicitudesAdmin()">⬇ Exportar CSV</button>
+        </div>
+      </div>
+
+      <!-- Añadir solicitud manualmente -->
+      <div class="sol-add-form">
+        <div class="sol-add-title">Añadir solicitud manualmente</div>
+        <div class="sol-add-row">
+          <div class="sol-add-field">
+            <label class="sol-add-label">@Telegram</label>
+            <input class="sol-add-input" type="text" id="adm_tg" placeholder="usuario_telegram" oninput="this.value=this.value.replace(/[^a-zA-Z0-9_]/g,'')">
+          </div>
+          <div class="sol-add-field">
+            <label class="sol-add-label">Título *</label>
+            <input class="sol-add-input" type="text" id="adm_titulo" placeholder="Título de la obra">
+          </div>
+        </div>
+        <div class="sol-add-row">
+          <div class="sol-add-field">
+            <label class="sol-add-label">Autor/a (si es libro)</label>
+            <input class="sol-add-input" type="text" id="adm_autor" placeholder="Autor/a">
+          </div>
+          <div class="sol-add-field">
+            <label class="sol-add-label">Estado inicial</label>
+            <div class="sol-chips" id="adm_estado_chips" style="margin-top:.3rem">
+              <button class="sol-chip active" data-val="NO" onclick="admSelChip('adm_estado_chips',this)">⏳ Pendiente</button>
+              <button class="sol-chip" data-val="SI" onclick="admSelChip('adm_estado_chips',this)">✓ Subido</button>
+            </div>
+          </div>
+        </div>
+        <div class="sol-add-row">
+          <div class="sol-add-field">
+            <label class="sol-add-label">¿Es sáfico?</label>
+            <div class="sol-chips" id="adm_safico_chips" style="margin-top:.3rem">
+              <button class="sol-chip" data-val="SI" onclick="admSelChip('adm_safico_chips',this)">Sí 🌹</button>
+              <button class="sol-chip active" data-val="NO" onclick="admSelChip('adm_safico_chips',this)">No / NS</button>
+            </div>
+          </div>
+          <div class="sol-add-field">
+            <label class="sol-add-label">Tipo</label>
+            <div class="sol-chips" id="adm_tipo_chips" style="margin-top:.3rem">
+              <button class="sol-chip active" data-val="Libro" onclick="admSelChip('adm_tipo_chips',this)">Libro</button>
+              <button class="sol-chip" data-val="Manhwa" onclick="admSelChip('adm_tipo_chips',this)">Manhwa</button>
+              <button class="sol-chip" data-val="Manhua" onclick="admSelChip('adm_tipo_chips',this)">Manhua</button>
+              <button class="sol-chip" data-val="Manga" onclick="admSelChip('adm_tipo_chips',this)">Manga</button>
+              <button class="sol-chip" data-val="Webtoon" onclick="admSelChip('adm_tipo_chips',this)">Webtoon</button>
+              <button class="sol-chip" data-val="Cómic" onclick="admSelChip('adm_tipo_chips',this)">Cómic</button>
+              <button class="sol-chip" data-val="Novela gráfica" onclick="admSelChip('adm_tipo_chips',this)">Novela gráfica</button>
+            </div>
+          </div>
+        </div>
+        <div class="sol-add-field">
+          <label class="sol-add-label">Idioma</label>
+          <div class="sol-chips" id="adm_idioma_chips" style="margin-top:.3rem">
+            <button class="sol-chip active" data-val="Español" onclick="admSelChip('adm_idioma_chips',this)">Español</button>
+            <button class="sol-chip" data-val="Inglés" onclick="admSelChip('adm_idioma_chips',this)">Inglés</button>
+            <button class="sol-chip" data-val="Thai" onclick="admSelChip('adm_idioma_chips',this)">Thai</button>
+            <button class="sol-chip" data-val="otro" onclick="admSelChip('adm_idioma_chips',this);document.getElementById('adm_otro_wrap').classList.add('visible')">Otro</button>
+          </div>
+          <div class="sol-otro-wrap" id="adm_otro_wrap">
+            <input class="sol-add-input" type="text" id="adm_otro_idioma" placeholder="¿En qué idioma?" style="margin-top:.3rem">
+          </div>
+        </div>
+        <div style="margin-top:.75rem;display:flex;align-items:center;gap:.5rem">
+          <button class="btn primary small" onclick="admAddSol()">+ Añadir solicitud</button>
+          <span class="sol-msg" id="adm_sol_msg" style="font-size:12px"></span>
+        </div>
+      </div>
+
+      <!-- Kanban -->
+      <div class="sol-admin-grid" id="solAdminGrid">
+        <div class="sol-adm-empty">Cargando…</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -487,11 +650,12 @@ async function adminLogin() {
   showMainUI();
   loadBooksFromStorage();
   await loadVoteStats();
+  await loadUsers();
 }
 
 async function checkSession() {
   const {data:{session}} = await sb.auth.getSession();
-  if(session && session.user.email === ADMIN_EMAIL){showMainUI();loadBooksFromStorage();await loadVoteStats();}
+  if(session && session.user.email === ADMIN_EMAIL){showMainUI();loadBooksFromStorage();await loadVoteStats();await loadUsers();}
 }
 
 function showMainUI() {
@@ -502,6 +666,167 @@ function showMainUI() {
 
 async function adminLogout(){await sb.auth.signOut();location.reload();}
 function setLoginError(msg){document.getElementById('loginError').textContent=msg;}
+
+/* ── TABS ── */
+function switchTab(tab){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.section-panel').forEach(p=>p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('panel'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  if(tab==='usuarias') loadUsers();
+  if(tab==='solicitudes') renderAdminSolicitudes();
+}
+
+/* ── SOLICITUDES ADMIN ── */
+
+function admSelChip(groupId, btn){
+  document.getElementById(groupId)?.querySelectorAll('.sol-chip').forEach(c=>c.classList.remove('active','rose'));
+  btn.classList.add('active');
+  if(btn.dataset.val==='SI'&&groupId==='adm_safico_chips') btn.classList.add('rose');
+  if(groupId==='adm_idioma_chips'&&btn.dataset.val!=='otro') document.getElementById('adm_otro_wrap').classList.remove('visible');
+}
+function admGetChip(groupId){return document.getElementById(groupId)?.querySelector('.sol-chip.active')?.dataset.val||null;}
+
+async function admAddSol(){
+  const tg=document.getElementById('adm_tg').value.trim();
+  const titulo=document.getElementById('adm_titulo').value.trim();
+  const autor=document.getElementById('adm_autor').value.trim();
+  const safico=admGetChip('adm_safico_chips')||'NO';
+  const tipo=admGetChip('adm_tipo_chips')||'Libro';
+  const idiomaChip=admGetChip('adm_idioma_chips')||'Español';
+  const idiomaOtro=document.getElementById('adm_otro_idioma').value.trim();
+  const idioma=idiomaChip==='otro'?(idiomaOtro||'Otro'):idiomaChip;
+  const subido=admGetChip('adm_estado_chips')||'NO';
+  const msg=document.getElementById('adm_sol_msg');
+
+  if(!titulo){msg.className='sol-msg err';msg.textContent='El título es obligatorio.';return;}
+
+  const {error}=await sb.from('solicitudes').insert({
+    id:'s_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),
+    telegram:tg||'admin', safico, tipo, titulo,
+    autor:tipo==='Libro'?autor:'',
+    idioma, subido
+  });
+
+  if(error){msg.className='sol-msg err';msg.textContent='Error: '+error.message;return;}
+
+  msg.className='sol-msg ok';msg.textContent='Solicitud añadida ✓';
+  document.getElementById('adm_tg').value='';
+  document.getElementById('adm_titulo').value='';
+  document.getElementById('adm_autor').value='';
+  setTimeout(()=>{msg.textContent='';},3000);
+  renderAdminSolicitudes();
+}
+
+async function admToggleEstado(id, estadoActual){
+  const nuevoEstado = estadoActual==='SI' ? 'NO' : 'SI';
+  const {error} = await sb.from('solicitudes').update({subido:nuevoEstado}).eq('id',id);
+  if(error){showToast('Error al actualizar','error');return;}
+  renderAdminSolicitudes();
+}
+
+async function admDelete(id){
+  if(!confirm('¿Borrar esta solicitud?')) return;
+  const {error} = await sb.from('solicitudes').delete().eq('id',id);
+  if(error){showToast('Error al borrar','error');return;}
+  showToast('Solicitud eliminada');
+  renderAdminSolicitudes();
+}
+
+function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+async function renderAdminSolicitudes(){
+  const grid=document.getElementById('solAdminGrid');
+  grid.innerHTML='<div class="sol-adm-empty">Cargando…</div>';
+
+  const {data:lista, error}=await sb.from('solicitudes').select('*').order('fecha',{ascending:false});
+  if(error){grid.innerHTML='<div class="sol-adm-empty">Error al cargar</div>';return;}
+
+  const pend=(lista||[]).filter(s=>s.subido==='NO');
+  const sub=(lista||[]).filter(s=>s.subido==='SI');
+
+  function cardHtml(s){
+    const saficoTag=s.safico==='SI'?'<span class="sol-adm-tag safico">Sáfico 🌹</span>':'';
+    const autorStr=s.autor?'<div class="sol-adm-meta">👤 '+escH(s.autor)+'</div>':'';
+    const esSubido=s.subido==='SI';
+    return '<div class="sol-adm-card">'
+      +'<div class="sol-adm-info">'
+      +'<div class="sol-adm-title">'+escH(s.titulo)+'</div>'
+      +autorStr
+      +'<div class="sol-adm-meta">@'+escH(s.telegram)+'</div>'
+      +'<div class="sol-adm-tags">'+saficoTag+'<span class="sol-adm-tag tipo">'+escH(s.tipo)+'</span><span class="sol-adm-tag idioma">'+escH(s.idioma)+'</span></div>'
+      +'</div>'
+      +'<div class="sol-adm-actions">'
+      +'<button class="sol-adm-btn '+(esSubido?'mark-pend':'mark-sub')+'" data-id="'+s.id+'" data-estado="'+s.subido+'" onclick="admToggleEstado(this.dataset.id,this.dataset.estado)">'+(esSubido?'↩ Pendiente':'✓ Subido')+'</button>'
+      +'<button class="sol-adm-btn del" data-id="'+s.id+'" onclick="admDelete(this.dataset.id)">✕ Borrar</button>'
+      +'</div></div>';
+  }
+
+  grid.innerHTML='<div class="sol-admin-col">'
+    +'<div class="sol-admin-col-hdr"><span class="sol-admin-col-title pend">⏳ Pendientes</span>'
+    +'<span style="font-size:11px;background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25);padding:2px 8px;border-radius:20px;font-weight:700">'+pend.length+'</span></div>'
+    +'<div class="sol-admin-col-body">'+(pend.length?pend.map(cardHtml).join(''):'<div class="sol-adm-empty">Sin pendientes 🌸</div>')+'</div>'
+    +'</div>'
+    +'<div class="sol-admin-col">'
+    +'<div class="sol-admin-col-hdr"><span class="sol-admin-col-title sub">✓ Subidos</span>'
+    +'<span style="font-size:11px;background:rgba(91,188,176,0.15);color:var(--teal);border:1px solid rgba(91,188,176,0.25);padding:2px 8px;border-radius:20px;font-weight:700">'+sub.length+'</span></div>'
+    +'<div class="sol-admin-col-body">'+(sub.length?sub.map(cardHtml).join(''):'<div class="sol-adm-empty">Nada subido aún 🌸</div>')+'</div>'
+    +'</div>';
+}
+
+async function exportarSolicitudesAdmin(){
+  const {data:lista}=await sb.from('solicitudes').select('*').order('fecha',{ascending:false});
+  if(!lista?.length){showToast('No hay solicitudes','warn');return;}
+  const cols=['ID','Telegram','Sáfico','Tipo','Título','Autor/a','Idioma','Fecha','Subido'];
+  const rows=lista.map(s=>[s.id,'@'+s.telegram,s.safico,s.tipo,s.titulo,s.autor||'',s.idioma,new Date(s.fecha).toLocaleString('es-ES'),s.subido]);
+  const csv=[cols,...rows].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download='solicitudes_tintasapphic.csv';a.click();
+  showToast('CSV exportado ✓');
+}
+
+/* ── USERS ── */
+async function loadUsers(){
+  document.getElementById('userList').innerHTML='<div class="empty">Cargando…</div>';
+  const {data:profiles} = await sb.from('profiles').select('*').order('created_at',{ascending:false});
+  const {data:ratings}  = await sb.from('ratings').select('user_id');
+
+  const voteCounts={};
+  if(ratings) ratings.forEach(r=>{voteCounts[r.user_id]=(voteCounts[r.user_id]||0)+1;});
+
+  document.getElementById('sUsers').innerHTML=`<em>${profiles?.length||0}</em>`;
+
+  if(!profiles||!profiles.length){
+    document.getElementById('userList').innerHTML='<div class="empty">No hay usuarias registradas aún.</div>';
+    return;
+  }
+
+  const rows=profiles.map(u=>{
+    const tg=u.telegram_username
+      ?`<a class="tg-link" href="https://t.me/${u.telegram_username}" target="_blank">@${u.telegram_username}</a>`
+      :`<span class="no-tg">Sin Telegram</span>`;
+    const votos=voteCounts[u.id]||0;
+    const fecha=u.created_at?new Date(u.created_at).toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'}):'—';
+    return `<tr>
+      <td>${tg}</td>
+      <td style="color:var(--muted);font-size:12px">${u.email||'—'}</td>
+      <td><span class="vote-count${votos===0?' zero':''}">${votos} voto${votos!==1?'s':''}</span></td>
+      <td style="color:var(--muted);font-size:12px">${fecha}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('userList').innerHTML=`
+    <table class="users-table">
+      <thead><tr>
+        <th>Telegram</th>
+        <th>Email</th>
+        <th>Votos</th>
+        <th>Registro</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
 
 /* ── BOOKS (JSON / memory) ── */
 function loadBooksFromStorage() {
