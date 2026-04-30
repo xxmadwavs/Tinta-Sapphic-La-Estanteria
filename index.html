@@ -431,6 +431,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <input class="search-input" id="searchInput" type="search" placeholder="Buscar por título o autora…" oninput="applyFilters()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="q" readonly onfocus="this.removeAttribute('readonly')">
       </div>
       <select class="sort-select" id="sortSel" onchange="applyFilters()">
+        <option value="nuevo">✨ Recién añadidos</option>
         <option value="top">🏆 Mejor valorados</option>
         <option value="votes">Más votados</option>
         <option value="az">A → Z</option>
@@ -928,7 +929,8 @@ function applyFilters(resetPage=true){
   if(filters.valoracion==='valorado') books=books.filter(b=>!!myRatings[b.id]);
   if(filters.valoracion==='no_valorado') books=books.filter(b=>!myRatings[b.id]);
   const sort=document.getElementById('sortSel').value;
-  if(sort==='top'){
+  if(sort==='nuevo') books.sort((a,b)=>b.id.localeCompare(a.id));
+  else if(sort==='top'){
     books.sort((a,b)=>{
       const ra=ratingsMap[a.id], rb=ratingsMap[b.id];
       const avgA=ra?.avg||0, avgB=rb?.avg||0;
