@@ -496,6 +496,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
   <!-- PANEL TOP 10 -->
   <div id="panelTop10" style="display:none">
+    <p style="text-align:center;font-size:12px;color:var(--muted);margin-bottom:1.25rem;line-height:1.6">El ranking usa una <strong style="color:var(--accent2)">puntuación ponderada</strong>: combina la nota media con el número de votos, para que un libro con muchas valoraciones altas supere a uno con un solo 5 ⭐</p>
     <div id="top10Container"></div>
   </div>
 
@@ -1261,14 +1262,22 @@ function switchTab(tab){
 /* ── TOP 10 ── */
 function renderTop10(){
   const c=document.getElementById('top10Container');
-  // ordenar por avg desc, solo libros con al menos 1 valoración
-  const ranked=[...allBooks]
-    .filter(b=>ratingsMap[b.id]?.count>0)
-    .sort((a,b)=>{
-      const da=ratingsMap[a.id],db=ratingsMap[b.id];
-      if(db.avg!==da.avg) return db.avg-da.avg;
-      return db.count-da.count; // desempate por número de votos
-    })
+  // Puntuación bayesiana ponderada (estilo IMDb):
+  // score = (C * m + R * v) / (m + v)
+  // donde: R = media del libro, v = nº votos del libro
+  //        C = media global de todos los libros valorados, m = mínimo de votos para contar (percentil 50)
+  const booksWithRatings=[...allBooks].filter(b=>ratingsMap[b.id]?.count>0);
+  const allCounts=booksWithRatings.map(b=>ratingsMap[b.id].count).sort((a,b)=>a-b);
+  const m=allCounts.length ? allCounts[Math.floor(allCounts.length*0.5)] : 3; // percentil 50 como umbral
+  const C=booksWithRatings.length
+    ? booksWithRatings.reduce((s,b)=>s+ratingsMap[b.id].avg,0)/booksWithRatings.length
+    : 3;
+  function bayesian(b){
+    const {avg:R,count:v}=ratingsMap[b.id];
+    return (C*m + R*v)/(m+v);
+  }
+  const ranked=booksWithRatings
+    .sort((a,b)=>bayesian(b)-bayesian(a))
     .slice(0,10);
 
   if(!ranked.length){
