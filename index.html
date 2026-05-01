@@ -550,6 +550,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
             </div>
 
             <div class="sol-field">
+              <span class="sol-label">Fecha de salida a la venta <span style="font-weight:400;text-transform:none;font-size:10px">(opcional)</span></span>
+              <input class="sol-input" type="date" id="solFechaDisp" style="color-scheme:dark">
+              <div style="font-size:11px;color:var(--muted);margin-top:3px">Si aún no está publicado, indica cuándo sale a la venta para que podamos esperarlo.</div>
+            </div>
+
+            <div class="sol-field">
               <span class="sol-label">Idioma disponible *</span>
               <div class="sol-chips" id="solIdiomaChips">
                 <button class="sol-chip" data-val="Español" onclick="selChip('solIdiomaChips',this,'single')">Español</button>
@@ -1394,6 +1400,7 @@ async function enviarSolicitud(){
   const idiomaChip = getSolChip('solIdiomaChips');
   const idiomaOtro = document.getElementById('solOtroIdioma').value.trim();
   const idioma = idiomaChip === 'otro' ? (idiomaOtro || 'Otro') : idiomaChip;
+  const fechaDisp = document.getElementById('solFechaDisp').value || null;
   const msg = document.getElementById('solMsg');
   const btnSub = document.querySelector('.sol-submit');
 
@@ -1413,7 +1420,8 @@ async function enviarSolicitud(){
     user_id: currentUser.id,
     telegram: tg, safico, tipo, titulo,
     autor: tipo==='Libro' ? autor : '',
-    idioma, subido:'NO'
+    idioma, subido:'NO',
+    fecha_disponible: fechaDisp
   });
 
   btnSub.disabled=false; btnSub.textContent='Enviar solicitud 🌹';
@@ -1425,6 +1433,7 @@ async function enviarSolicitud(){
   document.getElementById('solTitulo').value='';
   document.getElementById('solAutor').value='';
   document.getElementById('solOtroIdioma').value='';
+  document.getElementById('solFechaDisp').value='';
   ['solSaficoChips','solTipoChips','solIdiomaChips'].forEach(id=>{
     document.getElementById(id)?.querySelectorAll('.sol-chip').forEach(c=>c.classList.remove('active','rose'));
   });
@@ -1571,10 +1580,13 @@ function renderMisSolicitudes(lista, userId){
   misLista.innerHTML = mias.map(s=>{
     const fecha = new Date(s.fecha).toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'});
     const esSubido = s.subido==='SI';
+    const fechaDispStr = s.fecha_disponible
+      ? '<span style="font-size:10.5px;color:var(--gold);margin-left:4px">📅 Sale: '+new Date(s.fecha_disponible+'T00:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'})+'</span>'
+      : '';
     return '<div class="sol-item">'
       +'<div class="sol-item-info">'
       +'<div class="sol-item-title">'+escHtml(s.titulo)+'</div>'
-      +'<div class="sol-item-meta">'+escHtml(s.tipo)+' · '+escHtml(s.idioma)+' · '+fecha+'</div>'
+      +'<div class="sol-item-meta">'+escHtml(s.tipo)+' · '+escHtml(s.idioma)+' · '+fecha+fechaDispStr+'</div>'
       +'</div>'
       +'<div class="sol-badge '+(esSubido?'subido':'pendiente')+'">'+(esSubido?'✓ Subido':'⏳ Pendiente')+'</div>'
       +'</div>';

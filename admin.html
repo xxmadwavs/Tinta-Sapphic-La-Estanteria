@@ -714,7 +714,8 @@ async function admAddSol(){
     id:'s_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),
     telegram:tg||'admin', safico, tipo, titulo,
     autor:tipo==='Libro'?autor:'',
-    idioma, subido
+    idioma, subido,
+    fecha_disponible: null
   });
 
   if(error){msg.className='sol-msg err';msg.textContent='Error: '+error.message;return;}
@@ -742,6 +743,13 @@ async function admDelete(id){
   renderAdminSolicitudes();
 }
 
+async function admSetFecha(id, fechaVal){
+  const val = fechaVal || null;
+  const {error} = await sb.from('solicitudes').update({fecha_disponible: val}).eq('id', id);
+  if(error){showToast('Error al guardar fecha','error');return;}
+  showToast(val ? 'Fecha guardada ✓' : 'Fecha eliminada ✓', 'success');
+}
+
 function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 async function renderAdminSolicitudes(){
@@ -766,12 +774,21 @@ async function renderAdminSolicitudes(){
     const saficoTag=s.safico==='SI'?'<span class="sol-adm-tag safico">Sáfico 🌹</span>':'';
     const autorStr=s.autor?'<div class="sol-adm-meta">👤 '+escH(s.autor)+'</div>':'';
     const esSubido=s.subido==='SI';
+    const fdVal=s.fecha_disponible||'';
+    const fdDisplay=fdVal
+      ?'<div class="sol-adm-meta" style="color:var(--gold)">📅 Sale: '+new Date(fdVal+'T00:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'})+'</div>'
+      :'';
     return '<div class="sol-adm-card">'
       +'<div class="sol-adm-info">'
       +'<div class="sol-adm-title">'+escH(s.titulo)+'</div>'
       +autorStr
       +'<div class="sol-adm-meta">@'+escH(s.telegram)+'</div>'
+      +fdDisplay
       +'<div class="sol-adm-tags">'+saficoTag+'<span class="sol-adm-tag tipo">'+escH(s.tipo)+'</span><span class="sol-adm-tag idioma">'+escH(s.idioma)+'</span></div>'
+      +'<div style="display:flex;align-items:center;gap:5px;margin-top:5px">'
+      +'<label style="font-size:10px;color:var(--muted);white-space:nowrap">📅 Sale a la venta:</label>'
+      +'<input type="date" value="'+escH(fdVal)+'" style="padding:2px 6px;border-radius:6px;border:1px solid var(--border2);background:var(--surface3);color:var(--text);font-size:11.5px;font-family:inherit;outline:none;color-scheme:dark;flex:1" onchange="admSetFecha(\''+s.id+'\',this.value)">'
+      +'</div>'
       +'</div>'
       +'<div class="sol-adm-actions">'
       +'<button class="sol-adm-btn '+(esSubido?'mark-pend':'mark-sub')+'" data-id="'+s.id+'" data-estado="'+s.subido+'" onclick="admToggleEstado(this.dataset.id,this.dataset.estado)">'+(esSubido?'↩ Pendiente':'✓ Subido')+'</button>'
@@ -794,8 +811,8 @@ async function renderAdminSolicitudes(){
 async function exportarSolicitudesAdmin(){
   const {data:lista}=await sb.from('solicitudes').select('*').order('fecha',{ascending:false});
   if(!lista?.length){showToast('No hay solicitudes','warn');return;}
-  const cols=['ID','Telegram','Sáfico','Tipo','Título','Autor/a','Idioma','Fecha','Subido'];
-  const rows=lista.map(s=>[s.id,'@'+s.telegram,s.safico,s.tipo,s.titulo,s.autor||'',s.idioma,new Date(s.fecha).toLocaleString('es-ES'),s.subido]);
+  const cols=['ID','Telegram','Sáfico','Tipo','Título','Autor/a','Idioma','Fecha','Subido','Fecha Disponible'];
+  const rows=lista.map(s=>[s.id,'@'+s.telegram,s.safico,s.tipo,s.titulo,s.autor||'',s.idioma,new Date(s.fecha).toLocaleString('es-ES'),s.subido,s.fecha_disponible||'']);
   const csv=[cols,...rows].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
   const a=document.createElement('a');
   a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
