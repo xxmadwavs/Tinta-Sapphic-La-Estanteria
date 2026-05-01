@@ -356,6 +356,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sol-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:.7rem .9rem}
 .sol-card-title{font-size:13px;font-weight:500;line-height:1.3;margin-bottom:1px}
 .sol-card-author{font-size:11px;color:var(--muted);margin-bottom:.35rem}
+.sol-card-fecha{font-size:11px;color:var(--gold);margin-bottom:.3rem}
 .sol-card-tags{display:flex;flex-wrap:wrap;gap:.25rem}
 .sol-card-tag{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500}
 .sol-card-tag.tipo{background:var(--accent-soft);color:var(--accent2);border:1px solid rgba(192,111,196,0.2)}
@@ -1518,9 +1519,13 @@ function renderKanbanPage(tipo){
     const saficoTag = s.safico==='SI' ? '<span class="sol-card-tag safico">Sáfico 🌹</span>' : '';
     const autorStr = s.autor ? '<div class="sol-card-author">'+escHtml(s.autor)+'</div>' : '';
     const votosTag = s.votos>1 ? '<span class="sol-card-tag votos">+'+s.votos+' la piden</span>' : '';
+    const fechaVentaStr = s.fecha_disponible
+      ? '<div class="sol-card-fecha">📅 Sale: '+new Date(s.fecha_disponible+'T00:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'})+'</div>'
+      : '';
     return '<div class="sol-card">'
       +'<div class="sol-card-title">'+escHtml(s.titulo)+'</div>'
       +autorStr
+      +fechaVentaStr
       +'<div class="sol-card-tags">'
       +saficoTag+votosTag
       +'<span class="sol-card-tag tipo">'+escHtml(s.tipo)+'</span>'
