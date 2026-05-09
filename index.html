@@ -637,6 +637,8 @@ const SPICY_UNKNOWN_ICON  = '❓';
 
 let allBooks=[], ratingsMap={}, myRatings={}, currentUser=null, activeBook=null;
 let authMode='login', pendingStar=0;
+let spicyMap={}, mySpicy={}, pendingSpicy=0;
+const SPICY_MIN_VOTES=2; // votos mínimos para mostrar el spicy de la comunidad
 let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],adaptacion:null,valoracion:null};
 let currentPage=1;
 const PAGE_SIZE=24;
@@ -726,6 +728,16 @@ async function loadBooks(){
       ratingsMap[id]={avg:Math.round(scores.reduce((a,b)=>a+b,0)/scores.length*10)/10,count:scores.length};
     });
   }
+  // Cargar votos spicy de la comunidad
+  const {data:svData}=await sb.from('spicy_votes').select('book_id,level');
+  spicyMap={};
+  if(svData){
+    const grouped={};
+    svData.forEach(r=>{if(!grouped[r.book_id])grouped[r.book_id]=[];grouped[r.book_id].push(r.level);});
+    Object.entries(grouped).forEach(([id,levels])=>{
+      spicyMap[id]={avg:Math.round(levels.reduce((a,b)=>a+b,0)/levels.length*10)/10,count:levels.length};
+    });
+  }
   updateStats();
 }
 
@@ -734,6 +746,9 @@ async function loadMyRatings(){
   const {data}=await sb.from('ratings').select('book_id,score').eq('user_id',currentUser.id);
   myRatings={};
   if(data) data.forEach(r=>myRatings[r.book_id]=r.score);
+  const {data:sv}=await sb.from('spicy_votes').select('book_id,level').eq('user_id',currentUser.id);
+  mySpicy={};
+  if(sv) sv.forEach(r=>mySpicy[r.book_id]=r.level);
 }
 
 function updateStats(){
@@ -925,8 +940,8 @@ function applyFilters(resetPage=true){
   if(filters.years.length)     books=books.filter(b=>filters.years.includes(String(b.year)));
   if(filters.spicy.length||filters.spicyUnknown){
     books=books.filter(b=>{
-      const s=b.spicy;
-      const isUnknown=(s==null||s===undefined||s==='');
+      const s=effectiveSpicy(b);
+      const isUnknown=s==null;
       if(filters.spicyUnknown&&isUnknown) return true;
       if(filters.spicy.length&&!isUnknown&&filters.spicy.includes(s)) return true;
       return false;
@@ -970,7 +985,8 @@ function renderGrid(books, total, totalPages){
     const authorStr=(b.authors||[]).join(', ')||'—';
     const coverEl=b.cover?`<img class="book-cover" src="${b.cover}" alt="${b.title}" onerror="this.outerHTML='<div class=book-cover-ph>📖</div>'">`:`<div class="book-cover-ph">📖</div>`;
     const avgBadge=r.count>0?`<div class="avg-badge"><span style="color:var(--gold);font-size:11px">★</span><span style="font-size:11.5px;font-weight:600;color:var(--text)">${r.avg.toFixed(1)}</span><span style="font-size:10px;color:var(--muted)">(${r.count})</span></div>`:'';
-    const spicyBadge=(b.spicy>0)?`<div class="spicy-badge">${SPICY_ICONS[b.spicy]}</div>`:(b.spicy==null||b.spicy===undefined||b.spicy==='')?`<div class="spicy-badge" title="Nivel spicy desconocido" style="opacity:.65">${SPICY_UNKNOWN_ICON}</div>`:'';
+    const spicyEff=effectiveSpicy(b);
+    const spicyBadge=(spicyEff!=null&&spicyEff>0)?`<div class="spicy-badge">${SPICY_ICONS[spicyEff]}</div>`:(spicyEff==null)?`<div class="spicy-badge" title="Nivel spicy desconocido" style="opacity:.65">${SPICY_UNKNOWN_ICON}</div>`:'';
     const genreTags=(b.genres||[]).slice(0,2).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
     const dinamicaTag=(b.dinamicas||[]).slice(0,1).map(d=>`<span class="tag tag-dinamica">${d}</span>`).join('');
     const tropeTags=!dinamicaTag?(b.tropes||[]).slice(0,1).map(t=>`<span class="tag tag-trope">${t}</span>`).join(''):'';
@@ -1028,6 +1044,7 @@ function openBook(id){
   activeBook=allBooks.find(b=>b.id===id);
   if(!activeBook) return;
   pendingStar=myRatings[id]||0;
+  pendingSpicy=mySpicy[id]!=null?mySpicy[id]:0;
   renderBookModal();
   attachStarTouch();
   document.getElementById('bookModal').classList.add('open');
@@ -1056,10 +1073,11 @@ function renderBookModal(){
   const tropeTags=(b.tropes||[]).map(t=>`<span class="tag tag-trope">${t}</span>`).join('');
   const identidadTags=(b.identidades||[]).map(i=>`<span class="tag tag-identidad">${i}</span>`).join('');
   const characterTags=(b.characters||[]).map(c=>`<span class="tag tag-character">${c}</span>`).join('');
-  const spicyIsUnknown=(b.spicy==null||b.spicy===undefined||b.spicy==='');
+  const spicyEff=effectiveSpicy(b);
+  const spicyIsUnknown=spicyEff==null;
   const spicyTag=spicyIsUnknown
     ?`<span class="tag" style="background:rgba(138,120,152,0.15);color:var(--muted);border:1px solid rgba(138,120,152,0.3)">${SPICY_UNKNOWN_ICON} ${SPICY_UNKNOWN_LABEL}</span>`
-    :(b.spicy>0?`<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_ICONS[b.spicy]} ${SPICY_LABELS[b.spicy]}</span>`:
+    :(spicyEff>0?`<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_ICONS[spicyEff]} ${SPICY_LABELS[spicyEff]}</span>`:
     `<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_LABELS[0]}</span>`);
   const formatoTag=b.formato&&!['Saga','Dúo','Trilogía'].includes(b.formato)?`<span class="tag tag-formato">${b.formato}</span>`:'';
   const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
@@ -1097,6 +1115,7 @@ function renderBookModal(){
         </div>
       </div>`:''}
       <div class="rating-section" id="modalRatingSection"><div class="rating-title">Valoración de la comunidad</div>${communityRating}${voteArea}</div>
+      <div id="modalSpicySection">${buildSpicySectionHTML()}</div>
     </div>`;
 }
 
@@ -1192,7 +1211,110 @@ async function deleteVote(){
   updateStats();applyFilters(false);renderVoteSection();
 }
 
-/* ── AUTH ── */
+/* Devuelve el spicy efectivo de un libro:
+   - ≥2 votos comunidad → promedio comunidad redondeado
+   - 1 voto → ese voto
+   - 0 votos + valor editorial → editorial
+   - nada → null (desconocido) */
+function effectiveSpicy(b){
+  const sv=spicyMap[b.id];
+  if(sv&&sv.count>=1) return Math.round(sv.avg);
+  if(b.spicy!=null&&b.spicy!=='') return b.spicy;
+  return null;
+}
+function spicySourceLabel(b){
+  const sv=spicyMap[b.id];
+  if(sv&&sv.count>=SPICY_MIN_VOTES) return `comunidad (${sv.count} votos)`;
+  if(sv&&sv.count===1) return `1 voto`;
+  return 'editorial';
+}
+
+async function submitSpicyVote(){
+  if(!currentUser||!activeBook||!pendingSpicy) return;
+  const btn=document.getElementById('spicyVoteBtn');
+  if(btn) btn.disabled=true;
+  const existing=mySpicy[activeBook.id];
+  const {error}=existing!=null
+    ?await sb.from('spicy_votes').update({level:pendingSpicy}).eq('user_id',currentUser.id).eq('book_id',activeBook.id)
+    :await sb.from('spicy_votes').insert({user_id:currentUser.id,book_id:activeBook.id,level:pendingSpicy});
+  if(error){showToast('Error al guardar','error');if(btn)btn.disabled=false;return;}
+  // Actualizar spicyMap localmente
+  const sv=spicyMap[activeBook.id]||{avg:0,count:0};
+  const oldLevel=existing!=null?existing:null;
+  const newCount=oldLevel!=null?sv.count:sv.count+1;
+  const newAvg=oldLevel!=null?(sv.avg*sv.count-oldLevel+pendingSpicy)/sv.count:(sv.avg*sv.count+pendingSpicy)/newCount;
+  spicyMap[activeBook.id]={avg:Math.round(newAvg*10)/10,count:newCount};
+  mySpicy[activeBook.id]=pendingSpicy;
+  showToast('¡Spicy guardado! 🌶','success');
+  applyFilters(false);renderSpicySection();
+}
+
+async function deleteSpicyVote(){
+  if(!currentUser||!activeBook||mySpicy[activeBook.id]==null) return;
+  const btn=document.getElementById('spicyDeleteBtn');
+  if(btn){btn.disabled=true;btn.textContent='Eliminando…';}
+  const {error}=await sb.from('spicy_votes').delete().eq('user_id',currentUser.id).eq('book_id',activeBook.id);
+  if(error){showToast('Error al eliminar','error');if(btn){btn.disabled=false;btn.textContent='✕ Quitar mi voto';}return;}
+  const oldLevel=mySpicy[activeBook.id];
+  const sv=spicyMap[activeBook.id]||{avg:0,count:0};
+  if(sv.count<=1) delete spicyMap[activeBook.id];
+  else{const nc=sv.count-1;spicyMap[activeBook.id]={avg:Math.round((sv.avg*sv.count-oldLevel)/nc*10)/10,count:nc};}
+  delete mySpicy[activeBook.id];
+  pendingSpicy=0;
+  showToast('Voto spicy eliminado','success');
+  applyFilters(false);renderSpicySection();
+}
+
+function buildSpicySectionHTML(){
+  const b=activeBook;
+  const sv=spicyMap[b.id];
+  const myVote=mySpicy[b.id];
+  const eff=effectiveSpicy(b);
+  const src=spicySourceLabel(b);
+  // Mostrar nivel actual
+  const currentDisplay=eff!=null
+    ?`<div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem"><span style="font-size:1.3rem">${SPICY_ICONS[eff]||'—'}</span><span style="font-size:13.5px;color:var(--text)">${SPICY_LABELS[eff]}</span><span style="font-size:11px;color:var(--muted)">(${src})</span></div>`
+    :`<div style="font-size:13px;color:var(--muted);margin-bottom:.5rem">Nivel desconocido — ¡sé la primera en votar!</div>`;
+  // Input de voto (solo logueadas)
+  let voteInput='';
+  if(!currentUser){
+    voteInput=`<p style="font-size:12.5px;color:var(--muted);margin-top:.4rem"><a style="color:var(--accent);cursor:pointer" onclick="closeBookModal();openAuthModal()">Inicia sesión</a> para votar el nivel spicy.</p>`;
+  } else {
+    const chiles=[0,1,2,3,4,5].map(i=>{
+      const sel=i===(pendingSpicy||myVote);
+      return `<button class="spicy-vote-btn${sel?' spicy-sel':''}" data-s="${i}" onclick="selectSpicy(${i})" title="${SPICY_LABELS[i]}" style="background:transparent;border:none;cursor:pointer;font-size:1.5rem;padding:2px 3px;opacity:${sel?1:.45};transition:all .15s">${i===0?'🚫':SPICY_ICONS[i]}</button>`;
+    }).join('');
+    voteInput=`<div style="margin-top:.5rem">
+      <p style="font-size:11px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;font-weight:600;margin-bottom:.3rem">${myVote!=null?'Tu voto — puedes cambiarlo':'¿Cuál es el nivel spicy?'}</p>
+      <div id="spicyChileInput" style="display:flex;gap:2px;margin-bottom:.5rem">${chiles}</div>
+      <div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:center">
+        <button class="vote-submit" id="spicyVoteBtn" onclick="submitSpicyVote()" ${!pendingSpicy&&myVote==null?'disabled':''} style="font-size:12px;padding:7px 18px">${pendingSpicy||myVote!=null?'Guardar 🌶':'Guardar'}</button>
+        ${myVote!=null?`<button class="vote-delete" id="spicyDeleteBtn" onclick="deleteSpicyVote()" style="font-size:12px;padding:7px 14px">✕ Quitar mi voto</button>`:''}
+      </div>
+    </div>`;
+  }
+  return `<div class="rating-title" style="margin-top:1rem">Nivel Spicy</div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem">
+      ${currentDisplay}${voteInput}
+    </div>`;
+}
+
+function renderSpicySection(){
+  const el=document.getElementById('modalSpicySection');
+  if(!el) return;
+  el.innerHTML=buildSpicySectionHTML();
+}
+
+function selectSpicy(n){
+  pendingSpicy=n;
+  document.querySelectorAll('#spicyChileInput .spicy-vote-btn').forEach(b=>{
+    const s=parseInt(b.dataset.s);
+    b.style.opacity=s===n?'1':'0.4';
+    b.classList.toggle('spicy-sel',s===n);
+  });
+  const btn=document.getElementById('spicyVoteBtn');
+  if(btn){btn.disabled=false;btn.textContent='Guardar 🌶';}
+}
 function renderAuthUI(){
   const el=document.getElementById('authArea');
   if(currentUser){
