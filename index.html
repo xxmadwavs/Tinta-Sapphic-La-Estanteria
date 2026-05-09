@@ -1047,7 +1047,7 @@ function openBook(id){
   pendingSpicy=mySpicy[id]!=null?mySpicy[id]:0;
   renderBookModal();
   attachStarTouch();
-  document.getElementById('bookModal').classList.add('open');
+  _attachSpicyEvents();
   document.body.style.overflow='hidden';
 }
 function closeBookModal(){document.getElementById('bookModal').classList.remove('open');document.body.style.overflow='';}
@@ -1280,15 +1280,16 @@ function buildSpicySectionHTML(){
   if(!currentUser){
     voteInput=`<p style="font-size:12.5px;color:var(--muted);margin-top:.4rem"><a style="color:var(--accent);cursor:pointer" onclick="closeBookModal();openAuthModal()">Inicia sesión</a> para votar el nivel spicy.</p>`;
   } else {
-    const chiles=[0,1,2,3,4,5].map(i=>{
-      const sel=i===(pendingSpicy||myVote);
-      return `<button class="spicy-vote-btn${sel?' spicy-sel':''}" data-s="${i}" onclick="selectSpicy(${i})" title="${SPICY_LABELS[i]}" style="background:transparent;border:none;cursor:pointer;font-size:1.5rem;padding:2px 3px;opacity:${sel?1:.45};transition:all .15s">${i===0?'🚫':SPICY_ICONS[i]}</button>`;
-    }).join('');
-    voteInput=`<div style="margin-top:.5rem">
-      <p style="font-size:11px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;font-weight:600;margin-bottom:.3rem">${myVote!=null?'Tu voto — puedes cambiarlo':'¿Cuál es el nivel spicy?'}</p>
-      <div id="spicyChileInput" style="display:flex;gap:2px;margin-bottom:.5rem">${chiles}</div>
+    const active=pendingSpicy>0?pendingSpicy:(myVote!=null?myVote:-1);
+    const btn0sel=active===0;
+    const chileButtons=
+      `<button class="spicy-vote-btn" data-s="0" title="${SPICY_LABELS[0]}" style="background:transparent;border:none;cursor:pointer;font-size:1.4rem;padding:2px 5px;color:${btn0sel?'#e05050':'#444'};transition:color .12s">🚫</button>`+
+      [1,2,3,4,5].map(i=>`<button class="spicy-chile-btn" data-s="${i}" title="${SPICY_LABELS[i]}" style="background:transparent;border:none;cursor:pointer;font-size:1.4rem;padding:2px 2px;color:${active>=i?'#e05050':'#444'};transition:color .1s;line-height:1">🌶</button>`).join('');
+    voteInput=`<div style="margin-top:.6rem">
+      <p style="font-size:11px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;font-weight:600;margin-bottom:.4rem">${myVote!=null?'Tu voto — puedes cambiarlo':'¿Cuál es el nivel spicy?'}</p>
+      <div id="spicyChileInput" style="display:flex;align-items:center;gap:0;margin-bottom:.6rem">${chileButtons}</div>
       <div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:center">
-        <button class="vote-submit" id="spicyVoteBtn" onclick="submitSpicyVote()" ${!pendingSpicy&&myVote==null?'disabled':''} style="font-size:12px;padding:7px 18px">${pendingSpicy||myVote!=null?'Guardar 🌶':'Guardar'}</button>
+        <button class="vote-submit" id="spicyVoteBtn" onclick="submitSpicyVote()" ${active<0?'disabled':''} style="font-size:12px;padding:7px 18px">Guardar 🌶</button>
         ${myVote!=null?`<button class="vote-delete" id="spicyDeleteBtn" onclick="deleteSpicyVote()" style="font-size:12px;padding:7px 14px">✕ Quitar mi voto</button>`:''}
       </div>
     </div>`;
@@ -1303,17 +1304,41 @@ function renderSpicySection(){
   const el=document.getElementById('modalSpicySection');
   if(!el) return;
   el.innerHTML=buildSpicySectionHTML();
+  _attachSpicyEvents();
 }
 
 function selectSpicy(n){
   pendingSpicy=n;
-  document.querySelectorAll('#spicyChileInput .spicy-vote-btn').forEach(b=>{
-    const s=parseInt(b.dataset.s);
-    b.style.opacity=s===n?'1':'0.4';
-    b.classList.toggle('spicy-sel',s===n);
-  });
+  _paintChiles(n);
   const btn=document.getElementById('spicyVoteBtn');
-  if(btn){btn.disabled=false;btn.textContent='Guardar 🌶';}
+  if(btn){btn.disabled=false;}
+}
+function _paintChiles(upTo){
+  const wrap=document.getElementById('spicyChileInput');
+  if(!wrap) return;
+  wrap.querySelector('.spicy-vote-btn').style.color=upTo===0?'#e05050':'#444';
+  wrap.querySelectorAll('.spicy-chile-btn').forEach(b=>{
+    b.style.color=parseInt(b.dataset.s)<=upTo?'#e05050':'#444';
+  });
+}
+function _attachSpicyEvents(){
+  const wrap=document.getElementById('spicyChileInput');
+  if(!wrap) return;
+  // Botón 0 (🚫)
+  const btn0=wrap.querySelector('.spicy-vote-btn');
+  if(btn0){
+    btn0.addEventListener('click',()=>selectSpicy(0));
+    btn0.addEventListener('mouseover',()=>_paintChiles(0));
+    btn0.addEventListener('mouseout',()=>_paintChiles(pendingSpicy>0?pendingSpicy:mySpicy[activeBook?.id]??-1));
+  }
+  // Botones 1-5 (🌶)
+  wrap.querySelectorAll('.spicy-chile-btn').forEach(b=>{
+    const n=parseInt(b.dataset.s);
+    b.addEventListener('click',()=>selectSpicy(n));
+    b.addEventListener('mouseover',()=>_paintChiles(n));
+    b.addEventListener('mouseout',()=>_paintChiles(pendingSpicy>0?pendingSpicy:mySpicy[activeBook?.id]??-1));
+    b.addEventListener('touchstart',e=>{e.preventDefault();selectSpicy(n);},{passive:false});
+  });
 }
 function renderAuthUI(){
   const el=document.getElementById('authArea');
