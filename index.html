@@ -1048,6 +1048,7 @@ function openBook(id){
   renderBookModal();
   attachStarTouch();
   _attachSpicyEvents();
+  document.getElementById('bookModal').classList.add('open');
   document.body.style.overflow='hidden';
 }
 function closeBookModal(){document.getElementById('bookModal').classList.remove('open');document.body.style.overflow='';}
