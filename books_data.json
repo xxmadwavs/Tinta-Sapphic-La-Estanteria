@@ -5637,13 +5637,6 @@
     "adaptacion": null,
     "sagaName": "Roller Coaster",
     "sagaNum": 3,
-    "source": "thais",
-    "editions": [],
-    "saficlub": false,
-    "safi_categories": [],
-    "canal_rec": false,
-    "canal_month": null,
-    "my_rec": false,
-    "my_rec_categories": []
+    "editions": []
   }
 ]
