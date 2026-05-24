@@ -5689,10 +5689,17 @@
     "subgenres": [
       "Erótica"
     ],
-    "identidades": [],
+    "identidades": [
+      "Nerd",
+      "Femme",
+      "Lesbiana"
+    ],
     "characters": [],
     "dinamicas": [],
-    "tropes": [],
+    "tropes": [
+      "Strangers to Lovers",
+      "Opposites Attract"
+    ],
     "ambientacion": [],
     "spicy": 3,
     "formato": null,
@@ -6845,13 +6852,20 @@
     "genres": [
       "Fantasía",
       "Fantasía Urbana",
-      "Romance"
+      "Romance",
+      "YA"
     ],
-    "subgenres": [],
-    "identidades": [],
+    "subgenres": [
+      "Bisexual"
+    ],
+    "identidades": [
+      "Bisexual"
+    ],
     "characters": [],
     "dinamicas": [],
-    "tropes": [],
+    "tropes": [
+      "Love Triangle"
+    ],
     "ambientacion": [],
     "spicy": 1,
     "formato": null,
@@ -6859,7 +6873,13 @@
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777801674135_vzf9m",
@@ -6966,14 +6986,18 @@
     "pages": 250,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "YA"
     ],
-    "subgenres": [],
+    "subgenres": [
+      "Small Town"
+    ],
     "identidades": [],
     "characters": [],
     "dinamicas": [],
     "tropes": [
-      "Secret Relationship"
+      "Secret Relationship",
+      "Slow Burn"
     ],
     "ambientacion": [],
     "spicy": null,
@@ -6982,7 +7006,13 @@
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777801854335_tdlff",
@@ -7025,14 +7055,19 @@
     "pages": 402,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "Contemporánea"
     ],
-    "subgenres": [],
+    "subgenres": [
+      "Small Town"
+    ],
     "identidades": [],
     "characters": [],
     "dinamicas": [],
     "tropes": [
-      "Forbidden Love"
+      "Forbidden Love",
+      "Friends to Lovers",
+      "Hurt/Comfort"
     ],
     "ambientacion": [],
     "spicy": 3,
@@ -7041,7 +7076,13 @@
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777801927691_hkcfh",
@@ -7317,14 +7358,25 @@
     "genres": [
       "Romance"
     ],
-    "subgenres": [],
-    "identidades": [],
-    "characters": [],
+    "subgenres": [
+      "Bisexual"
+    ],
+    "identidades": [
+      "Bisexual",
+      "Femme"
+    ],
+    "characters": [
+      "Política",
+      "Escritora"
+    ],
     "dinamicas": [
-      "Femme × Femme"
+      "Femme × Femme",
+      "Dominante × Sumisa"
     ],
     "tropes": [
-      "Age Gap"
+      "Age Gap",
+      "Friends with Benefits",
+      "Slow Burn"
     ],
     "ambientacion": [],
     "spicy": 4,
@@ -7355,13 +7407,18 @@
     "pages": 108,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "Contemporánea"
     ],
     "subgenres": [],
     "identidades": [],
-    "characters": [],
+    "characters": [
+      "Política",
+      "Escritora"
+    ],
     "dinamicas": [
-      "Femme × Femme"
+      "Femme × Femme",
+      "Dominante × Sumisa"
     ],
     "tropes": [],
     "ambientacion": [],
@@ -7393,13 +7450,25 @@
     "genres": [
       "Romance"
     ],
-    "subgenres": [],
-    "identidades": [],
+    "subgenres": [
+      "Bisexual"
+    ],
+    "identidades": [
+      "Grumpy",
+      "Sunshine",
+      "Lesbiana",
+      "Bisexual"
+    ],
     "characters": [],
     "dinamicas": [
-      "Femme × Femme"
+      "Femme × Femme",
+      "Grumpy × Sunshine"
     ],
-    "tropes": [],
+    "tropes": [
+      "Forced Proximity",
+      "Slow Burn",
+      "Fake Relationship"
+    ],
     "ambientacion": [],
     "spicy": 4,
     "formato": "Trilogía",
@@ -7430,13 +7499,20 @@
       "Romance"
     ],
     "subgenres": [],
-    "identidades": [],
-    "characters": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Madre Soltera",
+      "Política"
+    ],
     "dinamicas": [
-      "Femme × Femme"
+      "Femme × Femme",
+      "Dominante × Sumisa"
     ],
     "tropes": [
-      "Second Chance Romance"
+      "Second Chance Romance",
+      "Friends to Lovers"
     ],
     "ambientacion": [],
     "spicy": 4,
@@ -8292,13 +8368,22 @@
       "Romance"
     ],
     "subgenres": [
-      "Música"
+      "Música",
+      "Mafia",
+      "Dark Romance"
     ],
-    "identidades": [],
+    "identidades": [
+      "Grumpy",
+      "Ice Queen"
+    ],
     "characters": [],
     "dinamicas": [],
     "tropes": [
-      "Age Gap"
+      "Age Gap",
+      "Forbidden Love",
+      "Enemies to Lovers",
+      "Revenge Romance",
+      "Slow Burn"
     ],
     "ambientacion": [],
     "spicy": 4,
@@ -8307,7 +8392,13 @@
     "sagaName": "Requiem",
     "sagaNum": 1,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778011060595_f39xc",
@@ -8324,7 +8415,8 @@
       "Romance"
     ],
     "subgenres": [
-      "Crimen"
+      "Crimen",
+      "Mafia"
     ],
     "identidades": [],
     "characters": [],
@@ -8337,7 +8429,13 @@
     "sagaName": "Requiem",
     "sagaNum": 1.5,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778011138674_kekjb",
@@ -8351,10 +8449,14 @@
     "pages": 249,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "New Adult"
     ],
     "subgenres": [],
-    "identidades": [],
+    "identidades": [
+      "Grumpy",
+      "Ice Queen"
+    ],
     "characters": [
       "Bailarina"
     ],
@@ -8362,7 +8464,8 @@
     "tropes": [
       "Enemies to Lovers",
       "Opposites Attract",
-      "Forced Proximity"
+      "Forced Proximity",
+      "Workplace Romance"
     ],
     "ambientacion": [],
     "spicy": 4,
@@ -8371,7 +8474,13 @@
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778011180301_xlu50",
@@ -25599,16 +25708,31 @@
     "pages": 328,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "Contemporánea",
+      "New Adult"
     ],
-    "subgenres": [],
-    "identidades": [],
+    "subgenres": [
+      "Bisexual"
+    ],
+    "identidades": [
+      "Bisexual",
+      "Sunshine",
+      "Grumpy",
+      "Femme"
+    ],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Grumpy × Sunshine",
+      "Dominante × Sumisa",
+      "Femme × Femme"
+    ],
     "tropes": [
       "Enemies to Lovers",
       "Slow Burn",
-      "Opposites Attract"
+      "Opposites Attract",
+      "Workplace Romance",
+      "Forced Proximity"
     ],
     "ambientacion": [],
     "spicy": 4,
@@ -25922,7 +26046,8 @@
       "Slow Burn",
       "Age Gap",
       "Opposites Attract",
-      "Forced Proximity"
+      "Forced Proximity",
+      "Workplace Romance"
     ],
     "ambientacion": [],
     "spicy": null,
