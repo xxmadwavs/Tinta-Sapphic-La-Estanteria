@@ -167,6 +167,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .modal-saga-link{background:none;border:none;padding:0;font-size:12.5px;color:var(--muted);font-family:var(--font-body);cursor:pointer;transition:color .15s;font-style:italic}
 .modal-saga-link:hover{color:var(--teal);text-decoration:underline}
 .modal-author{font-size:13px;color:var(--muted);margin-bottom:1rem}
+.modal-author-link{background:none;border:none;font:inherit;color:var(--muted);cursor:pointer;padding:0;transition:color .15s}
+.modal-author-link:hover{color:var(--accent2);text-decoration:underline}
+.tag-clickable{cursor:pointer;transition:opacity .15s,transform .12s}
+.tag-clickable:hover{opacity:.8;transform:translateY(-1px)}
 .modal-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.2rem}
 .modal-meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem .8rem;margin-bottom:1.4rem}
 .meta-item{display:flex;flex-direction:column;gap:1px}
@@ -243,10 +247,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .pg-info{font-size:12px;color:var(--muted);text-align:center;padding-bottom:.5rem}
 
 /* ── TABS ── */
-.tab-bar{display:flex;gap:.5rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border2);padding-bottom:0}
-.tab-btn{padding:10px 22px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:14px;font-weight:500;font-family:var(--font-body);cursor:pointer;transition:all .18s;margin-bottom:-1px;border-radius:8px 8px 0 0}
-.tab-btn:hover{color:var(--accent2)}
-.tab-btn.active{color:var(--accent2);border-bottom-color:var(--accent);background:var(--accent-soft)}
+.tab-bar{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border2);padding-bottom:.5rem}
+.tab-btn{padding:9px 18px;background:transparent;border:1px solid transparent;border-radius:30px;color:var(--muted);font-size:13.5px;font-weight:500;font-family:var(--font-body);cursor:pointer;transition:all .18s;white-space:nowrap}
+.tab-btn:hover{color:var(--accent2);border-color:var(--border2)}
+.tab-btn.active{color:var(--accent2);background:var(--accent-soft);border-color:var(--border2)}
 
 /* ── TOP 10 ── */
 .top10-wrap{display:flex;flex-direction:column;gap:1.25rem;max-width:780px;margin:0 auto;padding-bottom:4rem}
@@ -309,12 +313,132 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .top10-gold{flex-direction:column;align-items:center;text-align:center}
   .top10-gold .t10-tags{justify-content:center}
   .top10-gold .t10-score{justify-content:center}
-  .tab-btn{padding:8px 14px;font-size:13px}
+  .tab-btn{padding:7px 12px;font-size:12px}
 }
 
 /* ── SOLICITUDES ── */
 .sol-layout{display:grid;grid-template-columns:340px 1fr;gap:1.5rem;align-items:start;padding-bottom:4rem}
 @media(max-width:820px){.sol-layout{grid-template-columns:1fr}}
+
+/* ── HOME VIEW ─────────────────────────────────────── */
+#homeView{display:none;position:relative;z-index:1}
+#homeView.active{display:block}
+body.home-active .hero,body.home-active .main{display:none!important}
+
+.home-nav-btn{padding:7px 16px;border-radius:30px;background:transparent;border:1px solid var(--border2);color:var(--muted);font-size:12.5px;font-weight:500;cursor:pointer;font-family:var(--font-body);transition:all .18s}
+.home-nav-btn:hover{border-color:var(--accent);color:var(--accent2)}
+.home-nav-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
+
+/* Hero */
+.hv-hero{padding:5.5rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,rgba(192,111,196,0.1) 0%,transparent 65%)}
+.hv-hero::before{content:'TS';position:absolute;right:-.01em;top:50%;transform:translateY(-55%);font-family:var(--font-display);font-size:clamp(9rem,22vw,18rem);font-weight:800;font-style:italic;color:transparent;-webkit-text-stroke:1px rgba(192,111,196,0.07);pointer-events:none;user-select:none;line-height:1}
+.hv-eyebrow{font-size:10px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-bottom:1.4rem;display:flex;align-items:center;justify-content:center;gap:.8em}
+.hv-eyebrow::before,.hv-eyebrow::after{content:'';display:inline-block;width:32px;height:1px;background:currentColor;opacity:.4}
+.hv-h1{font-family:var(--font-display);font-size:clamp(3.2rem,10vw,7rem);font-weight:300;line-height:.93;letter-spacing:-.02em;margin-bottom:.7rem}
+.hv-h1 em{font-style:italic;font-weight:600;color:var(--accent)}
+.hv-jp{font-size:11px;color:var(--muted);letter-spacing:.22em;text-transform:uppercase;margin-bottom:1.6rem;opacity:.7}
+.hv-desc{max-width:480px;margin:0 auto 2.8rem;font-size:15px;color:var(--muted);line-height:1.8}
+.hv-ctas{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.hv-cta{display:inline-flex;align-items:center;gap:.45em;padding:13px 28px;border-radius:30px;font-size:13.5px;font-weight:600;font-family:var(--font-body);border:none;cursor:pointer;text-decoration:none;transition:all .22s}
+.hv-cta-main{background:var(--accent);color:#fff;box-shadow:0 4px 20px rgba(192,111,196,.25)}
+.hv-cta-main:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(192,111,196,.38)}
+.hv-cta-reads{background:var(--rose-soft);color:var(--rose);border:1px solid rgba(212,96,122,.35)}
+.hv-cta-reads:hover{background:rgba(212,96,122,.22);transform:translateY(-2px)}
+.hv-cta-sec{background:transparent;color:var(--muted);border:1px solid var(--border2)}
+.hv-cta-sec:hover{border-color:var(--accent);color:var(--accent2);transform:translateY(-2px)}
+
+/* Stats band con animación counter-up */
+.hv-stats-band{background:var(--surface);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);padding:1.75rem 2rem;display:flex;justify-content:center;gap:0;flex-wrap:wrap}
+.hv-stat{display:flex;flex-direction:column;align-items:center;padding:0 3rem;border-right:1px solid var(--border)}
+.hv-stat:last-child{border-right:none}
+.hv-stat-n{font-family:var(--font-display);font-size:2.8rem;font-weight:300;line-height:1;color:var(--text);transition:color .3s}
+.hv-stat-n em{font-style:italic;color:var(--accent)}
+.hv-stat-l{font-size:10.5px;color:var(--muted);letter-spacing:.09em;text-transform:uppercase;margin-top:4px}
+
+/* Feature cards */
+.hv-features{max-width:1100px;margin:0 auto;padding:4.5rem 2rem 0;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.hv-feat-card{background:var(--surface);padding:2.4rem 2.2rem;position:relative;overflow:hidden;cursor:default}
+.hv-feat-card::before{content:attr(data-n);position:absolute;bottom:-14px;right:6px;font-family:var(--font-display);font-size:6rem;font-weight:800;font-style:italic;color:transparent;-webkit-text-stroke:1.5px rgba(180,120,200,.06);pointer-events:none;line-height:1}
+.hv-feat-card.clickable{cursor:pointer;transition:background .18s,border-color .18s}
+.hv-feat-card.clickable:hover{background:var(--surface2)}
+.hv-feat-icon{font-size:1.9rem;margin-bottom:1.1rem;display:block}
+.hv-feat-h3{font-family:var(--font-display);font-size:1.4rem;font-weight:600;color:var(--text);margin-bottom:.65rem}
+.hv-feat-p{font-size:13px;color:var(--muted);line-height:1.8}
+.hv-feat-link{display:inline-flex;align-items:center;gap:.35em;margin-top:1.1rem;font-size:12.5px;font-weight:600;color:var(--accent2);background:none;border:none;cursor:pointer;font-family:var(--font-body);padding:0;transition:opacity .15s;text-decoration:none}
+.hv-feat-link:hover{opacity:.65}
+.hv-feat-link.rose{color:var(--rose)}
+
+/* SafiClub block — portadas reales + texto */
+.hv-safi-block{max-width:1100px;margin:1px auto 0;background:var(--surface);position:relative;overflow:hidden;cursor:pointer;transition:background .18s}
+.hv-safi-block:hover{background:var(--surface2)}
+.hv-safi-block::before{content:'';display:block;height:2px;background:linear-gradient(90deg,var(--rose),var(--accent),var(--teal))}
+.hv-safi-inner{display:grid;grid-template-columns:1fr 1.1fr;gap:0}
+.hv-safi-left{padding:2.5rem 2.5rem 2.5rem 2.5rem;display:flex;flex-direction:column;justify-content:center}
+.hv-safi-right{padding:2rem 2rem 2rem 0;display:flex;flex-direction:column;justify-content:center;gap:1rem}
+.hv-safi-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rose);margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem}
+.hv-safi-badge{padding:2px 9px;border:1px solid rgba(212,96,122,.35);background:rgba(212,96,122,.08);font-size:8px;letter-spacing:.14em;border-radius:20px}
+.hv-safi-h2{font-family:var(--font-display);font-size:2.4rem;font-weight:300;font-style:italic;color:var(--text);line-height:1.05;margin-bottom:.9rem}
+.hv-safi-h2 em{color:var(--rose);font-weight:600}
+.hv-safi-p{font-size:13.5px;color:var(--muted);line-height:1.85;margin-bottom:1.4rem}
+/* preview de portadas */
+.hv-safi-covers{display:flex;gap:.5rem;align-items:flex-end;flex-wrap:wrap}
+.hv-safi-cover{width:52px;height:78px;border-radius:8px;object-fit:cover;border:1px solid var(--border2);flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:transform .2s}
+.hv-safi-cover:hover{transform:translateY(-4px) scale(1.04)}
+.hv-safi-cover-ph{width:52px;height:78px;border-radius:8px;background:var(--surface3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;color:var(--muted)}
+.hv-safi-more{font-family:var(--font-display);font-size:1.1rem;font-weight:300;font-style:italic;color:var(--muted);padding:0 .5rem;align-self:center}
+/* categorías dinámicas */
+.hv-safi-cats{display:flex;flex-direction:column;gap:.4rem}
+.hv-safi-cat-row{display:flex;align-items:center;gap:.6rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.6rem .9rem;transition:border-color .15s}
+.hv-safi-cat-row:hover{border-color:rgba(212,96,122,.35)}
+.hv-safi-cat-name{flex:1;font-size:12.5px;font-weight:500;color:var(--text)}
+.hv-safi-cat-count{font-size:11px;color:var(--muted);white-space:nowrap}
+
+/* Cómo funciona */
+.hv-how{max-width:1100px;margin:4.5rem auto 0;padding:0 2rem 5.5rem}
+.hv-how-title{font-family:var(--font-display);font-size:2.6rem;font-weight:300;font-style:italic;text-align:center;margin-bottom:.3rem;color:var(--text)}
+.hv-how-sub{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:2.8rem;opacity:.7}
+.hv-how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.hv-how-card{background:var(--surface);padding:2.2rem 2rem;position:relative;overflow:hidden}
+.hv-how-card::before{content:attr(data-n);position:absolute;bottom:-14px;right:6px;font-family:var(--font-display);font-size:5.5rem;font-weight:800;font-style:italic;color:transparent;-webkit-text-stroke:1.5px rgba(180,120,200,.06);pointer-events:none;line-height:1}
+.hv-how-step{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--accent-soft);border:1px solid rgba(192,111,196,.3);font-family:var(--font-display);font-size:1rem;font-weight:600;color:var(--accent2);margin-bottom:1rem;flex-shrink:0}
+.hv-how-h3{font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--text);margin-bottom:.55rem}
+.hv-how-p{font-size:12.5px;color:var(--muted);line-height:1.8}
+
+/* Footer */
+.hv-footer{background:var(--surface);border-top:1px solid var(--border2);padding:2.5rem 2rem;text-align:center}
+.hv-footer-logo{font-family:var(--font-display);font-size:1.6rem;font-weight:300;color:var(--text);margin-bottom:.3rem}
+.hv-footer-logo em{font-style:italic;color:var(--accent);font-weight:600}
+.hv-footer-sub{font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+
+/* ── SafiClub tab panel ─────────────────────────────── */
+.safi-wrap{max-width:920px;margin:0 auto;padding-bottom:4rem}
+.safi-section-group{margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);overflow:hidden}
+.safi-section-head{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.25rem;border-bottom:1px solid var(--border)}
+.safi-section-name{font-family:var(--font-display);font-size:1.05rem;font-style:italic;color:var(--accent2);font-weight:600}
+.safi-section-count{font-size:11.5px;color:var(--muted)}
+.safi-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.75rem;padding:1.1rem 1.25rem}
+.safi-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .18s;display:flex;flex-direction:column}
+.safi-item:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.safi-item-cover{aspect-ratio:2/3;overflow:hidden;background:var(--surface3);position:relative}
+.safi-item-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.safi-item:hover .safi-item-cover img{transform:scale(1.04)}
+.safi-item-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--muted)}
+.safi-item-body{padding:.6rem .7rem}
+.safi-item-title{font-size:12px;font-weight:500;line-height:1.3;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:2px}
+.safi-item-author{font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.safi-empty{padding:3rem;text-align:center;color:var(--muted);font-style:italic;font-size:13px}
+
+@media(max-width:768px){
+  .hv-features{grid-template-columns:1fr}
+  .hv-safi-inner{grid-template-columns:1fr;padding:0}
+  .hv-safi-left{padding:2rem 1.5rem 1.5rem}
+  .hv-safi-right{padding:0 1.5rem 2rem;border-top:1px solid var(--border)}
+  .hv-how-grid{grid-template-columns:1fr}
+  .hv-stat{padding:.85rem 1.5rem;border-right:none;border-bottom:1px solid var(--border)}
+  .hv-stat:last-child{border-bottom:none}
+  .hv-stats-band{flex-direction:column}
+  .safi-items{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+}
 .sol-form-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1.5rem 1.75rem 1.75rem}
 .sol-form-title{font-family:var(--font-display);font-size:1.5rem;font-weight:400;font-style:italic;margin-bottom:.2rem}
 .sol-form-sub{font-size:12px;color:var(--muted);margin-bottom:1.25rem;line-height:1.6}
@@ -375,6 +499,58 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sol-badge.pendiente{background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.3)}
 .sol-badge.subido{background:rgba(91,188,176,0.15);color:var(--teal);border:1px solid rgba(91,188,176,0.3)}
 .sol-empty{text-align:center;padding:1.5rem;color:var(--muted);font-style:italic;font-size:12.5px}
+
+/* ── CANAL REC ── */
+.canal-wrap{max-width:920px;margin:0 auto;padding-bottom:4rem}
+.canal-month-group{margin-bottom:2rem;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);overflow:hidden}
+.canal-month-head{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.4rem;border-bottom:1px solid var(--border);background:linear-gradient(90deg,rgba(192,111,196,0.08) 0%,transparent 100%)}
+.canal-month-name{font-family:var(--font-display);font-size:1.15rem;font-style:italic;font-weight:600;color:var(--accent2);display:flex;align-items:center;gap:.6rem}
+.canal-month-name::before{content:'📻';font-style:normal;font-size:.9rem}
+.canal-month-count{font-size:11px;color:var(--muted)}
+.canal-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.6rem;padding:1rem 1.1rem}
+.canal-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .18s;display:flex;flex-direction:column}
+.canal-item:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.canal-item-cover{aspect-ratio:2/3;overflow:hidden;background:var(--surface3);position:relative}
+.canal-item-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.canal-item:hover .canal-item-cover img{transform:scale(1.04)}
+.canal-item-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--muted)}
+.canal-item-body{padding:.6rem .7rem}
+.canal-item-title{font-size:12px;font-weight:500;line-height:1.3;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:2px}
+.canal-item-author{font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.canal-empty{padding:3rem;text-align:center;color:var(--muted);font-style:italic;font-size:13px}
+.canal-hero-strip{background:linear-gradient(135deg,rgba(192,111,196,0.1) 0%,rgba(91,188,176,0.06) 100%);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1.5rem 2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.canal-hero-icon{font-size:2.5rem;flex-shrink:0}
+.canal-hero-text h2{font-family:var(--font-display);font-size:1.6rem;font-weight:300;font-style:italic;color:var(--text);margin-bottom:.2rem}
+.canal-hero-text h2 em{color:var(--accent);font-weight:600}
+.canal-hero-text p{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ── MIS REC ── */
+.myrec-wrap{max-width:920px;margin:0 auto;padding-bottom:4rem}
+.myrec-section-group{margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);overflow:hidden}
+.myrec-section-head{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.4rem;border-bottom:1px solid var(--border);background:linear-gradient(90deg,rgba(212,96,122,0.07) 0%,transparent 100%)}
+.myrec-section-name{font-family:var(--font-display);font-size:1.1rem;font-style:italic;font-weight:600;color:#e0909e;display:flex;align-items:center;gap:.6rem}
+.myrec-section-count{font-size:11px;color:var(--muted)}
+.myrec-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.6rem;padding:1rem 1.1rem}
+.myrec-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .18s;display:flex;flex-direction:column}
+.myrec-item:hover{border-color:rgba(212,96,122,0.35);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.myrec-item-cover{aspect-ratio:2/3;overflow:hidden;background:var(--surface3);position:relative}
+.myrec-item-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.myrec-item:hover .myrec-item-cover img{transform:scale(1.04)}
+.myrec-item-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--muted)}
+.myrec-item-body{padding:.6rem .7rem}
+.myrec-item-title{font-size:12px;font-weight:500;line-height:1.3;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:2px}
+.myrec-item-author{font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.myrec-empty{padding:3rem;text-align:center;color:var(--muted);font-style:italic;font-size:13px}
+.myrec-hero-strip{background:linear-gradient(135deg,rgba(212,96,122,0.1) 0%,rgba(192,111,196,0.06) 100%);border:1px solid rgba(212,96,122,0.25);border-radius:var(--radius-lg);padding:1.5rem 2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.myrec-hero-icon{font-size:2.5rem;flex-shrink:0}
+.myrec-hero-text h2{font-family:var(--font-display);font-size:1.6rem;font-weight:300;font-style:italic;color:var(--text);margin-bottom:.2rem}
+.myrec-hero-text h2 em{color:var(--rose);font-weight:600}
+.myrec-hero-text p{font-size:13px;color:var(--muted);line-height:1.7}
+@media(max-width:600px){.canal-items,.myrec-items{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}.canal-hero-strip,.myrec-hero-strip{padding:1rem 1.2rem}}
+.rec-ver-mas-wrap{padding:.6rem 1.1rem 1rem;text-align:center}
+.rec-ver-mas-btn{background:transparent;border:1px solid var(--border2);border-radius:30px;color:var(--muted);font-size:12px;font-family:var(--font-body);padding:6px 20px;cursor:pointer;transition:all .18s}
+.rec-ver-mas-btn:hover{border-color:var(--accent);color:var(--accent2);background:var(--accent-soft)}
+.rec-item-hidden{display:none!important}
 .sol-login-notice{text-align:center;padding:1.5rem;color:var(--muted);font-size:13px}
 .sol-login-notice a{color:var(--accent2);cursor:pointer;background:none;border:none;font:inherit;text-decoration:underline}
 .sol-kanban-locked{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:13px}
@@ -386,24 +562,173 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sol-pg-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
 .sol-pg-btn:disabled{opacity:.35;cursor:not-allowed}
 .sol-card-tag.votos{background:rgba(192,111,196,0.12);color:var(--accent2);border:1px solid rgba(192,111,196,0.2)}
+
+/* ── SECTION TABS ── */
+.section-tabs{display:flex;gap:.4rem;margin-bottom:.75rem;flex-wrap:wrap}
+.section-tab{display:flex;align-items:center;gap:.45rem;padding:9px 20px;border-radius:30px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:13px;font-weight:500;cursor:pointer;transition:all .18s;white-space:nowrap}
+.section-tab:hover{border-color:var(--border2);color:var(--text)}
+.section-tab.active-thais{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
+.section-tab.active-other{background:rgba(91,188,176,0.12);border-color:var(--teal);color:var(--teal)}
+.section-tab.active-spanish{background:rgba(155,111,212,0.15);border-color:#9b6fd4;color:#c9a8f0}
+.section-tab.active-baihee{background:rgba(212,96,96,0.12);border-color:#d46060;color:#f0a0a0}
+.section-tab.active-asian{background:rgba(201,151,90,0.15);border-color:var(--gold);color:var(--gold)}
+.section-tab.active-african{background:rgba(91,164,91,0.15);border-color:#5ba45b;color:#8fd48f}
+.section-tab .tab-count{font-size:10.5px;padding:1px 7px;border-radius:20px;font-weight:700;margin-left:1px}
+.section-tab.active-thais .tab-count{background:var(--accent);color:#fff}
+.section-tab.active-other .tab-count{background:var(--teal);color:var(--bg)}
+.section-tab.active-spanish .tab-count{background:#9b6fd4;color:#fff}
+.section-tab.active-baihee .tab-count{background:#d46060;color:#fff}
+.section-tab.active-asian .tab-count{background:var(--gold);color:var(--bg)}
+.section-tab.active-african .tab-count{background:#5ba45b;color:#fff}
+.section-tab .tab-count.hidden{display:none}
+@media(max-width:600px){.section-tabs{gap:.35rem;flex-wrap:wrap}.section-tab{padding:6px 12px;font-size:11.5px;flex:1 1 calc(50% - .35rem);justify-content:center}}
+
+/* FOOTER */
+.site-footer{position:relative;z-index:1;border-top:1px solid var(--border2);background:var(--surface);padding:2.5rem 2rem 1.8rem;margin-top:3rem}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:1.4rem}
+.footer-logo{font-family:var(--font-display);font-size:1.3rem;font-weight:300;color:var(--muted);letter-spacing:.04em;text-align:center}
+.footer-logo em{font-style:italic;color:var(--accent);font-weight:600}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.3rem}
+.footer-link{padding:6px 16px;border-radius:30px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:12px;font-family:var(--font-body);cursor:pointer;text-decoration:none;transition:all .18s;letter-spacing:.02em}
+.footer-link:hover{border-color:var(--accent);color:var(--accent2);background:var(--accent-soft)}
+.footer-copy{font-size:11px;color:var(--muted);opacity:.5;letter-spacing:.05em;text-align:center}
+/* INFO MODAL */
+.info-modal-bg{position:fixed;inset:0;background:rgba(8,5,10,0.82);backdrop-filter:blur(8px);display:none;align-items:flex-start;justify-content:center;z-index:400;padding:2rem 1rem;overflow-y:auto}
+.info-modal-bg.open{display:flex}
+.info-modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);width:100%;max-width:680px;margin:auto;box-shadow:0 32px 80px rgba(0,0,0,0.7);position:relative;overflow:hidden}
+.info-modal-header{padding:1.8rem 2rem 1.2rem;border-bottom:1px solid var(--border)}
+.info-modal-title{font-family:var(--font-display);font-size:2rem;font-weight:600;font-style:italic;color:var(--text);line-height:1}
+.info-modal-subtitle{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+.info-modal-body{padding:1.6rem 2rem 2rem;max-height:65vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.info-modal-body::-webkit-scrollbar{width:4px}
+.info-modal-body::-webkit-scrollbar-track{background:transparent}
+.info-modal-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+.info-section{margin-bottom:1.6rem}
+.info-section:last-child{margin-bottom:0}
+.info-section h3{font-family:var(--font-display);font-size:1.05rem;font-weight:600;color:var(--accent2);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.info-section h3::before{content:'';display:inline-block;width:3px;height:1em;background:var(--accent);border-radius:2px;flex-shrink:0}
+.info-section p,.info-section li{font-size:13.5px;color:var(--muted);line-height:1.75}
+.info-section ul{padding-left:1.2rem;display:flex;flex-direction:column;gap:.3rem}
+.info-section li::marker{color:var(--accent)}
+.info-highlight{background:var(--accent-soft);border:1px solid rgba(192,111,196,0.2);border-radius:10px;padding:.9rem 1.1rem;margin-bottom:1.4rem;font-size:13px;color:var(--text);line-height:1.65}
+.info-highlight em{color:var(--accent2);font-style:italic}
+.info-modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;background:rgba(14,11,16,0.75);border:1px solid var(--border2);color:var(--text);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:all .15s;line-height:1}
+.info-modal-close:hover{background:var(--rose);border-color:var(--rose);color:#fff}
+@media(max-width:600px){.info-modal-header{padding:1.4rem 1.2rem .9rem}.info-modal-body{padding:1.2rem 1.2rem 1.6rem}.info-modal-title{font-size:1.6rem}}
 </style>
 </head>
 <body>
 
 <nav class="topbar">
-  <a class="logo" href="#">
+  <a class="logo" href="#" onclick="showHome();return false;" style="text-decoration:none">
     <span class="logo-tinta">Tinta</span><em>Sapphic</em>
     <span class="logo-sep">~</span>
-    <span class="logo-sub">Nuestra Estantería Thai</span>
+    <span class="logo-sub">La Estantería</span>
   </a>
-  <div class="topbar-right" id="authArea">
-    <button class="btn-login" onclick="openAuthModal()">Entrar para votar</button>
+  <div class="topbar-right" style="display:flex;align-items:center;gap:8px">
+    <button class="home-nav-btn" id="homeNavBtn" onclick="showHome()">⌂ Inicio</button>
+    <div id="authArea">
+      <button class="btn-login" onclick="openAuthModal()">Entrar para votar</button>
+    </div>
   </div>
 </nav>
 
+<!-- HOME VIEW -->
+<div id="homeView">
+
+  <div class="hv-hero">
+    <div class="hv-eyebrow">Libros Sapphic · F/F · SafiClub</div>
+    <h1 class="hv-h1">La <em>estantería</em><br>sapphic</h1>
+    <p class="hv-jp">Tinta Sapphic · Curadas con amor</p>
+    <p class="hv-desc">
+      Explora libros sapphic curados por la comunidad de <strong style="color:var(--text)">Tinta Sapphic</strong>.
+      Vota tus favoritos, descubre el SafiClub y construye el ranking juntas.
+    </p>
+    <div class="hv-ctas">
+      <button class="hv-cta hv-cta-main" onclick="showCatalog()">✦ Ver la estantería</button>
+      <button class="hv-cta hv-cta-reads" onclick="showCatalog('safi')">🌹 SafiClub</button>
+      <button class="hv-cta hv-cta-sec" onclick="showCatalog('top10')">🏆 Top 10</button>
+    </div>
+  </div>
+
+  <div class="hv-stats-band">
+    <div class="hv-stat"><div class="hv-stat-n" id="hvStatTotal">—</div><div class="hv-stat-l">Libros</div></div>
+    <div class="hv-stat"><div class="hv-stat-n" id="hvStatVotos">—</div><div class="hv-stat-l">Valoraciones</div></div>
+    <div class="hv-stat"><div class="hv-stat-n" id="hvStatSafi">—</div><div class="hv-stat-l">SafiClub</div></div>
+    <div class="hv-stat"><div class="hv-stat-n" id="hvStatThais">—</div><div class="hv-stat-l">Libros Thais</div></div>
+  </div>
+
+  <div class="hv-features">
+    <div class="hv-feat-card clickable" data-n="01" onclick="showCatalog()">
+      <span class="hv-feat-icon">📚</span>
+      <h3 class="hv-feat-h3">Explora la estantería</h3>
+      <p class="hv-feat-p">Libros sapphic organizados por sección — Thais, Occidentales, En Español, Baihee y más. Filtra por género, dinámica, tropo y nivel spicy.</p>
+      <button class="hv-feat-link" onclick="showCatalog()">→ Abrir estantería</button>
+    </div>
+    <div class="hv-feat-card clickable" data-n="02" onclick="showCatalog('top10')">
+      <span class="hv-feat-icon">★</span>
+      <h3 class="hv-feat-h3">Vota estrellas y nivel spicy</h3>
+      <p class="hv-feat-p">Inicia sesión y puntúa del 1 al 5 cualquier libro. Además, puedes votar el nivel spicy 🌶 de cada libro — cuantas más lo voten, más preciso será el dato para toda la comunidad.</p>
+      <button class="hv-feat-link" onclick="showCatalog('top10')">→ Ver el Top 10</button>
+    </div>
+    <div class="hv-feat-card clickable" data-n="03" onclick="showCatalog()">
+      <span class="hv-feat-icon">🔍</span>
+      <h3 class="hv-feat-h3">Filtros avanzados</h3>
+      <p class="hv-feat-p">Busca por dinámica de pareja, tropos, nivel spicy, saga, año de publicación y más. Combina varios filtros para encontrar exactamente lo que buscas.</p>
+      <button class="hv-feat-link" onclick="showCatalog()">→ Usar filtros</button>
+    </div>
+  </div>
+
+  <!-- SafiClub block: texto izq + portadas reales + categorías dcha -->
+  <div class="hv-safi-block" onclick="showCatalog('safi')" style="max-width:1100px;margin:1px auto 0">
+    <div class="hv-safi-inner">
+      <div class="hv-safi-left">
+        <div class="hv-safi-eyebrow">Club de lectura <span class="hv-safi-badge">SafiClub</span></div>
+        <h2 class="hv-safi-h2">Leemos<br><em>juntas</em></h2>
+        <p class="hv-safi-p">Las lecturas del club de Tinta Sapphic, organizadas por categoría. Descubre qué hemos leído y qué viene a continuación.</p>
+        <button class="hv-feat-link rose" onclick="event.stopPropagation();showCatalog('safi')">→ Ver todo el SafiClub</button>
+        <div class="hv-safi-covers" id="hvSafiCovers" style="margin-top:1.5rem"></div>
+      </div>
+      <div class="hv-safi-right">
+        <div class="hv-safi-cats" id="hvSafiCats">
+          <div class="hv-safi-cat-row" style="opacity:.4"><span>🌹</span><span class="hv-safi-cat-name">Cargando…</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hv-how">
+    <h2 class="hv-how-title">¿Cómo funciona?</h2>
+    <p class="hv-how-sub">Todo lo que necesitas saber</p>
+    <div class="hv-how-grid">
+      <div class="hv-how-card" data-n="1">
+        <div class="hv-how-step">1</div>
+        <h3 class="hv-how-h3">Explora el catálogo</h3>
+        <p class="hv-how-p">Navega por cientos de libros sapphic organizados en secciones. Usa los filtros para encontrar exactamente lo que busca tu alma lectora.</p>
+      </div>
+      <div class="hv-how-card" data-n="2">
+        <div class="hv-how-step">2</div>
+        <h3 class="hv-how-h3">Crea tu cuenta</h3>
+        <p class="hv-how-p">Regístrate con tu usuario de Telegram y tu email. Es gratis y solo lleva un momento. Tu voto cuenta en el ranking comunitario.</p>
+      </div>
+      <div class="hv-how-card" data-n="3">
+        <div class="hv-how-step">3</div>
+        <h3 class="hv-how-h3">Vota estrellas y spicy</h3>
+        <p class="hv-how-p">Puntúa los libros del 1 al 5 ★ y vota el nivel spicy 🌶 que crees que tienen. El dato que aparece en cada libro se construye con los votos de la comunidad.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hv-footer">
+    <div class="hv-footer-logo">Tinta <em>Sapphic</em></div>
+    <div class="hv-footer-sub">La estantería sapphic de la comunidad</div>
+  </div>
+
+</div><!-- /#homeView -->
+
 <section class="hero">
   <div class="hero-eyebrow">📚 Libros Sapphic · F/F</div>
-  <h1 class="hero-title">Nuestra<br><em>Estantería Thai</em></h1>
+  <h1 class="hero-title">Nuestra<br><em>estantería</em></h1>
   <p class="hero-sub">Vota tus favoritos y descubre qué están leyendo las demás. El ranking lo construimos juntas.</p>
   <div class="hero-stats">
     <div class="stat-item"><div class="stat-num" id="statBooks"><em>—</em></div><div class="stat-label">Libros</div></div>
@@ -415,13 +740,24 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
   <!-- TABS -->
   <div class="tab-bar">
-    <button class="tab-btn active" id="tabEstanteria" onclick="switchTab('estanteria')">📚 Estantería Thai</button>
-    <button class="tab-btn" id="tabTop10" onclick="switchTab('top10')">🏆 Top 10</button>
+    <button class="tab-btn active" id="tabEstanteria" onclick="switchTab('estanteria')">📚 Estantería</button>
+    <button class="tab-btn" id="tabTop10" onclick="switchTab('top10')">🏆 Top 10 Thais</button>
+    <button class="tab-btn" id="tabSafi" onclick="switchTab('safi')">🌹 SafiClub</button>
+    <button class="tab-btn" id="tabCanal" onclick="switchTab('canal')">📻 Recomendaciones del Canal</button>
+    <button class="tab-btn" id="tabMyrec" onclick="switchTab('myrec')">💌 Mis Recomendaciones</button>
     <button class="tab-btn" id="tabSolicitudes" onclick="switchTab('solicitudes')">📬 Solicitudes</button>
   </div>
 
   <!-- PANEL ESTANTERÍA -->
   <div id="panelEstanteria">
+  <div class="section-tabs" id="sectionTabs">
+    <button class="section-tab active-thais" id="tabThais" onclick="switchSection('thais')">🌸 Libros Thais <span class="tab-count" id="countThais">0</span></button>
+    <button class="section-tab" id="tabOther" onclick="switchSection('other')">🌍 Libros Occidentales <span class="tab-count hidden" id="countOther">0</span></button>
+    <button class="section-tab" id="tabSpanish" onclick="switchSection('spanish')">💜 Libros en Español <span class="tab-count hidden" id="countSpanish">0</span></button>
+    <button class="section-tab" id="tabBaihee" onclick="switchSection('baihee')">🐉 Baihee <span class="tab-count hidden" id="countBaihee">0</span></button>
+    <button class="section-tab" id="tabAsian" onclick="switchSection('asian')">🏮 Asiáticas <span class="tab-count hidden" id="countAsian">0</span></button>
+    <button class="section-tab" id="tabAfrican" onclick="switchSection('african')">🪘 Africanas <span class="tab-count hidden" id="countAfrican">0</span></button>
+  </div>
   <div class="filter-shell">
     <div class="filter-top">
       <div class="search-wrap">
@@ -496,8 +832,28 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
   <!-- PANEL TOP 10 -->
   <div id="panelTop10" style="display:none">
-    <p style="text-align:center;font-size:12px;color:var(--muted);margin-bottom:1.25rem;line-height:1.6">El ranking usa una <strong style="color:var(--accent2)">puntuación ponderada</strong>: combina la nota media con el número de votos, para que un libro con muchas valoraciones altas supere a uno con un solo 5 ⭐</p>
     <div id="top10Container"></div>
+  </div>
+
+  <!-- PANEL LEÍDAS DEL CLUB -->
+  <div id="panelSafi" style="display:none">
+    <div class="safi-wrap" id="safiContainer">
+      <div class="loading"><div class="spinner"></div>Cargando lecturas…</div>
+    </div>
+  </div>
+
+  <!-- PANEL CANAL REC -->
+  <div id="panelCanal" style="display:none">
+    <div class="canal-wrap" id="canalContainer">
+      <div class="loading"><div class="spinner"></div>Cargando recomendaciones…</div>
+    </div>
+  </div>
+
+  <!-- PANEL MIS RECOMENDACIONES -->
+  <div id="panelMyrec" style="display:none">
+    <div class="myrec-wrap" id="myrecContainer">
+      <div class="loading"><div class="spinner"></div>Cargando recomendaciones…</div>
+    </div>
   </div>
 
   <!-- PANEL SOLICITUDES -->
@@ -636,9 +992,10 @@ const SPICY_UNKNOWN_LABEL = '? Nivel desconocido';
 const SPICY_UNKNOWN_ICON  = '❓';
 
 let allBooks=[], ratingsMap={}, myRatings={}, currentUser=null, activeBook=null;
+let activeSection='thais';
 let authMode='login', pendingStar=0;
 let spicyMap={}, mySpicy={}, pendingSpicy=0;
-const SPICY_MIN_VOTES=2; // votos mínimos para mostrar el spicy de la comunidad
+const SPICY_MIN_VOTES=2;
 let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],adaptacion:null,valoracion:null};
 let currentPage=1;
 const PAGE_SIZE=24;
@@ -648,21 +1005,25 @@ function debounce(fn,ms){let t;return(...args)=>{clearTimeout(t);t=setTimeout(()
 
 /* ── URL STATE ── */
 function pushState(){
-  const params=new URLSearchParams();
-  if(currentPage>1) params.set('page',currentPage);
-  if(filters.q) params.set('q',filters.q);
-  ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas'].forEach(k=>{
-    if(filters[k].length) params.set(k,filters[k].join('|'));
-  });
-  if(filters.spicy.length) params.set('spicy',filters.spicy.join('|'));
-  if(filters.spicyUnknown) params.set('spicyUnknown','1');
-  if(filters.adaptacion) params.set('adaptacion',filters.adaptacion);
-  if(filters.valoracion) params.set('valoracion',filters.valoracion);
-  const url=params.toString()?'?'+params.toString():location.pathname;
-  history.replaceState(null,'',url);
+  try{
+    const params=new URLSearchParams();
+    if(activeSection&&activeSection!=='thais') params.set('section',activeSection);
+    if(currentPage>1) params.set('page',currentPage);
+    if(filters.q) params.set('q',filters.q);
+    ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas'].forEach(k=>{
+      if(filters[k].length) params.set(k,filters[k].join('|'));
+    });
+    if(filters.spicy.length) params.set('spicy',filters.spicy.join('|'));
+    if(filters.spicyUnknown) params.set('spicyUnknown','1');
+    if(filters.adaptacion) params.set('adaptacion',filters.adaptacion);
+    if(filters.valoracion) params.set('valoracion',filters.valoracion);
+    const url=params.toString()?'?'+params.toString():location.pathname;
+    history.replaceState(null,'',url);
+  }catch(e){}
 }
 function loadState(){
   const params=new URLSearchParams(location.search);
+  if(params.get('section')) activeSection=params.get('section');
   if(params.get('page')) currentPage=parseInt(params.get('page'))||1;
   if(params.get('q')){filters.q=params.get('q');document.getElementById('searchInput').value=filters.q;}
   ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas'].forEach(k=>{
@@ -689,8 +1050,23 @@ async function init(){
   if(currentUser) await loadMyRatings();
   buildDropdowns();
   loadState();   // restaurar filtros y página desde la URL
+  // Pintar visualmente la sección activa restaurada
+  const _secTabs={thais:'tabThais',other:'tabOther',spanish:'tabSpanish',baihee:'tabBaihee',asian:'tabAsian',african:'tabAfrican'};
+  const _secCls={thais:'active-thais',other:'active-other',spanish:'active-spanish',baihee:'active-baihee',asian:'active-asian',african:'active-african'};
+  Object.entries(_secTabs).forEach(([key,id])=>{const el=document.getElementById(id);if(el)el.className='section-tab'+(key===activeSection?' '+_secCls[key]:'');});
   applyFilters(false);
   updateDDCounts();renderActivePills();
+  const savedTab = sessionStorage.getItem('ts_active_tab');
+  if(savedTab && savedTab !== 'home') {
+    // estaba en el catálogo — restaurar sin ir al home
+    document.getElementById('homeView').classList.remove('active');
+    document.body.classList.remove('home-active');
+    document.getElementById('homeNavBtn').classList.remove('active');
+    switchTab(savedTab === 'estanteria' ? 'estanteria' : savedTab);
+  } else {
+    // primera visita o venía del home
+    showHome();
+  }
   const debouncedLoadRatings=debounce(()=>{
     if(currentUser) loadMyRatings().then(()=>{applyFilters(false);if(activeBook)renderBookModal();checkSolicitudesNotif();});
     else{myRatings={};applyFilters(false);}
@@ -728,7 +1104,6 @@ async function loadBooks(){
       ratingsMap[id]={avg:Math.round(scores.reduce((a,b)=>a+b,0)/scores.length*10)/10,count:scores.length};
     });
   }
-  // Cargar votos spicy de la comunidad
   const {data:svData}=await sb.from('spicy_votes').select('book_id,level');
   spicyMap={};
   if(svData){
@@ -755,15 +1130,17 @@ function updateStats(){
   document.getElementById('statBooks').innerHTML=`<em>${allBooks.length}</em>`;
   document.getElementById('statVotes').innerHTML=`<em>${Object.values(ratingsMap).reduce((s,r)=>s+r.count,0)}</em>`;
   if(activeTab==='top10') renderTop10();
+  if(document.getElementById('homeView').classList.contains('active')) updateHomeStats();
 }
 
 /* ── DROPDOWNS ── */
 // Helper to get sorted unique values from a book field
 function uniqVals(key){
-  if(key==='authors') return [...new Set(allBooks.flatMap(b=>b.authors||[]))].sort();
-  if(key==='years')   return [...new Set(allBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String);
-  if(key==='sagas')   return [...new Set(allBooks.map(b=>getSaga(b)).filter(Boolean))].sort();
-  return [...new Set(allBooks.flatMap(b=>b[key]||[]))].sort();
+  const sectionBooks=allBooks.filter(b=>b.source===activeSection);
+  if(key==='authors') return [...new Set(sectionBooks.flatMap(b=>b.authors||[]))].sort();
+  if(key==='years')   return [...new Set(sectionBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String);
+  if(key==='sagas')   return [...new Set(sectionBooks.map(b=>getSaga(b)).filter(Boolean))].sort();
+  return [...new Set(sectionBooks.flatMap(b=>b[key]||[]))].sort();
 }
 
 const DD_MAP = {
@@ -966,10 +1343,13 @@ function applyFilters(resetPage=true){
   else if(sort==='za') books.sort((a,b)=>b.title.localeCompare(a.title,'es'));
   else if(sort==='year_desc') books.sort((a,b)=>(b.year||0)-(a.year||0));
   else if(sort==='year_asc') books.sort((a,b)=>(a.year||0)-(b.year||0));
+  // Filter by active section
+  books=books.filter(b=>b.source===activeSection);
   const total=books.length;
+  const secAll=allBooks.filter(b=>b.source===activeSection).length;
   const totalPages=Math.max(1,Math.ceil(total/PAGE_SIZE));
   if(currentPage>totalPages) currentPage=totalPages;
-  document.getElementById('resultsCount').textContent=`${total} de ${allBooks.length} libros`;
+  document.getElementById('resultsCount').textContent=`${total} de ${secAll} libros`;
   const start=(currentPage-1)*PAGE_SIZE;
   renderGrid(books.slice(start,start+PAGE_SIZE), total, totalPages);
   pushState();
@@ -977,6 +1357,14 @@ function applyFilters(resetPage=true){
 
 function renderGrid(books, total, totalPages){
   const c=document.getElementById('booksContainer');
+  // Update section tab counts (always from full filtered books before section split)
+  const _all=[...allBooks];
+  [{id:'countThais',src:'thais'},{id:'countOther',src:'other'},{id:'countSpanish',src:'spanish'},{id:'countBaihee',src:'baihee'},{id:'countAsian',src:'asian'},{id:'countAfrican',src:'african'}].forEach(({id,src})=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    const n=_all.filter(b=>b.source===src).length;
+    el.textContent=n; el.className='tab-count'+(n?'':' hidden');
+  });
   if(!total){c.innerHTML=`<div class="empty-state"><div class="empty-big">¿Dónde están?</div><p>Ningún libro coincide.</p></div>`;return;}
 
   let html=`<div class="books-grid">${books.map(b=>{
@@ -1057,7 +1445,9 @@ function renderBookModal(){
   const b=activeBook;
   const r=ratingsMap[b.id]||{avg:0,count:0};
   const myScore=myRatings[b.id]||0;
-  const authorStr=(b.authors||[]).join(', ')||'—';
+  const authorStr=(b.authors||[]).length
+    ? (b.authors).map(a=>`<button class="modal-author-link" onclick="filterByAuthorFromModal(decodeURIComponent('${encodeURIComponent(a)}'))">${a}</button>`).join(', ')
+    : '—';
   const coverEl=b.cover?`<div class="modal-cover-strip"><img src="${b.cover}" alt="${b.title}"></div>`:`<div class="modal-cover-ph">📖</div>`;
   const stars=avg=>[1,2,3,4,5].map(i=>`<span class="star ${i<=Math.round(avg)?'on':'off'}">★</span>`).join('');
   const communityRating=r.count>0
@@ -1068,12 +1458,12 @@ function renderBookModal(){
   if(!currentUser) voteArea=`<p class="login-to-vote"><a onclick="closeBookModal();openAuthModal()">Inicia sesión</a> para valorar este libro.</p>`;
   else voteArea=`<div><p class="vote-prompt">${myScore>0?`Tu valoración: ${'★'.repeat(myScore)} — puedes cambiarla`:'¿Qué te pareció?'}</p><div class="stars-input" id="starInput">${starInput}</div><div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center"><button class="vote-submit" id="voteBtn" onclick="submitVote()" ${!pendingStar?'disabled':''}>${pendingStar>0?`Guardar ${pendingStar} ★`:myScore>0?'Actualizar':'Guardar'}</button>${myScore>0?`<button class="vote-delete" id="deleteBtn" onclick="deleteVote()">✕ Eliminar mi voto</button>`:''}</div></div>`;
 
-  const genreTags=(b.genres||[]).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
-  const subgenreTags=(b.subgenres||[]).map(s=>`<span class="tag tag-subgenre">${s}</span>`).join('');
-  const dinamicaTags=(b.dinamicas||[]).map(d=>`<span class="tag tag-dinamica">${d}</span>`).join('');
-  const tropeTags=(b.tropes||[]).map(t=>`<span class="tag tag-trope">${t}</span>`).join('');
-  const identidadTags=(b.identidades||[]).map(i=>`<span class="tag tag-identidad">${i}</span>`).join('');
-  const characterTags=(b.characters||[]).map(c=>`<span class="tag tag-character">${c}</span>`).join('');
+  const genreTags=(b.genres||[]).map(g=>`<span class="tag tag-genre tag-clickable" onclick="filterByTagFromModal('genres',decodeURIComponent('${encodeURIComponent(g)}'))">${g}</span>`).join('');
+  const subgenreTags=(b.subgenres||[]).map(s=>`<span class="tag tag-subgenre tag-clickable" onclick="filterByTagFromModal('subgenres',decodeURIComponent('${encodeURIComponent(s)}'))">${s}</span>`).join('');
+  const dinamicaTags=(b.dinamicas||[]).map(d=>`<span class="tag tag-dinamica tag-clickable" onclick="filterByTagFromModal('dinamicas',decodeURIComponent('${encodeURIComponent(d)}'))">${d}</span>`).join('');
+  const tropeTags=(b.tropes||[]).map(t=>`<span class="tag tag-trope tag-clickable" onclick="filterByTagFromModal('tropes',decodeURIComponent('${encodeURIComponent(t)}'))">${t}</span>`).join('');
+  const identidadTags=(b.identidades||[]).map(i=>`<span class="tag tag-identidad tag-clickable" onclick="filterByTagFromModal('identidades',decodeURIComponent('${encodeURIComponent(i)}'))">${i}</span>`).join('');
+  const characterTags=(b.characters||[]).map(c=>`<span class="tag tag-character tag-clickable" onclick="filterByTagFromModal('characters',decodeURIComponent('${encodeURIComponent(c)}'))">${c}</span>`).join('');
   const spicyEff=effectiveSpicy(b);
   const spicyIsUnknown=spicyEff==null;
   const spicyTag=spicyIsUnknown
@@ -1163,6 +1553,22 @@ function filterBySagaFromModal(sagaName){
   updateDDCounts();renderActivePills();applyFilters(false);
   window.scrollTo({top:0,behavior:'smooth'});
 }
+function filterByAuthorFromModal(author){
+  closeBookModal();
+  switchTab('estanteria');
+  filters.authors=[author];
+  currentPage=1;
+  updateDDCounts();renderActivePills();applyFilters(false);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function filterByTagFromModal(filterKey, value){
+  closeBookModal();
+  switchTab('estanteria');
+  filters[filterKey]=[value];
+  currentPage=1;
+  updateDDCounts();renderActivePills();applyFilters(false);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 function hoverStar(n){document.querySelectorAll('#starInput .star-btn').forEach((b,i)=>b.style.color=i<n?'var(--gold)':'');}
 function unhoverStar(){document.querySelectorAll('#starInput .star-btn').forEach(b=>b.style.color='');}
 function selectStar(n){
@@ -1212,11 +1618,7 @@ async function deleteVote(){
   updateStats();applyFilters(false);renderVoteSection();
 }
 
-/* Devuelve el spicy efectivo de un libro:
-   - ≥2 votos comunidad → promedio comunidad redondeado
-   - 1 voto → ese voto
-   - 0 votos + valor editorial → editorial
-   - nada → null (desconocido) */
+/* ── SPICY VOTING ── */
 function effectiveSpicy(b){
   const sv=spicyMap[b.id];
   if(sv&&sv.count>=1) return Math.round(sv.avg);
@@ -1230,53 +1632,14 @@ function spicySourceLabel(b){
   return 'editorial';
 }
 
-async function submitSpicyVote(){
-  if(!currentUser||!activeBook||!pendingSpicy) return;
-  const btn=document.getElementById('spicyVoteBtn');
-  if(btn) btn.disabled=true;
-  const existing=mySpicy[activeBook.id];
-  const {error}=existing!=null
-    ?await sb.from('spicy_votes').update({level:pendingSpicy}).eq('user_id',currentUser.id).eq('book_id',activeBook.id)
-    :await sb.from('spicy_votes').insert({user_id:currentUser.id,book_id:activeBook.id,level:pendingSpicy});
-  if(error){showToast('Error al guardar','error');if(btn)btn.disabled=false;return;}
-  // Actualizar spicyMap localmente
-  const sv=spicyMap[activeBook.id]||{avg:0,count:0};
-  const oldLevel=existing!=null?existing:null;
-  const newCount=oldLevel!=null?sv.count:sv.count+1;
-  const newAvg=oldLevel!=null?(sv.avg*sv.count-oldLevel+pendingSpicy)/sv.count:(sv.avg*sv.count+pendingSpicy)/newCount;
-  spicyMap[activeBook.id]={avg:Math.round(newAvg*10)/10,count:newCount};
-  mySpicy[activeBook.id]=pendingSpicy;
-  showToast('¡Spicy guardado! 🌶','success');
-  applyFilters(false);renderSpicySection();
-}
-
-async function deleteSpicyVote(){
-  if(!currentUser||!activeBook||mySpicy[activeBook.id]==null) return;
-  const btn=document.getElementById('spicyDeleteBtn');
-  if(btn){btn.disabled=true;btn.textContent='Eliminando…';}
-  const {error}=await sb.from('spicy_votes').delete().eq('user_id',currentUser.id).eq('book_id',activeBook.id);
-  if(error){showToast('Error al eliminar','error');if(btn){btn.disabled=false;btn.textContent='✕ Quitar mi voto';}return;}
-  const oldLevel=mySpicy[activeBook.id];
-  const sv=spicyMap[activeBook.id]||{avg:0,count:0};
-  if(sv.count<=1) delete spicyMap[activeBook.id];
-  else{const nc=sv.count-1;spicyMap[activeBook.id]={avg:Math.round((sv.avg*sv.count-oldLevel)/nc*10)/10,count:nc};}
-  delete mySpicy[activeBook.id];
-  pendingSpicy=0;
-  showToast('Voto spicy eliminado','success');
-  applyFilters(false);renderSpicySection();
-}
-
 function buildSpicySectionHTML(){
   const b=activeBook;
-  const sv=spicyMap[b.id];
   const myVote=mySpicy[b.id];
   const eff=effectiveSpicy(b);
   const src=spicySourceLabel(b);
-  // Mostrar nivel actual
   const currentDisplay=eff!=null
     ?`<div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem"><span style="font-size:1.3rem">${SPICY_ICONS[eff]||'—'}</span><span style="font-size:13.5px;color:var(--text)">${SPICY_LABELS[eff]}</span><span style="font-size:11px;color:var(--muted)">(${src})</span></div>`
     :`<div style="font-size:13px;color:var(--muted);margin-bottom:.5rem">Nivel desconocido — ¡sé la primera en votar!</div>`;
-  // Input de voto (solo logueadas)
   let voteInput='';
   if(!currentUser){
     voteInput=`<p style="font-size:12.5px;color:var(--muted);margin-top:.4rem"><a style="color:var(--accent);cursor:pointer" onclick="closeBookModal();openAuthModal()">Inicia sesión</a> para votar el nivel spicy.</p>`;
@@ -1312,7 +1675,7 @@ function selectSpicy(n){
   pendingSpicy=n;
   _paintChiles(n);
   const btn=document.getElementById('spicyVoteBtn');
-  if(btn){btn.disabled=false;}
+  if(btn) btn.disabled=false;
 }
 function _paintChiles(upTo){
   const wrap=document.getElementById('spicyChileInput');
@@ -1325,14 +1688,12 @@ function _paintChiles(upTo){
 function _attachSpicyEvents(){
   const wrap=document.getElementById('spicyChileInput');
   if(!wrap) return;
-  // Botón 0 (🚫)
   const btn0=wrap.querySelector('.spicy-vote-btn');
   if(btn0){
     btn0.addEventListener('click',()=>selectSpicy(0));
     btn0.addEventListener('mouseover',()=>_paintChiles(0));
     btn0.addEventListener('mouseout',()=>_paintChiles(pendingSpicy>0?pendingSpicy:mySpicy[activeBook?.id]??-1));
   }
-  // Botones 1-5 (🌶)
   wrap.querySelectorAll('.spicy-chile-btn').forEach(b=>{
     const n=parseInt(b.dataset.s);
     b.addEventListener('click',()=>selectSpicy(n));
@@ -1341,6 +1702,43 @@ function _attachSpicyEvents(){
     b.addEventListener('touchstart',e=>{e.preventDefault();selectSpicy(n);},{passive:false});
   });
 }
+
+async function submitSpicyVote(){
+  if(!currentUser||!activeBook||!pendingSpicy) return;
+  const btn=document.getElementById('spicyVoteBtn');
+  if(btn) btn.disabled=true;
+  const existing=mySpicy[activeBook.id];
+  const {error}=existing!=null
+    ?await sb.from('spicy_votes').update({level:pendingSpicy}).eq('user_id',currentUser.id).eq('book_id',activeBook.id)
+    :await sb.from('spicy_votes').insert({user_id:currentUser.id,book_id:activeBook.id,level:pendingSpicy});
+  if(error){showToast('Error al guardar','error');if(btn)btn.disabled=false;return;}
+  const sv=spicyMap[activeBook.id]||{avg:0,count:0};
+  const oldLevel=existing!=null?existing:null;
+  const newCount=oldLevel!=null?sv.count:sv.count+1;
+  const newAvg=oldLevel!=null?(sv.avg*sv.count-oldLevel+pendingSpicy)/sv.count:(sv.avg*sv.count+pendingSpicy)/newCount;
+  spicyMap[activeBook.id]={avg:Math.round(newAvg*10)/10,count:newCount};
+  mySpicy[activeBook.id]=pendingSpicy;
+  showToast('¡Spicy guardado! 🌶','success');
+  applyFilters(false);renderSpicySection();
+}
+
+async function deleteSpicyVote(){
+  if(!currentUser||!activeBook||mySpicy[activeBook.id]==null) return;
+  const btn=document.getElementById('spicyDeleteBtn');
+  if(btn){btn.disabled=true;btn.textContent='Eliminando…';}
+  const {error}=await sb.from('spicy_votes').delete().eq('user_id',currentUser.id).eq('book_id',activeBook.id);
+  if(error){showToast('Error al eliminar','error');if(btn){btn.disabled=false;btn.textContent='✕ Quitar mi voto';}return;}
+  const oldLevel=mySpicy[activeBook.id];
+  const sv=spicyMap[activeBook.id]||{avg:0,count:0};
+  if(sv.count<=1) delete spicyMap[activeBook.id];
+  else{const nc=sv.count-1;spicyMap[activeBook.id]={avg:Math.round((sv.avg*sv.count-oldLevel)/nc*10)/10,count:nc};}
+  delete mySpicy[activeBook.id];
+  pendingSpicy=0;
+  showToast('Voto spicy eliminado','success');
+  applyFilters(false);renderSpicySection();
+}
+
+/* ── AUTH ── */
 function renderAuthUI(){
   const el=document.getElementById('authArea');
   if(currentUser){
@@ -1397,41 +1795,246 @@ function showToast(msg,type='success'){const t=document.getElementById('toast');
 let activeTab='estanteria';
 function switchTab(tab){
   activeTab=tab;
+  sessionStorage.setItem('ts_active_tab', tab);
   document.getElementById('tabEstanteria').classList.toggle('active',tab==='estanteria');
   document.getElementById('tabTop10').classList.toggle('active',tab==='top10');
+  document.getElementById('tabSafi').classList.toggle('active',tab==='safi');
+  document.getElementById('tabCanal').classList.toggle('active',tab==='canal');
+  document.getElementById('tabMyrec').classList.toggle('active',tab==='myrec');
   document.getElementById('tabSolicitudes').classList.toggle('active',tab==='solicitudes');
   document.getElementById('panelEstanteria').style.display=tab==='estanteria'?'':'none';
   document.getElementById('panelTop10').style.display=tab==='top10'?'':'none';
+  document.getElementById('panelSafi').style.display=tab==='safi'?'':'none';
+  document.getElementById('panelCanal').style.display=tab==='canal'?'':'none';
+  document.getElementById('panelMyrec').style.display=tab==='myrec'?'':'none';
   document.getElementById('panelSolicitudes').style.display=tab==='solicitudes'?'':'none';
   if(tab==='top10') renderTop10();
+  if(tab==='safi') renderSafi();
+  if(tab==='canal') renderCanal();
+  if(tab==='myrec') renderMyrec();
   if(tab==='solicitudes') renderSolicitudes();
 }
 
-/* ── TOP 10 ── */
+/* ── HOME VIEW ── */
+function showHome(){
+  sessionStorage.setItem('ts_active_tab', 'home');
+  document.getElementById('homeView').classList.add('active');
+  document.body.classList.add('home-active');
+  document.getElementById('homeNavBtn').classList.add('active');
+  updateHomeStats();
+}
+function showCatalog(tab){
+  const t = tab || 'estanteria';
+  sessionStorage.setItem('ts_active_tab', t);
+  document.getElementById('homeView').classList.remove('active');
+  document.body.classList.remove('home-active');
+  document.getElementById('homeNavBtn').classList.remove('active');
+  switchTab(t);
+}
+
+function animateCount(el, target){
+  if(!el) return;
+  if(!target){ el.innerHTML='<em>0</em>'; return; }
+  const duration=900, start=performance.now();
+  function step(now){
+    const t=Math.min((now-start)/duration,1);
+    const ease=1-Math.pow(1-t,3);
+    el.innerHTML=`<em>${Math.round(ease*target)}</em>`;
+    if(t<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function updateHomeStats(){
+  const total=allBooks.length;
+  const thais=allBooks.filter(b=>b.source==='thais').length;
+  const votes=Object.values(ratingsMap).reduce((s,r)=>s+r.count,0);
+  const safiCount=allBooks.filter(b=>b.saficlub).length;
+
+  animateCount(document.getElementById('hvStatTotal'), total);
+  animateCount(document.getElementById('hvStatVotos'), votes);
+  animateCount(document.getElementById('hvStatSafi'),  safiCount);
+  animateCount(document.getElementById('hvStatThais'), thais);
+
+  // Portadas reales del SafiClub
+  const safiBooks=allBooks.filter(b=>b.saficlub);
+  const coversEl=document.getElementById('hvSafiCovers');
+  if(coversEl){
+    const preview=safiBooks.slice(0,7);
+    const extra=safiBooks.length-preview.length;
+    coversEl.innerHTML=preview.map(b=>
+      b.cover
+        ?`<img class="hv-safi-cover" src="${b.cover}" alt="${b.title}" title="${b.title}" onclick="event.stopPropagation();showCatalog('safi')" onerror="this.outerHTML='<div class=hv-safi-cover-ph>📖</div>'">`
+        :`<div class="hv-safi-cover-ph">📖</div>`
+    ).join('')+(extra>0?`<span class="hv-safi-more">+${extra}</span>`:'');
+  }
+
+  // Categorías dinámicas reales
+  const catsEl=document.getElementById('hvSafiCats');
+  if(catsEl){
+    const catMap=new Map();
+    safiBooks.forEach(b=>(b.safi_categories||['Sin categoría']).forEach(c=>{
+      catMap.set(c,(catMap.get(c)||0)+1);
+    }));
+    const ICONS=['🌹','📖','⭐','🔖','✨','💜','🌸'];
+    catsEl.innerHTML=catMap.size===0
+      ?`<div class="hv-safi-cat-row" style="opacity:.45"><span>🌹</span><span class="hv-safi-cat-name">Aún sin lecturas del club</span></div>`
+      :[...catMap.entries()].map(([cat,count],i)=>`
+        <div class="hv-safi-cat-row">
+          <span>${ICONS[i%ICONS.length]}</span>
+          <span class="hv-safi-cat-name">${cat}</span>
+          <span class="hv-safi-cat-count">${count} libro${count!==1?'s':''}</span>
+        </div>`).join('');
+  }
+}
+
+/* ── SafiClub tab: grid de portadas ── */
+function renderSafi(){
+  const c=document.getElementById('safiContainer');
+  const safiData=allBooks.filter(b=>b.saficlub);
+  if(!safiData.length){
+    c.innerHTML=`<div class="safi-empty">Aún no hay libros en el SafiClub. 🌹<br><br>Edítalos desde el admin para añadirlos.</div>`;
+    return;
+  }
+  const catMap=new Map();
+  safiData.forEach(b=>(b.safi_categories||['Sin categoría']).forEach(cat=>{
+    if(!catMap.has(cat)) catMap.set(cat,[]);
+    if(!catMap.get(cat).find(x=>x.id===b.id)) catMap.get(cat).push(b);
+  }));
+  c.innerHTML=[...catMap.entries()].map(([cat,items])=>`
+    <div class="safi-section-group">
+      <div class="safi-section-head">
+        <span class="safi-section-name">${cat}</span>
+        <span class="safi-section-count">${items.length} libro${items.length!==1?'s':''}</span>
+      </div>
+      <div class="safi-items">
+        ${items.map(b=>{
+          const r=ratingsMap[b.id];
+          const avgBadge=r?.count>0?`<div style="position:absolute;bottom:6px;right:6px;background:rgba(14,11,16,.8);backdrop-filter:blur(6px);border:1px solid var(--border2);border-radius:20px;padding:2px 7px;font-size:10.5px;display:flex;align-items:center;gap:3px;z-index:2"><span style="color:var(--gold);font-size:10px">★</span><span style="font-weight:600">${r.avg.toFixed(1)}</span></div>`:'';
+          const authorStr=(b.authors||[]).join(', ')||'—';
+          return `<div class="safi-item" onclick="openBook('${b.id}')">
+            <div class="safi-item-cover">
+              ${b.cover?`<img src="${b.cover}" alt="${b.title}" onerror="this.outerHTML='<div class=safi-item-ph>📖</div>'">`:`<div class="safi-item-ph">📖</div>`}
+              ${avgBadge}
+            </div>
+            <div class="safi-item-body">
+              <div class="safi-item-title" title="${b.title}">${b.title}</div>
+              <div class="safi-item-author">${authorStr}</div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`).join('');
+}
+
+/* ── CANAL — Recomendaciones del Canal ── */
+function renderCanal(){
+  const c=document.getElementById('canalContainer');
+  const canalData=allBooks.filter(function(b){return b.canal_rec;});
+  const hero='<div class="canal-hero-strip"><div class="canal-hero-icon">📻</div><div class="canal-hero-text"><h2>Recomendaciones del <em>Canal</em></h2><p>Los libros que recomendamos mensualmente en el canal, organizados por mes.</p></div></div>';
+  if(!canalData.length){c.innerHTML=hero+'<div class="canal-empty">Aún no hay recomendaciones del canal. 📻<br><br>Márcalos desde el admin para añadirlos.</div>';return;}
+  const monthMap=new Map();
+  canalData.forEach(function(b){const month=b.canal_month||'Sin fecha';if(!monthMap.has(month))monthMap.set(month,[]);if(!monthMap.get(month).find(function(x){return x.id===b.id;}))monthMap.get(month).push(b);});
+  let html=hero;
+  const CANAL_LIMIT=7;
+  monthMap.forEach(function(items,month){
+    const gid='canal-g-'+month.replace(/\s+/g,'_');
+    let itemsHtml='';
+    items.forEach(function(b,i){
+      const r=ratingsMap[b.id];
+      const ab=r&&r.count>0?'<div style="position:absolute;bottom:6px;right:6px;background:rgba(14,11,16,.8);backdrop-filter:blur(6px);border:1px solid var(--border2);border-radius:20px;padding:2px 7px;font-size:10.5px;display:flex;align-items:center;gap:3px;z-index:2"><span style="color:var(--gold);font-size:10px">★</span><span style="font-weight:600">'+r.avg.toFixed(1)+'</span></div>':'';
+      const cov=b.cover?'<img src="'+b.cover+'" alt="'+b.title+'" onerror="this.outerHTML=\'<div class=canal-item-ph>📖</div>\'">'+'':'<div class="canal-item-ph">📖</div>';
+      const auth=(b.authors||[]).join(', ')||'—';
+      const hideCls=i>=CANAL_LIMIT?' rec-item-hidden':'';
+      itemsHtml+='<div class="canal-item'+hideCls+'" onclick="openBook(\''+b.id+'\')"><div class="canal-item-cover">'+cov+ab+'</div><div class="canal-item-body"><div class="canal-item-title">'+b.title+'</div><div class="canal-item-author">'+auth+'</div></div></div>';
+    });
+    const verMas=items.length>CANAL_LIMIT?'<div class="rec-ver-mas-wrap"><button class="rec-ver-mas-btn" onclick="recVerMas(\''+gid+'\',this)">Ver más ('+( items.length-CANAL_LIMIT)+' libros)</button></div>':'';
+    html+='<div class="canal-month-group" id="'+gid+'"><div class="canal-month-head"><span class="canal-month-name">'+month+'</span><span class="canal-month-count">'+items.length+' libro'+(items.length!==1?'s':'')+'</span></div><div class="canal-items">'+itemsHtml+'</div>'+verMas+'</div>';
+  });
+  c.innerHTML=html;
+}
+
+/* ── MIS RECOMENDACIONES ── */
+function renderMyrec(){
+  const c=document.getElementById('myrecContainer');
+  const myData=allBooks.filter(function(b){return b.my_rec;});
+  const hero='<div class="myrec-hero-strip"><div class="myrec-hero-icon">💌</div><div class="myrec-hero-text"><h2>Mis <em>Recomendaciones</em></h2><p>Libros que recomiendo personalmente, organizados por género y estilo.</p></div></div>';
+  if(!myData.length){c.innerHTML=hero+'<div class="myrec-empty">Aún no hay recomendaciones personales. 💌<br><br>Márcalos desde el admin para añadirlos.</div>';return;}
+  const catMap=new Map();
+  myData.forEach(function(b){(b.my_rec_categories||['Sin categoría']).forEach(function(cat){if(!catMap.has(cat))catMap.set(cat,[]);if(!catMap.get(cat).find(function(x){return x.id===b.id;}))catMap.get(cat).push(b);});});
+  let html=hero;
+  const MYREC_LIMIT=7;
+  catMap.forEach(function(items,cat){
+    const gid='myrec-g-'+cat.replace(/\s+/g,'_');
+    let itemsHtml='';
+    items.forEach(function(b,i){
+      const r=ratingsMap[b.id];
+      const ab=r&&r.count>0?'<div style="position:absolute;bottom:6px;right:6px;background:rgba(14,11,16,.8);backdrop-filter:blur(6px);border:1px solid var(--border2);border-radius:20px;padding:2px 7px;font-size:10.5px;display:flex;align-items:center;gap:3px;z-index:2"><span style="color:var(--gold);font-size:10px">★</span><span style="font-weight:600">'+r.avg.toFixed(1)+'</span></div>':'';
+      const cov=b.cover?'<img src="'+b.cover+'" alt="'+b.title+'" onerror="this.outerHTML=\'<div class=myrec-item-ph>📖</div>\'">'+'':'<div class="myrec-item-ph">📖</div>';
+      const auth=(b.authors||[]).join(', ')||'—';
+      const hideCls=i>=MYREC_LIMIT?' rec-item-hidden':'';
+      itemsHtml+='<div class="myrec-item'+hideCls+'" onclick="openBook(\''+b.id+'\')"><div class="myrec-item-cover">'+cov+ab+'</div><div class="myrec-item-body"><div class="myrec-item-title">'+b.title+'</div><div class="myrec-item-author">'+auth+'</div></div></div>';
+    });
+    const verMas=items.length>MYREC_LIMIT?'<div class="rec-ver-mas-wrap"><button class="rec-ver-mas-btn" onclick="recVerMas(\''+gid+'\',this)">Ver más ('+(items.length-MYREC_LIMIT)+' libros)</button></div>':'';
+    html+='<div class="myrec-section-group" id="'+gid+'"><div class="myrec-section-head"><span class="myrec-section-name">'+cat+'</span><span class="myrec-section-count">'+items.length+' libro'+(items.length!==1?'s':'')+'</span></div><div class="myrec-items">'+itemsHtml+'</div>'+verMas+'</div>';
+  });
+  c.innerHTML=html;
+}
+
+function recVerMas(groupId, btn){
+  const group=document.getElementById(groupId);
+  if(!group) return;
+  group.querySelectorAll('.rec-item-hidden').forEach(function(el){el.classList.remove('rec-item-hidden');});
+  btn.closest('.rec-ver-mas-wrap').remove();
+}
+
+function switchSection(section){
+  activeSection=section;
+  currentPage=1;
+  filters.authors=[];
+  filters.sagas=[];
+  const sectionBooks=allBooks.filter(b=>b.source===section);
+  ['genres','subgenres','dinamicas','tropes','characters','years','spicy'].forEach(key=>{
+    if(!filters[key].length) return;
+    if(key==='spicy'){ filters[key]=filters[key].filter(v=>sectionBooks.some(b=>b.spicy===v)); return; }
+    if(key==='years'){ filters[key]=filters[key].filter(v=>sectionBooks.some(b=>String(b.year)===v)); return; }
+    filters[key]=filters[key].filter(v=>sectionBooks.some(b=>(b[key]||[]).includes(v)));
+  });
+  const tabs={thais:'tabThais',other:'tabOther',spanish:'tabSpanish',baihee:'tabBaihee',asian:'tabAsian',african:'tabAfrican'};
+  const cls={thais:'active-thais',other:'active-other',spanish:'active-spanish',baihee:'active-baihee',asian:'active-asian',african:'active-african'};
+  Object.entries(tabs).forEach(([key,id])=>{
+    const el=document.getElementById(id);
+    if(el) el.className='section-tab'+(key===section?' '+cls[key]:'');
+  });
+  buildDropdowns();
+  renderActivePills();
+  applyFilters();
+}
+
+/* ── TOP 10 (solo Thais) ── */
 function renderTop10(){
   const c=document.getElementById('top10Container');
-  // Puntuación bayesiana ponderada (estilo IMDb):
-  // score = (C * m + R * v) / (m + v)
-  // donde: R = media del libro, v = nº votos del libro
-  //        C = media global de todos los libros valorados, m = mínimo de votos para contar (percentil 50)
-  const booksWithRatings=[...allBooks].filter(b=>ratingsMap[b.id]?.count>0);
-  const allCounts=booksWithRatings.map(b=>ratingsMap[b.id].count).sort((a,b)=>a-b);
-  const m=allCounts.length ? allCounts[Math.floor(allCounts.length*0.5)] : 3; // percentil 50 como umbral
-  const C=booksWithRatings.length
-    ? booksWithRatings.reduce((s,b)=>s+ratingsMap[b.id].avg,0)/booksWithRatings.length
-    : 3;
-  function bayesian(b){
-    const {avg:R,count:v}=ratingsMap[b.id];
-    return (C*m + R*v)/(m+v);
-  }
-  const ranked=booksWithRatings
-    .sort((a,b)=>bayesian(b)-bayesian(a))
-    .slice(0,10);
-
-  if(!ranked.length){
+  // Media ponderada bayesiana (fórmula IMDb):
+  // score = (v/(v+m)) × R + (m/(v+m)) × C
+  // v = votos del libro, R = media del libro
+  // m = mínimo de votos para contar (percentil 25 o mín. 3)
+  // C = media global de todos los libros Thais con votos
+  const thaisRated=[...allBooks].filter(b=>b.source==='thais' && ratingsMap[b.id]?.count>0);
+  if(!thaisRated.length){
     c.innerHTML=`<div class="top10-empty">Aún no hay valoraciones. ¡Sé la primera en votar! 🌹</div>`;
     return;
   }
+  // Calcular C (media global) y m (mínimo de votos)
+  const allCounts=thaisRated.map(b=>ratingsMap[b.id].count).sort((a,b)=>a-b);
+  const C=thaisRated.reduce((s,b)=>s+ratingsMap[b.id].avg,0)/thaisRated.length;
+  const m=Math.max(3, allCounts[Math.floor(allCounts.length*0.25)]||3);
+  function weightedScore(b){
+    const {avg:R,count:v}=ratingsMap[b.id];
+    return (v/(v+m))*R + (m/(v+m))*C;
+  }
+  const ranked=thaisRated
+    .sort((a,b)=>weightedScore(b)-weightedScore(a))
+    .slice(0,10);
 
   function coverEl(b,cls){
     return b.cover
@@ -1755,7 +2358,6 @@ function renderMisSolicitudes(lista, userId){
   }).join('');
 }
 
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeBookModal();closeAuthModal();closeAllDD();}});
 document.getElementById('bookModal').addEventListener('click',e=>{if(e.target.id==='bookModal')closeBookModal();});
 document.getElementById('authModal').addEventListener('click',e=>{if(e.target.id==='authModal')closeAuthModal();});
 
@@ -1776,5 +2378,183 @@ async function checkSolicitudesNotif(){
 
 init();
 </script>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">TINTA <em>Sapphic</em> ~ La Estantería</div>
+    <nav class="footer-links">
+      <a class="footer-link" href="#" onclick="openInfoModal('sobre');return false;">Sobre nosotras</a>
+      <a class="footer-link" href="#" onclick="openInfoModal('privacidad');return false;">Política de privacidad</a>
+      <a class="footer-link" href="#" onclick="openInfoModal('terminos');return false;">Términos de uso</a>
+    </nav>
+    <div class="footer-copy">© 2026 Tinta Sapphic</div>
+  </div>
+</footer>
+
+<!-- INFO MODALS -->
+<div id="infoModal" class="info-modal-bg" onclick="if(event.target.id==='infoModal')closeInfoModal()">
+  <div class="info-modal">
+    <button class="info-modal-close" onclick="closeInfoModal()">✕</button>
+    <div class="info-modal-header">
+      <div class="info-modal-title" id="infoModalTitle"></div>
+      <div class="info-modal-subtitle" id="infoModalSub"></div>
+    </div>
+    <div class="info-modal-body" id="infoModalBody"></div>
+  </div>
+</div>
+
+<script>
+const INFO_CONTENT = {
+  sobre: {
+    title: 'Sobre nosotras',
+    sub: 'Quiénes somos · Nuestra misión',
+    body: `
+      <div class="info-highlight">
+        <em>Tinta Sapphic</em> es una estantería digital dedicada exclusivamente a la literatura lésbica y sáfica — un espacio creado por y para lectoras que buscan historias donde ellas también existen.
+      </div>
+      <div class="info-section">
+        <h3>Nuestra misión</h3>
+        <p>Queremos reunir en un solo lugar toda la ficción sáfica que merece ser leída: desde romance contemporáneo hasta fantasía épica, pasando por terror, ciencia ficción y todo lo que hay en medio. Organizamos, catalogamos y ponemos en valor las historias donde las protagonistas son mujeres que aman a mujeres.</p>
+      </div>
+      <div class="info-section">
+        <h3>Qué encontrarás aquí</h3>
+        <ul>
+          <li>Catálogo curado de libros sáficos en español e inglés</li>
+          <li>Valoraciones y reseñas de la comunidad</li>
+          <li>Filtros por género, temática, nivel de contenido adulto y mucho más</li>
+          <li>Sistema de solicitudes para pedir libros que quieras ver añadidos</li>
+          <li>Clasificación por dinámicas, tropos e identidades representadas</li>
+        </ul>
+      </div>
+      <div class="info-section">
+        <h3>Un proyecto comunitario</h3>
+        <p>Esta estantería se mantiene con mucho amor y tiempo libre. Si encuentras algún error, tienes sugerencias o quieres contribuir con información sobre algún libro, puedes hacérnoslo saber a través del sistema de solicitudes.</p>
+      </div>
+      <div class="info-section">
+        <h3>Sobre el contenido adulto</h3>
+        <p>Algunos libros de nuestro catálogo contienen contenido explícito para adultos. Este contenido está debidamente etiquetado con nuestro sistema de clasificación de picante 🌶️. Eres responsable de filtrar el contenido según tu preferencia.</p>
+      </div>
+    `
+  },
+  privacidad: {
+    title: 'Política de privacidad',
+    sub: 'Cómo tratamos tus datos · Última actualización: 2026',
+    body: `
+      <div class="info-highlight">
+        Tu privacidad es importante para nosotras. Esta política explica qué datos recogemos, cómo los usamos y cuáles son tus derechos.
+      </div>
+      <div class="info-section">
+        <h3>Datos que recogemos al registrarte</h3>
+        <ul>
+          <li><strong style="color:var(--text)">Correo electrónico:</strong> necesario para crear y gestionar tu cuenta, y para enviarte notificaciones sobre tus solicitudes.</li>
+          <li><strong style="color:var(--text)">Contraseña:</strong> almacenada de forma cifrada mediante los sistemas seguros de Supabase. Nunca tenemos acceso a tu contraseña en texto plano.</li>
+          <li><strong style="color:var(--text)">Identificador de usuario:</strong> generado automáticamente para vincular tus valoraciones y solicitudes a tu cuenta.</li>
+        </ul>
+      </div>
+      <div class="info-section">
+        <h3>Datos que generan al usar la plataforma</h3>
+        <ul>
+          <li>Valoraciones (puntuaciones de 1 a 5 estrellas) que asignas a los libros</li>
+          <li>Solicitudes de libros que envías a través del formulario</li>
+          <li>Preferencias de filtros guardadas localmente en tu navegador</li>
+        </ul>
+      </div>
+      <div class="info-section">
+        <h3>Cómo usamos tus datos</h3>
+        <ul>
+          <li>Para mostrarte tus valoraciones y solicitudes en tu perfil</li>
+          <li>Para notificarte cuando una solicitud tuya se haya subido al catálogo</li>
+          <li>Para calcular puntuaciones medias de la comunidad</li>
+          <li>Para mejorar el catálogo basándonos en las solicitudes más votadas</li>
+        </ul>
+      </div>
+      <div class="info-section">
+        <h3>Proveedores de servicio</h3>
+        <p>Utilizamos <strong style="color:var(--text)">Supabase</strong> como proveedor de base de datos y autenticación. Tus datos se almacenan en sus servidores bajo sus propias políticas de seguridad y privacidad, que cumplen con el RGPD europeo.</p>
+      </div>
+      <div class="info-section">
+        <h3>Tus derechos</h3>
+        <ul>
+          <li><strong style="color:var(--text)">Acceso:</strong> puedes consultar qué datos tenemos sobre ti en cualquier momento desde tu perfil.</li>
+          <li><strong style="color:var(--text)">Eliminación:</strong> puedes solicitar que eliminemos tu cuenta y todos tus datos asociados.</li>
+          <li><strong style="color:var(--text)">Portabilidad:</strong> tienes derecho a recibir una copia de tus datos en formato legible.</li>
+        </ul>
+      </div>
+      <div class="info-section">
+        <h3>Cookies y almacenamiento local</h3>
+        <p>Usamos <strong style="color:var(--text)">localStorage</strong> del navegador únicamente para guardar preferencias de filtros y el estado de notificaciones vistas. No utilizamos cookies de rastreo ni publicidad.</p>
+      </div>
+      <div class="info-section">
+        <h3>Menores de edad</h3>
+        <p>Este sitio no está dirigido a menores de 18 años. Al registrarte confirmas que eres mayor de edad.</p>
+      </div>
+    `
+  },
+  terminos: {
+    title: 'Términos de uso',
+    sub: 'Condiciones de uso · Última actualización: 2026',
+    body: `
+      <div class="info-highlight">
+        Al usar <em>Tinta Sapphic</em> aceptas estos términos. Por favor, léelos con atención antes de crear una cuenta o interactuar con la plataforma.
+      </div>
+      <div class="info-section">
+        <h3>Uso permitido</h3>
+        <ul>
+          <li>Consultar el catálogo libremente sin necesidad de registro</li>
+          <li>Crear una cuenta para valorar libros y enviar solicitudes</li>
+          <li>Solicitar la incorporación de libros sáficos que no estén en el catálogo</li>
+          <li>Compartir el enlace a la estantería con otras lectoras</li>
+        </ul>
+      </div>
+      <div class="info-section">
+        <h3>Uso prohibido</h3>
+        <ul>
+          <li>Crear cuentas falsas o múltiples cuentas para manipular valoraciones</li>
+          <li>Enviar solicitudes de libros que no sean ficción sáfica</li>
+          <li>Intentar acceder a datos de otras usuarias o al panel de administración sin autorización</li>
+          <li>Usar scrapers o bots para extraer el contenido del catálogo de forma masiva</li>
+          <li>Publicar contenido ofensivo, discriminatorio o que atente contra la comunidad</li>
+        </ul>
+      </div>
+      <div class="info-section">
+        <h3>Cuentas de usuario</h3>
+        <p>Eres responsable de mantener la confidencialidad de tu contraseña y de toda la actividad realizada desde tu cuenta. Si detectas un acceso no autorizado, debes notificárnoslo de inmediato. Nos reservamos el derecho de suspender o eliminar cuentas que incumplan estos términos.</p>
+      </div>
+      <div class="info-section">
+        <h3>Contenido del catálogo</h3>
+        <p>La información sobre libros (portadas, sinopsis, metadatos) se recopila con fines informativos y de divulgación literaria. Los derechos de autor de cada obra pertenecen a sus respectivas autoras y editoriales. No alojamos ni distribuimos ningún contenido protegido por derechos de autor.</p>
+      </div>
+      <div class="info-section">
+        <h3>Valoraciones y solicitudes</h3>
+        <p>Al enviar una valoración o solicitud, nos concedes permiso para mostrar ese contenido en la plataforma de forma pública. Las solicitudes son visibles para toda la comunidad y pueden ser votadas por otras usuarias.</p>
+      </div>
+      <div class="info-section">
+        <h3>Disponibilidad del servicio</h3>
+        <p>Ofrecemos este servicio de forma gratuita y lo mantenemos con los recursos disponibles. No garantizamos una disponibilidad ininterrumpida y podemos modificar o discontinuar funcionalidades en cualquier momento, avisando siempre que sea posible.</p>
+      </div>
+      <div class="info-section">
+        <h3>Cambios en los términos</h3>
+        <p>Podemos actualizar estos términos ocasionalmente. Los cambios significativos se comunicarán a través de la plataforma. El uso continuado del servicio tras los cambios implica la aceptación de los nuevos términos.</p>
+      </div>
+    `
+  }
+};
+
+function openInfoModal(tipo) {
+  const c = INFO_CONTENT[tipo];
+  if (!c) return;
+  document.getElementById('infoModalTitle').textContent = c.title;
+  document.getElementById('infoModalSub').textContent = c.sub;
+  document.getElementById('infoModalBody').innerHTML = c.body;
+  document.getElementById('infoModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeInfoModal() {
+  document.getElementById('infoModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInfoModal(); });
+</script>
+
 </body>
 </html>
