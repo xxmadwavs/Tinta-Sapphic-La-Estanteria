@@ -5598,10 +5598,21 @@
       "Romance"
     ],
     "subgenres": [],
-    "identidades": [],
-    "characters": [],
-    "dinamicas": [],
-    "tropes": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Madre Soltera"
+    ],
+    "dinamicas": [
+      "Femme × Femme",
+      "Rich × Poor"
+    ],
+    "tropes": [
+      "Fake Relationship",
+      "Rich / Poor Romance",
+      "Forced Proximity"
+    ],
     "ambientacion": [],
     "spicy": 4,
     "formato": "Único",
@@ -5613,7 +5624,11 @@
     "saficlub": true,
     "safi_categories": [
       "2026"
-    ]
+    ],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777673009690_5p7qp",
@@ -5631,10 +5646,17 @@
       "Romance"
     ],
     "subgenres": [],
-    "identidades": [],
+    "identidades": [
+      "Grumpy",
+      "Sunshine"
+    ],
     "characters": [],
-    "dinamicas": [],
-    "tropes": [],
+    "dinamicas": [
+      "Grumpy × Sunshine"
+    ],
+    "tropes": [
+      "Forced Proximity"
+    ],
     "ambientacion": [],
     "spicy": 1,
     "formato": "Único",
@@ -5642,7 +5664,13 @@
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777673052155_olyjo",
@@ -5672,7 +5700,13 @@
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777673111074_36nba",
@@ -5687,7 +5721,8 @@
     "isbn": null,
     "genres": [
       "Distopía",
-      "Romance"
+      "Romance",
+      "Fantasía"
     ],
     "subgenres": [
       "Erótica"
@@ -5703,7 +5738,13 @@
     "sagaName": "The Raven Ladies",
     "sagaNum": 1,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777673154002_oxfr5",
@@ -5718,7 +5759,8 @@
     "isbn": null,
     "genres": [
       "Distopía",
-      "Romance"
+      "Romance",
+      "Fantasía"
     ],
     "subgenres": [
       "Erótica"
@@ -5734,7 +5776,13 @@
     "sagaName": "The Raven Ladies",
     "sagaNum": 2,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777673235693_l38d6",
@@ -5749,7 +5797,8 @@
     "isbn": null,
     "genres": [
       "Distopía",
-      "Romance"
+      "Romance",
+      "Fantasía"
     ],
     "subgenres": [
       "Erótica"
@@ -5765,7 +5814,13 @@
     "sagaName": "The Raven Ladies",
     "sagaNum": 3,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777797163126_sokfq",
@@ -5784,9 +5839,15 @@
     "subgenres": [],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Grumpy × Sunshine"
+    ],
     "tropes": [
-      "Rich / Poor Romance"
+      "Rich / Poor Romance",
+      "Age Gap",
+      "Friends to Lovers",
+      "Forced Proximity",
+      "Second Chance Romance"
     ],
     "ambientacion": [],
     "spicy": 3,
@@ -5795,7 +5856,13 @@
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777797221184_ampkt",
@@ -5929,7 +5996,8 @@
     "pages": 386,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "Misterio"
     ],
     "subgenres": [],
     "identidades": [],
@@ -5937,7 +6005,8 @@
     "dinamicas": [],
     "tropes": [
       "Enemies to Lovers",
-      "Age Gap"
+      "Age Gap",
+      "Forced Proximity"
     ],
     "ambientacion": [],
     "spicy": 4,
@@ -5946,7 +6015,13 @@
     "sagaName": "On The Record",
     "sagaNum": 1,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777797661137_d6m2x",
@@ -5977,7 +6052,13 @@
     "sagaName": "On The Record",
     "sagaNum": 2,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777797748887_tjh5q",
@@ -7239,7 +7320,9 @@
     "subgenres": [],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Age Gap"
     ],
@@ -7277,7 +7360,9 @@
     "subgenres": [],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [],
     "ambientacion": [],
     "spicy": 4,
@@ -7286,7 +7371,13 @@
     "sagaName": "Those Who Wait",
     "sagaNum": 1.5,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778008195772_jn2oc",
@@ -7305,7 +7396,9 @@
     "subgenres": [],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [],
     "ambientacion": [],
     "spicy": 4,
@@ -7314,7 +7407,13 @@
     "sagaName": "Those Who Wait",
     "sagaNum": 2,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778008284049_4nwlb",
@@ -7333,7 +7432,9 @@
     "subgenres": [],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Second Chance Romance"
     ],
@@ -7344,7 +7445,13 @@
     "sagaName": "Those Who Wait",
     "sagaNum": 3,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778008380504_a90sg",
@@ -9832,7 +9939,9 @@
     "subgenres": [],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [],
     "ambientacion": [],
     "spicy": 4,
@@ -9843,7 +9952,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778227070601_pzkhp",
@@ -10252,7 +10365,9 @@
     "characters": [
       "Famosa"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Age Gap"
     ],
@@ -10265,7 +10380,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778240006775_msf4u",
@@ -10321,7 +10440,9 @@
     "characters": [
       "Estudiante"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Enemies to Lovers"
     ],
@@ -10360,7 +10481,9 @@
     "subgenres": [],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [],
     "ambientacion": [],
     "spicy": 4,
@@ -10371,7 +10494,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778240166561_o86m0",
@@ -12062,7 +12189,9 @@
     "subgenres": [],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Fake Relationship"
     ],
@@ -12696,7 +12825,9 @@
     "characters": [
       "Vampira"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Enemies to Lovers"
     ],
@@ -12709,7 +12840,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778321378024_byxbe",
@@ -12730,7 +12865,9 @@
     "subgenres": [],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Enemies to Lovers",
       "Forced Proximity"
@@ -12744,7 +12881,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778321450860_cn4fm",
@@ -12768,7 +12909,9 @@
     ],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Enemies to Lovers",
       "Forced Proximity"
@@ -12782,7 +12925,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778321511427_48o6z",
@@ -12806,7 +12953,9 @@
     ],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Enemies to Lovers",
       "Forced Proximity"
@@ -12820,7 +12969,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778321549198_4ggp4",
@@ -13004,7 +13157,9 @@
     "subgenres": [],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Enemies to Lovers"
     ],
@@ -13017,7 +13172,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778487742861_u1i9h",
@@ -15793,7 +15952,9 @@
     "subgenres": [],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [],
     "ambientacion": [],
     "spicy": null,
@@ -16568,7 +16729,9 @@
     ],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [],
     "ambientacion": [],
     "spicy": null,
@@ -16847,42 +17010,6 @@
     "my_rec_categories": []
   },
   {
-    "id": "b_1778921599702_t1soq",
-    "title": "Rubies and Revenge",
-    "authors": [
-      "Carlyn Greenwald"
-    ],
-    "year": 2025,
-    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1745441828i/231824590.jpg",
-    "synopsis": "Zarina Gallo ha sido siempre la hija perfecta de una familia mafiosa, hasta que le ordenan casarse con Marcus Accardi, un hombre brutal al que no piensa pertenecer. Para ganar tiempo y evitar el matrimonio, recurre a Andrea Tamayo, la única gánster lesbiana poderosa de la ciudad, y le propone fingir un compromiso. A cambio, Andrea obtendrá poder, dinero y territorio.\n\nLo que Zarina no espera… es que le guste arrodillarse.\n\nAndrea Tamayo ha vivido por una sola causa: vengarse de la familia Cardenal. Zarina es su oportunidad de oro: la princesa en bandeja, dispuesta a todo. Andrea acepta el trato, pero antes la hará suplicar. Y no piensa soltarla… hasta destruirla como su familia la destruyó a ella.",
-    "pages": 274,
-    "isbn": null,
-    "genres": [
-      "Romance"
-    ],
-    "subgenres": [
-      "Crimen"
-    ],
-    "identidades": [],
-    "characters": [],
-    "dinamicas": [],
-    "tropes": [],
-    "ambientacion": [],
-    "spicy": null,
-    "formato": null,
-    "adaptacion": null,
-    "sagaName": null,
-    "sagaNum": null,
-    "source": "other",
-    "editions": [],
-    "saficlub": false,
-    "safi_categories": [],
-    "canal_rec": false,
-    "canal_month": null,
-    "my_rec": false,
-    "my_rec_categories": []
-  },
-  {
     "id": "b_1778921814846_ze090",
     "title": "Rubies and Revenge",
     "authors": [
@@ -17039,7 +17166,9 @@
     ],
     "identidades": [],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [],
     "ambientacion": [],
     "spicy": 4,
@@ -20900,7 +21029,9 @@
     "characters": [
       "Bruja"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Enemies to Lovers"
     ],
@@ -21238,10 +21369,12 @@
     "characters": [
       "Vampira"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [],
     "ambientacion": [],
-    "spicy": null,
+    "spicy": 5,
     "formato": "Saga",
     "adaptacion": null,
     "sagaName": "Soul Match Series",
@@ -21276,10 +21409,12 @@
     "characters": [
       "Vampira"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [],
     "ambientacion": [],
-    "spicy": null,
+    "spicy": 5,
     "formato": "Saga",
     "adaptacion": null,
     "sagaName": "Soul Match Series",
@@ -21317,7 +21452,7 @@
     "dinamicas": [],
     "tropes": [],
     "ambientacion": [],
-    "spicy": null,
+    "spicy": 5,
     "formato": "Saga",
     "adaptacion": null,
     "sagaName": "Soul Match Series",
@@ -21768,13 +21903,15 @@
     "characters": [
       "Deportista"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Enemies to Lovers",
       "Friends to Lovers"
     ],
     "ambientacion": [],
-    "spicy": null,
+    "spicy": 1,
     "formato": null,
     "adaptacion": null,
     "sagaName": null,
@@ -23220,11 +23357,17 @@
     "subgenres": [
       "Dark Romance"
     ],
-    "identidades": [],
+    "identidades": [
+      "Bisexual"
+    ],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Dominante × Sumisa"
+    ],
     "tropes": [
-      "Revenge Romance"
+      "Revenge Romance",
+      "Enemies to Lovers",
+      "Age Gap"
     ],
     "ambientacion": [],
     "spicy": null,
@@ -25537,10 +25680,26 @@
     "subgenres": [
       "Deporte"
     ],
-    "identidades": [],
-    "characters": [],
-    "dinamicas": [],
-    "tropes": [],
+    "identidades": [
+      "Masc",
+      "Femme",
+      "Sunshine",
+      "Grumpy"
+    ],
+    "characters": [
+      "Deportista"
+    ],
+    "dinamicas": [
+      "Masc × Femme",
+      "Grumpy × Sunshine",
+      "Protectora × Delicada"
+    ],
+    "tropes": [
+      "Rivals to Lovers",
+      "Forbidden Love",
+      "Workplace Romance",
+      "Slow Burn"
+    ],
     "ambientacion": [],
     "spicy": null,
     "formato": "Saga",
@@ -25906,17 +26065,32 @@
     "pages": 331,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "Fantasía"
     ],
     "subgenres": [],
-    "identidades": [],
+    "identidades": [
+      "Masc",
+      "Ice Queen",
+      "Femme"
+    ],
     "characters": [
       "Vampira"
     ],
-    "dinamicas": [],
-    "tropes": [],
+    "dinamicas": [
+      "Vampira × Humana",
+      "Boss × Employee",
+      "Rich × Poor",
+      "Jefa × Subordinada",
+      "Masc × Femme"
+    ],
+    "tropes": [
+      "Forced Proximity",
+      "Arranged Marriage",
+      "Workplace Romance"
+    ],
     "ambientacion": [],
-    "spicy": null,
+    "spicy": 4,
     "formato": null,
     "adaptacion": null,
     "sagaName": null,
@@ -25949,10 +26123,11 @@
     "characters": [],
     "dinamicas": [],
     "tropes": [
-      "Enemies to Lovers"
+      "Enemies to Lovers",
+      "Forced Proximity"
     ],
     "ambientacion": [],
-    "spicy": null,
+    "spicy": 4,
     "formato": null,
     "adaptacion": null,
     "sagaName": null,
