@@ -1067,9 +1067,19 @@ function getSaga(b){
 }
 
 async function init(){
+  // Detectar si venimos de un enlace de recuperación de contraseña
+  const hashParams=new URLSearchParams(window.location.hash.slice(1));
+  const tokenType=hashParams.get('type');
+  if(tokenType==='recovery'){
+    // Limpiar el hash de la URL para no exponerlo
+    history.replaceState(null,'',location.pathname+location.search);
+    // Esperar a que Supabase procese la sesión del token
+    await new Promise(resolve=>setTimeout(resolve,400));
+  }
   const {data:{session}}=await sb.auth.getSession();
   if(session) currentUser=session.user;
   renderAuthUI();
+  const isRecovery=(tokenType==='recovery');
   await loadBooks();
   if(currentUser) await loadMyRatings();
   buildDropdowns();
@@ -1106,6 +1116,7 @@ async function init(){
     if(activeTab==='solicitudes') renderSolicitudes();
   });
   document.addEventListener('click',e=>{if(!e.target.closest('.dd-wrap'))closeAllDD();});
+  if(isRecovery) openResetModal();
 }
 
 async function loadBooks(){
