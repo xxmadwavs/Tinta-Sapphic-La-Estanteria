@@ -1888,14 +1888,23 @@ async function handleResetPassword(){
   if(pass!==pass2){err.textContent='Las contraseñas no coinciden.';return;}
   btn.disabled=true;btn.textContent='Guardando…';
   // Verificar OTP y establecer sesión
-  const {error:otpErr}=await sb.auth.verifyOtp({email:window._resetEmail,token:otp,type:'recovery'});
+  // Intentar verificar OTP — primero como 'recovery', si falla como 'email'
+  let otpData, otpErr;
+  ({data:otpData,error:otpErr}=await sb.auth.verifyOtp({email:window._resetEmail,token:otp,type:'recovery'}));
+  if(otpErr){
+    ({data:otpData,error:otpErr}=await sb.auth.verifyOtp({email:window._resetEmail,token:otp,type:'email'}));
+  }
   if(otpErr){
     err.textContent='Código incorrecto o expirado.';
     btn.disabled=false;btn.textContent='Guardar contraseña';
     return;
   }
-  // Actualizar contraseña
-  const {error}=await sb.auth.updateUser({password:pass});
+  // Establecer sesión explícitamente si viene en la respuesta
+  if(otpData?.session){
+    await sb.auth.setSession({access_token:otpData.session.access_token,refresh_token:otpData.session.refresh_token});
+  }
+  // Actualizar contraseña — nonce para "Secure password change"
+  const {error}=await sb.auth.updateUser({password:pass,nonce:otp});
   if(error){
     err.textContent=error.message;
     btn.disabled=false;btn.textContent='Guardar contraseña';
