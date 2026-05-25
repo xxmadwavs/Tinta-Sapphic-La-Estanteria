@@ -8499,7 +8499,10 @@
     "subgenres": [
       "Erótica"
     ],
-    "identidades": [],
+    "identidades": [
+      "Ice Queen",
+      "Grumpy"
+    ],
     "characters": [],
     "dinamicas": [],
     "tropes": [
@@ -8513,7 +8516,13 @@
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778011258456_j4nod",
@@ -8588,21 +8597,35 @@
       "Romance"
     ],
     "subgenres": [],
-    "identidades": [],
-    "characters": [],
-    "dinamicas": [],
+    "identidades": [
+      "Lesbiana"
+    ],
+    "characters": [
+      "Actriz"
+    ],
+    "dinamicas": [
+      "Grumpy × Sunshine"
+    ],
     "tropes": [
       "Fake Relationship",
-      "Age Gap"
+      "Age Gap",
+      "Workplace Romance",
+      "Slow Burn"
     ],
     "ambientacion": [],
-    "spicy": 4,
+    "spicy": 3,
     "formato": null,
     "adaptacion": null,
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778011410242_p9ql5",
@@ -8654,10 +8677,18 @@
       "Romance"
     ],
     "subgenres": [],
-    "identidades": [],
+    "identidades": [
+      "Femme",
+      "Ice Queen"
+    ],
     "characters": [],
-    "dinamicas": [],
-    "tropes": [],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
+    "tropes": [
+      "Age Gap",
+      "Opposites Attract"
+    ],
     "ambientacion": [],
     "spicy": null,
     "formato": null,
@@ -8665,7 +8696,13 @@
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778011513185_1mqds",
@@ -8720,7 +8757,9 @@
       "Vampira"
     ],
     "dinamicas": [],
-    "tropes": [],
+    "tropes": [
+      "Secret Relationship"
+    ],
     "ambientacion": [],
     "spicy": 3,
     "formato": null,
@@ -8728,7 +8767,13 @@
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778011568638_1gigh",
@@ -8745,11 +8790,27 @@
       "Romance"
     ],
     "subgenres": [],
-    "identidades": [],
-    "characters": [],
-    "dinamicas": [],
+    "identidades": [
+      "Ice Queen",
+      "Femme",
+      "Sunshine"
+    ],
+    "characters": [
+      "Actriz",
+      "Psicóloga"
+    ],
+    "dinamicas": [
+      "Ice Queen × Sunshine",
+      "Grumpy × Sunshine",
+      "Rich × Poor",
+      "Femme × Femme"
+    ],
     "tropes": [
-      "Fake Relationship"
+      "Fake Relationship",
+      "Slow Burn",
+      "Rich / Poor Romance",
+      "Opposites Attract",
+      "Road Trip"
     ],
     "ambientacion": [],
     "spicy": 4,
@@ -8758,7 +8819,13 @@
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778011603439_2g2e9",
@@ -8783,13 +8850,19 @@
       "Enemies to Lovers"
     ],
     "ambientacion": [],
-    "spicy": 5,
+    "spicy": null,
     "formato": "Saga",
     "adaptacion": null,
     "sagaName": "Killing Eve",
     "sagaNum": 2,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778011673830_rkavi",
@@ -8831,21 +8904,42 @@
     "pages": 261,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "Contemporánea"
     ],
-    "subgenres": [],
-    "identidades": [],
-    "characters": [],
-    "dinamicas": [],
-    "tropes": [],
+    "subgenres": [
+      "BDSM",
+      "Small Town"
+    ],
+    "identidades": [
+      "Femme",
+      "Masc",
+      "Ice Queen"
+    ],
+    "characters": [
+      "Actriz"
+    ],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
+    "tropes": [
+      "Age Gap",
+      "Opposites Attract"
+    ],
     "ambientacion": [],
-    "spicy": null,
+    "spicy": 5,
     "formato": null,
     "adaptacion": null,
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778011744118_v4yn0",
@@ -8889,13 +8983,20 @@
     "genres": [
       "Ciencia Ficción",
       "Distopía",
-      "Romance"
+      "Romance",
+      "YA"
     ],
     "subgenres": [],
-    "identidades": [],
-    "characters": [],
+    "identidades": [
+      "Lesbiana"
+    ],
+    "characters": [
+      "Pirata"
+    ],
     "dinamicas": [],
-    "tropes": [],
+    "tropes": [
+      "Enemies to Lovers"
+    ],
     "ambientacion": [],
     "spicy": 2,
     "formato": "Dúo",
@@ -8903,7 +9004,13 @@
     "sagaName": "Compass Rose",
     "sagaNum": 1,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778011821952_jooyl",
@@ -8919,13 +9026,20 @@
     "genres": [
       "Ciencia Ficción",
       "Distopía",
-      "Romance"
+      "Romance",
+      "YA"
     ],
     "subgenres": [],
-    "identidades": [],
-    "characters": [],
+    "identidades": [
+      "Lesbiana"
+    ],
+    "characters": [
+      "Pirata"
+    ],
     "dinamicas": [],
-    "tropes": [],
+    "tropes": [
+      "Enemies to Lovers"
+    ],
     "ambientacion": [],
     "spicy": 2,
     "formato": "Dúo",
@@ -8933,7 +9047,13 @@
     "sagaName": "Compass Rose",
     "sagaNum": 2,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778011882124_jb5bu",
@@ -8948,7 +9068,9 @@
     "isbn": null,
     "genres": [
       "Distopía",
-      "Romance"
+      "Romance",
+      "Ciencia Ficción",
+      "YA"
     ],
     "subgenres": [],
     "identidades": [],
@@ -8962,7 +9084,13 @@
     "sagaName": "Blackout",
     "sagaNum": 1,
     "source": "other",
-    "editions": []
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778011919478_r8b67",
@@ -9011,13 +9139,19 @@
     ],
     "subgenres": [
       "BDSM",
-      "Erótica"
+      "Erótica",
+      "Bisexual"
     ],
-    "identidades": [],
+    "identidades": [
+      "Bisexual"
+    ],
     "characters": [
       "Vampira"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Boss × Employee",
+      "Jefa × Subordinada"
+    ],
     "tropes": [
       "Second Chance Romance"
     ],
@@ -9030,7 +9164,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778225055873_c7i0u",
@@ -9195,11 +9333,26 @@
       "Romance"
     ],
     "subgenres": [],
-    "identidades": [],
-    "characters": [],
-    "dinamicas": [],
+    "identidades": [
+      "Lesbiana",
+      "Ice Queen",
+      "Bisexual",
+      "Femme"
+    ],
+    "characters": [
+      "CEO",
+      "Reportera / Periodista"
+    ],
+    "dinamicas": [
+      "Grumpy × Sunshine",
+      "Femme × Femme"
+    ],
     "tropes": [
-      "Age Gap"
+      "Age Gap",
+      "Workplace Romance",
+      "Friends to Lovers",
+      "Slow Burn",
+      "Toaster Oven"
     ],
     "ambientacion": [],
     "spicy": 3,
@@ -9210,7 +9363,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778225306383_yentj",
@@ -9256,12 +9413,18 @@
     "pages": 368,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "YA"
     ],
     "subgenres": [],
-    "identidades": [],
+    "identidades": [
+      "Masc",
+      "Femme"
+    ],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
     "tropes": [
       "Opposites Attract"
     ],
@@ -9274,7 +9437,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778225509536_85jpy",
@@ -9293,12 +9460,23 @@
     "subgenres": [
       "Erótica"
     ],
-    "identidades": [],
+    "identidades": [
+      "Femme",
+      "Lesbiana",
+      "Ice Queen",
+      "Sunshine"
+    ],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme",
+      "Grumpy × Sunshine",
+      "Ice Queen × Sunshine",
+      "Rich × Poor"
+    ],
     "tropes": [
       "Age Gap",
-      "Workplace Romance"
+      "Workplace Romance",
+      "Rich / Poor Romance"
     ],
     "ambientacion": [],
     "spicy": 5,
@@ -9309,7 +9487,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778225541016_wl3qh",
@@ -9752,11 +9934,18 @@
     "genres": [
       "Horror"
     ],
-    "subgenres": [],
+    "subgenres": [
+      "Reality Show"
+    ],
     "identidades": [],
-    "characters": [],
+    "characters": [
+      "Sirena",
+      "Científica"
+    ],
     "dinamicas": [],
-    "tropes": [],
+    "tropes": [
+      "Workplace Romance"
+    ],
     "ambientacion": [],
     "spicy": 2,
     "formato": null,
@@ -9766,7 +9955,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778226476006_11rg1",
@@ -9917,12 +10110,19 @@
       "Romance"
     ],
     "subgenres": [],
-    "identidades": [],
+    "identidades": [
+      "Femme",
+      "Ice Queen",
+      "Masc"
+    ],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
     "tropes": [
       "Enemies to Lovers",
-      "Opposites Attract"
+      "Opposites Attract",
+      "Workplace Romance"
     ],
     "ambientacion": [],
     "spicy": 4,
@@ -9933,7 +10133,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778226860643_ez8is",
@@ -9980,13 +10184,27 @@
     "pages": 292,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "Contemporánea"
     ],
-    "subgenres": [],
-    "identidades": [],
+    "subgenres": [
+      "Coming Out"
+    ],
+    "identidades": [
+      "Bisexual",
+      "Femme"
+    ],
     "characters": [],
-    "dinamicas": [],
-    "tropes": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Coming Out tardío",
+      "Friends to Lovers",
+      "Vacation Romance",
+      "Slow Burn",
+      "Workplace Romance"
+    ],
     "ambientacion": [],
     "spicy": 3,
     "formato": null,
@@ -9996,7 +10214,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778226948529_bmkwp",
@@ -10046,12 +10268,21 @@
       "Romance"
     ],
     "subgenres": [],
-    "identidades": [],
+    "identidades": [
+      "Butch",
+      "Femme",
+      "Lesbiana",
+      "Queer"
+    ],
     "characters": [],
     "dinamicas": [
-      "Femme × Femme"
+      "Butch × Femme",
+      "Grumpy × Sunshine"
     ],
-    "tropes": [],
+    "tropes": [
+      "Forced Proximity",
+      "Slow Burn"
+    ],
     "ambientacion": [],
     "spicy": 4,
     "formato": null,
@@ -10109,13 +10340,30 @@
     "pages": 248,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "Contemporánea"
     ],
-    "subgenres": [],
-    "identidades": [],
-    "characters": [],
-    "dinamicas": [],
-    "tropes": [],
+    "subgenres": [
+      "Coming Out",
+      "Navidad"
+    ],
+    "identidades": [
+      "Femme",
+      "Sunshine"
+    ],
+    "characters": [
+      "Abogada",
+      "Madre Soltera"
+    ],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Found Family",
+      "Toaster Oven",
+      "Slow Burn",
+      "Friends to Lovers"
+    ],
     "ambientacion": [],
     "spicy": 4,
     "formato": null,
@@ -10125,7 +10373,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778227419098_8i3dp",
@@ -10174,15 +10426,25 @@
     "pages": 264,
     "isbn": null,
     "genres": [
-      "Romance"
+      "Romance",
+      "Contemporánea"
     ],
-    "subgenres": [],
-    "identidades": [],
+    "subgenres": [
+      "Coming Out",
+      "Small Town"
+    ],
+    "identidades": [
+      "Bisexual",
+      "Lesbiana"
+    ],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Rich × Poor"
+    ],
     "tropes": [
       "Friends to Lovers",
-      "Second Chance Romance"
+      "Second Chance Romance",
+      "Rich / Poor Romance"
     ],
     "ambientacion": [],
     "spicy": 4,
@@ -10193,7 +10455,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778227568689_y7ciy",
