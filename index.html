@@ -229,6 +229,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tg-input-wrap input{flex:1;padding:10px 14px 10px 2px;border:none;background:transparent;color:var(--text);font-size:13.5px;font-family:var(--font-body);outline:none}
 .tg-input-wrap input::placeholder{color:var(--muted)}
 
+/* RESET PASSWORD MODAL */
+.reset-modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);width:100%;max-width:370px;margin:auto;padding:2.5rem 2rem;text-align:center;position:relative}
+.reset-modal .auth-form input{padding:10px 14px;border-radius:10px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:13.5px;font-family:var(--font-body);outline:none;transition:border-color .15s;width:100%}
+.reset-modal .auth-form input:focus{border-color:var(--accent)}
+.reset-modal .auth-form input::placeholder{color:var(--muted)}
+.reset-modal .auth-form{display:flex;flex-direction:column;gap:.6rem;text-align:left;margin-bottom:.5rem}
+
 .toast{position:fixed;bottom:2rem;right:2rem;padding:10px 22px;border-radius:20px;font-size:13px;font-weight:600;z-index:999;transform:translateY(80px);opacity:0;transition:all .25s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
 .toast.success{background:var(--teal);color:var(--bg)}
@@ -978,6 +985,22 @@ body.home-active .hero,body.home-active .main{display:none!important}
   </div>
 </div>
 
+<!-- RESET PASSWORD MODAL -->
+<div class="modal-bg" id="resetModal">
+  <div class="reset-modal">
+    <button class="auth-close" onclick="closeResetModal()">✕</button>
+    <div class="auth-logo">Tinta <em>Sapphic</em></div>
+    <div class="auth-title" id="resetTitle">Nueva contraseña</div>
+    <p class="auth-sub" id="resetSub">Elige una contraseña nueva para tu cuenta.</p>
+    <div class="auth-form" id="resetFormWrap">
+      <input type="password" id="resetPass" placeholder="Nueva contraseña (mín. 6 caracteres)" autocomplete="new-password" onkeydown="if(event.key==='Enter')handleResetPassword()">
+      <input type="password" id="resetPass2" placeholder="Repite la contraseña" autocomplete="new-password" onkeydown="if(event.key==='Enter')handleResetPassword()">
+      <button class="btn-primary" id="resetBtn" onclick="handleResetPassword()">Guardar contraseña</button>
+    </div>
+    <div class="auth-error" id="resetError"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1072,6 +1095,10 @@ async function init(){
     else{myRatings={};applyFilters(false);}
   },300);
   sb.auth.onAuthStateChange((_e,session)=>{
+    if(_e==='PASSWORD_RECOVERY'){
+      openResetModal();
+      return;
+    }
     currentUser=session?.user||null;
     renderAuthUI();
     debouncedLoadRatings();
@@ -1788,6 +1815,38 @@ async function handleAuth(){
 }
 function setAuthError(msg){document.getElementById('authError').textContent=msg;}
 async function logout(){await sb.auth.signOut();myRatings={};showToast('Hasta pronto 🌹','success');applyFilters();}
+
+/* ── RESET PASSWORD ── */
+function openResetModal(){
+  document.getElementById('resetModal').classList.add('open');
+  document.body.style.overflow='hidden';
+  document.getElementById('resetError').textContent='';
+  document.getElementById('resetPass').value='';
+  document.getElementById('resetPass2').value='';
+  setTimeout(()=>document.getElementById('resetPass').focus(),100);
+}
+function closeResetModal(){
+  document.getElementById('resetModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+async function handleResetPassword(){
+  const pass=document.getElementById('resetPass').value;
+  const pass2=document.getElementById('resetPass2').value;
+  const btn=document.getElementById('resetBtn');
+  const err=document.getElementById('resetError');
+  if(!pass||pass.length<6){err.textContent='Mínimo 6 caracteres.';return;}
+  if(pass!==pass2){err.textContent='Las contraseñas no coinciden.';return;}
+  btn.disabled=true;btn.textContent='Guardando…';
+  const {error}=await sb.auth.updateUser({password:pass});
+  if(error){
+    err.textContent=error.message;
+    btn.disabled=false;btn.textContent='Guardar contraseña';
+  }else{
+    closeResetModal();
+    showToast('¡Contraseña actualizada! 🌹','success');
+  }
+}
+document.getElementById('resetModal').addEventListener('click',e=>{if(e.target.id==='resetModal')closeResetModal();});
 
 function showToast(msg,type='success'){const t=document.getElementById('toast');t.textContent=msg;t.className=`toast ${type}`;setTimeout(()=>t.classList.add('show'),10);setTimeout(()=>t.classList.remove('show'),3200);}
 
