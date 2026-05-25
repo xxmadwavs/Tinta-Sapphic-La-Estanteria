@@ -1903,10 +1903,18 @@ async function handleResetPassword(){
   if(otpData?.session){
     await sb.auth.setSession({access_token:otpData.session.access_token,refresh_token:otpData.session.refresh_token});
   }
-  // Actualizar contraseña — nonce para "Secure password change"
-  const {error}=await sb.auth.updateUser({password:pass,nonce:otp});
-  if(error){
-    err.textContent=error.message;
+  // Actualizar contraseña con timeout de 10s
+  let updateError=null;
+  try{
+    const updatePromise=sb.auth.updateUser({password:pass});
+    const timeoutPromise=new Promise((_,rej)=>setTimeout(()=>rej(new Error('Tiempo de espera agotado. Inténtalo de nuevo.')),10000));
+    const {error}=await Promise.race([updatePromise,timeoutPromise]);
+    updateError=error;
+  }catch(e){
+    updateError=e;
+  }
+  if(updateError){
+    err.textContent=updateError.message||JSON.stringify(updateError);
     btn.disabled=false;btn.textContent='Guardar contraseña';
   }else{
     closeResetModal();
