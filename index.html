@@ -991,14 +991,32 @@ body.home-active .hero,body.home-active .main{display:none!important}
   <div class="reset-modal">
     <button class="auth-close" onclick="closeResetModal()">✕</button>
     <div class="auth-logo">Tinta <em>Sapphic</em></div>
-    <div class="auth-title" id="resetTitle">Nueva contraseña</div>
-    <p class="auth-sub" id="resetSub">Elige una contraseña nueva para tu cuenta.</p>
-    <div class="auth-form" id="resetFormWrap">
-      <input type="password" id="resetPass" placeholder="Nueva contraseña (mín. 6 caracteres)" autocomplete="new-password" onkeydown="if(event.key==='Enter')handleResetPassword()">
-      <input type="password" id="resetPass2" placeholder="Repite la contraseña" autocomplete="new-password" onkeydown="if(event.key==='Enter')handleResetPassword()">
-      <button class="btn-primary" id="resetBtn" onclick="handleResetPassword()">Guardar contraseña</button>
+
+    <!-- Paso 1: pedir email -->
+    <div id="resetStep1">
+      <div class="auth-title">Recuperar cuenta</div>
+      <p class="auth-sub">Te enviaremos un código de 6 dígitos a tu email.</p>
+      <div class="auth-form">
+        <input type="email" id="resetEmail" placeholder="Tu email" autocomplete="email" onkeydown="if(event.key==='Enter')handleSendOtp()">
+        <button class="btn-primary" id="resetSendBtn" onclick="handleSendOtp()">Enviar código</button>
+      </div>
+      <div class="auth-error" id="resetError1"></div>
     </div>
-    <div class="auth-error" id="resetError"></div>
+
+    <!-- Paso 2: introducir código + nueva contraseña -->
+    <div id="resetStep2" style="display:none">
+      <div class="auth-title">Nueva contraseña</div>
+      <p class="auth-sub" id="resetStep2Sub">Introduce el código que te hemos enviado y elige una nueva contraseña.</p>
+      <div class="auth-form">
+        <input type="text" id="resetOtp" placeholder="Código de 6 dígitos" autocomplete="one-time-code" maxlength="6" inputmode="numeric" style="letter-spacing:.2em;font-size:1.3rem;text-align:center" onkeydown="if(event.key==='Enter')handleResetPassword()">
+        <input type="password" id="resetPass" placeholder="Nueva contraseña (mín. 6 caracteres)" autocomplete="new-password" onkeydown="if(event.key==='Enter')handleResetPassword()">
+        <input type="password" id="resetPass2" placeholder="Repite la contraseña" autocomplete="new-password" onkeydown="if(event.key==='Enter')handleResetPassword()">
+        <button class="btn-primary" id="resetBtn" onclick="handleResetPassword()">Guardar contraseña</button>
+      </div>
+      <div class="auth-error" id="resetError"></div>
+      <p class="auth-toggle" style="margin-top:.5rem"><a onclick="showResetStep1()">← Volver</a></p>
+    </div>
+
   </div>
 </div>
 
@@ -1067,19 +1085,9 @@ function getSaga(b){
 }
 
 async function init(){
-  // Detectar si venimos de un enlace de recuperación de contraseña
-  const hashParams=new URLSearchParams(window.location.hash.slice(1));
-  const tokenType=hashParams.get('type');
-  if(tokenType==='recovery'){
-    // Limpiar el hash de la URL para no exponerlo
-    history.replaceState(null,'',location.pathname+location.search);
-    // Esperar a que Supabase procese la sesión del token
-    await new Promise(resolve=>setTimeout(resolve,400));
-  }
   const {data:{session}}=await sb.auth.getSession();
   if(session) currentUser=session.user;
   renderAuthUI();
-  const isRecovery=(tokenType==='recovery');
   await loadBooks();
   if(currentUser) await loadMyRatings();
   buildDropdowns();
@@ -1116,7 +1124,6 @@ async function init(){
     if(activeTab==='solicitudes') renderSolicitudes();
   });
   document.addEventListener('click',e=>{if(!e.target.closest('.dd-wrap'))closeAllDD();});
-  if(isRecovery) openResetModal();
 }
 
 async function loadBooks(){
@@ -1806,13 +1813,35 @@ function updateAuthUI(){
   document.getElementById('authError').textContent='';
 }
 async function handleForgotPassword(){
-  const email=document.getElementById('authEmail').value.trim();
-  if(!email){setAuthError('Escribe tu email primero.');return;}
-  const redirectURL=window.location.origin+window.location.pathname;
-  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:redirectURL});
-  if(error){setAuthError(error.message);return;}
   closeAuthModal();
-  showToast('Te hemos enviado un email para restablecer tu contraseña 📧','success');
+  showResetStep1();
+  document.getElementById('resetModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function showResetStep1(){
+  document.getElementById('resetStep1').style.display='';
+  document.getElementById('resetStep2').style.display='none';
+  document.getElementById('resetError1').textContent='';
+  setTimeout(()=>document.getElementById('resetEmail').focus(),100);
+}
+async function handleSendOtp(){
+  const email=document.getElementById('resetEmail').value.trim();
+  const btn=document.getElementById('resetSendBtn');
+  const err=document.getElementById('resetError1');
+  if(!email){err.textContent='Escribe tu email.';return;}
+  btn.disabled=true;btn.textContent='Enviando…';
+  const {error}=await sb.auth.resetPasswordForEmail(email);
+  btn.disabled=false;btn.textContent='Enviar código';
+  if(error){err.textContent=error.message;return;}
+  document.getElementById('resetStep2Sub').textContent='Código enviado a '+email+'. Revisa tu bandeja de entrada.';
+  document.getElementById('resetStep1').style.display='none';
+  document.getElementById('resetStep2').style.display='';
+  document.getElementById('resetOtp').value='';
+  document.getElementById('resetPass').value='';
+  document.getElementById('resetPass2').value='';
+  document.getElementById('resetError').textContent='';
+  setTimeout(()=>document.getElementById('resetOtp').focus(),100);
+  window._resetEmail=email;
 }
 async function handleAuth(){
   const email=document.getElementById('authEmail').value.trim();
@@ -1840,25 +1869,32 @@ async function logout(){await sb.auth.signOut();myRatings={};showToast('Hasta pr
 
 /* ── RESET PASSWORD ── */
 function openResetModal(){
+  showResetStep1();
   document.getElementById('resetModal').classList.add('open');
   document.body.style.overflow='hidden';
-  document.getElementById('resetError').textContent='';
-  document.getElementById('resetPass').value='';
-  document.getElementById('resetPass2').value='';
-  setTimeout(()=>document.getElementById('resetPass').focus(),100);
 }
 function closeResetModal(){
   document.getElementById('resetModal').classList.remove('open');
   document.body.style.overflow='';
 }
 async function handleResetPassword(){
+  const otp=document.getElementById('resetOtp').value.trim();
   const pass=document.getElementById('resetPass').value;
   const pass2=document.getElementById('resetPass2').value;
   const btn=document.getElementById('resetBtn');
   const err=document.getElementById('resetError');
+  if(!otp||otp.length<6){err.textContent='Introduce el código de 6 dígitos.';return;}
   if(!pass||pass.length<6){err.textContent='Mínimo 6 caracteres.';return;}
   if(pass!==pass2){err.textContent='Las contraseñas no coinciden.';return;}
   btn.disabled=true;btn.textContent='Guardando…';
+  // Verificar OTP y establecer sesión
+  const {error:otpErr}=await sb.auth.verifyOtp({email:window._resetEmail,token:otp,type:'recovery'});
+  if(otpErr){
+    err.textContent='Código incorrecto o expirado.';
+    btn.disabled=false;btn.textContent='Guardar contraseña';
+    return;
+  }
+  // Actualizar contraseña
   const {error}=await sb.auth.updateUser({password:pass});
   if(error){
     err.textContent=error.message;
