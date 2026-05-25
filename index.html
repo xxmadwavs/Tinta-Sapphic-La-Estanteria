@@ -982,6 +982,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
     </div>
     <div class="auth-error" id="authError"></div>
     <p class="auth-toggle" id="authToggle">¿No tienes cuenta? <a onclick="toggleAuthMode()">Regístrate aquí</a></p>
+    <p class="auth-toggle" id="authForgotWrap" style="margin-top:.35rem"><a onclick="handleForgotPassword()">¿Olvidaste tu contraseña?</a></p>
   </div>
 </div>
 
@@ -1790,7 +1791,17 @@ function updateAuthUI(){
   document.getElementById('authTelegramWrap').style.display=isReg?'flex':'none';
   document.getElementById('authBtn').textContent=isReg?'Registrarse':'Entrar';
   document.getElementById('authToggle').innerHTML=isReg?'¿Ya tienes cuenta? <a onclick="toggleAuthMode()">Inicia sesión</a>':'¿No tienes cuenta? <a onclick="toggleAuthMode()">Regístrate aquí</a>';
+  document.getElementById('authForgotWrap').style.display=isReg?'none':'block';
   document.getElementById('authError').textContent='';
+}
+async function handleForgotPassword(){
+  const email=document.getElementById('authEmail').value.trim();
+  if(!email){setAuthError('Escribe tu email primero.');return;}
+  const redirectURL=window.location.origin+window.location.pathname;
+  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:redirectURL});
+  if(error){setAuthError(error.message);return;}
+  closeAuthModal();
+  showToast('Te hemos enviado un email para restablecer tu contraseña 📧','success');
 }
 async function handleAuth(){
   const email=document.getElementById('authEmail').value.trim();
