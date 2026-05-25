@@ -995,7 +995,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
     <!-- Paso 1: pedir email -->
     <div id="resetStep1">
       <div class="auth-title">Recuperar cuenta</div>
-      <p class="auth-sub">Te enviaremos un código de 6 dígitos a tu email.</p>
+      <p class="auth-sub">Te enviaremos un código de 8 dígitos a tu email.</p>
       <div class="auth-form">
         <input type="email" id="resetEmail" placeholder="Tu email" autocomplete="email" onkeydown="if(event.key==='Enter')handleSendOtp()">
         <button class="btn-primary" id="resetSendBtn" onclick="handleSendOtp()">Enviar código</button>
@@ -1008,7 +1008,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
       <div class="auth-title">Nueva contraseña</div>
       <p class="auth-sub" id="resetStep2Sub">Introduce el código que te hemos enviado y elige una nueva contraseña.</p>
       <div class="auth-form">
-        <input type="text" id="resetOtp" placeholder="Código de 6 dígitos" autocomplete="one-time-code" maxlength="6" inputmode="numeric" style="letter-spacing:.2em;font-size:1.3rem;text-align:center" onkeydown="if(event.key==='Enter')handleResetPassword()">
+        <input type="text" id="resetOtp" placeholder="Código de 8 dígitos" autocomplete="one-time-code" maxlength="8" inputmode="numeric" style="letter-spacing:.2em;font-size:1.3rem;text-align:center" onkeydown="if(event.key==='Enter')handleResetPassword()">
         <input type="password" id="resetPass" placeholder="Nueva contraseña (mín. 6 caracteres)" autocomplete="new-password" onkeydown="if(event.key==='Enter')handleResetPassword()">
         <input type="password" id="resetPass2" placeholder="Repite la contraseña" autocomplete="new-password" onkeydown="if(event.key==='Enter')handleResetPassword()">
         <button class="btn-primary" id="resetBtn" onclick="handleResetPassword()">Guardar contraseña</button>
@@ -1883,7 +1883,7 @@ async function handleResetPassword(){
   const pass2=document.getElementById('resetPass2').value;
   const btn=document.getElementById('resetBtn');
   const err=document.getElementById('resetError');
-  if(!otp||otp.length<6){err.textContent='Introduce el código de 6 dígitos.';return;}
+  if(!otp||otp.length<8){err.textContent='Introduce el código de 8 dígitos.';return;}
   if(!pass||pass.length<6){err.textContent='Mínimo 6 caracteres.';return;}
   if(pass!==pass2){err.textContent='Las contraseñas no coinciden.';return;}
   btn.disabled=true;btn.textContent='Guardando…';
