@@ -1888,35 +1888,39 @@ async function handleResetPassword(){
   if(pass!==pass2){err.textContent='Las contraseñas no coinciden.';return;}
   btn.disabled=true;btn.textContent='Guardando…';
   // Verificar OTP y establecer sesión
-  // Intentar verificar OTP — primero como 'recovery', si falla como 'email'
+  // Verificar OTP
+  err.textContent='Verificando código…';
   let otpData, otpErr;
   ({data:otpData,error:otpErr}=await sb.auth.verifyOtp({email:window._resetEmail,token:otp,type:'recovery'}));
   if(otpErr){
+    err.textContent='[recovery] '+otpErr.message+' — probando email…';
     ({data:otpData,error:otpErr}=await sb.auth.verifyOtp({email:window._resetEmail,token:otp,type:'email'}));
   }
   if(otpErr){
-    err.textContent='Código incorrecto o expirado.';
+    err.textContent='Error OTP: '+otpErr.message;
     btn.disabled=false;btn.textContent='Guardar contraseña';
     return;
   }
-  // Establecer sesión explícitamente si viene en la respuesta
+  err.textContent='Código OK. Estableciendo sesión…';
   if(otpData?.session){
-    await sb.auth.setSession({access_token:otpData.session.access_token,refresh_token:otpData.session.refresh_token});
+    const {error:sessErr}=await sb.auth.setSession({access_token:otpData.session.access_token,refresh_token:otpData.session.refresh_token});
+    if(sessErr){err.textContent='Error sesión: '+sessErr.message;btn.disabled=false;btn.textContent='Guardar contraseña';return;}
   }
-  // Actualizar contraseña con timeout de 10s
+  err.textContent='Sesión lista. Guardando contraseña…';
   let updateError=null;
   try{
     const updatePromise=sb.auth.updateUser({password:pass});
-    const timeoutPromise=new Promise((_,rej)=>setTimeout(()=>rej(new Error('Tiempo de espera agotado. Inténtalo de nuevo.')),10000));
+    const timeoutPromise=new Promise((_,rej)=>setTimeout(()=>rej(new Error('Tiempo agotado (10s).')),10000));
     const {error}=await Promise.race([updatePromise,timeoutPromise]);
     updateError=error;
   }catch(e){
     updateError=e;
   }
   if(updateError){
-    err.textContent=updateError.message||JSON.stringify(updateError);
+    err.textContent='Error al guardar: '+( updateError.message||JSON.stringify(updateError));
     btn.disabled=false;btn.textContent='Guardar contraseña';
   }else{
+    err.textContent='';
     closeResetModal();
     showToast('¡Contraseña actualizada! 🌹','success');
   }
