@@ -1037,6 +1037,7 @@ const DATA_URL     = 'books_data.json';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const SPICY_LABELS = ['0/5 Sin Steam','1/5 Mini Steam','2/5 Soft Steam','3/5 Spicy Light','4/5 Spicy','5/5 Infernal 🔥'];
+const EDAD_LABELS = ['Young Adult (15–18)','New Adult (18–24)','25–39','+40'];
 const SPICY_ICONS  = ['','🌶','🌶🌶','🌶🌶🌶','🌶🌶🌶🌶','🌶🌶🌶🌶🌶'];
 const SPICY_UNKNOWN_LABEL = '? Nivel desconocido';
 const SPICY_UNKNOWN_ICON  = '❓';
@@ -1206,10 +1207,21 @@ const DD_MAP = {
 function buildDropdowns(){
   Object.entries(DD_MAP).forEach(([key,listId])=>{
     if(listId==='listYear') buildDDList(listId, uniqVals('years'), 'years');
+    else if(listId==='listEdad') buildEdadDD();
     else buildDDList(listId, uniqVals(key), key);
   });
   buildSpicyDD();
   updateDDCounts();
+}
+
+function buildEdadDD(){
+  const el=document.getElementById('listEdad');
+  if(!el) return;
+  el.innerHTML=(filters.edad.length?`<div class="dd-clear" onclick="clearDDFilter('edad')">✕ Limpiar selección</div>`:'')+
+    EDAD_LABELS.map(v=>{
+      const sid='dd_edad_'+v.replace(/\W/g,'_');
+      return `<div class="dd-item"><input type="checkbox" id="${sid}" ${filters.edad.includes(v)?'checked':''} onchange="toggleDDFilter('edad','${v.replace(/'/g,"\\'")}')"><label for="${sid}">${v}</label></div>`;
+    }).join('');
 }
 
 function buildDDList(listId,values,key,search=''){
@@ -1242,6 +1254,7 @@ function toggleDDFilter(key,val){
   const arr=filters[key],idx=arr.indexOf(val);
   idx>=0?arr.splice(idx,1):arr.push(val);
   if(key==='spicy') buildSpicyDD();
+  else if(key==='edad') buildEdadDD();
   else buildDDList(DD_MAP[key], uniqVals(key), key);
   updateDDCounts();renderActivePills();applyFilters();
 }
@@ -1256,6 +1269,7 @@ function clearDDFilter(key){
   filters[key]=[];
   if(key==='spicy') filters.spicyUnknown=false;
   if(key==='spicy') buildSpicyDD();
+  else if(key==='edad') buildEdadDD();
   else buildDDList(DD_MAP[key], uniqVals(key), key);
   updateDDCounts();renderActivePills();applyFilters();
 }
