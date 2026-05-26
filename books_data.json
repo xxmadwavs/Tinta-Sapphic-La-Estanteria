@@ -14482,6 +14482,10 @@
       "Secret Relationship",
       "Forbidden Love"
     ],
+    "edad": [
+      "Young Adult (15–18)"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 2,
     "formato": null,
@@ -15249,11 +15253,22 @@
     "genres": [
       "Romance"
     ],
-    "subgenres": [],
-    "identidades": [],
-    "characters": [],
+    "subgenres": [
+      "Coming Out"
+    ],
+    "identidades": [
+      "Asexual"
+    ],
+    "characters": [
+      "Camarera"
+    ],
     "dinamicas": [],
-    "tropes": [],
+    "tropes": [
+      "Friends to Lovers",
+      "Found Family"
+    ],
+    "edad": [],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 3,
     "formato": "Saga",
@@ -15263,7 +15278,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778489706279_16hgu",
@@ -15280,10 +15299,28 @@
       "Romance"
     ],
     "subgenres": [],
-    "identidades": [],
-    "characters": [],
-    "dinamicas": [],
-    "tropes": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Artista",
+      "Granjera"
+    ],
+    "dinamicas": [
+      "Grumpy × Sunshine",
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Enemies to Lovers",
+      "Friends with Benefits",
+      "Forced Proximity"
+    ],
+    "edad": [
+      "New Adult (18–24)"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
     "ambientacion": [],
     "spicy": 4,
     "formato": null,
@@ -15293,7 +15330,11 @@
     "source": "other",
     "editions": [],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778498108681_f0n1v",
@@ -16475,10 +16516,15 @@
     "characters": [],
     "dinamicas": [],
     "tropes": [
-      "Age Gap"
+      "Age Gap",
+      "Opposites Attract"
     ],
+    "edad": [
+      "+40"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
-    "spicy": null,
+    "spicy": 3,
     "formato": "Saga",
     "adaptacion": null,
     "sagaName": "Cupids & Goddesses",
@@ -16733,6 +16779,10 @@
     "tropes": [
       "Enemies to Lovers"
     ],
+    "edad": [
+      "New Adult (18–24)"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": null,
     "formato": null,
@@ -17643,16 +17693,28 @@
       "Romance"
     ],
     "subgenres": [
-      "Navidad"
+      "Navidad",
+      "Small Town"
     ],
     "identidades": [],
     "characters": [],
     "dinamicas": [
-      "Femme × Femme"
+      "Femme × Femme",
+      "Grumpy × Sunshine"
     ],
-    "tropes": [],
+    "tropes": [
+      "Forced Proximity",
+      "Second Chance Romance",
+      "Friends with Benefits"
+    ],
+    "edad": [
+      "New Adult (18–24)"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
     "ambientacion": [],
-    "spicy": null,
+    "spicy": 4,
     "formato": null,
     "adaptacion": null,
     "sagaName": null,
@@ -17802,6 +17864,10 @@
     "dinamicas": [],
     "tropes": [
       "Enemies to Lovers"
+    ],
+    "edad": [],
+    "pais_cultura": [
+      "Mundo fantástico"
     ],
     "ambientacion": [],
     "spicy": null,
@@ -18050,6 +18116,12 @@
     "characters": [],
     "dinamicas": [],
     "tropes": [],
+    "edad": [
+      "Young Adult (15–18)"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
     "ambientacion": [],
     "spicy": null,
     "formato": "Dúo",
@@ -18088,6 +18160,12 @@
       "Femme × Femme"
     ],
     "tropes": [],
+    "edad": [
+      "New Adult (18–24)"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
     "ambientacion": [],
     "spicy": 4,
     "formato": null,
@@ -18302,6 +18380,13 @@
       "Friends to Lovers",
       "Age Gap"
     ],
+    "edad": [
+      "25–39",
+      "+40"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
     "ambientacion": [],
     "spicy": null,
     "formato": null,
@@ -18340,8 +18425,14 @@
     "tropes": [
       "Enemies to Lovers"
     ],
+    "edad": [
+      "Young Adult (15–18)"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
     "ambientacion": [],
-    "spicy": null,
+    "spicy": 5,
     "formato": null,
     "adaptacion": null,
     "sagaName": null,
@@ -18445,14 +18536,24 @@
       "Romance"
     ],
     "subgenres": [],
-    "identidades": [],
+    "identidades": [
+      "Grumpy",
+      "Sunshine"
+    ],
     "characters": [
       "Zombie"
     ],
-    "dinamicas": [],
-    "tropes": [],
+    "dinamicas": [
+      "Grumpy × Sunshine"
+    ],
+    "tropes": [
+      "Enemies to Lovers",
+      "Forced Proximity"
+    ],
+    "edad": [],
+    "pais_cultura": [],
     "ambientacion": [],
-    "spicy": null,
+    "spicy": 3,
     "formato": null,
     "adaptacion": null,
     "sagaName": null,
@@ -21953,6 +22054,12 @@
     "tropes": [
       "Enemies to Lovers"
     ],
+    "edad": [
+      "Young Adult (15–18)"
+    ],
+    "pais_cultura": [
+      "Ambientación europea"
+    ],
     "ambientacion": [],
     "spicy": 5,
     "formato": "Trilogía",
@@ -22291,6 +22398,10 @@
       "Femme × Femme"
     ],
     "tropes": [],
+    "edad": [
+      "Young Adult (15–18)"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 5,
     "formato": "Saga",
@@ -22331,6 +22442,10 @@
       "Femme × Femme"
     ],
     "tropes": [],
+    "edad": [
+      "Young Adult (15–18)"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 5,
     "formato": "Saga",
@@ -22369,6 +22484,10 @@
     ],
     "dinamicas": [],
     "tropes": [],
+    "edad": [
+      "Young Adult (15–18)"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 5,
     "formato": "Saga",
@@ -22559,6 +22678,12 @@
     "tropes": [
       "Fake Relationship"
     ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
     "ambientacion": [],
     "spicy": 4,
     "formato": null,
@@ -22576,42 +22701,6 @@
       "Fake Relationship",
       "Grumpy/Sunshine"
     ]
-  },
-  {
-    "id": "b_1779392474083_evez2",
-    "title": "Hotshot",
-    "authors": [
-      "Clare Lydon"
-    ],
-    "year": 2023,
-    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1680123068i/124923138.jpg",
-    "synopsis": "Sloane Patterson es la sensación del fútbol estadounidense cuya llegada al Reino Unido causa un gran revuelo. Tiene el juego, la fama, el físico y la prometida. Pero las apariencias engañan.\n\nCuando la vida de Sloane empieza a desmoronarse, Ella Carmichael, la nueva empleada del Salchester Rovers, la ayuda a rehacer su vida. Pero a medida que las líneas entre sus vidas profesionales y personales se difuminan, las tensiones afloran. Ahora, el objetivo de Sloane de ayudar al equipo a ganar la liga y la FA Cup tiene un añadido importante: ganarse el corazón de Ella.",
-    "pages": null,
-    "isbn": null,
-    "genres": [
-      "Romance"
-    ],
-    "subgenres": [
-      "Deporte"
-    ],
-    "identidades": [],
-    "characters": [],
-    "dinamicas": [],
-    "tropes": [],
-    "ambientacion": [],
-    "spicy": null,
-    "formato": null,
-    "adaptacion": null,
-    "sagaName": null,
-    "sagaNum": null,
-    "source": "other",
-    "editions": [],
-    "saficlub": false,
-    "safi_categories": [],
-    "canal_rec": false,
-    "canal_month": null,
-    "my_rec": false,
-    "my_rec_categories": []
   },
   {
     "id": "b_1779392537897_mfd6k",
@@ -22828,6 +22917,10 @@
       "Enemies to Lovers",
       "Friends to Lovers"
     ],
+    "edad": [
+      "Young Adult (15–18)"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 1,
     "formato": null,
@@ -24287,6 +24380,11 @@
       "Enemies to Lovers",
       "Age Gap"
     ],
+    "edad": [
+      "Young Adult (15–18)",
+      "New Adult (18–24)"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": null,
     "formato": null,
@@ -24773,14 +24871,24 @@
       "Fantasía Urbana",
       "Romance"
     ],
-    "subgenres": [],
+    "subgenres": [
+      "Magia",
+      "Poliamor"
+    ],
     "identidades": [],
     "characters": [
       "Bruja",
       "Vampira"
     ],
     "dinamicas": [],
-    "tropes": [],
+    "tropes": [
+      "Age Gap"
+    ],
+    "edad": [
+      "+40",
+      "25–39"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 5,
     "formato": "Dúo",
@@ -25850,6 +25958,13 @@
       "Enemies to Lovers",
       "Workplace Romance"
     ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Estados Unidos",
+      "Francia"
+    ],
     "ambientacion": [],
     "spicy": null,
     "formato": "Trilogía",
@@ -25892,6 +26007,12 @@
       "Enemies to Lovers",
       "Workplace Romance"
     ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
     "ambientacion": [],
     "spicy": 5,
     "formato": "Trilogía",
@@ -25933,6 +26054,10 @@
     "tropes": [
       "Enemies to Lovers",
       "Workplace Romance"
+    ],
+    "edad": [],
+    "pais_cultura": [
+      "Estados Unidos"
     ],
     "ambientacion": [],
     "spicy": 4,
@@ -26089,6 +26214,12 @@
     "characters": [],
     "dinamicas": [],
     "tropes": [],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
     "ambientacion": [],
     "spicy": 5,
     "formato": null,
@@ -26633,6 +26764,12 @@
       "Workplace Romance",
       "Slow Burn"
     ],
+    "edad": [
+      "New Adult (18–24)"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
     "ambientacion": [],
     "spicy": null,
     "formato": "Saga",
@@ -27059,6 +27196,12 @@
     "tropes": [
       "Enemies to Lovers",
       "Forced Proximity"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
     ],
     "ambientacion": [],
     "spicy": 4,
