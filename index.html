@@ -41,7 +41,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-logout{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:11px;padding:2px 4px;font-family:var(--font-body);transition:color .15s}
 .btn-logout:hover{color:var(--rose)}
 @media(max-width:600px){.topbar{padding:0 1rem}.logo{font-size:17px}.logo-sep,.logo-sub{display:none}}
-@media(max-width:600px){.hero{padding:2.5rem 1rem 2rem}.filter-shell{padding:1rem}.filter-dropdowns{gap:.35rem}.dd-btn{font-size:11.5px;padding:5px 10px}}
+@media(max-width:600px){
+  .hero{padding:2.5rem 1rem 2rem}
+  .filter-top{padding:.85rem 1rem .8rem}
+  .filter-dropdowns{padding:.7rem 1rem .75rem;gap:.3rem}
+  .filter-bottom{padding:.6rem 1rem}
+  .dd-btn{font-size:11px;padding:4px 9px}
+  .search-input{font-size:13px}
+}
 
 .hero{position:relative;z-index:1;padding:4rem 2rem 3rem;text-align:center;overflow:hidden}
 .hero::before{content:'TS';position:absolute;right:-.02em;top:50%;transform:translateY(-52%);font-family:var(--font-display);font-size:clamp(8rem,20vw,15rem);font-weight:800;font-style:italic;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(192,111,196,0.06);pointer-events:none;user-select:none}
@@ -57,55 +64,193 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 .main{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:2rem 1.5rem 5rem}
 
-/* FILTERS */
-.filter-shell{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1.2rem 1.5rem;margin-bottom:2rem;display:flex;flex-direction:column;gap:.85rem}
-.filter-top{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+/* ── FILTERS – Rediseño elegante ── */
+.filter-shell{
+  background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,0.95) 100%);
+  border:1px solid var(--border2);
+  border-radius:var(--radius-lg);
+  padding:0;
+  margin-bottom:2rem;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  box-shadow:0 8px 40px rgba(0,0,0,0.35);
+  position:relative;
+}
+.filter-shell::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--rose),var(--teal));
+  opacity:.7;
+}
+
+/* Fila búsqueda + sort */
+.filter-top{
+  display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;
+  padding:1.1rem 1.5rem 1rem;
+  border-bottom:1px solid var(--border);
+}
 .search-wrap{position:relative;flex:1;min-width:200px}
-.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;pointer-events:none}
-.search-input{width:100%;padding:9px 14px 9px 36px;border-radius:30px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:13.5px;font-family:var(--font-body);outline:none;transition:border-color .15s}
-.search-input:focus{border-color:var(--accent)}
-.search-input::placeholder{color:var(--muted)}
-.sort-select{padding:8px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12.5px;font-family:var(--font-body);cursor:pointer;outline:none}
+.search-icon{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:var(--muted);font-size:13px;pointer-events:none;opacity:.7;
+}
+.search-input{
+  width:100%;padding:9px 16px 9px 40px;
+  border-radius:10px;
+  border:1px solid var(--border2);
+  background:var(--surface2);
+  color:var(--text);font-size:13px;font-family:var(--font-body);
+  outline:none;transition:border-color .2s,box-shadow .2s;
+  letter-spacing:.01em;
+}
+.search-input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(192,111,196,0.1);
+}
+.search-input::placeholder{color:var(--muted);opacity:.7}
 
-.filter-dropdowns{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
-.filter-label-txt{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.sort-select{
+  padding:8px 32px 8px 14px;
+  border-radius:10px;
+  border:1px solid var(--border2);
+  background:var(--surface2);
+  color:var(--text);font-size:12.5px;font-family:var(--font-body);
+  cursor:pointer;outline:none;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a7898' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;background-size:10px;
+  transition:border-color .2s;
+}
+.sort-select:focus{border-color:var(--accent)}
 
-/* DROPDOWN */
+/* Área de dropdowns */
+.filter-dropdowns{
+  display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;
+  padding:.85rem 1.5rem .9rem;
+  border-bottom:1px solid var(--border);
+}
+.filter-label-txt{
+  font-size:9.5px;color:var(--muted);letter-spacing:.14em;
+  text-transform:uppercase;white-space:nowrap;font-weight:600;
+  margin-right:.2rem;opacity:.7;
+}
+
+/* ── DROPDOWN ── */
 .dd-wrap{position:relative;display:inline-block}
-.dd-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:30px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:12.5px;font-family:var(--font-body);cursor:pointer;transition:all .15s;white-space:nowrap;user-select:none}
-.dd-btn:hover{border-color:var(--accent);color:var(--accent2)}
-.dd-btn.has-sel{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
-.dd-btn svg{width:10px;height:10px;flex-shrink:0;transition:transform .2s}
+.dd-btn{
+  display:flex;align-items:center;gap:5px;
+  padding:5px 12px;
+  border-radius:8px;
+  border:1px solid transparent;
+  background:var(--surface2);
+  color:var(--muted);
+  font-size:12px;font-family:var(--font-body);
+  cursor:pointer;transition:all .18s;white-space:nowrap;user-select:none;
+  letter-spacing:.01em;
+}
+.dd-btn:hover{
+  border-color:rgba(192,111,196,0.35);
+  color:var(--text);
+  background:var(--surface3);
+}
+.dd-btn.has-sel{
+  background:var(--accent-soft);
+  border-color:rgba(192,111,196,0.4);
+  color:var(--accent2);
+}
+.dd-btn svg{width:9px;height:9px;flex-shrink:0;transition:transform .22s;opacity:.6}
 .dd-wrap.open .dd-btn svg{transform:rotate(180deg)}
-.dd-count{background:var(--accent);color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:1px 6px}
-.dd-panel{position:absolute;top:calc(100% + 6px);left:0;min-width:190px;max-width:280px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,0.5);z-index:200;display:none;max-height:320px;overflow-y:auto}
+.dd-wrap.open .dd-btn{border-color:rgba(192,111,196,0.4);color:var(--text);background:var(--surface3)}
+
+.dd-count{
+  background:var(--accent);color:#fff;border-radius:20px;
+  font-size:9px;font-weight:700;padding:1px 5px;letter-spacing:0;
+}
+.dd-panel{
+  position:absolute;top:calc(100% + 8px);left:0;
+  min-width:200px;max-width:290px;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  box-shadow:0 20px 60px rgba(0,0,0,0.55),0 4px 20px rgba(0,0,0,0.3);
+  z-index:200;display:none;
+  max-height:320px;overflow-y:auto;
+  animation:ddFadeIn .14s ease;
+}
+@keyframes ddFadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .dd-wrap.open .dd-panel{display:block}
-.dd-search{padding:.5rem .75rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface)}
-.dd-search input{width:100%;padding:5px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12.5px;font-family:var(--font-body);outline:none}
-.dd-search input::placeholder{color:var(--muted)}
+.dd-search{
+  padding:.55rem .85rem;
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;
+  background:var(--surface);
+  backdrop-filter:blur(8px);
+}
+.dd-search input{
+  width:100%;padding:6px 10px;border-radius:7px;
+  border:1px solid var(--border2);background:var(--surface2);
+  color:var(--text);font-size:12px;font-family:var(--font-body);outline:none;
+  transition:border-color .15s;
+}
+.dd-search input::placeholder{color:var(--muted);opacity:.6}
 .dd-search input:focus{border-color:var(--accent)}
-.dd-list{padding:.4rem 0}
-.dd-item{display:flex;align-items:center;gap:8px;padding:6px 14px;cursor:pointer;transition:background .12s;font-size:13px}
+.dd-list{padding:.35rem 0}
+.dd-item{
+  display:flex;align-items:center;gap:9px;
+  padding:7px 14px;cursor:pointer;transition:background .12s;font-size:12.5px;
+}
 .dd-item:hover{background:var(--surface2)}
-.dd-item input[type=checkbox]{accent-color:var(--accent);width:14px;height:14px;flex-shrink:0;cursor:pointer}
-.dd-item label{cursor:pointer;flex:1;color:var(--text)}
-.dd-empty{padding:10px 14px;font-size:12px;color:var(--muted);font-style:italic}
-.dd-clear{padding:6px 14px;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--rose);cursor:pointer;transition:background .12s}
+.dd-item input[type=checkbox]{
+  accent-color:var(--accent);width:14px;height:14px;flex-shrink:0;cursor:pointer;
+  border-radius:4px;
+}
+.dd-item label{cursor:pointer;flex:1;color:var(--text);line-height:1.4}
+.dd-empty{padding:12px 14px;font-size:12px;color:var(--muted);font-style:italic}
+.dd-clear{
+  padding:7px 14px;border-bottom:1px solid var(--border);
+  font-size:11px;color:var(--rose);cursor:pointer;transition:background .12s;
+  letter-spacing:.04em;font-weight:500;
+}
 .dd-clear:hover{background:var(--rose-soft)}
-.spicy-dd-item{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;transition:background .12s}
+.spicy-dd-item{display:flex;align-items:center;gap:9px;padding:8px 14px;cursor:pointer;transition:background .12s}
 .spicy-dd-item:hover{background:var(--surface2)}
 .spicy-dd-item input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0}
-.spicy-dd-item label{cursor:pointer;font-size:12.5px;color:var(--text);display:flex;flex-direction:column}
+.spicy-dd-item label{cursor:pointer;font-size:12.5px;color:var(--text);display:flex;flex-direction:column;gap:1px}
 .spicy-dd-item label small{font-size:10.5px;color:var(--muted)}
 
-.filter-bottom{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-.active-filters{display:flex;flex-wrap:wrap;gap:.35rem}
-.af-pill{display:flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;background:var(--accent-soft);border:1px solid rgba(192,111,196,0.25);font-size:11.5px;color:var(--accent2)}
-.af-pill button{background:transparent;border:none;color:var(--accent);cursor:pointer;font-size:13px;padding:0;line-height:1;opacity:.7}
+/* Fila inferior: pills activos + resultados */
+.filter-bottom{
+  display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+  padding:.7rem 1.5rem;
+  min-height:42px;
+}
+.active-filters{display:flex;flex-wrap:wrap;gap:.3rem}
+.af-pill{
+  display:flex;align-items:center;gap:5px;
+  padding:3px 10px 3px 11px;
+  border-radius:7px;
+  background:var(--accent-soft);
+  border:1px solid rgba(192,111,196,0.2);
+  font-size:11px;color:var(--accent2);
+  font-weight:500;letter-spacing:.01em;
+}
+.af-pill button{
+  background:transparent;border:none;color:var(--accent);
+  cursor:pointer;font-size:12px;padding:0;line-height:1;opacity:.6;
+  transition:opacity .15s;
+}
 .af-pill button:hover{opacity:1}
-.clear-all-btn{padding:5px 14px;border-radius:30px;border:1px solid rgba(212,96,122,0.3);background:transparent;color:var(--rose);font-size:12px;font-family:var(--font-body);cursor:pointer;transition:all .15s;margin-left:auto}
-.clear-all-btn:hover{background:var(--rose-soft)}
-.results-count{font-size:12px;color:var(--muted)}
+.clear-all-btn{
+  padding:4px 12px;border-radius:7px;
+  border:1px solid rgba(212,96,122,0.25);
+  background:transparent;color:var(--rose);
+  font-size:11px;font-family:var(--font-body);font-weight:500;
+  cursor:pointer;transition:all .15s;margin-left:auto;letter-spacing:.02em;
+}
+.clear-all-btn:hover{background:var(--rose-soft);border-color:rgba(212,96,122,0.5)}
+.results-count{
+  font-size:11px;color:var(--muted);letter-spacing:.03em;
+  font-variant-numeric:tabular-nums;
+}
 
 /* GRID */
 .books-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem}
@@ -797,7 +942,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('subgenres','listSubgenre',this.value)"></div><div class="dd-list" id="listSubgenre"></div></div>
       </div>
       <div class="dd-wrap" id="ddDinamica">
-        <button class="dd-btn" onclick="toggleDD('ddDinamica')">Dinámica 💞 <span class="dd-count" id="cntDinamica" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <button class="dd-btn" onclick="toggleDD('ddDinamica')">Dinámica <span class="dd-count" id="cntDinamica" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('dinamicas','listDinamica',this.value)"></div><div class="dd-list" id="listDinamica"></div></div>
       </div>
       <div class="dd-wrap" id="ddTrope">
@@ -817,26 +962,26 @@ body.home-active .hero,body.home-active .main{display:none!important}
         <div class="dd-panel"><div class="dd-list" id="listYear"></div></div>
       </div>
       <div class="dd-wrap" id="ddSpicy">
-        <button class="dd-btn" onclick="toggleDD('ddSpicy')">Spicy 🌶 <span class="dd-count" id="cntSpicy" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <button class="dd-btn" onclick="toggleDD('ddSpicy')">Spicy <span class="dd-count" id="cntSpicy" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel" id="listSpicy"></div>
       </div>
       <div class="dd-wrap" id="ddSaga">
-        <button class="dd-btn" onclick="toggleDD('ddSaga')">Saga 📚 <span class="dd-count" id="cntSaga" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <button class="dd-btn" onclick="toggleDD('ddSaga')">Saga <span class="dd-count" id="cntSaga" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('sagas','listSaga',this.value)"></div><div class="dd-list" id="listSaga"></div></div>
       </div>
       <div class="dd-wrap" id="ddEdad">
-        <button class="dd-btn" onclick="toggleDD('ddEdad')">Edad 🎂 <span class="dd-count" id="cntEdad" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <button class="dd-btn" onclick="toggleDD('ddEdad')">Edad <span class="dd-count" id="cntEdad" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-list" id="listEdad"></div></div>
       </div>
       <div class="dd-wrap" id="ddPais">
-        <button class="dd-btn" onclick="toggleDD('ddPais')">País 🌍 <span class="dd-count" id="cntPais" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <button class="dd-btn" onclick="toggleDD('ddPais')">País <span class="dd-count" id="cntPais" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('pais_cultura','listPais',this.value)"></div><div class="dd-list" id="listPais"></div></div>
       </div>
       <div id="valoracionFilter" style="display:none">
         <button class="dd-btn" id="btnValorado" onclick="toggleValoracion('valorado')" title="Mostrar solo libros que ya valoré">★ Valorados</button>
         <button class="dd-btn" id="btnNoValorado" onclick="toggleValoracion('no_valorado')" title="Mostrar libros que aún no he valorado">☆ Sin valorar</button>
       </div>
-      <button class="dd-btn" id="btnConSerie" onclick="toggleAdaptacion('serie')" title="Solo libros con serie de televisión">📺 Con serie</button>
+      <button class="dd-btn" id="btnConSerie" onclick="toggleAdaptacion('serie')" title="Solo libros con serie de televisión">Con serie</button>
     </div>
     <div class="filter-bottom">
       <div class="active-filters" id="activeFilters"></div>
