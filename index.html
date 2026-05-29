@@ -72,14 +72,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   padding:0;
   margin-bottom:2rem;
   display:flex;flex-direction:column;
-  overflow:hidden;
+  overflow:visible;
   box-shadow:0 8px 40px rgba(0,0,0,0.35);
   position:relative;
 }
 .filter-shell::before{
   content:'';position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,var(--accent),var(--rose),var(--teal));
-  opacity:.7;
+  opacity:.7;border-radius:var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 /* Fila búsqueda + sort */
@@ -87,6 +87,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;
   padding:1.1rem 1.5rem 1rem;
   border-bottom:1px solid var(--border);
+  border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+  background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,0.95) 100%);
 }
 .search-wrap{position:relative;flex:1;min-width:200px}
 .search-icon{
@@ -127,6 +129,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;
   padding:.85rem 1.5rem .9rem;
   border-bottom:1px solid var(--border);
+  background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,0.95) 100%);
 }
 .filter-label-txt{
   font-size:9.5px;color:var(--muted);letter-spacing:.14em;
@@ -222,6 +225,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
   padding:.7rem 1.5rem;
   min-height:42px;
+  border-radius:0 0 var(--radius-lg) var(--radius-lg);
+  background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,0.95) 100%);
 }
 .active-filters{display:flex;flex-wrap:wrap;gap:.3rem}
 .af-pill{
