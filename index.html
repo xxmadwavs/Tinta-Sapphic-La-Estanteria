@@ -156,6 +156,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);width:100%;max-width:560px;margin:auto;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.6);position:relative}
 .modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;background:rgba(14,11,16,0.75);border:1px solid var(--border2);color:var(--text);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:all .15s;line-height:1}
 .modal-close:hover{background:var(--rose);border-color:var(--rose);color:#fff}
+.modal-share-btn{position:absolute;top:14px;right:54px;width:32px;height:32px;border-radius:50%;background:rgba(14,11,16,0.75);border:1px solid var(--border2);color:var(--text);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:all .15s;line-height:1}
+.modal-share-btn:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
 .modal-cover-strip{aspect-ratio:16/7;overflow:hidden;position:relative}
 .modal-cover-strip img{width:100%;height:100%;object-fit:cover;filter:brightness(.55)}
 .modal-cover-strip::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--surface) 0%,transparent 60%)}
@@ -967,6 +969,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
 <div class="modal-bg" id="bookModal">
   <div class="modal">
     <button class="modal-close" onclick="closeBookModal()">✕</button>
+    <button class="modal-share-btn" id="modalShareBtn" onclick="shareBook()" title="Copiar enlace a esta ficha">🔗</button>
     <div id="bookModalContent"></div>
   </div>
 </div>
@@ -1498,7 +1501,7 @@ function goToPage(n){
 }
 
 /* ── BOOK MODAL ── */
-function openBook(id){
+function openBook(id, pushState=true){
   activeBook=allBooks.find(b=>b.id===id);
   if(!activeBook) return;
   pendingStar=myRatings[id]||0;
@@ -1508,8 +1511,13 @@ function openBook(id){
   _attachSpicyEvents();
   document.getElementById('bookModal').classList.add('open');
   document.body.style.overflow='hidden';
+  if(pushState) history.pushState({bookId:id},'',`#libro/${id}`);
 }
-function closeBookModal(){document.getElementById('bookModal').classList.remove('open');document.body.style.overflow='';}
+function closeBookModal(){
+  document.getElementById('bookModal').classList.remove('open');
+  document.body.style.overflow='';
+  if(location.hash.startsWith('#libro/')) history.pushState({},'',location.pathname+location.search);
+}
 
 function renderBookModal(){
   const b=activeBook;
@@ -2521,6 +2529,49 @@ function renderMisSolicitudes(lista, userId){
 }
 
 document.getElementById('bookModal').addEventListener('click',e=>{if(e.target.id==='bookModal')closeBookModal();});
+
+/* ── URL HASH ROUTING per libro ── */
+function shareBook(){
+  if(!activeBook) return;
+  const url = location.origin + location.pathname + '#libro/' + activeBook.id;
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(()=>showToast('Enlace copiado 🔗','success')).catch(()=>{prompt('Copia este enlace:',url);});
+  } else {
+    prompt('Copia este enlace:',url);
+  }
+}
+
+function tryOpenFromHash(){
+  const hash = location.hash;
+  if(!hash.startsWith('#libro/')) return;
+  const id = hash.slice(7);
+  if(!id) return;
+  if(allBooks.length){
+    openBook(id, false);
+  } else {
+    // Esperar a que los libros carguen
+    const waitFor = setInterval(()=>{
+      if(allBooks.length){
+        clearInterval(waitFor);
+        openBook(id, false);
+      }
+    },100);
+    setTimeout(()=>clearInterval(waitFor),8000);
+  }
+}
+
+window.addEventListener('popstate', ()=>{
+  if(location.hash.startsWith('#libro/')){
+    const id = location.hash.slice(7);
+    openBook(id, false);
+  } else {
+    document.getElementById('bookModal').classList.remove('open');
+    document.body.style.overflow='';
+  }
+});
+
+// Intentar al cargar la página
+tryOpenFromHash();
 document.getElementById('authModal').addEventListener('click',e=>{if(e.target.id==='authModal')closeAuthModal();});
 
 async function checkSolicitudesNotif(){
