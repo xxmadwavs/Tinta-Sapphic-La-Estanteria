@@ -32444,5 +32444,95 @@
     "canal_month": null,
     "my_rec": false,
     "my_rec_categories": []
-  }
+  },
+  {
+  "id": "b_nuevo_askingkate",
+  "title": "Asking Kate",
+  "authors": ["Clare Ashton"],
+  "year": 2025,
+  "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1765557172i/245138440.jpg",
+  "synopsis": "Olivia Sachdeva está enamorada. ¿Quién hubiera imaginado que la mujer perfecta para la fría abogada sería la cercana y carismática Kate Laurence, su ídolo de la pantalla?\n\nOlivia vive con la mujer de sus sueños en su hermosa casa en Park Town, Oxford. Pero el matrimonio es lo último que Olivia se plantearía proponer a Kate. Después de conocerse como abogada y clienta en un tenso caso de divorcio, es un milagro que estén juntas, y las bodas son un tema completamente descartado.\n\nLa íntegra Olivia lo sabe muy bien. Su integridad profesional le exige ese tipo de disciplina. El problema es que, en el fondo, Olivia es humana, y su corazón enamorado desearía con todas sus fuerzas casarse con Kate.\n\nEntonces... ¿y si aprovechara la Navidad para pedírselo?",
+  "pages": 81,
+  "isbn": null,
+  "genres": ["Romance"],
+  "subgenres": ["Navidad"],
+  "identidades": [],
+  "characters": ["Abogada", "Actriz", "Femme"],
+  "dinamicas": ["Femme × Femme", "Grumpy × Sunshine"],
+  "tropes": ["Proposal", "Established Couple"],
+  "ambientacion": ["Reino Unido"],
+  "spicy": 2,
+  "formato": "Único",
+  "adaptacion": null,
+  "sagaName": "Oxford Romance",
+  "sagaNum": 3.5,
+  "editions": [
+    {
+      "lang": "EN",
+      "store": "Amazon",
+      "url": "https://www.amazon.com/Asking-Kate-Novella-Oxford-Romance-ebook/dp/B0G6M8MCK5"
+    }
+  ],
+  "source": "occidental"
+},
+{
+  "id": "b_nuevo_piningparadox",
+  "title": "The Pining Paradox",
+  "authors": ["Monica McCallan"],
+  "year": 2025,
+  "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1765229196i/244956049.jpg",
+  "synopsis": "Hace seis meses, los padres de Hallie Thatcher vendieron el posada The Stone's Throw Inn, donde ella ha vivido y trabajado toda su vida. Todo está cambiando a su alrededor, y lleva tiempo intentando adaptarse. De verdad. Incluso cuando eso significa gestionar su nuevo ascenso en la posada, ayudar a planear la boda de su mejor amiga con su nueva jefa, y ahora recibir a una gerente interina que cubra su puesto mientras visita a su familia en las fiestas.\n\nLo que no espera es llegar a apreciar tanto a la nueva gerente, Brynn Fitzpatrick. No debería encajar con ella, y sin embargo encaja. Y aunque la estancia de Brynn en Stoneport es temporal, Hallie no puede evitar dejarse llevar por su encanto tranquilo... incluso cuando eso significa verse arrastrada al ridículo plan de Brynn de empezar a usar apps de citas. O, más peligrosamente, cuando empieza a preguntarse por qué nadie de esas citas se compara con Brynn.\n\nBrynn Fitzpatrick cree que ayudar en la posada es el siguiente paso lógico después de un compromiso muy público que no llegó a nada. Es un favor perfecto para la hermana de su ex prometido, a quien ha llegado a considerar una amiga. Y los amigos siempre han escaseado en la vida de Brynn. Además, no está lista para volver a Boston y enfrentarse al escrutinio del bien intencionado pero asfixiante apoyo de sus padres, en una ciudad que nunca ha sentido del todo como su hogar.\n\nPara alguien que se suponía iba a casarse hace unos meses, Brynn nunca ha pensado demasiado en el amor. Pero pasar tanto tiempo con Hallie la está haciendo pensar en muchas cosas por primera vez... y desear cosas que jamás esperó anhelar.",
+  "pages": 433,
+  "isbn": null,
+  "genres": ["Romance", "Contemporáneo"],
+  "subgenres": ["Navidad"],
+  "identidades": [],
+  "characters": ["Femme"],
+  "dinamicas": ["Femme × Femme", "Roommates"],
+  "tropes": ["Friends to Lovers", "Slow Burn", "Pining", "Lesbian Awakening"],
+  "ambientacion": ["Estados Unidos"],
+  "spicy": 4,
+  "formato": "Único",
+  "adaptacion": null,
+  "sagaName": "The Love Lie",
+  "sagaNum": 2,
+  "editions": [
+    {
+      "lang": "EN",
+      "store": "Amazon",
+      "url": "https://www.amazon.com/Pining-Paradox-Monica-McCallan-ebook/dp/B0G5SV1TVB"
+    }
+  ],
+  "source": "occidental"
+},
+{
+  "id": "b_nuevo_rightthereallallong",
+  "title": "Right There All Along",
+  "authors": ["Elee Rose"],
+  "year": 2025,
+  "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1754007194i/239563789.jpg",
+  "synopsis": "Drea Voss solo ama unas pocas cosas en este mundo: sus amigos, su familia, su librería y el sexo. El sexo es un segundo muy cercano.\n\nLo que no ama es que algo irrumpa en su vida, cause problemas y le complique el trabajo. Y solo hay una persona que parece conseguir exactamente eso.\n\nBlair Sterling ama su trabajo. Le pagan por escribir novelas de romance ambientadas en mundos de fantasía. Pero toda rosa tiene sus espinas, y Drea Voss es la mayor espina de Blair. Es insufrible, incompetente, poco profesional y enseña demasiada piel.\n\nLas cosas no empiezan bien cuando las dos se ven obligadas a trabajar juntas, y la tensión va en aumento hasta que alguien cede. ¿Qué pasa cuando dos mujeres que no se soportan tienen que trabajar codo con codo? ¿Podrán capear el temporal, o acabará destruyendo los cimientos?",
+  "pages": 314,
+  "isbn": null,
+  "genres": ["Romance", "Contemporáneo"],
+  "subgenres": [],
+  "identidades": [],
+  "characters": ["Escritora", "Femme"],
+  "dinamicas": ["Femme × Femme"],
+  "tropes": ["Enemies to Lovers", "Forced Proximity", "Pining"],
+  "ambientacion": ["Estados Unidos"],
+  "spicy": 4,
+  "formato": "Único",
+  "adaptacion": null,
+  "sagaName": "Sapphic in Seattle",
+  "sagaNum": 2,
+  "editions": [
+    {
+      "lang": "EN",
+      "store": "Amazon",
+      "url": "https://www.goodreads.com/book/show/239563789-right-there-all-along"
+    }
+  ],
+  "source": "occidental"
+}
 ]
