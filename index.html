@@ -738,6 +738,19 @@ body.home-active .hero,body.home-active .main{display:none!important}
 @media(max-width:600px){.section-tabs{gap:.35rem;flex-wrap:wrap}.section-tab{padding:6px 12px;font-size:11.5px;flex:1 1 calc(50% - .35rem);justify-content:center}}
 
 /* FOOTER */
+.tab-share-btn{
+  margin-left:auto;
+  display:flex;align-items:center;gap:5px;
+  padding:7px 14px;border-radius:30px;
+  border:1px solid var(--border2);
+  background:transparent;
+  color:var(--muted);font-size:12px;font-family:var(--font-body);
+  cursor:pointer;transition:all .18s;white-space:nowrap;flex-shrink:0;
+}
+.tab-share-btn:hover{border-color:var(--accent);color:var(--accent2);background:var(--accent-soft)}
+.tab-share-btn.copied{border-color:var(--teal);color:var(--teal);background:rgba(91,188,176,0.1)}
+@media(max-width:600px){.tab-share-btn{margin-left:0;flex:1 1 calc(50% - .35rem);justify-content:center}}
+/* FOOTER */
 .site-footer{position:relative;z-index:1;border-top:1px solid var(--border2);background:var(--surface);padding:2.5rem 2rem 1.8rem;margin-top:3rem}
 .footer-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:1.4rem}
 .footer-logo{font-family:var(--font-display);font-size:1.3rem;font-weight:300;color:var(--muted);letter-spacing:.04em;text-align:center}
@@ -911,6 +924,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
     <button class="tab-btn" id="tabCanal" onclick="switchTab('canal')">📻 Recomendaciones del Canal</button>
     <button class="tab-btn" id="tabMyrec" onclick="switchTab('myrec')">💌 Mis Recomendaciones</button>
     <button class="tab-btn" id="tabSolicitudes" onclick="switchTab('solicitudes')">📬 Solicitudes</button>
+    <button class="tab-share-btn" id="tabShareBtn" onclick="copyTabLink()" title="Copiar enlace a esta sección">🔗 Copiar enlace</button>
   </div>
 
   <!-- PANEL ESTANTERÍA -->
@@ -1224,6 +1238,8 @@ function debounce(fn,ms){let t;return(...args)=>{clearTimeout(t);t=setTimeout(()
 function pushState(){
   try{
     const params=new URLSearchParams();
+    // Include active tab so the URL is shareable per section
+    if(activeTab&&activeTab!=='estanteria') params.set('tab',activeTab);
     if(activeSection&&activeSection!=='thais') params.set('section',activeSection);
     if(currentPage>1) params.set('page',currentPage);
     if(filters.q) params.set('q',filters.q);
@@ -1240,6 +1256,7 @@ function pushState(){
 }
 function loadState(){
   const params=new URLSearchParams(location.search);
+  if(params.get('tab')) activeTab=params.get('tab');
   if(params.get('section')) activeSection=params.get('section');
   if(params.get('page')) currentPage=parseInt(params.get('page'))||1;
   if(params.get('q')){filters.q=params.get('q');document.getElementById('searchInput').value=filters.q;}
@@ -1273,7 +1290,10 @@ async function init(){
   Object.entries(_secTabs).forEach(([key,id])=>{const el=document.getElementById(id);if(el)el.className='section-tab'+(key===activeSection?' '+_secCls[key]:'');});
   applyFilters(false);
   updateDDCounts();renderActivePills();
-  const savedTab = sessionStorage.getItem('ts_active_tab');
+  // Restore active tab from URL if present, otherwise use sessionStorage or home
+  const urlParams=new URLSearchParams(location.search);
+  const urlTab=urlParams.get('tab');
+  const savedTab = urlTab || sessionStorage.getItem('ts_active_tab');
   if(savedTab && savedTab !== 'home') {
     // estaba en el catálogo — restaurar sin ir al home
     document.getElementById('homeView').classList.remove('active');
@@ -2238,6 +2258,23 @@ document.getElementById('resetModal').addEventListener('click',e=>{if(e.target.i
 
 function showToast(msg,type='success'){const t=document.getElementById('toast');t.textContent=msg;t.className=`toast ${type}`;setTimeout(()=>t.classList.add('show'),10);setTimeout(()=>t.classList.remove('show'),3200);}
 
+function copyTabLink(){
+  try{
+    navigator.clipboard.writeText(location.href).then(()=>{
+      showToast('¡Enlace copiado! 🔗','success');
+      const btn=document.getElementById('tabShareBtn');
+      if(btn){btn.classList.add('copied');btn.textContent='✓ Enlace copiado';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='🔗 Copiar enlace';},2200);}
+    });
+  }catch(e){
+    // fallback
+    const ta=document.createElement('textarea');
+    ta.value=location.href;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('¡Enlace copiado! 🔗','success');
+  }
+}
+
 /* ── TABS ── */
 let activeTab='estanteria';
 function switchTab(tab){
@@ -2260,6 +2297,13 @@ function switchTab(tab){
   if(tab==='canal') renderCanal();
   if(tab==='myrec') renderMyrec();
   if(tab==='solicitudes') renderSolicitudes();
+  // Update URL so the tab is shareable
+  try{
+    const params=new URLSearchParams(location.search);
+    if(tab==='estanteria') params.delete('tab'); else params.set('tab',tab);
+    const url=params.toString()?'?'+params.toString():location.pathname;
+    history.replaceState(null,'',url);
+  }catch(e){}
 }
 
 /* ── HOME VIEW ── */
