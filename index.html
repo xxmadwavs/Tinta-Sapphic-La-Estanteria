@@ -72,14 +72,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   padding:0;
   margin-bottom:2rem;
   display:flex;flex-direction:column;
-  overflow:visible;
+  overflow:hidden;
   box-shadow:0 8px 40px rgba(0,0,0,0.35);
   position:relative;
 }
 .filter-shell::before{
   content:'';position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,var(--accent),var(--rose),var(--teal));
-  opacity:.7;border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+  opacity:.7;
 }
 
 /* Fila búsqueda + sort */
@@ -87,8 +87,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;
   padding:1.1rem 1.5rem 1rem;
   border-bottom:1px solid var(--border);
-  border-radius:var(--radius-lg) var(--radius-lg) 0 0;
-  background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,0.95) 100%);
 }
 .search-wrap{position:relative;flex:1;min-width:200px}
 .search-icon{
@@ -129,7 +127,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;
   padding:.85rem 1.5rem .9rem;
   border-bottom:1px solid var(--border);
-  background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,0.95) 100%);
 }
 .filter-label-txt{
   font-size:9.5px;color:var(--muted);letter-spacing:.14em;
@@ -225,8 +222,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
   padding:.7rem 1.5rem;
   min-height:42px;
-  border-radius:0 0 var(--radius-lg) var(--radius-lg);
-  background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,0.95) 100%);
 }
 .active-filters{display:flex;flex-wrap:wrap;gap:.3rem}
 .af-pill{
@@ -751,6 +746,17 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .footer-link{padding:6px 16px;border-radius:30px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:12px;font-family:var(--font-body);cursor:pointer;text-decoration:none;transition:all .18s;letter-spacing:.02em}
 .footer-link:hover{border-color:var(--accent);color:var(--accent2);background:var(--accent-soft)}
 .footer-copy{font-size:11px;color:var(--muted);opacity:.5;letter-spacing:.05em;text-align:center}
+/* ── COMMUNITY TAGS ── */
+.community-tags-block{margin-top:1rem}
+.ctags-section{margin-bottom:.75rem}
+.ctags-section-header{font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;display:flex;align-items:center;gap:.35rem}
+.ctags-tag-row{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.tag-comm-added{opacity:.85;border-style:dashed!important}
+.tag-comm-dot{font-size:9px;opacity:.65;font-style:italic;font-weight:400}
+.tag-adder-wrap{display:inline-flex}
+.tag-adder-select{background:var(--surface2);border:1px dashed var(--border2);border-radius:20px;color:var(--muted);font-size:11px;padding:3px 9px;cursor:pointer;outline:none;transition:border-color .15s,color .15s;font-family:var(--font-body);max-width:130px}
+.tag-adder-select:hover{border-color:var(--accent);color:var(--accent2)}
+
 /* INFO MODAL */
 .info-modal-bg{position:fixed;inset:0;background:rgba(8,5,10,0.82);backdrop-filter:blur(8px);display:none;align-items:flex-start;justify-content:center;z-index:400;padding:2rem 1rem;overflow-y:auto}
 .info-modal-bg.open{display:flex}
@@ -1199,6 +1205,13 @@ let allBooks=[], ratingsMap={}, myRatings={}, currentUser=null, activeBook=null;
 let activeSection='thais';
 let authMode='login', pendingStar=0;
 let spicyMap={}, mySpicy={}, pendingSpicy=0;
+let communityTagsMap={}, myTags={};
+const VALID_TAGS={
+  trope:['Age Gap','Alpha/Beta/Omega','Arranged Marriage','Childhood Friends','Coming Out tardío','Destined Lovers','Enemies to Lovers','Fake Relationship','Forbidden Love','Forced Proximity','Found Family','Friends to Lovers','Friends with Benefits','Hurt/Comfort','Jealousy Trope','Lesbian Awakening','Love Triangle','Marriage of Convenience','Opposites Attract','Revenge Romance','Rich/Poor Romance','Rivals to Lovers','Road Trip','Second Chance Romance','Secret Relationship','Slow Burn','Strangers to Lovers','Student × Teacher','Toaster Oven','Unrequited Love','Vacation Romance','Workplace Romance'],
+  dinamica:['Bodyguard × VIP','Boss × Employee','Butch × Femme','Dominante × Sumisa','Femme × Femme','Fría × Cálida','Grumpy × Sunshine','Ice Queen × Softie','Ice Queen × Sunshine','Jefa × Subordinada','Masc × Femme','Mentora × Aprendiz','Nerd × Popular','Protectora × Delicada','Realeza × Plebeya','Rich × Poor','Soft Butch × Femme','Switch × Switch','Top × Bottom','Vampira × Humana'],
+  character:['Abogada','Actriz','Arqueóloga','Artista','Azafata','Bailarina','Bruja','CEO','Camarera','Cantante','Chef','Científica','Demonio','Deportista','Doctora / Médica','Empresaria','Escritora','Estudiante','Famosa','Femme','Florista','Futbolista','Granjera','Guardaespaldas','Ice Queen','Investigadora','Madre Soltera','Millonaria / Billonaria','Modelo','Mujer Lobo','Música','Piloto','Pirata','Policía','Política','Profesora','Psicóloga','Realeza','Reportera / Periodista','Sirena','Vampira','Veterinaria','Zombie','Ángel'],
+  identidad:['Asexual','Bisexual','Butch','Femme','Grumpy','Ice Queen','Introvertida','Lesbiana','Masc','Nerd','Queer','Soft Butch','Sunshine']
+};
 const SPICY_MIN_VOTES=2;
 let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null};
 let currentPage=1;
@@ -1321,6 +1334,16 @@ async function loadBooks(){
       spicyMap[id]={avg:Math.round(levels.reduce((a,b)=>a+b,0)/levels.length*10)/10,count:levels.length};
     });
   }
+  const {data:ctData}=await sb.from('community_tags').select('book_id,tag_type,tag_value');
+  communityTagsMap={};
+  if(ctData){
+    ctData.forEach(r=>{
+      if(!communityTagsMap[r.book_id]) communityTagsMap[r.book_id]={};
+      if(!communityTagsMap[r.book_id][r.tag_type]) communityTagsMap[r.book_id][r.tag_type]=[];
+      if(!communityTagsMap[r.book_id][r.tag_type].includes(r.tag_value))
+        communityTagsMap[r.book_id][r.tag_type].push(r.tag_value);
+    });
+  }
   updateStats();
 }
 
@@ -1332,6 +1355,15 @@ async function loadMyRatings(){
   const {data:sv}=await sb.from('spicy_votes').select('book_id,level').eq('user_id',currentUser.id);
   mySpicy={};
   if(sv) sv.forEach(r=>mySpicy[r.book_id]=r.level);
+  const {data:myCtData}=await sb.from('community_tags').select('book_id,tag_type,tag_value').eq('user_id',currentUser.id);
+  myTags={};
+  if(myCtData){
+    myCtData.forEach(r=>{
+      if(!myTags[r.book_id]) myTags[r.book_id]={};
+      if(!myTags[r.book_id][r.tag_type]) myTags[r.book_id][r.tag_type]=[];
+      myTags[r.book_id][r.tag_type].push(r.tag_value);
+    });
+  }
 }
 
 function updateStats(){
@@ -1735,6 +1767,7 @@ function renderBookModal(){
       </div>`:''}
       <div class="rating-section" id="modalRatingSection"><div class="rating-title">Valoración de la comunidad</div>${communityRating}${voteArea}</div>
       <div id="modalSpicySection">${buildSpicySectionHTML()}</div>
+      <div id="modalCommunityTagsSection">${buildCommunityTagsHTML()}</div>
     </div>`;
 }
 
@@ -1964,6 +1997,93 @@ async function deleteSpicyVote(){
   pendingSpicy=0;
   showToast('Voto spicy eliminado','success');
   applyFilters(false);renderSpicySection();
+}
+
+/* ── COMMUNITY TAGS ── */
+function getEffectiveTags(book, tagType){
+  const jsonKey={trope:'tropes',dinamica:'dinamicas',character:'characters',identidad:'identidades'}[tagType];
+  const official=book[jsonKey]||[];
+  const community=(communityTagsMap[book.id]||{})[tagType]||[];
+  const merged=[...new Set([...official,...community])];
+  return {official,community,merged};
+}
+
+function buildCommunityTagsHTML(){
+  const b=activeBook;
+  if(!b) return '';
+  const sections=[
+    {type:'trope',    label:'Tropos',      emoji:'🎭', filterKey:'tropes'},
+    {type:'dinamica', label:'Dinámicas',   emoji:'💫', filterKey:'dinamicas'},
+    {type:'character',label:'Personajes',  emoji:'👤', filterKey:'characters'},
+    {type:'identidad',label:'Identidades', emoji:'🏳️‍🌈', filterKey:'identidades'}
+  ];
+  const sectionHTMLs=sections.map(({type,label,emoji,filterKey})=>{
+    const {official,community,merged}=getEffectiveTags(b,type);
+    const myVotedHere=(myTags[b.id]||{})[type]||[];
+    if(!currentUser&&merged.length===0) return '';
+    const tagList=merged.map(tag=>{
+      const isOfficial=official.includes(tag);
+      const isCommunity=!isOfficial&&community.includes(tag);
+      const isMyVote=myVotedHere.includes(tag);
+      const baseClass=isOfficial?'tag-'+type.replace('dinamica','dinamica').replace('character','character').replace('identidad','identidad'):''
+      const extraStyle=isCommunity?';border-style:dashed':'';
+      const tagClass=type==='trope'?'tag-trope':type==='dinamica'?'tag-dinamica':type==='character'?'tag-character':'tag-identidad';
+      const removeBtn=isMyVote?`<button onclick="removeMyTag('${type}','${tag.replace(/'/g,"\\'")}',event)" style="background:transparent;border:none;color:inherit;cursor:pointer;font-size:10px;padding:0 0 0 3px;opacity:.6;line-height:1" title="Quitar mi voto">×</button>`:'';
+      return `<span class="tag ${tagClass}${isCommunity?' tag-comm-added':''}" style="cursor:pointer${extraStyle}" onclick="filterByTagFromModal('${filterKey}',decodeURIComponent('${encodeURIComponent(tag)}'))">${tag}${isCommunity?`<span class="tag-comm-dot"> ·com</span>`:''}${removeBtn}</span>`;
+    }).join('');
+    const addSection=currentUser?buildTagAdderHTML(b.id,type,merged):'';
+    return `<div class="ctags-section">
+      <div class="ctags-section-header">${emoji} ${label}</div>
+      <div class="ctags-tag-row">${tagList||`<span style="color:var(--muted);font-size:11.5px;font-style:italic">Sin datos aún</span>`}${addSection}</div>
+    </div>`;
+  }).filter(Boolean).join('');
+  if(!sectionHTMLs) return '';
+  return `<div class="community-tags-block" style="margin-top:1rem">
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem">
+      <div class="rating-title">Tags de la comunidad</div>
+      ${sectionHTMLs}
+      ${!currentUser?`<p style="font-size:11.5px;color:var(--muted);margin-top:.5rem;font-style:italic"><a onclick="closeBookModal();openAuthModal()" style="cursor:pointer;color:var(--accent2)">Inicia sesión</a> para añadir tags.</p>`:''}
+    </div>
+  </div>`;
+}
+
+function buildTagAdderHTML(bookId, tagType, alreadyPresent){
+  const available=VALID_TAGS[tagType].filter(t=>!alreadyPresent.includes(t));
+  if(!available.length) return '';
+  const opts=available.map(t=>`<option value="${t.replace(/"/g,'&quot;')}">${t}</option>`).join('');
+  return `<span class="tag-adder-wrap"><select class="tag-adder-select" onchange="handleTagAdderChange('${tagType}',this)"><option value="">+ Añadir</option>${opts}</select></span>`;
+}
+
+async function handleTagAdderChange(tagType, selectEl){
+  const value=selectEl.value;
+  if(!value||!currentUser||!activeBook) return;
+  selectEl.value='';
+  const bookId=activeBook.id;
+  const myVotedHere=(myTags[bookId]||{})[tagType]||[];
+  if(myVotedHere.includes(value)) return;
+  const {error}=await sb.from('community_tags').insert({user_id:currentUser.id,book_id:bookId,tag_type:tagType,tag_value:value});
+  if(error){showToast('Error al añadir tag','error');return;}
+  if(!myTags[bookId]) myTags[bookId]={};
+  if(!myTags[bookId][tagType]) myTags[bookId][tagType]=[];
+  myTags[bookId][tagType].push(value);
+  if(!communityTagsMap[bookId]) communityTagsMap[bookId]={};
+  if(!communityTagsMap[bookId][tagType]) communityTagsMap[bookId][tagType]=[];
+  if(!communityTagsMap[bookId][tagType].includes(value)) communityTagsMap[bookId][tagType].push(value);
+  document.getElementById('modalCommunityTagsSection').innerHTML=buildCommunityTagsHTML();
+  showToast('Tag añadido ✓','success');
+}
+
+async function removeMyTag(tagType, value, event){
+  event.stopPropagation();
+  if(!currentUser||!activeBook) return;
+  const bookId=activeBook.id;
+  const {error}=await sb.from('community_tags').delete()
+    .eq('user_id',currentUser.id).eq('book_id',bookId).eq('tag_type',tagType).eq('tag_value',value);
+  if(error){showToast('Error al eliminar tag','error');return;}
+  if(myTags[bookId]?.[tagType]) myTags[bookId][tagType]=myTags[bookId][tagType].filter(t=>t!==value);
+  if(communityTagsMap[bookId]?.[tagType]) communityTagsMap[bookId][tagType]=communityTagsMap[bookId][tagType].filter(t=>t!==value);
+  document.getElementById('modalCommunityTagsSection').innerHTML=buildCommunityTagsHTML();
+  showToast('Tag eliminado','success');
 }
 
 /* ── AUTH ── */

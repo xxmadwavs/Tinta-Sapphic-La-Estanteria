@@ -2461,12 +2461,17 @@
     "tropes": [
       "Slow Burn"
     ],
+    "edad": [
+      "New Adult (18–24)"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 3,
     "formato": "Único",
     "adaptacion": "Tiene serie",
     "sagaName": null,
     "sagaNum": null,
+    "source": "thais",
     "editions": [
       {
         "lang": "EN",
@@ -2474,7 +2479,12 @@
         "url": "https://en.mebmarket.com/?action=book_details&book_id=372308"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777277540743_us7lw",
@@ -2503,6 +2513,10 @@
       "Enemies to Lovers",
       "Workplace Romance"
     ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 3,
     "formato": "Único",
@@ -2714,12 +2728,17 @@
       "Secret Relationship",
       "Opposites Attract"
     ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 4,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
     "sagaName": "ROLLER COASTER",
     "sagaNum": 1,
+    "source": "thais",
     "editions": [
       {
         "lang": "ES",
@@ -2732,7 +2751,12 @@
         "url": "https://en.mebmarket.com/?action=book_details&book_id=375861"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777279275019_mmpb1",
@@ -2859,18 +2883,24 @@
       "Actriz"
     ],
     "dinamicas": [
-      "Grumpy × Sunshine"
+      "Grumpy × Sunshine",
+      "Rich × Poor"
     ],
     "tropes": [
       "Age Gap",
       "Forced Proximity"
     ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 4,
     "formato": "Único",
     "adaptacion": "Tiene serie",
     "sagaName": null,
     "sagaNum": null,
+    "source": "thais",
     "editions": [
       {
         "lang": "ES",
@@ -2883,11 +2913,16 @@
         "url": "https://en.mebmarket.com/?action=book_details&book_id=363951"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777280191522_cngu3",
-    "title": "LIKE A PALETTE (LIKE A 1)",
+    "title": "LIKE A PALETTE",
     "authors": [
       "Zezeho"
     ],
@@ -2911,12 +2946,17 @@
       "Nerd × Popular"
     ],
     "tropes": [],
+    "edad": [
+      "New Adult (18–24)"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
     "sagaName": "LIKE A",
     "sagaNum": 1,
+    "source": "thais",
     "editions": [
       {
         "lang": "EN",
@@ -2924,7 +2964,12 @@
         "url": "https://en.mebmarket.com/?action=book_details&book_id=377598"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777280365665_055np",
@@ -3481,7 +3526,9 @@
     "subgenres": [
       "GL Thai 🇹🇭"
     ],
-    "identidades": [],
+    "identidades": [
+      "Femme"
+    ],
     "characters": [
       "CEO",
       "Estudiante"
@@ -3498,12 +3545,19 @@
     "tropes": [
       "Rich / Poor Romance"
     ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Tailandia"
+    ],
     "ambientacion": [],
     "spicy": 4,
     "formato": "Dúo",
     "adaptacion": "Tiene serie",
     "sagaName": "Dangerous Queen",
     "sagaNum": 1.5,
+    "source": "thais",
     "editions": [
       {
         "lang": "EN",
@@ -3511,7 +3565,12 @@
         "url": "https://en.mebmarket.com/?action=book_details&book_id=410976"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777287384010_39x75",
@@ -3567,13 +3626,18 @@
       "Actriz"
     ],
     "dinamicas": [],
-    "tropes": [],
+    "tropes": [
+      "Enemies to Lovers"
+    ],
+    "edad": [],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 4,
     "formato": "Único",
     "adaptacion": "Sin adaptación",
     "sagaName": null,
     "sagaNum": null,
+    "source": "thais",
     "editions": [
       {
         "lang": "TH",
@@ -3581,7 +3645,12 @@
         "url": "https://www.mebmarket.com/ebook-318307-MY-Pink-Love-%E0%B8%A1%E0%B8%B2%E0%B8%A2%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%AA%E0%B8%B5%E0%B8%8A%E0%B8%A1%E0%B8%9E%E0%B8%B9-English-version"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777287504864_ar3ed",
@@ -4114,16 +4183,24 @@
     "subgenres": [
       "Mafia"
     ],
-    "identidades": [],
+    "identidades": [
+      "Femme",
+      "Masc"
+    ],
     "characters": [],
-    "dinamicas": [],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
     "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 2,
     "formato": "Trilogía",
     "adaptacion": "Tiene serie",
     "sagaName": "THE DRAGON, THE TIGER & THE SWAN",
     "sagaNum": 1,
+    "source": "thais",
     "editions": [
       {
         "lang": "ES",
@@ -4146,7 +4223,12 @@
         "url": "https://www.mebmarket.com/ebook-348644-THE-DRAGON-Indonesian-Version"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777361238169_onpvc",
@@ -4258,21 +4340,31 @@
     "subgenres": [
       "GL Thai 🇹🇭"
     ],
-    "identidades": [],
+    "identidades": [
+      "Femme",
+      "Masc"
+    ],
     "characters": [
       "Policía"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
     "tropes": [
       "Forced Proximity",
       "Rich / Poor Romance"
     ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 2,
     "formato": null,
     "adaptacion": "Tiene serie",
     "sagaName": null,
     "sagaNum": null,
+    "source": "thais",
     "editions": [
       {
         "lang": "TH",
@@ -4280,7 +4372,12 @@
         "url": "https://www.mebmarket.com/ebook-367648-I-SEE-YOU-%E0%B8%88%E0%B8%B2%E0%B8%81%E0%B8%AB%E0%B8%99%E0%B8%B6%E0%B9%88%E0%B8%87%E0%B8%96%E0%B8%B6%E0%B8%87%E0%B9%80%E0%B8%98%E0%B8%AD"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777361559253_ud4hj",
@@ -4733,13 +4830,18 @@
     "identidades": [],
     "characters": [],
     "dinamicas": [],
-    "tropes": [],
+    "tropes": [
+      "Destined Lovers"
+    ],
+    "edad": [],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 1,
     "formato": "Trilogía",
     "adaptacion": "Sin adaptación",
     "sagaName": "Trilogía Christmas",
     "sagaNum": 1,
+    "source": "thais",
     "editions": [
       {
         "lang": "TH",
@@ -4747,7 +4849,12 @@
         "url": "https://www.mebmarket.com/ebook-339823-Last-Christmas-%E0%B8%A3%E0%B8%B0%E0%B8%A2%E0%B8%B0%E0%B8%A5%E0%B8%AD%E0%B8%87%E0%B8%A3%E0%B8%B1%E0%B8%81"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777383563978_zp112",
@@ -4875,18 +4982,30 @@
     "subgenres": [
       "GL Thai 🇹🇭"
     ],
-    "identidades": [],
+    "identidades": [
+      "Femme"
+    ],
     "characters": [
       "Actriz"
     ],
-    "dinamicas": [],
-    "tropes": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Enemies to Lovers",
+      "Forced Proximity",
+      "Slow Burn",
+      "Secret Relationship"
+    ],
+    "edad": [],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 4,
     "formato": "Único",
     "adaptacion": "Tiene serie",
     "sagaName": null,
     "sagaNum": null,
+    "source": "thais",
     "editions": [
       {
         "lang": "EN",
@@ -4899,7 +5018,12 @@
         "url": "https://www.mebmarket.com/ebook-363428-Frozen-Valentine-%E0%B8%9B%E0%B8%B4%E0%B9%8A%E0%B8%87%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B8%9E%E0%B8%B5%E0%B9%88%E0%B9%80%E0%B8%A2%E0%B9%87%E0%B8%99%E0%B8%8A%E0%B8%B2"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777383897166_iinbf",
@@ -5061,20 +5185,30 @@
     "subgenres": [
       "GL Thai 🇹🇭"
     ],
-    "identidades": [],
+    "identidades": [
+      "Femme",
+      "Masc"
+    ],
     "characters": [
       "Piloto"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
     "tropes": [
       "Childhood Friends"
     ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [],
     "ambientacion": [],
     "spicy": 4,
     "formato": "Único",
     "adaptacion": "Tiene serie",
     "sagaName": null,
     "sagaNum": null,
+    "source": "thais",
     "editions": [
       {
         "lang": "ES",
@@ -5092,7 +5226,12 @@
         "url": "https://www.mebmarket.com/ebook-337031-Yours-Ever-%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%B0%E0%B9%80%E0%B8%98%E0%B8%AD%E0%B8%84%E0%B8%B7%E0%B8%AD%E0%B9%81%E0%B8%AA%E0%B8%87%E0%B9%81%E0%B8%A3%E0%B8%81"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777384275926_p68sx",
@@ -5150,14 +5289,28 @@
     "subgenres": [
       "GL Thai 🇹🇭"
     ],
-    "identidades": [],
+    "identidades": [
+      "Femme"
+    ],
     "characters": [
       "Madre Soltera"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Rich × Poor",
+      "Femme × Femme",
+      "Boss × Employee",
+      "Jefa × Subordinada"
+    ],
     "tropes": [
       "Age Gap",
-      "Workplace Romance"
+      "Workplace Romance",
+      "Rich / Poor Romance"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Tailandia"
     ],
     "ambientacion": [],
     "spicy": 4,
@@ -5165,6 +5318,7 @@
     "adaptacion": "Tiene serie",
     "sagaName": null,
     "sagaNum": null,
+    "source": "thais",
     "editions": [
       {
         "lang": "ES",
@@ -5182,7 +5336,12 @@
         "url": "https://www.mebmarket.com/ebook-310237-Blossom-lady-%E0%B9%80%E0%B8%81%E0%B8%B5%E0%B9%89%E0%B8%A2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%94%E0%B8%B1%E0%B8%87%E0%B8%87%E0%B8%B2"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777384434317_bpib4",
@@ -5199,12 +5358,23 @@
       "Romance"
     ],
     "subgenres": [],
-    "identidades": [],
-    "characters": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Estudiante"
+    ],
     "dinamicas": [],
     "tropes": [
       "Friends to Lovers",
       "Slow Burn"
+    ],
+    "edad": [
+      "New Adult (18–24)",
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Tailandia"
     ],
     "ambientacion": [],
     "spicy": 4,
@@ -5212,6 +5382,7 @@
     "adaptacion": "Sin adaptación",
     "sagaName": null,
     "sagaNum": null,
+    "source": "thais",
     "editions": [
       {
         "lang": "TH",
@@ -5219,7 +5390,12 @@
         "url": "https://www.mebmarket.com/ebook-188719-Dangerous-Friend-%E0%B8%98%E0%B8%B1%E0%B8%99%E0%B8%A7%E0%B8%B2%E0%B9%80%E0%B8%94%E0%B8%B7%E0%B8%AD%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B8%A7"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777384609603_pad2s",
@@ -5414,16 +5590,27 @@
     "subgenres": [
       "GL Thai 🇹🇭"
     ],
-    "identidades": [],
+    "identidades": [
+      "Femme",
+      "Masc"
+    ],
     "characters": [
       "Empresaria"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
     "tropes": [
       "Forbidden Love",
       "Slow Burn",
       "Opposites Attract",
       "Rich / Poor Romance"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Tailandia"
     ],
     "ambientacion": [],
     "spicy": 5,
@@ -5431,6 +5618,7 @@
     "adaptacion": "Tiene serie",
     "sagaName": null,
     "sagaNum": null,
+    "source": "thais",
     "editions": [
       {
         "lang": "TH",
@@ -5438,7 +5626,12 @@
         "url": "https://www.mebmarket.com/ebook-285784-being-of-love-%E0%B8%AB%E0%B8%A2%E0%B8%B8%E0%B8%94%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%A2%E0%B9%83%E0%B8%AB%E0%B9%89%E0%B9%80%E0%B8%98%E0%B8%AD%E0%B8%A3%E0%B8%B1%E0%B8%81"
       }
     ],
-    "source": "thais"
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777405898914_hkxn7",
@@ -7344,15 +7537,25 @@
     "subgenres": [
       "GL Thai 🇹🇭"
     ],
-    "identidades": [],
-    "characters": [
-      "Granjera"
+    "identidades": [
+      "Femme",
+      "Masc"
     ],
-    "dinamicas": [],
+    "characters": [
+      "Granjera",
+      "Empresaria"
+    ],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
     "tropes": [
       "Opposites Attract",
       "Forced Proximity",
       "Marriage of Convenience"
+    ],
+    "edad": [],
+    "pais_cultura": [
+      "Tailandia"
     ],
     "ambientacion": [],
     "spicy": 4,
@@ -7367,7 +7570,13 @@
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-435923-My-Rustic-Wife-Special-Dog-in-a-Manger-English-Version"
       }
-    ]
+    ],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1777970747578_t62r2",
@@ -7386,10 +7595,20 @@
     "subgenres": [
       "GL Thai 🇹🇭"
     ],
-    "identidades": [],
-    "characters": [],
-    "dinamicas": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Empresaria"
+    ],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [],
+    "edad": [],
+    "pais_cultura": [
+      "Tailandia"
+    ],
     "ambientacion": [],
     "spicy": 4,
     "formato": null,
@@ -7403,7 +7622,13 @@
         "store": "MEB",
         "url": "https://www.mebmarket.com/ebook-384696-Wind-of-Love-%E0%B9%80%E0%B8%A5%E0%B9%88%E0%B8%AB%E0%B9%8C%E0%B8%A5%E0%B8%A1%E0%B8%AB%E0%B8%A7%E0%B8%99-English-Version"
       }
-    ]
+    ],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778008068133_dmv6t",
@@ -14959,15 +15184,27 @@
     "subgenres": [
       "GL Thai 🇹🇭"
     ],
-    "identidades": [],
+    "identidades": [
+      "Grumpy",
+      "Sunshine"
+    ],
     "characters": [
       "Actriz"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Unrequited Love",
       "Secret Relationship",
       "Workplace Romance"
+    ],
+    "edad": [
+      "25–39",
+      "New Adult (18–24)"
+    ],
+    "pais_cultura": [
+      "Tailandia"
     ],
     "ambientacion": [],
     "spicy": 5,
@@ -14984,7 +15221,11 @@
       }
     ],
     "saficlub": false,
-    "safi_categories": []
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   },
   {
     "id": "b_1778489358712_bi59e",
@@ -20073,12 +20314,18 @@
       "Artista",
       "Empresaria"
     ],
-    "dinamicas": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
     "tropes": [
       "Second Chance Romance",
       "Forbidden Love",
       "Slow Burn",
       "Unrequited Love"
+    ],
+    "edad": [],
+    "pais_cultura": [
+      "Tailandia"
     ],
     "ambientacion": [],
     "spicy": 2,
@@ -27916,7 +28163,9 @@
     "edad": [
       "25–39"
     ],
-    "pais_cultura": [],
+    "pais_cultura": [
+      "Tailandia"
+    ],
     "ambientacion": [],
     "spicy": 3,
     "formato": "Saga",
@@ -27965,7 +28214,9 @@
     "edad": [
       "25–39"
     ],
-    "pais_cultura": [],
+    "pais_cultura": [
+      "Tailandia"
+    ],
     "ambientacion": [],
     "spicy": 3,
     "formato": "Saga",
@@ -32437,6 +32688,846 @@
     "sagaName": null,
     "sagaNum": null,
     "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780085063314_2k36c",
+    "title": "Asking Kate",
+    "authors": [
+      "Clare Ashton"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1765557172i/245138440.jpg",
+    "synopsis": "Olivia Sachdeva está enamorada. ¿Quién iba a decir que la mujer perfecta para el gélido abogado sería la sensata Kate Laurence, su ídolo de la pantalla?\n\nOlivia vive con la mujer de sus sueños en su hermosa casa de Park Town, en Oxford. Pero el matrimonio es lo último que Olivia plantearía con Kate. Tras conocerse como abogada y clienta en un tenso divorcio, es un milagro que estén juntos, y las bodas son indiscutibles.\n\nLa íntegra Olivia lo sabe. Su integridad profesional exige este tipo de disciplina. El problema es que, en el fondo, Olivia es humana, y su corazón enamorado anhela casarse con Kate.\n\n ¿Y si se arriesgara en Navidad a pedírselo?",
+    "pages": 81,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [
+      "Navidad"
+    ],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [
+      "Reino Unido"
+    ],
+    "ambientacion": [],
+    "spicy": 3,
+    "formato": "Trilogía",
+    "adaptacion": null,
+    "sagaName": "Oxford Romance",
+    "sagaNum": 3.5,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780085246720_xcev1",
+    "title": "The Pining Paradox",
+    "authors": [
+      "Monica McCallan"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1765229196i/244956049.jpg",
+    "synopsis": "Hallie Thatcher intenta adaptarse a los cambios en la posada que fue de su familia durante toda su vida. Su mundo da un vuelco con la llegada de Brynn Fitzpatrick, una gerente interina que huye de un compromiso fallido y público en Boston para buscar paz en el pequeño pueblo de Stoneport.\n\nA pesar de que la estancia de Brynn es temporal, surge entre ambas una conexión inmediata y cómoda. Mientras Hallie intenta buscar pareja sin éxito (pues nadie se compara con Brynn), esta última empieza a cuestionar su visión del amor y a desear un futuro que nunca imaginó, dándose cuenta de que lo que realmente anhela es quedarse al lado de Hallie.",
+    "pages": 433,
+    "isbn": null,
+    "genres": [
+      "Romance",
+      "Contemporánea"
+    ],
+    "subgenres": [
+      "Bisexual",
+      "Autodescubrimiento",
+      "Small Town"
+    ],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [
+      "Femme × Femme",
+      "Dominante × Sumisa"
+    ],
+    "tropes": [
+      "Friends to Lovers",
+      "Slow Burn",
+      "Found Family",
+      "Workplace Romance"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ambientacion": [],
+    "spicy": 4,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780085347530_ykhag",
+    "title": "Right There All Along",
+    "authors": [
+      "Elee Rose"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1754007194i/239563789.jpg",
+    "synopsis": "Drea Voss solo ama unas pocas cosas en esto. Sus amigos, su familia, su librería y el sexo. El sexo es un cercano segundo lugar.\n\nLo que no ama es cuando algo entra en su vida, causa problemas y hace que su trabajo sea mucho más difícil, y solo hay una persona que parece lograr precisamente eso.\n\nBlair Sterling ama su trabajo. Le pagan por escribir novelas románticas sobre mundos de fantasía. Pero toda rosa tiene su espina, y Drea Voss es la espina más grande que tiene Blair. Es insufrible, incompetente, poco profesional y muestra demasiada piel.\n\nLas cosas comienzan no tan bien cuando la pareja se ve obligada a trabajar junta, y las tensiones aumentan hasta que alguien se rompe.",
+    "pages": 316,
+    "isbn": null,
+    "genres": [
+      "Romance",
+      "Contemporánea"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Lesbiana"
+    ],
+    "characters": [
+      "Escritora"
+    ],
+    "dinamicas": [],
+    "tropes": [
+      "Forced Proximity",
+      "Enemies to Lovers",
+      "Found Family",
+      "Workplace Romance"
+    ],
+    "edad": [],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ambientacion": [],
+    "spicy": 5,
+    "formato": "Trilogía",
+    "adaptacion": null,
+    "sagaName": "Sapphic In Seattle",
+    "sagaNum": 2,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780085494479_o513b",
+    "title": "The Christmas CEO",
+    "authors": [
+      "Emily Hayes"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1765022110i/244866135.jpg",
+    "synopsis": "Un director ejecutivo que odia la Navidad. Un asistente radiante. Un ascensor averiado que lo cambia todo.\n\nCamille Hartman no es Navidad; prefiere el control, la eficiencia y la perfección. Pero cuando una tormenta invernal la deja atrapada en un ascensor con Lola Brooks, la mujer cuyos suéteres brillantes y sonrisa dulce como la canela la deshacen a diario, su armadura de hielo finalmente se resquebraja.\n\nEn la penumbra, la respiración se convierte en confesión, la tensión en calor y las líneas que nunca se han atrevido a cruzar comienzan a desdibujarse.\n\nCuando las puertas se abren, nada entre ellas es igual.",
+    "pages": 84,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [
+      "Navidad"
+    ],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "A Very Sapphic Christmas Collection",
+    "sagaNum": 2,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780085534267_9da3o",
+    "title": "Fire and Frost",
+    "authors": [
+      "Emily Hayes"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1765025086i/244867607.jpg",
+    "synopsis": "Una cirujana urbana desconsolada. Un carpintero marimacho de pueblo de montaña. Una ventisca que los atrapa juntos y enciende algo que ninguna de las dos vio venir.\n\nLa gélida Dra. Nia South está en Hawthorne Lake para una gran cirugía y planea evitar por completo sus propios sentimientos. Pero cuando una tormenta de nieve cierra las carreteras y el aeropuerto y la deja varada en un acogedor bar con Soren Stevenson, el local tatuado que lo arregla todo con sus talentosas manos y su encantadora sonrisa, el mundo helado de Nia comienza a descongelarse.",
+    "pages": 106,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [
+      "Navidad"
+    ],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [
+      "Forced Proximity"
+    ],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "A Very Sapphic Christmas Collection",
+    "sagaNum": 3,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780087428956_csw1u",
+    "title": "Vow Cold and Kindled",
+    "authors": [
+      "Moira Darling"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1761297973i/243028380.jpg",
+    "synopsis": "Un caballero vampiro. Una princesa predestinada. Doce Noches de Yule para enamorarse.\nIlyra, la hija menor de la realeza, jamás esperó gobernar ni ser el centro de un antiguo pacto sagrado. Pero cuando un enviado vampiro se arrodilla ante ella, queda atrapada en un vínculo ritual que exige cortejo, protección… y una devoción peligrosa.\nSer Virelle es el último caballero de sangre de una casa moribunda, ligado a Ilyra por sangre y juramento hasta que Yule llegue a su fin. Juntas deberán sobrevivir a una corte llena de luces, secretos y traiciones, mientras el deseo crece con cada noche.\nEntre nieve, velas y destino, solo queda una pregunta: ¿podrá el amor sobrevivir a lo que exige el pacto?",
+    "pages": 175,
+    "isbn": null,
+    "genres": [
+      "Fantasía",
+      "Fantasía Urbana",
+      "Romance"
+    ],
+    "subgenres": [
+      "Erótica",
+      "Magia"
+    ],
+    "identidades": [
+      "Butch",
+      "Femme",
+      "Lesbiana"
+    ],
+    "characters": [
+      "Vampira",
+      "Realeza"
+    ],
+    "dinamicas": [
+      "Butch × Femme"
+    ],
+    "tropes": [
+      "Age Gap",
+      "Forced Proximity"
+    ],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": 4,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Her Fangs in My Heart",
+    "sagaNum": 4,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780087494280_r2604",
+    "title": "Sad Girl Hours",
+    "authors": [
+      "Quirke_Anna_Zoe"
+    ],
+    "year": 2025,
+    "cover": "https://s3.amazonaws.com/romance.io/books/large/6897845d7a3b753031ea9f58.jpg",
+    "synopsis": "Saffron lucha con el trastorno afectivo estacional (TAE) y teme el otoño y el invierno. Se tomó un tiempo libre en su primer año de universidad y no puede permitirse hacer lo mismo este año si quiere lograr su sueño de ser astrofísica. Ha logrado mantenerlo en secreto de sus amigos, temiendo que no quieran pasar tiempo con ella si la ven en su punto más bajo, pero cada vez es más difícil. Especialmente cuando conoce a Nell.\n\nNell, aspirante a poeta, autista y orgullosa, y amante del otoño y el invierno, está decidida a mostrarle a Saffron todo lo que estas estaciones tienen para ofrecer. Las dos se vuelven cercanas, y cuando Saffron confía en Nell, el romance florece. Pero con Saffron luchando por controlar su salud mental y Nell descubriendo su propia identidad sexual, las cosas pronto se descontrolan.",
+    "pages": 432,
+    "isbn": null,
+    "genres": [
+      "Comedia Romántica",
+      "Romance",
+      "YA",
+      "Contemporánea"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [
+      "Friends to Lovers"
+    ],
+    "edad": [
+      "New Adult (18–24)"
+    ],
+    "pais_cultura": [
+      "Reino Unido"
+    ],
+    "ambientacion": [],
+    "spicy": 1,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780088070503_dwowa",
+    "title": "Wisdom of Bug",
+    "authors": [
+      "Alyson Root"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1765187339i/244936254.jpg",
+    "synopsis": "Evelyn Crawford vive el peor inicio de Navidad: hereda el imperio de su padre, la junta quiere echarla y descubre a su novia con otra persona. Como si fuera poco, un perro desaliñado aparece en su oficina de Londres.\n\nAlyssa Fox, directora de Four Paws Rescue, harta de las adopciones impulsivas navideñas, se asocia con la empresa de Evelyn para proteger a sus perros. No contaba con un CEO gruñón que odia la Navidad… ni con Bug, el rescatado que decide que Evelyn es su humana.\n\nEntre perros sueltos, caos festivo y una atracción inesperada, el control de Evelyn se desmorona y Alyssa descubre que enamorarse puede ser el mayor riesgo.",
+    "pages": 272,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [
+      "Navidad"
+    ],
+    "identidades": [
+      "Ice Queen",
+      "Bisexual",
+      "Lesbiana"
+    ],
+    "characters": [
+      "CEO",
+      "Veterinaria"
+    ],
+    "dinamicas": [
+      "Grumpy × Sunshine",
+      "Femme × Femme",
+      "Ice Queen × Sunshine"
+    ],
+    "tropes": [
+      "Opposites Attract",
+      "Slow Burn",
+      "Workplace Romance",
+      "Forced Proximity",
+      "Friends to Lovers"
+    ],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": 3,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780088166779_3uzhx",
+    "title": "Lo raro de quererte",
+    "authors": [
+      "Carmen Pérez"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1764236698i/244492732.jpg",
+    "synopsis": "Mencía tiene un plan para conquistar a convertirse en la canguro de su hijo durante las vacaciones navideñas. Con torpeza, improvisación y una buena dosis de humor, logra que Lola acepte. Pero lo que parecía sencillo pronto se complica cuando el corazón de Mencía empieza a reaccionar… con la persona equivocada.\n\nPorque el amor de su vida siempre ha estado ahí: con sus tonterías, su sarcasmo y su manera única de hacerla reír.\n\nUna broma inocente, muchas dudas y villancicos horribles como banda sonora acompañarán a Mencía a descubrir que lo raro no es sentir cosquillas por quien menos imaginó, sino haber tardado tanto en darse cuenta.\n\nLo raro de quererte es una comedia romántica sobre los miedos, las verdades que cuestan admitir y el vértigo delicioso de volver a mirar a quien siempre estuvo delante.",
+    "pages": 371,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [
+      "Navidad"
+    ],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780088367899_vyeb3",
+    "title": "Después de todo",
+    "authors": [
+      "Karin Kallmaker"
+    ],
+    "year": 2005,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1444088343i/26872234.jpg",
+    "synopsis": "Syrah Ardani ha intentado construir su vida lejos de los viñedos familiares, pero el valle de Napa la reclama. Al regresar, se encuentra con un paisaje tan hermoso como amenazado: la mala gestión de su padre ha llevado a Viñedos Ardani al borde de la quiebra.\n\nLa única solución parece ser Toni Blanchard, una especialista designada por los tribunales para proteger a los acreedores. Implacable, distante y recién llegada de Manhattan tras una ruptura amarga, Toni no mezcla negocios con placer. Pero nadie le advirtió que Syrah Ardani sería tan decidida… ni tan difícil de ignorar.\n\nMientras Syrah lucha por salvar su legado familiar y Toni intenta mantenerse fiel a sus reglas, ambas descubrirán que algunas batallas no se ganan solo con números. A veces, incluso lo inevitable puede cambiarlo todo.",
+    "pages": 208,
+    "isbn": null,
+    "genres": [
+      "Romance",
+      "Contemporánea"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Granjera"
+    ],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Enemies to Lovers",
+      "Opposites Attract",
+      "Workplace Romance"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780088414353_1skjm",
+    "title": "La hija de la rectora",
+    "authors": [
+      "Mónica Benítez"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1763226813i/243878902.jpg",
+    "synopsis": "Seis años después de huir de la universidad y de una atracción que la desbordó, Grace Morley regresa decidida a terminar lo que dejó pendiente. No contaba con que al reencontrarse con Natalie Dumont, la consejera académica que nunca pudo olvidar, esa electricidad devastadora siguiera intacta.\n\nNatalie, acostumbrada a lidiar con estudiantes difíciles, cree tener el control… hasta que Grace vuelve a su despacho, provocadora y decidida a cruzar límites. Mientras intenta mantener la compostura, cada mirada de Grace hace temblar su mundo, porque en el fondo desea exactamente lo que debería evitar.\n\nAhora solo queda una pregunta: ¿cuánto tiempo podrán ocultar un deseo que arde con tanta intensidad?",
+    "pages": 344,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780088778178_qzbvx",
+    "title": "Se alquila habitación",
+    "authors": [
+      "Carlota Font Castelló"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1749555700i/236081958.jpg",
+    "synopsis": "Abril lo tiene todo cuesta arriba: tras tres años de relación, Eloi la ha dejado y ya no puede permitirse pagar el alquiler sola. Con veinticuatro años, un trabajo precario, un jefe insoportable y una carrera en Historia del Arte que no le está sirviendo de mucho, decide ocultar la verdad a su familia y buscar a alguien con quien compartir piso.\n\nLa candidata ideal aparece en forma de una azafata de vuelo… con más particularidades de las esperadas. Mientras Abril intenta recomponer su vida entre rupturas, silencios incómodos y decisiones forzadas, se anuncian turbulencias tanto en casa como en su interior.",
+    "pages": 160,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780088810319_28mw3",
+    "title": "LEALTAD & AMOR",
+    "authors": [
+      "B. E. RAYA"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1766276360i/245580691.jpg",
+    "synopsis": "Kathrin Lang, una alfa dominante y oficial clave del gobierno de Valdoria, vive guiada por el deber y la disciplina hasta que conoce a Anneliese Bootes, una omega brillante que pone en jaque su autocontrol.\n\nProtegida por una poderosa familia, Anneliese sabe que involucrarse con Kathrin es peligroso, pero la atracción entre ambas resulta imposible de evitar.\n\nMientras una conspiración amenaza al país y enfrenta a sus familias, Kathrin deberá elegir entre su lealtad al Estado o el amor que podría destruirla.",
+    "pages": 334,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [
+      "Omegaverse"
+    ],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780088851437_elbkf",
+    "title": "Nuestra canción pendiente",
+    "authors": [
+      "Clara Vega"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1764402871i/244561827.jpg",
+    "synopsis": "Roxie Hart lleva cinco años cantando finales felices que nunca ha vivido. Estrella del country-pop y perfecta en la alfombra roja, la única historia que no ha sabido escribir es la suya.\n\nKylie Keller solo quiere jugar al baloncesto. Base explosiva de los Los Angeles Sparks, su enfoque está en sistemas, no en sentimientos. Pero el día de su presentación, descubre que la nueva inversora del equipo es Roxie: su primer amor secreto, a quien dejó atrás para no vivir a su sombra.\n\nLo que parece una colaboración perfecta para el mundo se convierte en una bomba de relojería para ellas, entre ruedas de prensa, conciertos, viajes y un pasado que se niega a quedarse en silencio.",
+    "pages": 204,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780088893462_3iu5j",
+    "title": "Cenizas: Corona de Bufones – Parte 1",
+    "authors": [
+      "Mila Meid"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1759048287i/242159998.jpg",
+    "synopsis": "Ella debía ser su enemiga. La primera vez que la vio, quiso matarla… pero algo la detuvo.\n\nEn un mundo dividido por la sangre, dos mujeres marcadas por la pérdida y los secretos caminan sobre la delgada línea entre la lealtad y la traición.\n\nUna es filo y sombra, criada para proteger y destruir.\nLa otra es luz y esperanza, aquello que debería odiar… y a lo que no puede renunciar.\n\nEntre guerras, magia y conspiraciones, descubrirán que algunas promesas se pagan con la vida… y otras con el corazón.",
+    "pages": 910,
+    "isbn": null,
+    "genres": [
+      "Fantasía",
+      "Fantasía Urbana",
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780088972626_ztcmn",
+    "title": "Una fábula para el fin del mundo",
+    "authors": [
+      "Ava Reid"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1739216761i/226855891.jpg",
+    "synopsis": "La corporación Caerus domina a las clases bajas mediante deudas imposibles; cuando no se pagan, el castigo es el Desafío del Cordero, un espectáculo mortal retransmitido en directo.\n\nInesa sobrevive con su hermano en un pueblo medio sumergido hasta que descubre que su madre la ha ofrecido como sacrificio. Con pocas posibilidades de vivir, solo su experiencia en el terreno baldío podría darle una oportunidad.\n\nMelinoë es la asesina perfecta de Caerus, creada para cazar y matar sin fallar. Tras un error público, necesita demostrar que sigue siendo letal.\n\nMientras Mel persigue a Inesa por un mundo postapocalíptico, ambas empiezan a cuestionar quiénes son… y a sentir una atracción tan peligrosa como prohibida.",
+    "pages": 320,
+    "isbn": null,
+    "genres": [
+      "Ciencia Ficción",
+      "Distopía",
+      "Romance",
+      "YA"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [
+      "Enemies to Lovers",
+      "Opposites Attract",
+      "Slow Burn"
+    ],
+    "edad": [],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ambientacion": [],
+    "spicy": 2,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780089025659_bkhli",
+    "title": "Dalia",
+    "authors": [
+      "Viri Vallera"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1764960401i/244839408.jpg",
+    "synopsis": "Dalia nunca ha creído que el amor sea un lugar seguro. Marcada por una infancia difícil, criada como “la arrimada” en casa de sus tíos y acostumbrada a ocultar sus emociones detrás de un carácter reservado, ha aprendido a sobrevivir sin esperar demasiado de nadie. Hasta que Elena llega a su vida.\nElena es todo lo que Dalia no se atreve a segura, directa, luminosa. Sin proponérselo, poco a poco derriba las paredes que Dalia levantó para protegerse, mostrándole que merece ser amada sin condiciones, con sus sombras y sus cicatrices.\nEntre risas, miedos, torpezas y momentos inesperadamente tiernos, ambas mujeres descubren que el amor puede sanar, reconstruir y florecer incluso en quienes nunca creyeron que crecerían raíces firmes.",
+    "pages": 260,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780089103190_97ayn",
+    "title": "La asistente invisible",
+    "authors": [
+      "Mia J. Hart"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1765560366i/245140518.jpg",
+    "synopsis": "Amanda Thorne es una leyenda de la arquitectura, brillante y exigente, en busca de una mente creativa a su altura. Cuando empieza a recibir bocetos anónimos de un talento excepcional, se obsesiona con descubrir quién es la misteriosa musa dentro de su firma.\n\nMegan Foran, una asistente junior marcada por un trauma, oculta su enorme talento dejando sus diseños de forma anónima en el escritorio de Amanda, a quien admira en silencio.\n\nEntre secretos y miradas contenidas, la admiración se convierte en una atracción peligrosa. Pero cuando la verdad salga a la luz, ambas deberán decidir si el amor puede sobrevivir a la traición.",
+    "pages": 241,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780089135977_fvrbn",
+    "title": "Trilogía Urgencias",
+    "authors": [
+      "Eva Gonzay",
+      "Julia C. Brown"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1766390451i/245628477.jpg",
+    "synopsis": "Doctora Martín\nBárbara, jefa de cirugía, e Irina, teniente experta en crisis, deben liderar un hospital de campaña tras un accidente. Entre caos y decisiones de vida o muerte, la tensión entre ellas se vuelve imposible de ignorar.\n\nDoctora Silva\nOlga, directora sofisticada, y Elena, audaz y rebelde, chocan desde el primer encuentro. Diferentes en todo, su atracción crece con cada enfrentamiento.\n\nDoctora Mayot\nAntonia, independiente doctora, y Sandra, agente persistente, empiezan con discusiones pero no pueden ignorar la atracción que surge entre ellas.",
+    "pages": 446,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [
+      "Doctora / Médica"
+    ],
+    "dinamicas": [],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1780089226312_ez1xi",
+    "title": "Mi Regalo de la Mafia",
+    "authors": [
+      "Jade Fierro"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1766252405i/245572437.jpg",
+    "synopsis": "No estaba destinada a ser tocada.\nEstaba destinada a ser un pago.\n\nMe llamo Nix Serrano.\nEn Ravenport cobro deudas — y no perdono retrasos.\nCuando un hombre poderoso se queda sin dinero, no pido promesas.\n\nPido un aval.\n\nCeleste Blanco es entregada a mi puerta en Navidad, envuelta en un lazo rojo y en su propia rebeldía.\nEstá aquí para mantener con vida a su padre. Nada más.\n\nEsa es la regla.\nY las reglas son cómo sobrevivo.\n\nPero Ravenport no perdona la debilidad, y el deseo es el pasivo más peligroso de todos.\nCuanto más tiempo Celeste es mía para conservarla, más difícil se vuelve recordar que esto es solo negocio…\ny no lo único capaz de destruirnos a las dos.",
+    "pages": 279,
+    "isbn": null,
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [
+      "Dark Romance",
+      "Mafia"
+    ],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "spicy": null,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Reinas de Ravenport",
+    "sagaNum": 5,
+    "source": "spanish",
     "editions": [],
     "saficlub": false,
     "safi_categories": [],
