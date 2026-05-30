@@ -1380,6 +1380,13 @@ function uniqVals(key){
   if(key==='authors') return [...new Set(sectionBooks.flatMap(b=>b.authors||[]))].sort();
   if(key==='years')   return [...new Set(sectionBooks.map(b=>b.year).filter(Boolean))].sort((a,z)=>z-a).map(String);
   if(key==='sagas')   return [...new Set(sectionBooks.map(b=>getSaga(b)).filter(Boolean))].sort();
+  const tagTypeMap={tropes:'trope',dinamicas:'dinamica',characters:'character',identidades:'identidad'};
+  if(tagTypeMap[key]){
+    const tagType=tagTypeMap[key];
+    const fromJson=sectionBooks.flatMap(b=>b[key]||[]);
+    const fromComm=sectionBooks.flatMap(b=>(communityTagsMap[b.id]||{})[tagType]||[]);
+    return [...new Set([...fromJson,...fromComm])].sort();
+  }
   return [...new Set(sectionBooks.flatMap(b=>b[key]||[]))].sort();
 }
 
@@ -1563,9 +1570,9 @@ function applyFilters(resetPage=true){
   if(filters.q) books=books.filter(b=>(b.title+' '+(b.authors||[]).join(' ')+(getSaga(b)||'')).toLowerCase().includes(filters.q));
   if(filters.genres.length)    books=books.filter(b=>filters.genres.every(g=>(b.genres||[]).includes(g)));
   if(filters.subgenres.length) books=books.filter(b=>filters.subgenres.every(s=>(b.subgenres||[]).includes(s)));
-  if(filters.dinamicas.length) books=books.filter(b=>filters.dinamicas.every(d=>(b.dinamicas||[]).includes(d)));
-  if(filters.tropes.length)    books=books.filter(b=>filters.tropes.every(t=>(b.tropes||[]).includes(t)));
-  if(filters.characters.length) books=books.filter(b=>filters.characters.every(c=>(b.characters||[]).includes(c)));
+  if(filters.dinamicas.length) books=books.filter(b=>filters.dinamicas.every(d=>[...(b.dinamicas||[]),...((communityTagsMap[b.id]||{}).dinamica||[])].includes(d)));
+  if(filters.tropes.length)    books=books.filter(b=>filters.tropes.every(t=>[...(b.tropes||[]),...((communityTagsMap[b.id]||{}).trope||[])].includes(t)));
+  if(filters.characters.length) books=books.filter(b=>filters.characters.every(c=>[...(b.characters||[]),...((communityTagsMap[b.id]||{}).character||[])].includes(c)));
   if(filters.authors.length)   books=books.filter(b=>filters.authors.some(a=>(b.authors||[]).includes(a)));
   if(filters.years.length)     books=books.filter(b=>filters.years.includes(String(b.year)));
   if(filters.spicy.length||filters.spicyUnknown){
