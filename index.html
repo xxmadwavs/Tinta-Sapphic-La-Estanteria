@@ -763,7 +763,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .ruleta-dd-btn svg{width:9px;height:9px;flex-shrink:0;transition:transform .22s;opacity:.6}
 .ruleta-dd-wrap.open .ruleta-dd-btn svg{transform:rotate(180deg)}
 .ruleta-dd-btn .rdd-count{background:var(--accent);color:#fff;border-radius:20px;font-size:9px;font-weight:700;padding:1px 5px;letter-spacing:0}
-.ruleta-dd-panel{position:absolute;top:calc(100% + 8px);left:0;min-width:210px;max-width:290px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);box-shadow:0 20px 60px rgba(0,0,0,.55),0 4px 20px rgba(0,0,0,.3);z-index:250;display:none;max-height:300px;overflow-y:auto;animation:ddFadeIn .14s ease}
+.ruleta-dd-panel{position:fixed;min-width:210px;max-width:290px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);box-shadow:0 20px 60px rgba(0,0,0,.55),0 4px 20px rgba(0,0,0,.3);z-index:500;display:none;max-height:300px;overflow-y:auto;animation:ddFadeIn .14s ease}
 .ruleta-dd-wrap.open .ruleta-dd-panel{display:block}
 .ruleta-dd-search{padding:.5rem .8rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);backdrop-filter:blur(8px)}
 .ruleta-dd-search input{width:100%;padding:5px 9px;border-radius:7px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12px;font-family:var(--font-body);outline:none;transition:border-color .15s}
@@ -3323,8 +3323,23 @@ function toggleRDD(id) {
   const wrap = document.getElementById(id);
   const wasOpen = wrap.classList.contains('open');
   closeAllRDD();
-  closeAllDD(); // también cierra los de la estantería
-  if (!wasOpen) wrap.classList.add('open');
+  closeAllDD();
+  if (!wasOpen) {
+    wrap.classList.add('open');
+    // Posicionar el panel con fixed relativo al botón
+    const btn = wrap.querySelector('.ruleta-dd-btn');
+    const panel = wrap.querySelector('.ruleta-dd-panel');
+    const rect = btn.getBoundingClientRect();
+    panel.style.top = (rect.bottom + 8) + 'px';
+    panel.style.left = rect.left + 'px';
+    // Ajustar si se sale por la derecha
+    requestAnimationFrame(() => {
+      const panelRect = panel.getBoundingClientRect();
+      if (panelRect.right > window.innerWidth - 8) {
+        panel.style.left = (window.innerWidth - panelRect.width - 8) + 'px';
+      }
+    });
+  }
 }
 function closeAllRDD() { document.querySelectorAll('.ruleta-dd-wrap.open').forEach(w => w.classList.remove('open')); }
 
