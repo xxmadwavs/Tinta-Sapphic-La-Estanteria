@@ -1011,7 +1011,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
   </div>
 
   <!-- PANEL ESTANTERÍA -->
-  <div id="panelEstanteria">
+  <div id="panelEstanteria" style="display:none">
   <div class="section-tabs" id="sectionTabs">
     <button class="section-tab active-thais" id="tabThais" onclick="switchSection('thais')">🌸 Libros Thais <span class="tab-count" id="countThais">0</span></button>
     <button class="section-tab" id="tabOther" onclick="switchSection('other')">🌍 Libros Occidentales <span class="tab-count hidden" id="countOther">0</span></button>
@@ -1881,6 +1881,8 @@ function applyFilters(resetPage=true){
 }
 
 function renderGrid(books, total, totalPages){
+  // Only render if estanteria tab is active
+  if(activeTab !== 'estanteria') return;
   const c=document.getElementById('booksContainer');
   // Update section tab counts (always from full filtered books before section split)
   const _all=[...allBooks];
