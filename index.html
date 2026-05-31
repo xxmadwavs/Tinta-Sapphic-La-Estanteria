@@ -1481,22 +1481,21 @@ async function init(){
   const _secTabs={thais:'tabThais',other:'tabOther',spanish:'tabSpanish',baihee:'tabBaihee',asian:'tabAsian',african:'tabAfrican'};
   const _secCls={thais:'active-thais',other:'active-other',spanish:'active-spanish',baihee:'active-baihee',asian:'active-asian',african:'active-african'};
   Object.entries(_secTabs).forEach(([key,id])=>{const el=document.getElementById(id);if(el)el.className='section-tab'+(key===activeSection?' '+_secCls[key]:'');});
-  applyFilters(false);
   updateDDCounts();renderActivePills();
   // Restore active tab from URL if present, otherwise use sessionStorage or home
   const urlParams=new URLSearchParams(location.search);
   const urlTab=urlParams.get('tab');
   const savedTab = urlTab || sessionStorage.getItem('ts_active_tab');
   if(savedTab && savedTab !== 'home') {
-    // estaba en el catálogo — restaurar sin ir al home
     document.getElementById('homeView').classList.remove('active');
     document.body.classList.remove('home-active');
     document.getElementById('homeNavBtn').classList.remove('active');
     switchTab(savedTab === 'estanteria' ? 'estanteria' : savedTab);
   } else {
-    // primera visita o venía del home
     showHome();
   }
+  // Solo pintar libros si el tab activo es estantería
+  if(activeTab === 'estanteria') applyFilters(false);
   const debouncedLoadRatings=debounce(()=>{
     if(currentUser) loadMyRatings().then(()=>{applyFilters(false);if(activeBook)renderBookModal();checkSolicitudesNotif();});
     else{myRatings={};applyFilters(false);}
@@ -2545,6 +2544,7 @@ function switchTab(tab){
   if(tab==='myrec') renderMyrec();
   if(tab==='solicitudes') renderSolicitudes();
   if(tab==='ruleta') ruletaInit();
+  if(tab==='estanteria') applyFilters(false);
   // Update URL so the tab is shareable
   try{
     const params=new URLSearchParams(location.search);
