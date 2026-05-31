@@ -1273,6 +1273,27 @@ body.home-active .hero,body.home-active .main{display:none!important}
               <div class="ruleta-dd-list" id="rddListTrope"></div>
             </div>
           </div>
+          <!-- Subgénero -->
+          <div class="ruleta-dd-wrap" id="rddSubgenre">
+            <button class="ruleta-dd-btn" onclick="toggleRDD('rddSubgenre')">
+              Temática <span class="rdd-count" id="rddCntSubgenre" style="display:none"></span>
+              <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
+            </button>
+            <div class="ruleta-dd-panel">
+              <div class="ruleta-dd-search"><input type="text" placeholder="Buscar…" oninput="filterRDD('subgenres','rddListSubgenre',this.value)"></div>
+              <div class="ruleta-dd-list" id="rddListSubgenre"></div>
+            </div>
+          </div>
+          <!-- Spicy -->
+          <div class="ruleta-dd-wrap" id="rddSpicy">
+            <button class="ruleta-dd-btn" onclick="toggleRDD('rddSpicy')">
+              Spicy <span class="rdd-count" id="rddCntSpicy" style="display:none"></span>
+              <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
+            </button>
+            <div class="ruleta-dd-panel">
+              <div class="ruleta-dd-list" id="rddListSpicy"></div>
+            </div>
+          </div>
         </div>
         <!-- Pills de filtros propios de la ruleta -->
         <div class="ruleta-own-pills" id="ruletaOwnPills"></div>
@@ -3287,7 +3308,7 @@ let ruletaOnlyPendientes = false;
 let ruletaSection = 'all'; // 'all' | 'thais' | 'other' | 'spanish' | 'baihee' | 'asian' | 'african'
 
 // Filtros propios de la ruleta (independientes de los de la estantería)
-const ruletaFilters = { genres: [], dinamicas: [], tropes: [] };
+const ruletaFilters = { genres: [], dinamicas: [], tropes: [], subgenres: [], spicy: [], spicyUnknown: false };
 
 /* ── RULETA DD HELPERS ── */
 function rddUniqVals(key) {
@@ -3344,26 +3365,30 @@ function toggleRDD(id) {
 function closeAllRDD() { document.querySelectorAll('.ruleta-dd-wrap.open').forEach(w => w.classList.remove('open')); }
 
 function toggleRDDFilter(key, val) {
+  if (key === 'spicy') val = parseInt(val);
   const arr = ruletaFilters[key], idx = arr.indexOf(val);
   idx >= 0 ? arr.splice(idx, 1) : arr.push(val);
   updateRDDCounts();
   renderRuletaOwnPills();
-  const listMap = { genres: 'rddListGenre', dinamicas: 'rddListDinamica', tropes: 'rddListTrope' };
-  buildRDDList(listMap[key], key);
+  const listMap = { genres: 'rddListGenre', dinamicas: 'rddListDinamica', tropes: 'rddListTrope', subgenres: 'rddListSubgenre' };
+  if (listMap[key]) buildRDDList(listMap[key], key);
+  else if (key === 'spicy') buildRDDSpicyList();
   ruletaUpdateUI();
 }
 
 function clearRDDFilter(key) {
   ruletaFilters[key] = [];
+  if (key === 'spicy') ruletaFilters.spicyUnknown = false;
   updateRDDCounts();
   renderRuletaOwnPills();
-  const listMap = { genres: 'rddListGenre', dinamicas: 'rddListDinamica', tropes: 'rddListTrope' };
-  buildRDDList(listMap[key], key);
+  const listMap = { genres: 'rddListGenre', dinamicas: 'rddListDinamica', tropes: 'rddListTrope', subgenres: 'rddListSubgenre' };
+  if (listMap[key]) buildRDDList(listMap[key], key);
+  else if (key === 'spicy') buildRDDSpicyList();
   ruletaUpdateUI();
 }
 
 function updateRDDCounts() {
-  [['Genre', 'genres'], ['Dinamica', 'dinamicas'], ['Trope', 'tropes']].forEach(([k, fk]) => {
+  [['Genre','genres'],['Dinamica','dinamicas'],['Trope','tropes'],['Subgenre','subgenres']].forEach(([k, fk]) => {
     const cnt = document.getElementById('rddCnt' + k);
     const btn = document.querySelector('#rdd' + k + ' .ruleta-dd-btn');
     if (!cnt || !btn) return;
@@ -3371,26 +3396,63 @@ function updateRDDCounts() {
     cnt.textContent = n; cnt.style.display = n ? '' : 'none';
     btn.classList.toggle('has-sel', n > 0);
   });
+  // Spicy especial
+  const cntS = document.getElementById('rddCntSpicy');
+  const btnS = document.querySelector('#rddSpicy .ruleta-dd-btn');
+  if (cntS && btnS) {
+    const n = ruletaFilters.spicy.length + (ruletaFilters.spicyUnknown ? 1 : 0);
+    cntS.textContent = n; cntS.style.display = n ? '' : 'none';
+    btnS.classList.toggle('has-sel', n > 0);
+  }
 }
 
 function renderRuletaOwnPills() {
   const el = document.getElementById('ruletaOwnPills');
   if (!el) return;
-  const labelMap = { genres: 'Género', dinamicas: 'Dinámica', tropes: 'Tropo' };
+  const labelMap = { genres: 'Género', dinamicas: 'Dinámica', tropes: 'Tropo', subgenres: 'Temática' };
   const pills = [];
-  Object.entries(ruletaFilters).forEach(([key, arr]) => {
-    arr.forEach(v => {
+  ['genres','dinamicas','tropes','subgenres'].forEach(key => {
+    ruletaFilters[key].forEach(v => {
       pills.push(`<span class="ruleta-own-pill">${labelMap[key]}: ${v}<button onclick="toggleRDDFilter('${key}','${v.replace(/'/g, "\\'")}')">×</button></span>`);
     });
   });
+  ruletaFilters.spicy.forEach(v => {
+    pills.push(`<span class="ruleta-own-pill">Spicy: ${SPICY_LABELS[v]}<button onclick="toggleRDDFilter('spicy',${v})">×</button></span>`);
+  });
+  if (ruletaFilters.spicyUnknown) {
+    pills.push(`<span class="ruleta-own-pill">Spicy: ${SPICY_UNKNOWN_LABEL}<button onclick="ruletaToggleSpicyUnknown()">×</button></span>`);
+  }
   el.innerHTML = pills.join('');
   el.style.display = pills.length ? '' : 'none';
+}
+
+function buildRDDSpicyList() {
+  const el = document.getElementById('rddListSpicy');
+  if (!el) return;
+  const hasSel = ruletaFilters.spicy.length || ruletaFilters.spicyUnknown;
+  el.innerHTML = (hasSel ? `<div class="ruleta-dd-clear" onclick="clearRDDFilter('spicy')">✕ Limpiar</div>` : '') +
+    `<div class="ruleta-dd-item"><input type="checkbox" id="rddsp_unk" ${ruletaFilters.spicyUnknown ? 'checked' : ''} onchange="ruletaToggleSpicyUnknown()"><label for="rddsp_unk">${SPICY_UNKNOWN_ICON} ${SPICY_UNKNOWN_LABEL}</label></div>` +
+    SPICY_LABELS.map((lbl, i) => {
+      const sid = 'rddsp_' + i;
+      const icon = SPICY_ICONS[i] ? SPICY_ICONS[i] + ' ' : '';
+      return `<div class="ruleta-dd-item"><input type="checkbox" id="${sid}" ${ruletaFilters.spicy.includes(i) ? 'checked' : ''} onchange="toggleRDDFilter('spicy',${i})"><label for="${sid}">${icon}${lbl}</label></div>`;
+    }).join('');
+}
+
+function ruletaToggleSpicyUnknown() {
+  ruletaFilters.spicyUnknown = !ruletaFilters.spicyUnknown;
+  buildRDDSpicyList();
+  updateRDDCounts();
+  renderRuletaOwnPills();
+  ruletaUpdateUI();
 }
 
 function buildRDDDropdowns() {
   buildRDDList('rddListGenre', 'genres');
   buildRDDList('rddListDinamica', 'dinamicas');
   buildRDDList('rddListTrope', 'tropes');
+  buildRDDList('rddListSubgenre', 'subgenres');
+  buildRDDSpicyList();
   updateRDDCounts();
 }
 
@@ -3436,10 +3498,19 @@ function getFilteredBooksForRuleta() {
   if (ruletaSection !== 'all') {
     books = books.filter(b => b.source === ruletaSection);
   }
-  // filtros propios de la ruleta (géneros, dinámicas, tropos)
-  if (ruletaFilters.genres.length)   books = books.filter(b => ruletaFilters.genres.every(g => (b.genres||[]).includes(g)));
+  // filtros propios de la ruleta (géneros, dinámicas, tropos, subgéneros, spicy)
+  if (ruletaFilters.genres.length)    books = books.filter(b => ruletaFilters.genres.every(g => (b.genres||[]).includes(g)));
+  if (ruletaFilters.subgenres.length) books = books.filter(b => ruletaFilters.subgenres.every(s => (b.subgenres||[]).includes(s)));
   if (ruletaFilters.dinamicas.length) books = books.filter(b => ruletaFilters.dinamicas.every(d => [...(b.dinamicas||[]), ...((communityTagsMap[b.id]||{}).dinamica||[])].includes(d)));
-  if (ruletaFilters.tropes.length)   books = books.filter(b => ruletaFilters.tropes.every(t => [...(b.tropes||[]), ...((communityTagsMap[b.id]||{}).trope||[])].includes(t)));
+  if (ruletaFilters.tropes.length)    books = books.filter(b => ruletaFilters.tropes.every(t => [...(b.tropes||[]), ...((communityTagsMap[b.id]||{}).trope||[])].includes(t)));
+  if (ruletaFilters.spicy.length || ruletaFilters.spicyUnknown) {
+    books = books.filter(b => {
+      const s = effectiveSpicy(b);
+      if (ruletaFilters.spicyUnknown && s == null) return true;
+      if (ruletaFilters.spicy.length && s != null && ruletaFilters.spicy.includes(s)) return true;
+      return false;
+    });
+  }
   // valorados toggle
   if (ruletaOnlyPendientes) books = books.filter(b => !myRatings[b.id]);
   else if (ruletaExcludeValorados) books = books.filter(b => !myRatings[b.id]);
@@ -3506,9 +3577,11 @@ function ruletaSetSection(src) {
     btn.classList.toggle('active', btn.dataset.src === src);
   });
   // Limpiar filtros propios que ya no tienen sentido en la nueva sección
-  ruletaFilters.genres = ruletaFilters.genres.filter(v => rddUniqVals('genres').includes(v));
+  ruletaFilters.genres    = ruletaFilters.genres.filter(v => rddUniqVals('genres').includes(v));
   ruletaFilters.dinamicas = ruletaFilters.dinamicas.filter(v => rddUniqVals('dinamicas').includes(v));
-  ruletaFilters.tropes = ruletaFilters.tropes.filter(v => rddUniqVals('tropes').includes(v));
+  ruletaFilters.tropes    = ruletaFilters.tropes.filter(v => rddUniqVals('tropes').includes(v));
+  ruletaFilters.subgenres = ruletaFilters.subgenres.filter(v => rddUniqVals('subgenres').includes(v));
+  // spicy y spicyUnknown son independientes de la sección, no se limpian
   buildRDDDropdowns();
   renderRuletaOwnPills();
   ruletaUpdateUI();
@@ -3532,6 +3605,9 @@ function ruletaClearFilters() {
   ruletaFilters.genres = [];
   ruletaFilters.dinamicas = [];
   ruletaFilters.tropes = [];
+  ruletaFilters.subgenres = [];
+  ruletaFilters.spicy = [];
+  ruletaFilters.spicyUnknown = false;
   updateRDDCounts();
   renderRuletaOwnPills();
   buildRDDDropdowns();
