@@ -754,20 +754,47 @@ body.home-active .hero,body.home-active .main{display:none!important}
 @media(max-width:600px){.tab-share-btn{margin-left:0;flex:1 1 calc(50% - .35rem);justify-content:center}}
 /* ── RULETA ── */
 .ruleta-wrap{max-width:700px;margin:0 auto;padding-bottom:4rem;display:flex;flex-direction:column;align-items:center;gap:1.5rem}
-.ruleta-filtros-card{width:100%;background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,0.95) 100%);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;box-shadow:0 8px 40px rgba(0,0,0,.3);position:relative;overflow:hidden}
+.ruleta-filtros-card{width:100%;background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,0.95) 100%);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1.5rem 1.75rem 1.25rem;box-shadow:0 8px 40px rgba(0,0,0,.3);position:relative;overflow:hidden}
 .ruleta-filtros-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--rose),var(--teal));opacity:.7}
-.ruleta-filtros-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
-.ruleta-filtros-label{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.ruleta-filtros-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.ruleta-filtros-label{font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .ruleta-filtros-status{font-size:12px;color:var(--accent2);font-weight:600}
-.ruleta-filtros-pills{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.9rem;min-height:24px}
-.ruleta-filtros-row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+/* Select grid 2x2 */
+.ruleta-selects-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem .75rem;margin-bottom:1rem}
+.ruleta-sel-group{display:flex;flex-direction:column;gap:.3rem}
+.ruleta-sel-label{font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.ruleta-select{
+  width:100%;padding:9px 32px 9px 14px;border-radius:10px;
+  border:1px solid var(--border2);background:var(--surface2);
+  color:var(--text);font-size:13px;font-family:var(--font-body);
+  cursor:pointer;outline:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a7898' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;background-size:10px;
+  transition:border-color .2s;color-scheme:dark;
+}
+.ruleta-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(192,111,196,0.1)}
+.ruleta-select.has-val{border-color:rgba(192,111,196,0.4);background:var(--accent-soft);color:var(--accent2)}
+/* Spicy row */
+.ruleta-spicy-row{margin-bottom:.9rem}
+.ruleta-spicy-row .ruleta-sel-label{display:block;margin-bottom:.4rem}
+.ruleta-spicy-btns{display:flex;gap:.4rem;flex-wrap:wrap}
+.ruleta-spicy-btn{
+  padding:7px 14px;border-radius:9px;
+  border:1px solid var(--border2);background:var(--surface2);
+  color:var(--text);font-size:12.5px;font-family:var(--font-body);
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.ruleta-spicy-btn:hover{border-color:rgba(201,151,90,0.4);background:var(--gold-soft)}
+.ruleta-spicy-btn.active{background:var(--gold-soft);border-color:rgba(201,151,90,0.6);color:var(--gold);font-weight:600}
+/* bottom row */
+.ruleta-filtros-row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;padding-top:.75rem;border-top:1px solid var(--border)}
 .ruleta-toggle-btn{display:flex;align-items:center;gap:5px;padding:6px 14px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:12px;font-family:var(--font-body);cursor:pointer;transition:all .18s}
 .ruleta-toggle-btn:hover{border-color:var(--accent);color:var(--accent2);background:var(--accent-soft)}
 .ruleta-toggle-btn.active-excl{background:rgba(212,96,122,0.12);border-color:var(--rose);color:#e0909e}
 .ruleta-toggle-btn.active-only{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
-.ruleta-toggle-icon{font-size:14px}
 .ruleta-clear-btn{padding:6px 14px;border-radius:20px;border:1px solid rgba(212,96,122,0.25);background:transparent;color:var(--rose);font-size:11.5px;font-family:var(--font-body);cursor:pointer;transition:all .15s;margin-left:auto}
 .ruleta-clear-btn:hover{background:var(--rose-soft);border-color:rgba(212,96,122,0.5)}
+/* wheel */
 .ruleta-stage{position:relative;display:flex;flex-direction:column;align-items:center;gap:1.25rem}
 .ruleta-arrow-top{color:var(--accent);font-size:22px;line-height:1;filter:drop-shadow(0 0 8px rgba(192,111,196,0.7));animation:ruletaArrowPulse 2s ease-in-out infinite;z-index:10;position:relative}
 @keyframes ruletaArrowPulse{0%,100%{filter:drop-shadow(0 0 8px rgba(192,111,196,0.5));transform:translateY(0)}50%{filter:drop-shadow(0 0 14px rgba(192,111,196,0.9));transform:translateY(3px)}}
@@ -779,6 +806,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .ruleta-spin-btn:active{transform:translateY(0)}
 .ruleta-spin-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .ruleta-spin-icon{font-size:1rem}
+/* result */
 .ruleta-result{width:100%;animation:ruletaResultIn .5s cubic-bezier(0.34,1.56,0.64,1) both}
 @keyframes ruletaResultIn{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:none}}
 .ruleta-result-inner{background:linear-gradient(135deg,rgba(192,111,196,0.1) 0%,rgba(212,96,122,0.06) 100%);border:1px solid rgba(192,111,196,0.3);border-radius:var(--radius-lg);padding:1.5rem 2rem;text-align:center;box-shadow:0 8px 40px rgba(192,111,196,0.15)}
@@ -795,7 +823,14 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .ruleta-action-btn:hover{border-color:var(--border2);background:var(--surface2);color:var(--text)}
 .ruleta-action-primary{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
 .ruleta-action-primary:hover{background:rgba(192,111,196,0.22);border-color:var(--accent);color:var(--text)}
-@media(max-width:600px){.ruleta-canvas-wrap canvas{width:300px!important;height:300px!important}.ruleta-filtros-card{padding:1rem}.ruleta-result-inner{padding:1rem}}
+@media(max-width:600px){
+  .ruleta-canvas-wrap canvas{width:300px!important;height:300px!important}
+  .ruleta-filtros-card{padding:1rem}
+  .ruleta-result-inner{padding:1rem}
+  .ruleta-selects-grid{grid-template-columns:1fr}
+  .ruleta-spicy-btns{gap:.3rem}
+  .ruleta-spicy-btn{padding:6px 10px;font-size:12px}
+}
 
 /* FOOTER */
 .site-footer{position:relative;z-index:1;border-top:1px solid var(--border2);background:var(--surface);padding:2.5rem 2rem 1.8rem;margin-top:3rem}
@@ -1006,7 +1041,10 @@ body.home-active .hero,body.home-active .main{display:none!important}
     </div>
     <div class="filter-dropdowns">
       <span class="filter-label-txt">Filtrar por</span>
-      <div class="dd-wrap" id="ddGenre">
+      <div class="dd-wrap" id="ddTipo">
+        <button class="dd-btn" onclick="toggleDD('ddTipo')">Tipo <span class="dd-count" id="cntTipo" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="dd-panel"><div class="dd-list" id="listTipo"></div></div>
+      </div>
         <button class="dd-btn" onclick="toggleDD('ddGenre')">Género <span class="dd-count" id="cntGenre" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('genres','listGenre',this.value)"></div><div class="dd-list" id="listGenre"></div></div>
       </div>
@@ -1184,30 +1222,87 @@ body.home-active .hero,body.home-active .main{display:none!important}
   <!-- PANEL RULETA -->
   <div id="panelRuleta" style="display:none">
     <div class="ruleta-wrap">
-      <!-- Filtros de la ruleta -->
+
+      <!-- Filtros propios de la ruleta -->
       <div class="ruleta-filtros-card">
         <div class="ruleta-filtros-header">
-          <span class="ruleta-filtros-label">🎯 Filtros activos</span>
+          <span class="ruleta-filtros-label">Filtros</span>
           <div class="ruleta-filtros-status" id="ruletaStatus">Cargando…</div>
         </div>
-        <div class="ruleta-filtros-pills" id="ruletaFiltrosPills"></div>
+
+        <div class="ruleta-selects-grid">
+          <!-- Tipo -->
+          <div class="ruleta-sel-group">
+            <label class="ruleta-sel-label">Tipo</label>
+            <select class="ruleta-select" id="rfTipo" onchange="ruletaApplyFilters()">
+              <option value="">Todos</option>
+              <option value="thais">🌸 Libros Thais</option>
+              <option value="other">🌍 Occidentales</option>
+              <option value="spanish">💜 En Español</option>
+              <option value="baihee">🐉 Baihee</option>
+              <option value="asian">🏮 Asiáticas</option>
+              <option value="african">🪘 Africanas</option>
+            </select>
+          </div>
+          <!-- Género -->
+          <div class="ruleta-sel-group">
+            <label class="ruleta-sel-label">Género</label>
+            <select class="ruleta-select" id="rfGenre" onchange="ruletaApplyFilters()">
+              <option value="">Todos</option>
+            </select>
+          </div>
+          <!-- Dinámica -->
+          <div class="ruleta-sel-group">
+            <label class="ruleta-sel-label">Dinámica</label>
+            <select class="ruleta-select" id="rfDinamica" onchange="ruletaApplyFilters()">
+              <option value="">Todas</option>
+            </select>
+          </div>
+          <!-- Trope -->
+          <div class="ruleta-sel-group">
+            <label class="ruleta-sel-label">Trope</label>
+            <select class="ruleta-select" id="rfTrope" onchange="ruletaApplyFilters()">
+              <option value="">Todos</option>
+            </select>
+          </div>
+          <!-- Formato -->
+          <div class="ruleta-sel-group">
+            <label class="ruleta-sel-label">Formato</label>
+            <select class="ruleta-select" id="rfFormato" onchange="ruletaApplyFilters()">
+              <option value="">Todos</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Spicy mínimo -->
+        <div class="ruleta-spicy-row">
+          <span class="ruleta-sel-label">Spicy (mínimo)</span>
+          <div class="ruleta-spicy-btns">
+            <button class="ruleta-spicy-btn active" data-val="-1" onclick="ruletaSetSpicy(-1,this)">Cualquiera</button>
+            <button class="ruleta-spicy-btn" data-val="1" onclick="ruletaSetSpicy(1,this)">🌶</button>
+            <button class="ruleta-spicy-btn" data-val="2" onclick="ruletaSetSpicy(2,this)">🌶🌶</button>
+            <button class="ruleta-spicy-btn" data-val="3" onclick="ruletaSetSpicy(3,this)">🌶🌶🌶</button>
+            <button class="ruleta-spicy-btn" data-val="4" onclick="ruletaSetSpicy(4,this)">🌶🌶🌶🌶</button>
+            <button class="ruleta-spicy-btn" data-val="5" onclick="ruletaSetSpicy(5,this)">🌶🌶🌶🌶🌶</button>
+          </div>
+        </div>
+
+        <!-- Toggles valorados -->
         <div class="ruleta-filtros-row">
           <button class="ruleta-toggle-btn" id="ruletaToggleValorados" onclick="ruletaToggleValorados()">
-            <span class="ruleta-toggle-icon">☆</span>
-            <span>Incluir valorados</span>
+            <span>☆ Excluir valorados</span>
           </button>
           <button class="ruleta-toggle-btn" id="ruletaToggleSinValorar" onclick="ruletaToggleSinValorar()">
-            <span class="ruleta-toggle-icon">★</span>
-            <span>Solo sin valorar</span>
+            <span>★ Solo sin valorar</span>
           </button>
-          <button class="ruleta-clear-btn" onclick="ruletaClearFilters()">✕ Usar todos los libros</button>
+          <button class="ruleta-clear-btn" onclick="ruletaClearAll()">✕ Limpiar todo</button>
         </div>
       </div>
 
-      <!-- Canvas de la ruleta -->
+      <!-- Rueda -->
       <div class="ruleta-stage">
         <div class="ruleta-arrow-top">▼</div>
-        <div class="ruleta-canvas-wrap" id="ruletaCanvasWrap">
+        <div class="ruleta-canvas-wrap" id="ruletaCanvasWrap" onclick="ruletaSpin()">
           <canvas id="ruletaCanvas" width="420" height="420"></canvas>
         </div>
         <button class="ruleta-spin-btn" id="ruletaSpinBtn" onclick="ruletaSpin()">
@@ -1222,11 +1317,12 @@ body.home-active .hero,body.home-active .main{display:none!important}
           <div class="ruleta-result-label">Tu próxima lectura ✨</div>
           <div class="ruleta-result-book" id="ruletaResultBook"></div>
           <div class="ruleta-result-actions">
-            <button class="ruleta-action-btn ruleta-action-primary" id="ruletaOpenBtn" onclick="ruletaOpenBook()">Ver ficha del libro</button>
+            <button class="ruleta-action-btn ruleta-action-primary" onclick="ruletaOpenBook()">Ver ficha del libro</button>
             <button class="ruleta-action-btn" onclick="ruletaSpin()">Volver a girar</button>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 
@@ -1324,7 +1420,7 @@ const VALID_TAGS={
   identidad:['Asexual','Bisexual','Butch','Femme','Grumpy','Ice Queen','Introvertida','Lesbiana','Masc','Nerd','Queer','Soft Butch','Sunshine']
 };
 const SPICY_MIN_VOTES=2;
-let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null};
+let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null,tipo:[]};
 let currentPage=1;
 const PAGE_SIZE=24;
 
@@ -1340,7 +1436,7 @@ function pushState(){
     if(activeSection&&activeSection!=='thais') params.set('section',activeSection);
     if(currentPage>1) params.set('page',currentPage);
     if(filters.q) params.set('q',filters.q);
-    ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura'].forEach(k=>{
+    ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura','tipo'].forEach(k=>{
       if(filters[k].length) params.set(k,filters[k].join('|'));
     });
     if(filters.spicy.length) params.set('spicy',filters.spicy.join('|'));
@@ -1357,7 +1453,7 @@ function loadState(){
   if(params.get('section')) activeSection=params.get('section');
   if(params.get('page')) currentPage=parseInt(params.get('page'))||1;
   if(params.get('q')){filters.q=params.get('q');document.getElementById('searchInput').value=filters.q;}
-  ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura'].forEach(k=>{
+  ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura','tipo'].forEach(k=>{
     if(params.get(k)) filters[k]=params.get(k).split('|');
   });
   if(params.get('spicy')) filters.spicy=params.get('spicy').split('|').map(Number);
@@ -1513,6 +1609,47 @@ const DD_MAP = {
   years:'listYear', sagas:'listSaga', edad:'listEdad', pais_cultura:'listPais'
 };
 
+const TIPO_OPTIONS = [
+  {val:'thais',   label:'🌸 Libros Thais'},
+  {val:'other',   label:'🌍 Occidentales'},
+  {val:'spanish', label:'💜 En Español'},
+  {val:'baihee',  label:'🐉 Baihee'},
+  {val:'asian',   label:'🏮 Asiáticas'},
+  {val:'african', label:'🪘 Africanas'},
+];
+
+function buildTipoDD(){
+  const el=document.getElementById('listTipo');
+  if(!el) return;
+  el.innerHTML=(filters.tipo.length?`<div class="dd-clear" onclick="clearTipoFilter()">✕ Limpiar</div>`:'')+
+    TIPO_OPTIONS.map(({val,label})=>{
+      const sid='dd_tipo_'+val;
+      return `<div class="dd-item"><input type="checkbox" id="${sid}" ${filters.tipo.includes(val)?'checked':''} onchange="toggleTipoFilter('${val}')"><label for="${sid}">${label}</label></div>`;
+    }).join('');
+}
+
+function toggleTipoFilter(val){
+  const idx=filters.tipo.indexOf(val);
+  idx>=0?filters.tipo.splice(idx,1):filters.tipo.push(val);
+  buildTipoDD();
+  updateTipoCnt();renderActivePills();applyFilters();
+}
+
+function clearTipoFilter(){
+  filters.tipo=[];
+  buildTipoDD();
+  updateTipoCnt();renderActivePills();applyFilters();
+}
+
+function updateTipoCnt(){
+  const cnt=document.getElementById('cntTipo');
+  const btn=document.querySelector('#ddTipo .dd-btn');
+  if(!cnt||!btn) return;
+  const n=filters.tipo.length;
+  cnt.textContent=n;cnt.style.display=n?'':'none';
+  btn.classList.toggle('has-sel',n>0);
+}
+
 function buildDropdowns(){
   Object.entries(DD_MAP).forEach(([key,listId])=>{
     if(listId==='listYear') buildDDList(listId, uniqVals('years'), 'years');
@@ -1520,7 +1657,9 @@ function buildDropdowns(){
     else buildDDList(listId, uniqVals(key), key);
   });
   buildSpicyDD();
+  buildTipoDD();
   updateDDCounts();
+  updateTipoCnt();
 }
 
 function buildEdadDD(){
@@ -1644,15 +1783,16 @@ function renderActivePills(){
   const labelMap={
     genres:'Género', subgenres:'Temática', dinamicas:'Dinámica',
     tropes:'Tropo', characters:'Personaje', authors:'Autora',
-    years:'Año', spicy:'Spicy', sagas:'Saga', edad:'Edad', pais_cultura:'País'
+    years:'Año', spicy:'Spicy', sagas:'Saga', edad:'Edad', pais_cultura:'País', tipo:'Tipo'
   };
+  const tipoLabelMap=Object.fromEntries(TIPO_OPTIONS.map(o=>[o.val,o.label]));
   const pills=[];
   Object.entries(filters).forEach(([key,arr])=>{
     if(key==='q'||key==='valoracion'||key==='adaptacion') return;
     if(!arr.length) return;
     arr.forEach(v=>{
-      const display=key==='spicy'?SPICY_LABELS[v]:v;
-      const removeCall=key==='spicy'?`toggleDDFilter('spicy',${v})`:`toggleDDFilter('${key}','${v.replace(/'/g,"\\'")}')`;
+      const display=key==='spicy'?SPICY_LABELS[v]:key==='tipo'?(tipoLabelMap[v]||v):v;
+      const removeCall=key==='spicy'?`toggleDDFilter('spicy',${v})`:key==='tipo'?`toggleTipoFilter('${v}')`:`toggleDDFilter('${key}','${v.replace(/'/g,"\\'")}')`;
       pills.push(`<span class="af-pill">${labelMap[key]}: ${display}<button onclick="${removeCall}">×</button></span>`);
     });
   });
@@ -1671,7 +1811,7 @@ function renderActivePills(){
 }
 
 function clearAllFilters(){
-  filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null};
+  filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null,tipo:[]};
   document.getElementById('searchInput').value='';
   updateValoracionBtns();
   updateAdaptacionBtn();
@@ -1722,10 +1862,16 @@ function applyFilters(resetPage=true){
   else if(sort==='za') books.sort((a,b)=>b.title.localeCompare(a.title,'es'));
   else if(sort==='year_desc') books.sort((a,b)=>(b.year||0)-(a.year||0));
   else if(sort==='year_asc') books.sort((a,b)=>(a.year||0)-(b.year||0));
-  // Filter by active section
-  books=books.filter(b=>b.source===activeSection);
+  // Filter by tipo (sections) — if nothing selected, use activeSection tab; if selected, filter by chosen types
+  if(filters.tipo.length){
+    books=books.filter(b=>filters.tipo.includes(b.source));
+  } else {
+    books=books.filter(b=>b.source===activeSection);
+  }
   const total=books.length;
-  const secAll=allBooks.filter(b=>b.source===activeSection).length;
+  const secAll=filters.tipo.length
+    ? allBooks.filter(b=>filters.tipo.includes(b.source)).length
+    : allBooks.filter(b=>b.source===activeSection).length;
   const totalPages=Math.max(1,Math.ceil(total/PAGE_SIZE));
   if(currentPage>totalPages) currentPage=totalPages;
   document.getElementById('resultsCount').textContent=`${total} de ${secAll} libros`;
@@ -3198,8 +3344,8 @@ let ruletaSelectedBook = null;
 let ruletaAngle = 0;
 let ruletaExcludeValorados = false;
 let ruletaOnlyPendientes = false;
+let ruletaSpicyMin = -1; // -1 = cualquiera
 
-// Colores de los segmentos (paleta oscura con acentos del tema)
 const RULETA_COLORS = [
   '#2a1f36','#221930','#1e1428','#261d33',
   '#2c1e38','#1f1630','#251c30','#2e2040',
@@ -3212,101 +3358,133 @@ const RULETA_ACCENT_COLORS = [
   'rgba(201,151,90,0.3)','rgba(192,111,196,0.35)','rgba(212,96,122,0.35)'
 ];
 
-function getFilteredBooksForRuleta() {
-  let books = [...allBooks];
-  // Apply all current filters exactly as applyFilters does
-  if (filters.q) books = books.filter(b => (b.title + ' ' + (b.authors||[]).join(' ') + (getSaga(b)||'')).toLowerCase().includes(filters.q));
-  if (filters.genres.length)    books = books.filter(b => filters.genres.every(g => (b.genres||[]).includes(g)));
-  if (filters.subgenres.length) books = books.filter(b => filters.subgenres.every(s => (b.subgenres||[]).includes(s)));
-  if (filters.dinamicas.length) books = books.filter(b => filters.dinamicas.every(d => [...(b.dinamicas||[]), ...((communityTagsMap[b.id]||{}).dinamica||[])].includes(d)));
-  if (filters.tropes.length)    books = books.filter(b => filters.tropes.every(t => [...(b.tropes||[]), ...((communityTagsMap[b.id]||{}).trope||[])].includes(t)));
-  if (filters.characters.length) books = books.filter(b => filters.characters.every(c => [...(b.characters||[]), ...((communityTagsMap[b.id]||{}).character||[])].includes(c)));
-  if (filters.authors.length)   books = books.filter(b => filters.authors.some(a => (b.authors||[]).includes(a)));
-  if (filters.years.length)     books = books.filter(b => filters.years.includes(String(b.year)));
-  if (filters.spicy.length || filters.spicyUnknown) {
-    books = books.filter(b => {
-      const s = effectiveSpicy(b);
-      if (filters.spicyUnknown && s == null) return true;
-      if (filters.spicy.length && s != null && filters.spicy.includes(s)) return true;
-      return false;
+/* ── Poblar selects con valores únicos del catálogo completo ── */
+function ruletaBuildSelects() {
+  const books = allBooks; // todos, sin filtro de sección
+  function uniq(arr) { return [...new Set(arr.filter(Boolean))].sort(); }
+
+  const genres   = uniq(books.flatMap(b => b.genres   || []));
+  const dinamicas = uniq(books.flatMap(b => b.dinamicas || []));
+  const tropes   = uniq(books.flatMap(b => b.tropes   || []));
+  const formatos = uniq(books.map(b => b.formato).filter(Boolean));
+
+  function fill(id, vals) {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    const first = sel.options[0]; // "Todos / Todas"
+    sel.innerHTML = '';
+    sel.appendChild(first);
+    vals.forEach(v => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = v;
+      sel.appendChild(o);
     });
   }
-  if (filters.sagas.length)     books = books.filter(b => filters.sagas.includes(getSaga(b)));
-  if (filters.edad.length)      books = books.filter(b => filters.edad.every(e => (b.edad||[]).includes(e)));
-  if (filters.pais_cultura.length) books = books.filter(b => filters.pais_cultura.every(p => (b.pais_cultura||[]).includes(p)));
-  if (filters.adaptacion === 'serie') books = books.filter(b => b.adaptacion === 'Tiene serie');
-  // section filter
-  books = books.filter(b => b.source === activeSection);
-  // valorados toggle
-  if (ruletaOnlyPendientes) books = books.filter(b => !myRatings[b.id]);
+  fill('rfGenre',   genres);
+  fill('rfDinamica', dinamicas);
+  fill('rfTrope',   tropes);
+  fill('rfFormato', formatos);
+}
+
+/* ── Calcular pool con filtros propios de la ruleta ── */
+function getFilteredBooksForRuleta() {
+  let books = [...allBooks]; // TODOS los libros, sin filtro de sección
+
+  const genre   = document.getElementById('rfGenre')?.value   || '';
+  const dinamica= document.getElementById('rfDinamica')?.value || '';
+  const trope   = document.getElementById('rfTrope')?.value   || '';
+  const formato = document.getElementById('rfFormato')?.value || '';
+  const tipo    = document.getElementById('rfTipo')?.value    || '';
+
+  if (tipo)     books = books.filter(b => b.source === tipo);
+  if (genre)    books = books.filter(b => (b.genres    || []).includes(genre));
+  if (dinamica) books = books.filter(b => [...(b.dinamicas || []), ...((communityTagsMap[b.id]||{}).dinamica||[])].includes(dinamica));
+  if (trope)    books = books.filter(b => [...(b.tropes || []), ...((communityTagsMap[b.id]||{}).trope||[])].includes(trope));
+  if (formato)  books = books.filter(b => b.formato === formato);
+
+  // Spicy mínimo
+  if (ruletaSpicyMin >= 0) {
+    books = books.filter(b => {
+      const s = effectiveSpicy(b);
+      return s != null && s >= ruletaSpicyMin;
+    });
+  }
+
+  // Valorados
+  if (ruletaOnlyPendientes)    books = books.filter(b => !myRatings[b.id]);
   else if (ruletaExcludeValorados) books = books.filter(b => !myRatings[b.id]);
+
   return books;
 }
 
 function ruletaInit() {
   ruletaSelectedBook = null;
   document.getElementById('ruletaResult').style.display = 'none';
+  ruletaBuildSelects();
+  ruletaApplyFilters();
+}
+
+function ruletaApplyFilters() {
   ruletaPool = getFilteredBooksForRuleta();
-  ruletaUpdateUI();
+  // highlight active selects
+  ['rfTipo','rfGenre','rfDinamica','rfTrope','rfFormato'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('has-val', !!el.value);
+  });
+  ruletaUpdateStatus();
   ruletaDraw();
 }
 
-function ruletaUpdateUI() {
-  ruletaPool = getFilteredBooksForRuleta();
-  const status = document.getElementById('ruletaStatus');
-  const spinBtn = document.getElementById('ruletaSpinBtn');
-  status.textContent = ruletaPool.length === 0 ? 'Sin libros con estos filtros' : `${ruletaPool.length} libro${ruletaPool.length !== 1 ? 's' : ''} en la ruleta`;
-  if (spinBtn) spinBtn.disabled = ruletaPool.length === 0 || ruletaSpinning;
-  // Render active filter pills
-  const pillsEl = document.getElementById('ruletaFiltrosPills');
-  if (!pillsEl) return;
-  const labelMap = { genres:'Género', subgenres:'Temática', dinamicas:'Dinámica', tropes:'Tropo', characters:'Personaje', authors:'Autora', years:'Año', spicy:'Spicy', sagas:'Saga', edad:'Edad', pais_cultura:'País' };
-  const pills = [];
-  Object.entries(filters).forEach(([key, arr]) => {
-    if (key === 'q' || key === 'valoracion' || key === 'adaptacion') return;
-    if (!arr.length) return;
-    arr.forEach(v => {
-      const display = key === 'spicy' ? SPICY_LABELS[v] : v;
-      pills.push(`<span class="af-pill">${labelMap[key]}: ${display}</span>`);
-    });
-  });
-  if (filters.q) pills.push(`<span class="af-pill">🔍 "${filters.q}"</span>`);
-  if (filters.adaptacion === 'serie') pills.push(`<span class="af-pill">📺 Con serie</span>`);
-  if (filters.spicyUnknown) pills.push(`<span class="af-pill">Spicy: desconocido</span>`);
-  if (pills.length === 0) pills.push(`<span style="font-size:12px;color:var(--muted);font-style:italic">Ningún filtro aplicado — se usan todos los libros de la sección activa</span>`);
-  pillsEl.innerHTML = pills.join('');
-  // Toggle buttons
-  const btnExcl = document.getElementById('ruletaToggleValorados');
-  const btnOnly = document.getElementById('ruletaToggleSinValorar');
-  if (btnExcl) {
-    btnExcl.className = 'ruleta-toggle-btn' + (ruletaExcludeValorados ? ' active-excl' : '');
-    btnExcl.querySelector('span:last-child').textContent = ruletaExcludeValorados ? 'Excluir valorados ✓' : 'Excluir valorados';
-  }
-  if (btnOnly) {
-    btnOnly.className = 'ruleta-toggle-btn' + (ruletaOnlyPendientes ? ' active-only' : '');
-    btnOnly.querySelector('span:last-child').textContent = ruletaOnlyPendientes ? 'Solo sin valorar ✓' : 'Solo sin valorar';
-  }
-  ruletaDraw();
+function ruletaSetSpicy(val, btn) {
+  ruletaSpicyMin = val;
+  document.querySelectorAll('.ruleta-spicy-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.val) === val));
+  ruletaApplyFilters();
 }
 
 function ruletaToggleValorados() {
   if (!currentUser) { showToast('Inicia sesión para usar esta opción', 'error'); return; }
   ruletaExcludeValorados = !ruletaExcludeValorados;
   if (ruletaExcludeValorados) ruletaOnlyPendientes = false;
-  ruletaUpdateUI();
+  ruletaUpdateToggleBtns();
+  ruletaApplyFilters();
 }
 function ruletaToggleSinValorar() {
   if (!currentUser) { showToast('Inicia sesión para usar esta opción', 'error'); return; }
   ruletaOnlyPendientes = !ruletaOnlyPendientes;
   if (ruletaOnlyPendientes) ruletaExcludeValorados = false;
-  ruletaUpdateUI();
+  ruletaUpdateToggleBtns();
+  ruletaApplyFilters();
 }
-function ruletaClearFilters() {
+function ruletaClearAll() {
   ruletaExcludeValorados = false;
   ruletaOnlyPendientes = false;
-  ruletaUpdateUI();
+  ruletaSpicyMin = -1;
+  ['rfTipo','rfGenre','rfDinamica','rfTrope','rfFormato'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ''; el.classList.remove('has-val'); }
+  });
+  document.querySelectorAll('.ruleta-spicy-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.val) === -1));
+  ruletaUpdateToggleBtns();
+  ruletaApplyFilters();
 }
 
+function ruletaUpdateStatus() {
+  const el = document.getElementById('ruletaStatus');
+  const btn = document.getElementById('ruletaSpinBtn');
+  if (el) el.textContent = ruletaPool.length === 0
+    ? 'Sin libros con estos filtros'
+    : `${ruletaPool.length} libro${ruletaPool.length !== 1 ? 's' : ''} en la ruleta`;
+  if (btn) btn.disabled = ruletaPool.length === 0 || ruletaSpinning;
+}
+
+function ruletaUpdateToggleBtns() {
+  const bE = document.getElementById('ruletaToggleValorados');
+  const bO = document.getElementById('ruletaToggleSinValorar');
+  if (bE) bE.className = 'ruleta-toggle-btn' + (ruletaExcludeValorados ? ' active-excl' : '');
+  if (bO) bO.className = 'ruleta-toggle-btn' + (ruletaOnlyPendientes  ? ' active-only' : '');
+}
+
+/* ── Canvas ── */
 function ruletaDraw(highlightIdx = -1) {
   const canvas = document.getElementById('ruletaCanvas');
   if (!canvas) return;
@@ -3316,119 +3494,90 @@ function ruletaDraw(highlightIdx = -1) {
   const R = W / 2 - 4;
   ctx.clearRect(0, 0, W, H);
 
-  const pool = ruletaPool;
-  const n = pool.length;
+  const n = ruletaPool.length;
 
   if (n === 0) {
-    // Empty state
     ctx.fillStyle = '#1e1924';
     ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = 'rgba(192,111,196,0.3)';
-    ctx.lineWidth = 2;
-    ctx.stroke();
+    ctx.strokeStyle = 'rgba(192,111,196,0.3)'; ctx.lineWidth = 2; ctx.stroke();
     ctx.fillStyle = 'rgba(138,120,152,0.5)';
     ctx.font = `bold 14px 'Instrument Sans', sans-serif`;
-    ctx.textAlign = 'center';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText('Sin libros', cx, cy - 8);
     ctx.font = `12px 'Instrument Sans', sans-serif`;
     ctx.fillText('Ajusta los filtros', cx, cy + 12);
     return;
   }
 
-  // Draw segments
-  const segCount = Math.min(n, 24); // max 24 visual segments
+  const segCount = Math.min(n, 24);
   const anglePerSeg = (Math.PI * 2) / segCount;
 
   for (let i = 0; i < segCount; i++) {
     const startAngle = ruletaAngle + i * anglePerSeg - Math.PI / 2;
     const endAngle = startAngle + anglePerSeg;
-    const isHighlight = i === highlightIdx;
+    const isH = i === highlightIdx;
 
-    // Fill
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, R, startAngle, endAngle);
-    ctx.closePath();
-    ctx.fillStyle = isHighlight ? RULETA_ACCENT_COLORS[i % RULETA_ACCENT_COLORS.length].replace(/0\.\d+\)/, '0.8)') : RULETA_COLORS[i % RULETA_COLORS.length];
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, R, startAngle, endAngle); ctx.closePath();
+    ctx.fillStyle = isH
+      ? RULETA_ACCENT_COLORS[i % RULETA_ACCENT_COLORS.length].replace(/[\d.]+\)$/, '0.75)')
+      : RULETA_COLORS[i % RULETA_COLORS.length];
     ctx.fill();
 
-    // Accent border inner glow
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, R, startAngle, endAngle);
-    ctx.closePath();
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, R, startAngle, endAngle); ctx.closePath();
     ctx.strokeStyle = RULETA_ACCENT_COLORS[i % RULETA_ACCENT_COLORS.length];
-    ctx.lineWidth = isHighlight ? 2 : 1;
-    ctx.stroke();
+    ctx.lineWidth = isH ? 2 : 1; ctx.stroke();
 
-    // Decorative dot
     const midAngle = startAngle + anglePerSeg / 2;
     const dotR = R * 0.72;
-    const dotX = cx + Math.cos(midAngle) * dotR;
-    const dotY = cy + Math.sin(midAngle) * dotR;
     ctx.beginPath();
-    ctx.arc(dotX, dotY, isHighlight ? 5 : 3, 0, Math.PI * 2);
-    ctx.fillStyle = isHighlight ? 'rgba(255,255,255,0.9)' : RULETA_ACCENT_COLORS[i % RULETA_ACCENT_COLORS.length].replace(/,\s*[\d.]+\)/, ', 0.7)');
+    ctx.arc(cx + Math.cos(midAngle) * dotR, cy + Math.sin(midAngle) * dotR, isH ? 5 : 3, 0, Math.PI * 2);
+    ctx.fillStyle = isH ? 'rgba(255,255,255,0.9)' : RULETA_ACCENT_COLORS[i % RULETA_ACCENT_COLORS.length].replace(/[\d.]+\)$/, '0.6)');
     ctx.fill();
 
-    // Small decorative marks at R * 0.88
-    if (n <= 12) {
+    if (segCount <= 16) {
       const markR = R * 0.87;
-      const markX = cx + Math.cos(midAngle) * markR;
-      const markY = cy + Math.sin(midAngle) * markR;
       ctx.save();
-      ctx.translate(markX, markY);
+      ctx.translate(cx + Math.cos(midAngle) * markR, cy + Math.sin(midAngle) * markR);
       ctx.rotate(midAngle + Math.PI / 2);
-      ctx.font = `bold ${isHighlight ? 12 : 10}px serif`;
-      ctx.fillStyle = isHighlight ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.35)';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
+      ctx.font = `bold ${isH ? 12 : 9}px serif`;
+      ctx.fillStyle = isH ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.3)';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText('✦', 0, 0);
       ctx.restore();
     }
   }
 
-  // Divider lines
+  // dividers
   for (let i = 0; i < segCount; i++) {
     const angle = ruletaAngle + i * anglePerSeg - Math.PI / 2;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
+    ctx.beginPath(); ctx.moveTo(cx, cy);
     ctx.lineTo(cx + Math.cos(angle) * R, cy + Math.sin(angle) * R);
-    ctx.strokeStyle = 'rgba(14,11,16,0.6)';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
+    ctx.strokeStyle = 'rgba(14,11,16,0.55)'; ctx.lineWidth = 1.5; ctx.stroke();
   }
 
-  // Outer ring
-  ctx.beginPath();
-  ctx.arc(cx, cy, R, 0, Math.PI * 2);
-  ctx.strokeStyle = 'rgba(192,111,196,0.4)';
-  ctx.lineWidth = 3;
-  ctx.stroke();
+  // outer ring
+  ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(192,111,196,0.4)'; ctx.lineWidth = 3; ctx.stroke();
 
-  // Inner decorative ring
-  ctx.beginPath();
-  ctx.arc(cx, cy, R * 0.18, 0, Math.PI * 2);
-  ctx.fillStyle = '#0e0b10';
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(192,111,196,0.5)';
-  ctx.lineWidth = 2;
-  ctx.stroke();
+  // inner hub
+  ctx.beginPath(); ctx.arc(cx, cy, R * 0.18, 0, Math.PI * 2);
+  ctx.fillStyle = '#0e0b10'; ctx.fill();
+  ctx.strokeStyle = 'rgba(192,111,196,0.5)'; ctx.lineWidth = 2; ctx.stroke();
 
-  // Center gem
-  ctx.beginPath();
-  ctx.arc(cx, cy, R * 0.08, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(192,111,196,0.8)';
-  ctx.fill();
+  // center gem
+  ctx.beginPath(); ctx.arc(cx, cy, R * 0.08, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(192,111,196,0.8)'; ctx.fill();
 
-  // Count text in center
+  // count
   ctx.font = `bold 11px 'Instrument Sans', sans-serif`;
-  ctx.fillStyle = 'rgba(240,234,245,0.8)';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  if (n <= 99) ctx.fillText(n, cx, cy);
+  ctx.fillStyle = 'rgba(240,234,245,0.75)';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(n, cx, cy);
 }
 
+/* ── Spin ── */
 function ruletaSpin() {
   const pool = getFilteredBooksForRuleta();
   if (pool.length === 0 || ruletaSpinning) return;
@@ -3437,32 +3586,24 @@ function ruletaSpin() {
   document.getElementById('ruletaResult').style.display = 'none';
   document.getElementById('ruletaSpinBtn').disabled = true;
 
-  // Pick random book
   const winner = pool[Math.floor(Math.random() * pool.length)];
   const segCount = Math.min(pool.length, 24);
   const winnerIdx = pool.indexOf(winner) % segCount;
   const anglePerSeg = (Math.PI * 2) / segCount;
 
-  // Calculate target angle so winner segment lands under top (pointer)
-  // The pointer is at top (-PI/2). Segment i starts at ruletaAngle + i*anglePerSeg - PI/2
-  // We want the midpoint of segment winnerIdx to end at 0 (top after rotation)
-  // target = -(winnerIdx + 0.5) * anglePerSeg
-  const spins = 5 + Math.floor(Math.random() * 4); // 5-8 full spins
+  const spins = 5 + Math.floor(Math.random() * 4);
   const targetAngleInWheel = -(winnerIdx + 0.5) * anglePerSeg;
   const totalRotation = spins * Math.PI * 2 + targetAngleInWheel - (ruletaAngle % (Math.PI * 2));
   const duration = 4000 + Math.random() * 1500;
   const startAngle = ruletaAngle;
   const startTime = performance.now();
 
-  function easeOut(t) {
-    return 1 - Math.pow(1 - t, 4);
-  }
+  function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
 
   function animate(now) {
     const elapsed = now - startTime;
     const t = Math.min(elapsed / duration, 1);
-    const easedT = easeOut(t);
-    ruletaAngle = startAngle + totalRotation * easedT;
+    ruletaAngle = startAngle + totalRotation * easeOut(t);
     ruletaDraw();
     if (t < 1) {
       requestAnimationFrame(animate);
@@ -3478,6 +3619,7 @@ function ruletaSpin() {
   requestAnimationFrame(animate);
 }
 
+/* ── Resultado ── */
 function ruletaShowResult(book) {
   const el = document.getElementById('ruletaResult');
   const bookEl = document.getElementById('ruletaResultBook');
@@ -3491,15 +3633,16 @@ function ruletaShowResult(book) {
   const spicyTag = spicyEff != null && spicyEff > 0
     ? `<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25);font-size:11px">${SPICY_ICONS[spicyEff]}</span>` : '';
   const genreTags = (book.genres || []).slice(0, 2).map(g => `<span class="tag tag-genre" style="font-size:11px">${g}</span>`).join('');
-  const ratingTag = r.count > 0 ? `<span class="tag" style="background:rgba(201,151,90,0.12);color:var(--gold);border:1px solid rgba(201,151,90,0.2);font-size:11px">★ ${r.avg.toFixed(1)} (${r.count})</span>` : '';
-  const myTag = myScore > 0 ? `<span class="tag" style="background:var(--accent-soft);color:var(--accent2);border:1px solid rgba(192,111,196,0.2);font-size:11px">${'★'.repeat(myScore)} Mi voto</span>` : '';
+  const ratingTag = r.count > 0
+    ? `<span class="tag" style="background:rgba(201,151,90,0.12);color:var(--gold);border:1px solid rgba(201,151,90,0.2);font-size:11px">★ ${r.avg.toFixed(1)} (${r.count})</span>` : '';
+  const myTag = myScore > 0
+    ? `<span class="tag" style="background:var(--accent-soft);color:var(--accent2);border:1px solid rgba(192,111,196,0.2);font-size:11px">${'★'.repeat(myScore)} Mi voto</span>` : '';
   bookEl.innerHTML = `${coverEl}<div class="ruleta-result-info">
     <div class="ruleta-result-title">${book.title}</div>
     <div class="ruleta-result-author">por ${authorStr}</div>
     <div class="ruleta-result-tags">${genreTags}${spicyTag}${ratingTag}${myTag}</div>
   </div>`;
   el.style.display = '';
-  // re-trigger animation
   el.classList.remove('ruleta-result');
   void el.offsetWidth;
   el.classList.add('ruleta-result');
