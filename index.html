@@ -219,6 +219,25 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .spicy-dd-item label{cursor:pointer;font-size:12.5px;color:var(--text);display:flex;flex-direction:column;gap:1px}
 .spicy-dd-item label small{font-size:10.5px;color:var(--muted)}
 
+/* ── Filtros solo para usuarias registradas ── */
+.dd-wrap.auth-only{display:none}
+.dd-wrap.auth-only.visible{display:inline-block}
+
+/* Aviso filtros ocultos */
+.filters-auth-hint{
+  display:inline-flex;align-items:center;gap:.35em;
+  font-size:11px;color:var(--muted);
+  padding:4px 10px;border-radius:20px;
+  border:1px dashed rgba(192,111,196,0.25);
+  background:rgba(192,111,196,0.05);
+  white-space:nowrap;cursor:pointer;
+  transition:color .15s,border-color .15s,background .15s;
+  font-style:italic;
+}
+.filters-auth-hint:hover{color:var(--accent2);border-color:rgba(192,111,196,0.5);background:rgba(192,111,196,0.1)}
+.filters-auth-hint a{color:var(--accent2);text-decoration:underline;cursor:pointer}
+.filters-auth-hint.hidden{display:none}
+
 /* Fila inferior: pills activos + resultados */
 .filter-bottom{
   display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
@@ -325,7 +344,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .meta-item{display:flex;flex-direction:column;gap:1px}
 .meta-key{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .meta-val{font-size:13.5px;color:var(--text)}
-.modal-synopsis{font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:1.4rem}
+.modal-synopsis{font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:.75rem}
+.modal-synopsis:last-of-type{margin-bottom:0}
+.modal-synopsis-wrap{position:relative;margin-bottom:1.4rem}
+.modal-synopsis-wrap .modal-synopsis{margin-bottom:0}
 .buy-section{margin-bottom:1.2rem}
 .buy-title{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:.6rem}
 .buy-links{display:flex;flex-wrap:wrap;gap:.4rem}
@@ -993,7 +1015,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
   <p class="hero-sub">Vota tus favoritos y descubre qué están leyendo las demás. El ranking lo construimos juntas.</p>
   <div class="hero-stats">
     <div class="stat-item"><div class="stat-num" id="statBooks"><em>—</em></div><div class="stat-label">Libros</div></div>
-    <div class="stat-item"><div class="stat-num" id="statVotes"><em>—</em></div><div class="stat-label">Valoraciones</div></div>
+    <div class="stat-item" id="statVotesItem" style="display:none"><div class="stat-num" id="statVotes"><em>—</em></div><div class="stat-label">Valoraciones</div></div>
   </div>
 </section>
 
@@ -1050,7 +1072,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
         <button class="dd-btn" onclick="toggleDD('ddSubgenre')">Temática <span class="dd-count" id="cntSubgenre" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('subgenres','listSubgenre',this.value)"></div><div class="dd-list" id="listSubgenre"></div></div>
       </div>
-      <div class="dd-wrap" id="ddDinamica">
+      <div class="dd-wrap auth-only" id="ddDinamica">
         <button class="dd-btn" onclick="toggleDD('ddDinamica')">Dinámica <span class="dd-count" id="cntDinamica" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('dinamicas','listDinamica',this.value)"></div><div class="dd-list" id="listDinamica"></div></div>
       </div>
@@ -1070,7 +1092,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
         <button class="dd-btn" onclick="toggleDD('ddYear')">Año <span class="dd-count" id="cntYear" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-list" id="listYear"></div></div>
       </div>
-      <div class="dd-wrap" id="ddSpicy">
+      <div class="dd-wrap auth-only" id="ddSpicy">
         <button class="dd-btn" onclick="toggleDD('ddSpicy')">Spicy <span class="dd-count" id="cntSpicy" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel" id="listSpicy"></div>
       </div>
@@ -1078,11 +1100,11 @@ body.home-active .hero,body.home-active .main{display:none!important}
         <button class="dd-btn" onclick="toggleDD('ddSaga')">Saga <span class="dd-count" id="cntSaga" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('sagas','listSaga',this.value)"></div><div class="dd-list" id="listSaga"></div></div>
       </div>
-      <div class="dd-wrap" id="ddEdad">
+      <div class="dd-wrap auth-only" id="ddEdad">
         <button class="dd-btn" onclick="toggleDD('ddEdad')">Edad <span class="dd-count" id="cntEdad" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-list" id="listEdad"></div></div>
       </div>
-      <div class="dd-wrap" id="ddPais">
+      <div class="dd-wrap auth-only" id="ddPais">
         <button class="dd-btn" onclick="toggleDD('ddPais')">País <span class="dd-count" id="cntPais" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('pais_cultura','listPais',this.value)"></div><div class="dd-list" id="listPais"></div></div>
       </div>
@@ -1091,6 +1113,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
         <button class="dd-btn" id="btnNoValorado" onclick="toggleValoracion('no_valorado')" title="Mostrar libros que aún no he valorado">☆ Sin valorar</button>
       </div>
       <button class="dd-btn" id="btnConSerie" onclick="toggleAdaptacion('serie')" title="Solo libros con serie de televisión">Con serie</button>
+      <span class="filters-auth-hint" id="filtersAuthHint" onclick="openAuthModal()">🔒 Más filtros al <a>registrarte</a></span>
     </div>
     <div class="filter-bottom">
       <div class="active-filters" id="activeFilters"></div>
@@ -1521,6 +1544,7 @@ async function init(){
     renderAuthUI();
     debouncedLoadRatings();
     if(activeTab==='solicitudes') renderSolicitudes();
+    if(activeTab==='ruleta') ruletaInit();
   });
   document.addEventListener('click',e=>{if(!e.target.closest('.dd-wrap')&&!e.target.closest('.ruleta-dd-wrap')){closeAllDD();closeAllRDD();}});
 }
@@ -1858,9 +1882,9 @@ function renderGrid(books, total, totalPages){
     const myScore=myRatings[b.id]||0;
     const authorStr=(b.authors||[]).join(', ')||'—';
     const coverEl=b.cover?`<img class="book-cover" src="${b.cover}" alt="${b.title}" onerror="this.outerHTML='<div class=book-cover-ph>📖</div>'">`:`<div class="book-cover-ph">📖</div>`;
-    const avgBadge=r.count>0?`<div class="avg-badge"><span style="color:var(--gold);font-size:11px">★</span><span style="font-size:11.5px;font-weight:600;color:var(--text)">${r.avg.toFixed(1)}</span><span style="font-size:10px;color:var(--muted)">(${r.count})</span></div>`:'';
+    const avgBadge=currentUser&&r.count>0?`<div class="avg-badge"><span style="color:var(--gold);font-size:11px">★</span><span style="font-size:11.5px;font-weight:600;color:var(--text)">${r.avg.toFixed(1)}</span><span style="font-size:10px;color:var(--muted)">(${r.count})</span></div>`:'';
     const spicyEff=effectiveSpicy(b);
-    const spicyBadge=(spicyEff!=null&&spicyEff>0)?`<div class="spicy-badge">${SPICY_ICONS[spicyEff]}</div>`:(spicyEff==null)?`<div class="spicy-badge" title="Nivel spicy desconocido" style="opacity:.65">${SPICY_UNKNOWN_ICON}</div>`:'';
+    const spicyBadge=currentUser?((spicyEff!=null&&spicyEff>0)?`<div class="spicy-badge">${SPICY_ICONS[spicyEff]}</div>`:(spicyEff==null)?`<div class="spicy-badge" title="Nivel spicy desconocido" style="opacity:.65">${SPICY_UNKNOWN_ICON}</div>`:''):`<div class="spicy-badge" title="Regístrate para ver el nivel spicy" style="opacity:.5;cursor:pointer" onclick="event.stopPropagation();openAuthModal()">🔒</div>`;
     const genreTags=(b.genres||[]).slice(0,2).map(g=>`<span class="tag tag-genre">${g}</span>`).join('');
     const dinamicaTag=(b.dinamicas||[]).slice(0,1).map(d=>`<span class="tag tag-dinamica">${d}</span>`).join('');
     const tropeTags=!dinamicaTag?(b.tropes||[]).slice(0,1).map(t=>`<span class="tag tag-trope">${t}</span>`).join(''):'';
@@ -1879,7 +1903,9 @@ function renderGrid(books, total, totalPages){
         <div class="book-author">${authorStr}</div>
         <div class="book-tags">${genreTags}${dinamicaTag}${tropeTags}${yearTag}${formatoTag}${adaptTag}</div>
         <div class="book-footer">
-          ${r.count>0?`<span style="color:var(--gold);font-size:11px">★ ${r.avg.toFixed(1)}</span>`:`<span class="no-ratings">Sin valoraciones</span>`}
+          ${currentUser
+            ? (r.count>0?`<span style="color:var(--gold);font-size:11px">★ ${r.avg.toFixed(1)}</span>`:`<span class="no-ratings">Sin valoraciones</span>`)
+            : `<span class="no-ratings" style="cursor:pointer" onclick="event.stopPropagation();openAuthModal()">🔒 Regístrate</span>`}
           <button class="vote-mini-btn${myScore>0?' voted':''}" onclick="event.stopPropagation();openBook('${b.id}')">${voteLabel}</button>
         </div>
       </div>
@@ -1957,10 +1983,12 @@ function renderBookModal(){
   const characterTags=(b.characters||[]).map(c=>`<span class="tag tag-character tag-clickable" onclick="filterByTagFromModal('characters',decodeURIComponent('${encodeURIComponent(c)}'))">${c}</span>`).join('');
   const spicyEff=effectiveSpicy(b);
   const spicyIsUnknown=spicyEff==null;
-  const spicyTag=spicyIsUnknown
-    ?`<span class="tag" style="background:rgba(138,120,152,0.15);color:var(--muted);border:1px solid rgba(138,120,152,0.3)">${SPICY_UNKNOWN_ICON} ${SPICY_UNKNOWN_LABEL}</span>`
-    :(spicyEff>0?`<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_ICONS[spicyEff]} ${SPICY_LABELS[spicyEff]}</span>`:
-    `<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_LABELS[0]}</span>`);
+  const spicyTag=currentUser
+    ?(spicyIsUnknown
+      ?`<span class="tag" style="background:rgba(138,120,152,0.15);color:var(--muted);border:1px solid rgba(138,120,152,0.3)">${SPICY_UNKNOWN_ICON} ${SPICY_UNKNOWN_LABEL}</span>`
+      :(spicyEff>0?`<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_ICONS[spicyEff]} ${SPICY_LABELS[spicyEff]}</span>`
+      :`<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25)">${SPICY_LABELS[0]}</span>`))
+    :`<span class="tag" style="background:rgba(138,120,152,0.1);color:var(--muted);border:1px dashed rgba(138,120,152,0.3);cursor:pointer" onclick="closeBookModal();openAuthModal()" title="Regístrate para ver el nivel spicy">🔒 Spicy oculto</span>`;
   const formatoTag=b.formato&&!['Saga','Dúo','Trilogía'].includes(b.formato)?`<span class="tag tag-formato">${b.formato}</span>`:'';
   const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
   const sagaName=b.sagaName||(b.formato&&['Saga','Dúo','Trilogía'].includes(b.formato)?getSaga(b):null);
@@ -1984,7 +2012,12 @@ function renderBookModal(){
         ${b.pages?`<div class="meta-item"><span class="meta-key">Páginas</span><span class="meta-val">${b.pages}</span></div>`:''}
         ${b.isbn?`<div class="meta-item"><span class="meta-key">ISBN</span><span class="meta-val">${b.isbn}</span></div>`:''}
       </div>
-      ${b.synopsis?`<p class="modal-synopsis">${b.synopsis}</p>`:''}
+      ${b.synopsis?(()=>{
+        const paras=b.synopsis.split(/\n\n+/).map(p=>p.replace(/\n/g,' ').trim()).filter(Boolean);
+        const full=paras.map(p=>`<p class="modal-synopsis">${p}</p>`).join('');
+        const preview=`<p class="modal-synopsis">${paras[0]||b.synopsis}</p>`;
+        return `<div class="modal-synopsis-wrap">${full}</div>`;
+      })():''}
       ${b.editions&&b.editions.length?`
       <div class="buy-section">
         <div class="buy-title">Dónde comprarlo</div>
@@ -1996,8 +2029,14 @@ function renderBookModal(){
           </a>`).join('')}
         </div>
       </div>`:''}
-      <div class="rating-section" id="modalRatingSection"><div class="rating-title">Valoración de la comunidad</div>${communityRating}${voteArea}</div>
-      <div id="modalSpicySection">${buildSpicySectionHTML()}</div>
+      ${currentUser
+        ? `<div class="rating-section" id="modalRatingSection"><div class="rating-title">Valoración de la comunidad</div>${communityRating}${voteArea}</div>`
+        : `<div class="rating-section" id="modalRatingSection" style="text-align:center;padding:1.4rem">
+            <div style="font-size:1.5rem;margin-bottom:.5rem">🔒</div>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:.75rem;line-height:1.6">Las valoraciones de la comunidad son solo para usuarias registradas.</p>
+            <button onclick="closeBookModal();openAuthModal()" style="padding:8px 20px;border-radius:20px;background:var(--accent-soft);border:1px solid rgba(192,111,196,0.35);color:var(--accent2);font-size:12.5px;font-weight:500;cursor:pointer;font-family:var(--font-body)">Entrar para ver valoraciones</button>
+           </div>`}
+      <div id="modalSpicySection">${currentUser?buildSpicySectionHTML():''}</div>
       <div id="modalCommunityTagsSection">${buildCommunityTagsHTML()}</div>
     </div>`;
 }
@@ -2320,16 +2359,31 @@ async function removeMyTag(tagType, value, event){
 /* ── AUTH ── */
 function renderAuthUI(){
   const el=document.getElementById('authArea');
+  const authOnlyFilters=document.querySelectorAll('.dd-wrap.auth-only');
   if(currentUser){
     const tg=currentUser.user_metadata?.telegram_username||currentUser.email.split('@')[0];
     el.innerHTML=`<div class="user-chip"><div class="user-avatar">${tg.slice(0,2).toUpperCase()}</div><span class="user-name">@${tg}</span><button class="btn-logout" onclick="logout()">salir</button></div>`;
     document.getElementById('valoracionFilter').style.display='flex';
     document.getElementById('valoracionFilter').style.gap='.4rem';
+    authOnlyFilters.forEach(f=>f.classList.add('visible'));
+    const hint=document.getElementById('filtersAuthHint');
+    if(hint) hint.classList.add('hidden');
+    const svi=document.getElementById('statVotesItem');
+    if(svi) svi.style.display='';
   }else{
     el.innerHTML=`<button class="btn-login" onclick="openAuthModal()">Entrar para votar</button>`;
     document.getElementById('valoracionFilter').style.display='none';
     filters.valoracion=null;
     updateValoracionBtns();
+    authOnlyFilters.forEach(f=>f.classList.remove('visible'));
+    const hint=document.getElementById('filtersAuthHint');
+    if(hint) hint.classList.remove('hidden');
+    // Limpiar filtros restringidos si estaban activos
+    filters.spicy=[];filters.spicyUnknown=false;
+    filters.dinamicas=[];filters.edad=[];filters.pais_cultura=[];
+    renderActivePills();applyFilters(false);
+    const svi=document.getElementById('statVotesItem');
+    if(svi) svi.style.display='none';
   }
 }
 function openAuthModal(){authMode='login';updateAuthUI();document.getElementById('authModal').classList.add('open');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('authEmail').focus(),100);}
@@ -3529,6 +3583,24 @@ function ruletaInit() {
   ruletaPool = getFilteredBooksForRuleta();
   ruletaUpdateUI();
   ruletaDraw();
+
+  // Mostrar/ocultar aviso de login
+  let loginNotice = document.getElementById('ruletaLoginNotice');
+  const spinBtn = document.getElementById('ruletaSpinBtn');
+  if (!currentUser) {
+    if (!loginNotice) {
+      loginNotice = document.createElement('div');
+      loginNotice.id = 'ruletaLoginNotice';
+      loginNotice.style.cssText = 'width:100%;text-align:center;padding:1rem 1.5rem;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);font-size:13.5px;color:var(--muted);';
+      loginNotice.innerHTML = '🔒 <strong style="color:var(--text)">Inicia sesión para usar la ruleta.</strong><br><br><button onclick="openAuthModal()" style="padding:9px 24px;border-radius:20px;background:var(--accent);border:none;color:#fff;font-size:13px;font-weight:600;font-family:var(--font-body);cursor:pointer;margin-top:.5rem">Entrar / Registrarse 🌹</button>';
+      const wrap = document.querySelector('.ruleta-wrap');
+      if (wrap) wrap.appendChild(loginNotice);
+    }
+    loginNotice.style.display = '';
+    if (spinBtn) spinBtn.disabled = true;
+  } else {
+    if (loginNotice) loginNotice.style.display = 'none';
+  }
 }
 
 function ruletaUpdateUI() {
@@ -3737,6 +3809,11 @@ function ruletaDraw(highlightIdx = -1) {
 }
 
 function ruletaSpin() {
+  if (!currentUser) {
+    showToast('Inicia sesión para usar la ruleta 🌹', 'error');
+    openAuthModal();
+    return;
+  }
   const pool = getFilteredBooksForRuleta();
   if (pool.length === 0 || ruletaSpinning) return;
   ruletaPool = pool;
@@ -3795,7 +3872,7 @@ function ruletaShowResult(book) {
     ? `<img class="ruleta-result-cover" src="${book.cover}" alt="${book.title}" onerror="this.outerHTML='<div class=ruleta-result-cover-ph>📖</div>'">`
     : `<div class="ruleta-result-cover-ph">📖</div>`;
   const spicyEff = effectiveSpicy(book);
-  const spicyTag = spicyEff != null && spicyEff > 0
+  const spicyTag = currentUser && spicyEff != null && spicyEff > 0
     ? `<span class="tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,0.25);font-size:11px">${SPICY_ICONS[spicyEff]}</span>` : '';
   const genreTags = (book.genres || []).slice(0, 2).map(g => `<span class="tag tag-genre" style="font-size:11px">${g}</span>`).join('');
   const ratingTag = r.count > 0 ? `<span class="tag" style="background:rgba(201,151,90,0.12);color:var(--gold);border:1px solid rgba(201,151,90,0.2);font-size:11px">★ ${r.avg.toFixed(1)} (${r.count})</span>` : '';
