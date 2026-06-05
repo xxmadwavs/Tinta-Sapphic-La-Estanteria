@@ -365,7 +365,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .avg-votes{font-size:12px;color:var(--muted)}
 .vote-prompt{font-size:12.5px;color:var(--muted);margin-bottom:.5rem}
 .stars-input{display:flex;gap:.2rem;margin-bottom:.6rem}
-.star-btn{background:transparent;border:none;cursor:pointer;font-size:1.9rem;color:var(--surface3);transition:color .1s;padding:0;line-height:1}
+.star-btn{background:transparent;border:none;cursor:pointer;font-size:1.9rem;color:var(--surface3);transition:color .1s;padding:6px;min-width:44px;min-height:44px;line-height:1}
 .star-btn.lit,.star-btn.selected{color:var(--gold)}
 .vote-submit{padding:8px 22px;border-radius:20px;background:var(--accent);border:none;color:#fff;font-size:12.5px;font-weight:600;font-family:var(--font-body);cursor:pointer;transition:all .18s}
 .vote-submit:hover{background:var(--accent2)}
@@ -2072,8 +2072,7 @@ function attachStarTouch(){
     btn.addEventListener('mouseover',()=>hoverStar(n));
     btn.addEventListener('mouseout',()=>unhoverStar());
     btn.addEventListener('click',()=>selectStar(n));
-    btn.addEventListener('touchstart',e=>{e.preventDefault();hoverStar(n);},{passive:false});
-    btn.addEventListener('touchend',e=>{e.preventDefault();selectStar(n);unhoverStar();},{passive:false});
+    btn.addEventListener('touchend',e=>{e.preventDefault();selectStar(n);},{passive:false});
   });
 }
 
@@ -2177,8 +2176,8 @@ function buildSpicySectionHTML(){
   } else {
     const active=pendingSpicy>0?pendingSpicy:(myVote!=null?myVote:-1);
     const chileButtons=
-      `<button class="spicy-vote-btn" data-s="0" title="${SPICY_LABELS[0]}" style="background:transparent;border:none;cursor:pointer;font-size:1.6rem;padding:6px 8px;min-width:44px;min-height:44px;opacity:0.3;transition:opacity .12s">🚫</button>`+
-      [1,2,3,4,5].map(i=>`<button class="spicy-chile-btn" data-s="${i}" title="${SPICY_LABELS[i]}" style="background:transparent;border:none;cursor:pointer;font-size:1.6rem;padding:6px 6px;min-width:44px;min-height:44px;opacity:0.3;transition:opacity .1s;line-height:1">🌶</button>`).join('');
+      `<button class="spicy-vote-btn" data-s="0" title="${SPICY_LABELS[0]}" style="background:transparent;border:none;cursor:pointer;font-size:1.6rem;padding:6px 8px;min-width:44px;min-height:44px;color:#444;transition:color .12s">🚫</button>`+
+      [1,2,3,4,5].map(i=>`<button class="spicy-chile-btn" data-s="${i}" title="${SPICY_LABELS[i]}" style="background:transparent;border:none;cursor:pointer;font-size:1.6rem;padding:6px 6px;min-width:44px;min-height:44px;color:#444;transition:color .1s;line-height:1">🌶</button>`).join('');
     voteInput=`<div style="margin-top:.6rem">
       <p style="font-size:11px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;font-weight:600;margin-bottom:.4rem">${myVote!=null?'Tu voto — puedes cambiarlo':'¿Cuál es el nivel spicy?'}</p>
       <div id="spicyChileInput" style="display:flex;align-items:center;gap:4px;margin-bottom:.6rem">${chileButtons}</div>
@@ -2213,9 +2212,9 @@ function selectSpicy(n){
 function _paintChiles(upTo){
   const wrap=document.getElementById('spicyChileInput');
   if(!wrap) return;
-  wrap.querySelector('.spicy-vote-btn').style.opacity=upTo===0?'1':'0.3';
+  wrap.querySelector('.spicy-vote-btn').style.color=upTo===0?'#e05050':'#444';
   wrap.querySelectorAll('.spicy-chile-btn').forEach(b=>{
-    b.style.opacity=parseInt(b.dataset.s)<=upTo?'1':'0.3';
+    b.style.color=parseInt(b.dataset.s)<=upTo?'#e05050':'#444';
   });
 }
 function _attachSpicyEvents(){
@@ -2232,7 +2231,7 @@ function _attachSpicyEvents(){
     b.addEventListener('click',()=>selectSpicy(n));
     b.addEventListener('mouseover',()=>_paintChiles(n));
     b.addEventListener('mouseout',()=>_paintChiles(pendingSpicy>0?pendingSpicy:mySpicy[activeBook?.id]??-1));
-    b.addEventListener('touchstart',e=>{e.preventDefault();selectSpicy(n);},{passive:false});
+    b.addEventListener('touchend',e=>{e.preventDefault();selectSpicy(n);},{passive:false});
   });
 }
 
