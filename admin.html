@@ -624,6 +624,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <button class="jnav-btn" onclick="jumpTo('sec-characters')">🧑 Personajes</button>
         <button class="jnav-btn" onclick="jumpTo('sec-edad')">🎂 Edad</button>
         <button class="jnav-btn" onclick="jumpTo('sec-pais')">🌍 País</button>
+        <button class="jnav-btn" onclick="jumpTo('sec-warnings')">⚠️ Advertencias</button>
         <button class="jnav-btn" onclick="jumpTo('sec-spicy')">🌶 Spicy</button>
       </div>
       <button class="modal-close" onclick="closeModal()">✕</button>
@@ -877,6 +878,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           </div>
         </div>
 
+        <div id="sec-warnings" class="chip-section">
+          <div class="chip-section-hd" onclick="toggleChipSection(this)">
+            <span class="chip-section-lbl">⚠️ Advertencias de contenido <span class="chip-section-badge" id="badge-warnings" style="display:none"></span></span>
+            <span class="chip-section-arrow">▾</span>
+          </div>
+          <div class="chip-section-body">
+            <p style="font-size:11px;color:var(--muted);margin-bottom:.6rem;line-height:1.5">Marca las advertencias relevantes para ayudar a las lectoras a tomar decisiones informadas.</p>
+            <div class="chip-group" id="warningChips"></div>
+          </div>
+        </div>
+
       </div><!-- /col-right -->
     </div><!-- /modal-body -->
 
@@ -1008,10 +1020,53 @@ const PAIS_CULTURA = [
   'Ambientación nórdica','Cultura indígena','Mundo fantástico',
 ];
 
+// ── 9. ADVERTENCIAS DE CONTENIDO ─────────────────────────────────────────
+const CONTENT_WARNINGS = [
+  'Abuso Sexual',
+  'Acoso / Hostigamiento',
+  'Acoso Sexual (sin HEA)',
+  'Alcohol',
+  'Anticoncepción sin Consentimiento',
+  'Autolesión',
+  'Bullying',
+  'Consentimiento Dudoso (Dub-Con)',
+  'Contenido Adulto (R18)',
+  'Conflictos Familiares',
+  'Crueldad Animal',
+  'Drogas / Consumo de Sustancias',
+  'Embarazo Forzado',
+  'Enfermedad Mental',
+  'Enfermedad Terminal',
+  'Gordofobia / Fobia Corporal',
+  'Incesto',
+  'Infantilización',
+  'Juego Patológico',
+  'Maltrato Físico',
+  'Maltrato / Muerte de Animal',
+  'Manipulación Psicológica',
+  'Misoginia',
+  'Muerte',
+  'Queerofobia / LGTBfobia',
+  'Racismo',
+  'Relación Tóxica',
+  'Sin Consentimiento (Non-Con)',
+  'Stalking',
+  'Suicidio / Intento de Suicidio',
+  'Tráfico de Personas',
+  'Trauma Mental',
+  'Trauma Religioso',
+  'Trastornos Alimentarios',
+  'Traición del Propio Cuerpo',
+  'Vergüenza Sexual (Slut Shaming)',
+  'Violación',
+  'Violencia Gráfica',
+  'Violencia sobre Personajes Secundarios',
+];
+
 // Books stored in memory (from JSON), votes in Supabase
 let books = [], editingId = null;
 let adminFilterSection = 'all'; // 'all' | 'thais' | 'other' | 'spanish' | 'baihee' | 'asian'
-let sel = {genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:null,formato:null,adaptacion:null,sagaName:'',sagaNum:'',source:'thais',edad:[],pais_cultura:[]};
+let sel = {genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:null,formato:null,adaptacion:null,sagaName:'',sagaNum:'',source:'thais',edad:[],pais_cultura:[],content_warnings:[]};
 let authors = []; // array of strings
 let editions = []; // array of {lang, store, url}
 
@@ -1239,6 +1294,7 @@ function openEditModal(id) {
   sel.tropes      =[...(b.tropes||[])];
   sel.edad        =[...(b.edad||[])];
   sel.pais_cultura=[...(b.pais_cultura||[])];
+  sel.content_warnings=[...(b.content_warnings||[])];
   sel.spicy     =b.spicy||0;
   sel.formato   =b.formato||null;
   sel.adaptacion=b.adaptacion||null;
@@ -1273,7 +1329,7 @@ function clearForm() {
   document.getElementById('dupWarning').classList.remove('show');
   document.getElementById('dupOk').classList.remove('show');
   authors=[];editions=[];
-  sel={genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:null,formato:null,adaptacion:null,sagaName:'',sagaNum:'',source:'thais',edad:[],pais_cultura:[]};
+  sel={genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:null,formato:null,adaptacion:null,sagaName:'',sagaNum:'',source:'thais',edad:[],pais_cultura:[],content_warnings:[]};
   setSource('thais');
   const p=document.getElementById('coverPreview');p.style.display='none';p.src='';
   document.getElementById('fCoverFile').value='';
@@ -1439,13 +1495,14 @@ function renderAllChips() {
   renderChipGroup('tropeChips',      TROPES,      'tropes',      false);
   renderChipGroup('edadChips',       EDAD_PROTAGONISTA, 'edad',  false);
   renderChipGroup('paisCulturaChips',PAIS_CULTURA,'pais_cultura',false);
+  renderChipGroup('warningChips',CONTENT_WARNINGS,'content_warnings',false);
   renderSingleChips('formatoChips',    FORMATOS,    'formato',    'teal');
   renderSingleChips('adaptacionChips', ADAPTACIONES,'adaptacion', 'lavender');
   renderSpicy();
   // Update section badges
   [['badge-genres','genres'],['badge-subgenres','subgenres'],['badge-dinamicas','dinamicas'],
    ['badge-tropes','tropes'],['badge-characters','characters'],['badge-identidades','identidades'],
-   ['badge-edad','edad'],['badge-pais','pais_cultura']
+   ['badge-edad','edad'],['badge-pais','pais_cultura'],['badge-warnings','content_warnings']
   ].forEach(([bid,key])=>{
     const el=document.getElementById(bid);
     if(!el) return;
@@ -1531,6 +1588,7 @@ function saveBook() {
     edad:        [...(sel.edad||[])],
     pais_cultura:[...(sel.pais_cultura||[])],
     ambientacion:[...(sel.ambientacion||[])],
+    content_warnings:[...(sel.content_warnings||[])],
     spicy:     sel.spicy===null?null:sel.spicy,
     formato:   sel.formato,
     adaptacion:sel.adaptacion,

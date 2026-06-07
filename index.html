@@ -301,6 +301,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tag-identidad{background:rgba(155,130,201,0.14);color:#c8b8f0;border:1px solid rgba(155,130,201,0.3)}
 .tag-subgenre{background:rgba(91,188,176,0.1);color:var(--teal);border:1px solid rgba(91,188,176,0.22)}
 .tag-character{background:var(--surface3);color:var(--muted);border:1px solid var(--border)}
+.tag-warning{background:#8b1a2a;color:#ffd0d8;border:1px solid rgba(255,100,120,0.35);font-size:10.5px;font-weight:600;letter-spacing:.02em}
 .tag-year{background:var(--surface3);color:var(--muted);border:1px solid var(--border)}
 .tag-formato{background:rgba(91,188,176,0.12);color:var(--teal);border:1px solid rgba(91,188,176,0.25)}
 .tag-adaptacion{background:rgba(155,130,201,0.12);color:#c4b0e8;border:1px solid rgba(155,130,201,0.3)}
@@ -2012,6 +2013,11 @@ function renderBookModal(){
         ${b.pages?`<div class="meta-item"><span class="meta-key">Páginas</span><span class="meta-val">${b.pages}</span></div>`:''}
         ${b.isbn?`<div class="meta-item"><span class="meta-key">ISBN</span><span class="meta-val">${b.isbn}</span></div>`:''}
       </div>
+      ${(b.content_warnings&&b.content_warnings.length)?`
+      <div class="modal-warnings-block" style="margin-bottom:1rem">
+        <div style="font-size:10px;font-weight:600;color:#ff6b6b;text-transform:uppercase;letter-spacing:.12em;margin-bottom:.5rem">⚠️ Advertencias de contenido</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.3rem">${b.content_warnings.map(w=>`<span class="tag tag-warning">⚠ ${w}</span>`).join('')}</div>
+      </div>`:''}
       ${b.synopsis?(()=>{
         const paras=b.synopsis.split(/\n\n+/).map(p=>p.replace(/\n/g,' ').trim()).filter(Boolean);
         const full=paras.map(p=>`<p class="modal-synopsis">${p}</p>`).join('');
