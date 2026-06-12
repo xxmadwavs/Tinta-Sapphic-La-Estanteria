@@ -518,6 +518,9 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .hv-jp{font-size:11px;color:var(--muted);letter-spacing:.22em;text-transform:uppercase;margin-bottom:1.6rem;opacity:.7}
 .hv-desc{max-width:480px;margin:0 auto 2.8rem;font-size:15px;color:var(--muted);line-height:1.8}
 .hv-ctas{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.hv-url-row{margin-top:1.2rem;text-align:center}
+.hv-url-link{font-family:var(--font-body);font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:.03em;border-bottom:1px solid transparent;transition:color .18s,border-color .18s}
+.hv-url-link:hover{color:var(--accent2);border-bottom-color:var(--accent2)}
 .hv-cta{display:inline-flex;align-items:center;gap:.45em;padding:13px 28px;border-radius:30px;font-size:13.5px;font-weight:600;font-family:var(--font-body);border:none;cursor:pointer;text-decoration:none;transition:all .22s}
 .hv-cta-main{background:var(--accent);color:#fff;box-shadow:0 4px 20px rgba(192,111,196,.25)}
 .hv-cta-main:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(192,111,196,.38)}
@@ -933,6 +936,9 @@ body.home-active .hero,body.home-active .main{display:none!important}
       <button class="hv-cta hv-cta-reads" onclick="showCatalog('safi')">🌹 SafiClub</button>
       <button class="hv-cta hv-cta-sec" onclick="showCatalog('top10')">🏆 Top 10</button>
     </div>
+    <div class="hv-url-row">
+      <a class="hv-url-link" href="https://xxmadwavs.github.io/Tinta-Sapphic-La-Estanteria" target="_blank">xxmadwavs.github.io/Tinta-Sapphic-La-Estanteria</a>
+    </div>
   </div>
 
   <div class="hv-stats-band">
@@ -1114,6 +1120,10 @@ body.home-active .hero,body.home-active .main{display:none!important}
         <button class="dd-btn" id="btnNoValorado" onclick="toggleValoracion('no_valorado')" title="Mostrar libros que aún no he valorado">☆ Sin valorar</button>
       </div>
       <button class="dd-btn" id="btnConSerie" onclick="toggleAdaptacion('serie')" title="Solo libros con serie de televisión">Con serie</button>
+      <div class="dd-wrap" id="ddPages">
+        <button class="dd-btn" id="btnPages" onclick="toggleDD('ddPages')">Páginas <span class="dd-count" id="cntPages" style="display:none">1</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="dd-panel"><div class="dd-list" id="listPages"></div></div>
+      </div>
       <span class="filters-auth-hint" id="filtersAuthHint" onclick="openAuthModal()">🔒 Más filtros al <a>registrarte</a></span>
     </div>
     <div class="filter-bottom">
@@ -1455,7 +1465,7 @@ const VALID_TAGS={
   identidad:['Asexual','Bisexual','Butch','Femme','Grumpy','Ice Queen','Introvertida','Lesbiana','Masc','Nerd','Queer','Soft Butch','Sunshine']
 };
 const SPICY_MIN_VOTES=2;
-let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null};
+let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null,pages:null};
 let currentPage=1;
 const PAGE_SIZE=24;
 
@@ -1496,6 +1506,7 @@ function loadState(){
   if(params.get('spicyUnknown')) filters.spicyUnknown=true;
   if(params.get('adaptacion')) filters.adaptacion=params.get('adaptacion');
   if(params.get('valoracion')) filters.valoracion=params.get('valoracion');
+  if(params.get('pages')) filters.pages=params.get('pages');
 }
 
 // Extract saga name from book
@@ -1519,10 +1530,11 @@ async function init(){
   Object.entries(_secTabs).forEach(([key,id])=>{const el=document.getElementById(id);if(el)el.className='section-tab'+(key===activeSection?' '+_secCls[key]:'');});
   applyFilters(false);
   updateDDCounts();renderActivePills();
+  if(filters.pages){const _cp=document.getElementById('cntPages');if(_cp)_cp.style.display='';}
   // Restore active tab from URL if present, otherwise use sessionStorage or home
   const urlParams=new URLSearchParams(location.search);
   const urlTab=urlParams.get('tab');
-  const hasCatalogParams=['section','q','genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura','spicy','spicyUnknown','adaptacion','valoracion'].some(k=>urlParams.has(k));
+  const hasCatalogParams=['section','q','genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura','spicy','spicyUnknown','adaptacion','valoracion','pages'].some(k=>urlParams.has(k));
   const savedTab = urlTab || sessionStorage.getItem('ts_active_tab');
   if(savedTab && savedTab !== 'home') {
     // estaba en el catálogo — restaurar sin ir al home
@@ -1763,6 +1775,34 @@ function updateAdaptacionBtn(){
   if(btn) btn.classList.toggle('has-sel', filters.adaptacion==='serie');
 }
 
+const PAGE_RANGES=[
+  {key:'0-100',   label:'0 – 100',   min:0,   max:100},
+  {key:'101-200', label:'101 – 200', min:101, max:200},
+  {key:'201-300', label:'201 – 300', min:201, max:300},
+  {key:'301-400', label:'301 – 400', min:301, max:400},
+  {key:'401-500', label:'401 – 500', min:401, max:500},
+  {key:'500+',    label:'+ 500',     min:501, max:Infinity},
+];
+function buildPagesDD(){
+  const el=document.getElementById('listPages');
+  if(!el) return;
+  const clearBtn=filters.pages?'<div class="dd-clear" onclick="togglePagesFilter(null)">\u2715 Limpiar</div>':'';
+  const items=PAGE_RANGES.map(r=>{
+    const checked=filters.pages===r.key?'checked':'';
+    return '<div class="dd-item"><input type="radio" name="pagesRange" id="pr_'+r.key+'" '+checked+' onchange="togglePagesFilter(\'' +r.key+ '\')"><label for="pr_'+r.key+'">'+r.label+'</label></div>';
+  }).join('');
+  el.innerHTML=clearBtn+items;
+}
+function togglePagesFilter(key){
+  filters.pages=(filters.pages===key)?null:key;
+  const cnt=document.getElementById('cntPages');
+  if(cnt) cnt.style.display=filters.pages?'':'none';
+  buildPagesDD();
+  renderActivePills();
+  applyFilters();
+  if(!key) closeAllDD();
+}
+
 function updateValoracionBtns(){
   const bV=document.getElementById('btnValorado');
   const bN=document.getElementById('btnNoValorado');
@@ -1775,7 +1815,7 @@ function toggleDD(id){
   const wrap=document.getElementById(id);
   const wasOpen=wrap.classList.contains('open');
   closeAllDD();
-  if(!wasOpen) wrap.classList.add('open');
+  if(!wasOpen){ wrap.classList.add('open'); if(id==='ddPages') buildPagesDD(); }
 }
 function closeAllDD(){document.querySelectorAll('.dd-wrap.open').forEach(w=>w.classList.remove('open'));}
 
@@ -1788,7 +1828,7 @@ function renderActivePills(){
   };
   const pills=[];
   Object.entries(filters).forEach(([key,arr])=>{
-    if(key==='q'||key==='valoracion'||key==='adaptacion') return;
+    if(key==='q'||key==='valoracion'||key==='adaptacion'||key==='pages') return;
     if(!arr.length) return;
     arr.forEach(v=>{
       const display=key==='spicy'?SPICY_LABELS[v]:v;
@@ -1806,13 +1846,18 @@ function renderActivePills(){
   if(filters.adaptacion==='serie'){
     pills.push(`<span class="af-pill">📺 Con serie<button onclick="toggleAdaptacion('serie')">×</button></span>`);
   }
+  if(filters.pages){
+    const r=PAGE_RANGES.find(x=>x.key===filters.pages);
+    if(r) pills.push(`<span class="af-pill">📄 ${r.label} págs<button onclick="togglePagesFilter(null)">×</button></span>`);
+  }
   af.innerHTML=pills.join('');
   document.getElementById('clearAllBtn').style.display=(pills.length||filters.q)?'':'none';
 }
 
 function clearAllFilters(){
-  filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null};
+  filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null,pages:null};
   document.getElementById('searchInput').value='';
+  const _cp=document.getElementById('cntPages'); if(_cp) _cp.style.display='none';
   updateValoracionBtns();
   updateAdaptacionBtn();
   buildDropdowns();renderActivePills();applyFilters();
@@ -1845,6 +1890,10 @@ function applyFilters(resetPage=true){
   if(filters.edad.length)       books=books.filter(b=>filters.edad.every(e=>(b.edad||[]).includes(e)));
   if(filters.pais_cultura.length) books=books.filter(b=>filters.pais_cultura.every(p=>(b.pais_cultura||[]).includes(p)));
   if(filters.adaptacion==='serie') books=books.filter(b=>b.adaptacion==='Tiene serie');
+  if(filters.pages){
+    const r=PAGE_RANGES.find(x=>x.key===filters.pages);
+    if(r) books=books.filter(b=>b.pages!=null&&b.pages>=r.min&&b.pages<=r.max);
+  }
   if(filters.valoracion==='valorado') books=books.filter(b=>!!myRatings[b.id]);
   if(filters.valoracion==='no_valorado') books=books.filter(b=>!myRatings[b.id]);
   const sort=document.getElementById('sortSel').value;
@@ -2756,13 +2805,12 @@ function recVerMas(groupId, btn){
   btn.closest('.rec-ver-mas-wrap').remove();
 }
 
-function switchSection(section){
+function switchSection(section,silent){
   activeSection=section;
   currentPage=1;
-  // Push a new history entry so the back button works between sections
-  try{
+  if(!silent) try{
     const params=new URLSearchParams(location.search);
-    if(section==='thais') params.delete('section'); else params.set('section',section);
+    params.set('section',section);
     params.delete('page');
     const url=params.toString()?'?'+params.toString():location.pathname;
     history.pushState({section},'',url);
