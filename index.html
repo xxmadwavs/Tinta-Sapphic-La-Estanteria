@@ -1468,7 +1468,7 @@ function pushState(addEntry){
     const params=new URLSearchParams();
     // Include active tab so the URL is shareable per section
     if(activeTab&&activeTab!=='estanteria') params.set('tab',activeTab);
-    if(activeSection&&activeSection!=='thais') params.set('section',activeSection);
+    if(activeSection) params.set('section',activeSection);
     if(currentPage>1) params.set('page',currentPage);
     if(filters.q) params.set('q',filters.q);
     ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura'].forEach(k=>{
@@ -1522,6 +1522,7 @@ async function init(){
   // Restore active tab from URL if present, otherwise use sessionStorage or home
   const urlParams=new URLSearchParams(location.search);
   const urlTab=urlParams.get('tab');
+  const hasCatalogParams=['section','q','genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura','spicy','spicyUnknown','adaptacion','valoracion'].some(k=>urlParams.has(k));
   const savedTab = urlTab || sessionStorage.getItem('ts_active_tab');
   if(savedTab && savedTab !== 'home') {
     // estaba en el catálogo — restaurar sin ir al home
@@ -1529,6 +1530,12 @@ async function init(){
     document.body.classList.remove('home-active');
     document.getElementById('homeNavBtn').classList.remove('active');
     switchTab(savedTab === 'estanteria' ? 'estanteria' : savedTab, true);
+  } else if(hasCatalogParams) {
+    // URL compartida con section/filtros pero sin ?tab — abrir catálogo en estantería
+    document.getElementById('homeView').classList.remove('active');
+    document.body.classList.remove('home-active');
+    document.getElementById('homeNavBtn').classList.remove('active');
+    switchTab('estanteria', true);
   } else {
     // primera visita o venía del home
     showHome();
