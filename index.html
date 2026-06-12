@@ -1463,7 +1463,7 @@ const PAGE_SIZE=24;
 function debounce(fn,ms){let t;return(...args)=>{clearTimeout(t);t=setTimeout(()=>fn(...args),ms);};}
 
 /* ── URL STATE ── */
-function pushState(){
+function pushState(addEntry){
   try{
     const params=new URLSearchParams();
     // Include active tab so the URL is shareable per section
@@ -1479,7 +1479,8 @@ function pushState(){
     if(filters.adaptacion) params.set('adaptacion',filters.adaptacion);
     if(filters.valoracion) params.set('valoracion',filters.valoracion);
     const url=params.toString()?'?'+params.toString():location.pathname;
-    history.replaceState(null,'',url);
+    if(addEntry) history.pushState(null,'',url);
+    else history.replaceState(null,'',url);
   }catch(e){}
 }
 function loadState(){
@@ -1527,7 +1528,7 @@ async function init(){
     document.getElementById('homeView').classList.remove('active');
     document.body.classList.remove('home-active');
     document.getElementById('homeNavBtn').classList.remove('active');
-    switchTab(savedTab === 'estanteria' ? 'estanteria' : savedTab);
+    switchTab(savedTab === 'estanteria' ? 'estanteria' : savedTab, true);
   } else {
     // primera visita o venía del home
     showHome();
@@ -2012,6 +2013,7 @@ function renderBookModal(){
         ${b.year?`<div class="meta-item"><span class="meta-key">Año</span><span class="meta-val">${b.year}</span></div>`:''}
         ${b.pages?`<div class="meta-item"><span class="meta-key">Páginas</span><span class="meta-val">${b.pages}</span></div>`:''}
         ${b.isbn?`<div class="meta-item"><span class="meta-key">ISBN</span><span class="meta-val">${b.isbn}</span></div>`:''}
+        ${(b.ship&&b.ship.length)?`<div class="meta-item"><span class="meta-key">Ship</span><span class="meta-val">${b.ship.join(' · ')}</span></div>`:''}
       </div>
       ${(b.content_warnings&&b.content_warnings.length)?`
       <div class="modal-warnings-block" style="margin-bottom:1rem">
@@ -2542,7 +2544,7 @@ function copyTabLink(){
 
 /* ── TABS ── */
 let activeTab='estanteria';
-function switchTab(tab){
+function switchTab(tab, silent){
   activeTab=tab;
   sessionStorage.setItem('ts_active_tab', tab);
   document.getElementById('tabEstanteria').classList.toggle('active',tab==='estanteria');
@@ -2565,12 +2567,12 @@ function switchTab(tab){
   if(tab==='myrec') renderMyrec();
   if(tab==='solicitudes') renderSolicitudes();
   if(tab==='ruleta') ruletaInit();
-  // Update URL so the tab is shareable
-  try{
+  // Update URL so the tab is shareable and the back button works
+  if(!silent) try{
     const params=new URLSearchParams(location.search);
     if(tab==='estanteria') params.delete('tab'); else params.set('tab',tab);
     const url=params.toString()?'?'+params.toString():location.pathname;
-    history.replaceState(null,'',url);
+    history.pushState({tab},'',url);
   }catch(e){}
 }
 
@@ -2750,6 +2752,14 @@ function recVerMas(groupId, btn){
 function switchSection(section){
   activeSection=section;
   currentPage=1;
+  // Push a new history entry so the back button works between sections
+  try{
+    const params=new URLSearchParams(location.search);
+    if(section==='thais') params.delete('section'); else params.set('section',section);
+    params.delete('page');
+    const url=params.toString()?'?'+params.toString():location.pathname;
+    history.pushState({section},'',url);
+  }catch(e){}
   filters.authors=[];
   filters.sagas=[];
   const sectionBooks=allBooks.filter(b=>b.source===section);
@@ -3153,9 +3163,51 @@ window.addEventListener('popstate', ()=>{
   if(location.hash.startsWith('#libro/')){
     const id = location.hash.slice(7);
     openBook(id, false);
-  } else {
-    document.getElementById('bookModal').classList.remove('open');
-    document.body.style.overflow='';
+    return;
+  }
+  // Close book modal if open
+  document.getElementById('bookModal').classList.remove('open');
+  document.body.style.overflow='';
+  // Restore tab and section from URL
+  const params=new URLSearchParams(location.search);
+  const tab=params.get('tab')||'estanteria';
+  const section=params.get('section')||'thais';
+  // Switch tab without pushing a new history entry (we're already restoring)
+  activeTab=tab;
+  sessionStorage.setItem('ts_active_tab', tab);
+  document.getElementById('tabEstanteria').classList.toggle('active',tab==='estanteria');
+  document.getElementById('tabTop10').classList.toggle('active',tab==='top10');
+  document.getElementById('tabSafi').classList.toggle('active',tab==='safi');
+  document.getElementById('tabCanal').classList.toggle('active',tab==='canal');
+  document.getElementById('tabMyrec').classList.toggle('active',tab==='myrec');
+  document.getElementById('tabSolicitudes').classList.toggle('active',tab==='solicitudes');
+  document.getElementById('tabRuleta').classList.toggle('active',tab==='ruleta');
+  document.getElementById('panelEstanteria').style.display=tab==='estanteria'?'':'none';
+  document.getElementById('panelTop10').style.display=tab==='top10'?'':'none';
+  document.getElementById('panelSafi').style.display=tab==='safi'?'':'none';
+  document.getElementById('panelCanal').style.display=tab==='canal'?'':'none';
+  document.getElementById('panelMyrec').style.display=tab==='myrec'?'':'none';
+  document.getElementById('panelSolicitudes').style.display=tab==='solicitudes'?'':'none';
+  document.getElementById('panelRuleta').style.display=tab==='ruleta'?'':'none';
+  if(tab==='top10') renderTop10();
+  if(tab==='safi') renderSafi();
+  if(tab==='canal') renderCanal();
+  if(tab==='myrec') renderMyrec();
+  if(tab==='solicitudes') renderSolicitudes();
+  if(tab==='ruleta') ruletaInit();
+  // If on estantería, restore section without pushing history
+  if(tab==='estanteria' && section!==activeSection){
+    activeSection=section;
+    currentPage=parseInt(params.get('page'))||1;
+    const tabs={thais:'tabThais',other:'tabOther',spanish:'tabSpanish',baihee:'tabBaihee',asian:'tabAsian',african:'tabAfrican'};
+    const cls={thais:'active-thais',other:'active-other',spanish:'active-spanish',baihee:'active-baihee',asian:'active-asian',african:'active-african'};
+    Object.entries(tabs).forEach(([key,id])=>{
+      const el=document.getElementById(id);
+      if(el) el.className='section-tab'+(key===section?' '+cls[key]:'');
+    });
+    buildDropdowns();
+    renderActivePills();
+    applyFilters(false);
   }
 });
 
