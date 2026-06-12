@@ -678,6 +678,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
             <label class="form-label">ISBN</label>
             <input type="text" id="fIsbn" placeholder="978-…">
           </div>
+          <div class="form-row" id="shipRow" style="display:none">
+            <label class="form-label">Ship(s) <span style="color:var(--muted);font-size:10px;font-weight:400;text-transform:none;letter-spacing:0">(nombres separados por comas)</span></label>
+            <input type="text" id="fShip" placeholder="PhinyaBusaya, OtroShip…">
+          </div>
         </div>
 
         <div class="form-section">
@@ -1320,6 +1324,9 @@ function openEditModal(id) {
   document.getElementById('fSynopsis').value=b.synopsis||'';
   document.getElementById('fPages').value   =b.pages||'';
   document.getElementById('fIsbn').value    =b.isbn||'';
+  document.getElementById('fShip').value    =(b.ship&&b.ship.length)?b.ship.join(', '):'';
+  const shipRow=document.getElementById('shipRow');
+  if(shipRow) shipRow.style.display=(b.source==='thais')?'':'none';
   previewCover(b.cover||'');
   // If cover is base64, show upload button as "has file"
   if(b.cover&&b.cover.startsWith('data:')){
@@ -1606,6 +1613,8 @@ function setSource(v){
     const el=document.getElementById(id);
     if(el) el.className='source-chip'+(key===v?' '+map[key]:'');
   });
+  const shipRow=document.getElementById('shipRow');
+  if(shipRow) shipRow.style.display=(v==='thais')?'':'none';
 }
 
 
@@ -1624,6 +1633,9 @@ function saveBook() {
     synopsis:  document.getElementById('fSynopsis').value.trim()||null,
     pages:     parseInt(document.getElementById('fPages').value)||null,
     isbn:      document.getElementById('fIsbn').value.trim()||null,
+    ship:      sel.source==='thais'
+      ? document.getElementById('fShip').value.split(',').map(s=>s.trim()).filter(Boolean)
+      : [],
     genres:      [...sel.genres],
     subgenres:   [...sel.subgenres],
     identidades: [...sel.identidades],
