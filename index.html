@@ -1475,8 +1475,9 @@ function debounce(fn,ms){let t;return(...args)=>{clearTimeout(t);t=setTimeout(()
 /* ── URL STATE ── */
 function pushState(addEntry){
   try{
+    // Don't touch URL if home is active
+    if(sessionStorage.getItem('ts_active_tab')==='home') return;
     const params=new URLSearchParams();
-    // Include active tab so the URL is shareable per section
     if(activeTab&&activeTab!=='estanteria') params.set('tab',activeTab);
     if(activeSection) params.set('section',activeSection);
     if(currentPage>1) params.set('page',currentPage);
@@ -1488,6 +1489,7 @@ function pushState(addEntry){
     if(filters.spicyUnknown) params.set('spicyUnknown','1');
     if(filters.adaptacion) params.set('adaptacion',filters.adaptacion);
     if(filters.valoracion) params.set('valoracion',filters.valoracion);
+    if(filters.pages) params.set('pages',filters.pages);
     const url=params.toString()?'?'+params.toString():location.pathname;
     if(addEntry) history.pushState(null,'',url);
     else history.replaceState(null,'',url);
@@ -2639,6 +2641,8 @@ function showHome(){
   document.body.classList.add('home-active');
   document.getElementById('homeNavBtn').classList.add('active');
   updateHomeStats();
+  // Clean URL — home has no params
+  try{ history.replaceState(null,'',location.pathname); }catch(e){}
 }
 function showCatalog(tab){
   const t = tab || 'estanteria';
