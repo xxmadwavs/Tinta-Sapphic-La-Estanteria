@@ -35,11 +35,24 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .topbar-right{display:flex;align-items:center;gap:10px}
 .btn-login{padding:7px 18px;border-radius:30px;background:var(--accent-soft);border:1px solid var(--border2);color:var(--accent2);font-size:12.5px;font-weight:500;cursor:pointer;font-family:var(--font-body);transition:all .18s}
 .btn-login:hover{background:rgba(192,111,196,0.22);border-color:var(--accent)}
-.user-chip{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border-radius:30px;background:var(--surface2);border:1px solid var(--border2)}
+.user-chip{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border-radius:30px;background:var(--surface2);border:1px solid var(--border2);cursor:pointer;transition:background .15s;user-select:none}
+.user-chip:hover{background:var(--surface3)}
+.user-chip-caret{font-size:9px;color:var(--muted);opacity:.6;margin-left:-2px;transition:transform .18s}
+.user-chip-wrap{position:relative}
+.user-chip-wrap.open .user-chip-caret{transform:rotate(180deg)}
+.user-dropdown{position:absolute;top:calc(100% + 8px);right:0;min-width:170px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);box-shadow:0 20px 60px rgba(0,0,0,.55),0 4px 20px rgba(0,0,0,.3);z-index:300;display:none;overflow:hidden;animation:ddFadeIn .14s ease}
+.user-chip-wrap.open .user-dropdown{display:block}
+.user-dd-item{display:flex;align-items:center;gap:10px;padding:10px 14px;font-size:13px;color:var(--text);cursor:pointer;transition:background .12s;font-family:var(--font-body);border:none;background:none;width:100%;text-align:left}
+.user-dd-item:hover{background:var(--surface2)}
+.user-dd-item.danger{color:var(--rose)}
+.user-dd-item.danger:hover{background:var(--rose-soft)}
+.user-dd-sep{height:1px;background:var(--border);margin:3px 0}
 .user-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--rose));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;flex-shrink:0}
 .user-name{font-size:12.5px;color:var(--text);font-weight:500;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .btn-logout{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:11px;padding:2px 4px;font-family:var(--font-body);transition:color .15s}
 .btn-logout:hover{color:var(--rose)}
+.btn-shelf{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:15px;padding:2px 4px;transition:opacity .15s;line-height:1}
+.btn-shelf:hover{opacity:.75}
 @media(max-width:600px){.topbar{padding:0 1rem}.logo{font-size:17px}.logo-sep,.logo-sub{display:none}}
 @media(max-width:600px){
   .hero{padding:2.5rem 1rem 2rem}
@@ -902,6 +915,147 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .info-modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;background:rgba(14,11,16,0.75);border:1px solid var(--border2);color:var(--text);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:all .15s;line-height:1}
 .info-modal-close:hover{background:var(--rose);border-color:var(--rose);color:#fff}
 @media(max-width:600px){.info-modal-header{padding:1.4rem 1.2rem .9rem}.info-modal-body{padding:1.2rem 1.2rem 1.6rem}.info-modal-title{font-size:1.6rem}}
+
+/* ── BINGO DE LECTURA ── */
+.bingo-wrap{max-width:920px;margin:0 auto}
+.bingo-login-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:2.5rem 2rem;text-align:center;max-width:420px;margin:2rem auto}
+.bingo-login-card p{color:var(--muted);font-size:13px;margin:.6rem 0 1.25rem;line-height:1.7}
+.bingo-empty{text-align:center;padding:3rem 1rem;color:var(--muted);font-size:13.5px}
+.bingo-selector{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.bingo-chal-btn{padding:8px 16px;border-radius:30px;background:var(--surface2);border:1px solid var(--border2);color:var(--muted);font-size:12.5px;font-weight:500;cursor:pointer;font-family:var(--font-body);transition:all .15s;white-space:nowrap}
+.bingo-chal-btn:hover{border-color:var(--accent);color:var(--text)}
+.bingo-chal-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
+.bingo-header-card{background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,0.95) 100%);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1.5rem 1.75rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.bingo-header-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--rose),var(--teal));opacity:.7}
+.bingo-header-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap}
+.bingo-title{font-family:var(--font-display);font-size:1.6rem;font-weight:600;color:var(--text)}
+.bingo-dates{font-size:11.5px;color:var(--muted);margin-top:2px;letter-spacing:.02em}
+.bingo-progress-pill{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border2);border-radius:30px;padding:6px 14px}
+.bingo-progress-pill b{color:var(--accent2);font-size:14px}
+.bingo-progress-pill span{font-size:11.5px;color:var(--muted)}
+.bingo-progress-bar{height:6px;border-radius:6px;background:var(--surface2);overflow:hidden;margin-top:1rem}
+.bingo-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--rose));border-radius:6px;transition:width .4s ease}
+.bingo-line-badge{display:none;align-items:center;gap:6px;background:var(--gold-soft);border:1px solid rgba(201,151,90,0.35);color:var(--gold);font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:30px;margin-top:.85rem}
+.bingo-line-badge.show{display:inline-flex}
+
+.bingo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.55rem;margin-bottom:1.5rem}
+.bingo-grid.size-16{grid-template-columns:repeat(4,1fr)}
+.bingo-cell{position:relative;aspect-ratio:1/1;border-radius:12px;background:var(--surface2);border:1px solid var(--border2);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:.5rem .4rem;transition:all .18s;overflow:hidden}
+.bingo-cell:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,0.25)}
+.bingo-cell-label{font-size:10.5px;font-weight:600;line-height:1.25;color:var(--text);letter-spacing:.01em;position:relative;z-index:1}
+.bingo-cell.c-rose{background:var(--rose-soft);border-color:rgba(212,96,122,0.3)}
+.bingo-cell.c-gold{background:var(--gold-soft);border-color:rgba(201,151,90,0.3)}
+.bingo-cell.c-teal{background:rgba(91,188,176,0.1);border-color:rgba(91,188,176,0.3)}
+.bingo-cell.c-accent{background:var(--accent-soft);border-color:var(--border2)}
+.bingo-cell.free .bingo-cell-label{font-family:var(--font-display);font-style:italic;font-size:13px;color:var(--accent2)}
+.bingo-cell.marked{background:linear-gradient(160deg,rgba(192,111,196,0.22),rgba(212,96,122,0.16));border-color:var(--accent)}
+.bingo-cell.marked::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(192,111,196,0.25),transparent 70%)}
+.bingo-cell-cover{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;opacity:.34;filter:saturate(1.1)}
+.bingo-cell.marked .bingo-cell-label{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.55);position:relative;z-index:2}
+.bingo-cell-check{position:absolute;top:5px;right:5px;width:18px;height:18px;border-radius:50%;background:var(--accent);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.bingo-cell-auto-dot{position:absolute;top:6px;left:6px;width:6px;height:6px;border-radius:50%;background:var(--teal);opacity:.75;z-index:2}
+@media(max-width:560px){.bingo-grid{gap:.4rem}.bingo-cell-label{font-size:9px}.bingo-header-card{padding:1.2rem 1.1rem}.bingo-title{font-size:1.3rem}}
+
+/* Modal de casilla */
+.bingo-cell-modal-body{padding:1.5rem 1.75rem 1.75rem}
+.bingo-cell-modal-label{font-family:var(--font-display);font-size:1.5rem;font-weight:600;color:var(--text);margin-bottom:.3rem}
+.bingo-cell-modal-hint{font-size:12px;color:var(--muted);margin-bottom:1.25rem;line-height:1.6}
+.bingo-link-tabs{display:flex;gap:.4rem;margin-bottom:1rem;background:var(--surface2);border-radius:10px;padding:4px}
+.bingo-link-tab{flex:1;padding:7px 10px;border-radius:8px;background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:500;cursor:pointer;font-family:var(--font-body);transition:all .15s}
+.bingo-link-tab.active{background:var(--surface3);color:var(--text)}
+.bingo-book-search{position:relative;margin-bottom:.75rem}
+.bingo-book-search input{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:13.5px;font-family:var(--font-body);outline:none}
+.bingo-book-search input:focus{border-color:var(--accent)}
+.bingo-book-results{max-height:240px;overflow-y:auto;display:flex;flex-direction:column;gap:.4rem}
+.bingo-book-result{display:flex;align-items:center;gap:10px;padding:7px 9px;border-radius:9px;background:var(--surface2);cursor:pointer;transition:background .15s;border:1px solid transparent}
+.bingo-book-result:hover{background:var(--surface3);border-color:var(--border2)}
+.bingo-book-result img{width:30px;height:44px;object-fit:cover;border-radius:4px;flex-shrink:0;background:var(--surface3)}
+.bingo-book-result-info{flex:1;min-width:0}
+.bingo-book-result-title{font-size:12.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bingo-book-result-author{font-size:11px;color:var(--muted)}
+.bingo-book-suggested-tag{font-size:9.5px;color:var(--teal);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.5rem;display:flex;align-items:center;gap:5px}
+.bingo-manual-input{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:13.5px;font-family:var(--font-body);outline:none;margin-bottom:.75rem}
+.bingo-manual-input:focus{border-color:var(--accent)}
+.bingo-manual-confirm{display:flex;align-items:flex-start;gap:8px;font-size:11.5px;color:var(--muted);line-height:1.5;margin:-.25rem 0 .9rem;cursor:pointer;user-select:none}
+.bingo-manual-confirm input{margin-top:2px;accent-color:var(--accent);cursor:pointer}
+.bingo-cell-marked-info{background:var(--accent-soft);border:1px solid var(--border2);border-radius:10px;padding:.85rem 1rem;display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.bingo-cell-marked-info img{width:34px;height:50px;object-fit:cover;border-radius:5px;flex-shrink:0}
+.bingo-cell-marked-info-text{flex:1;font-size:12.5px;color:var(--text)}
+.bingo-cell-marked-info-text small{display:block;color:var(--muted);font-size:10.5px;margin-top:1px}
+.bingo-btn-row{display:flex;gap:.6rem;margin-top:.5rem}
+.bingo-btn-primary{flex:1;padding:10px;border-radius:10px;background:var(--accent);border:none;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:opacity .15s}
+.bingo-btn-primary:hover{opacity:.88}
+.bingo-btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.bingo-btn-danger{padding:10px 16px;border-radius:10px;background:transparent;border:1px solid rgba(212,96,122,0.4);color:var(--rose);font-size:12.5px;font-weight:500;cursor:pointer;font-family:var(--font-body);transition:all .15s}
+.bingo-btn-danger:hover{background:var(--rose-soft)}
+
+/* ── SHELF BUTTONS (modal) ── */
+.shelf-btns{display:flex;gap:.5rem;margin:.4rem 0 1rem;flex-wrap:wrap}
+.shelf-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex:1;padding:8px 0;border-radius:10px;border:1px solid var(--border2);background:var(--surface2);color:var(--muted);font-size:12.5px;font-family:var(--font-body);font-weight:500;cursor:pointer;transition:all .18s;user-select:none}
+.shelf-btn:hover{border-color:rgba(192,111,196,.4);color:var(--text);background:var(--surface3)}
+.shelf-btn.want{background:var(--accent-soft);border-color:rgba(192,111,196,.45);color:var(--accent2)}
+.shelf-btn.read{background:rgba(91,188,176,.12);border-color:rgba(91,188,176,.4);color:var(--teal)}
+
+/* ── SHELF BUTTONS (tarjeta) ── */
+.card-shelf-btns{display:flex;gap:.4rem;margin-top:.6rem}
+.card-shelf-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex:1;padding:6px 4px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--muted);font-size:11px;font-family:var(--font-body);font-weight:500;cursor:pointer;transition:all .2s;user-select:none;letter-spacing:.01em}
+.card-shelf-btn:hover{border-color:rgba(192,111,196,.5);color:var(--accent2);background:var(--accent-soft)}
+.card-shelf-btn.want{background:var(--accent-soft);border-color:rgba(192,111,196,.5);color:var(--accent2)}
+.card-shelf-btn.read{background:rgba(91,188,176,.12);border-color:rgba(91,188,176,.45);color:var(--teal)}
+.card-shelf-btn.read:hover{background:rgba(91,188,176,.2);border-color:rgba(91,188,176,.65);color:var(--teal)}
+.card-shelf-icon{font-size:12px;line-height:1}
+.card-shelf-icon{font-size:11px;line-height:1}
+
+/* ── SHELF VIEW ── */
+#shelfView{display:none;position:relative;z-index:1;padding:0 0 5rem}
+#shelfView.active{display:block}
+.shelf-layout{display:grid;grid-template-columns:220px 1fr;gap:0;max-width:1200px;margin:0 auto;min-height:80vh}
+.shelf-sidebar{border-right:1px solid var(--border2);padding:2rem 0;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto}
+.shelf-sidebar-header{padding:0 1.5rem 1.2rem;border-bottom:1px solid var(--border)}
+.shelf-sidebar-name{font-family:var(--font-display);font-size:1.4rem;font-weight:600;font-style:italic;color:var(--text);line-height:1.1}
+.shelf-sidebar-sub{font-size:10.5px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+.shelf-sidebar-section{padding:1rem 1.5rem .4rem}
+.shelf-sidebar-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);opacity:.6;margin-bottom:.4rem}
+.shelf-nav-item{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-radius:8px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--muted);font-family:var(--font-body);background:transparent;border:none;width:100%;text-align:left}
+.shelf-nav-item:hover{background:var(--surface2);color:var(--text)}
+.shelf-nav-item.active{background:var(--accent-soft);color:var(--accent2);font-weight:500}
+.shelf-nav-count{font-size:11px;padding:1px 7px;border-radius:10px;background:var(--surface3);color:var(--muted)}
+.shelf-nav-item.active .shelf-nav-count{background:rgba(192,111,196,.2);color:var(--accent2)}
+.shelf-back-link{display:flex;align-items:center;gap:.4em;padding:6px 10px;border-radius:8px;color:var(--muted);font-size:12.5px;cursor:pointer;font-family:var(--font-body);background:transparent;border:none;width:100%;transition:all .15s;margin-top:.5rem}
+.shelf-back-link:hover{color:var(--accent2)}
+.shelf-main{padding:2rem 2rem 4rem;min-width:0}
+.shelf-main-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
+.shelf-main-title{font-family:var(--font-display);font-size:1.6rem;font-weight:600;font-style:italic;color:var(--text)}
+.shelf-main-title span{color:var(--muted);font-weight:300;font-size:1.1rem;margin-left:.4rem}
+.shelf-view-toggle{display:flex;gap:2px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:3px}
+.shelf-view-btn{width:30px;height:30px;border:none;background:transparent;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .15s}
+.shelf-view-btn:hover{color:var(--text)}
+.shelf-view-btn.active{background:var(--surface);color:var(--accent2);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.shelf-view-btn svg{width:15px;height:15px}
+.shelf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.85rem}
+.shelf-book{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .22s}
+.shelf-book:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.5)}
+.shelf-book .shelf-book-cover{aspect-ratio:2/3;overflow:hidden;background:var(--surface2)}
+.shelf-book .shelf-book-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.shelf-book:hover .shelf-book-cover img{transform:scale(1.04)}
+.shelf-book-cover-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--muted)}
+.shelf-book .shelf-book-body{padding:.6rem .7rem}
+.shelf-book .shelf-book-title{font-size:12px;font-weight:500;line-height:1.3;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:2px}
+.shelf-book .shelf-book-author{font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.shelf-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border2);border-radius:var(--radius-lg);overflow:hidden}
+.shelf-list-item{display:grid;grid-template-columns:52px 1fr auto;gap:1rem;align-items:center;padding:.85rem 1.25rem;border-bottom:1px solid var(--border);background:var(--surface);cursor:pointer;transition:background .15s}
+.shelf-list-item:last-child{border-bottom:none}
+.shelf-list-item:hover{background:var(--surface2)}
+.shelf-list-cover{width:52px;height:78px;border-radius:7px;object-fit:cover;border:1px solid var(--border);flex-shrink:0;display:block}
+.shelf-list-cover-ph{width:52px;height:78px;border-radius:7px;background:var(--surface3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--muted)}
+.shelf-list-info{min-width:0}
+.shelf-list-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.shelf-list-author{font-size:12px;color:var(--muted);margin-bottom:.4rem}
+.shelf-list-right{display:flex;flex-direction:column;align-items:flex-end;gap:.3rem;flex-shrink:0}
+.shelf-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem;color:var(--muted);text-align:center;gap:.75rem}
+.shelf-empty-icon{font-size:2.5rem;opacity:.5}
+.shelf-empty p{font-size:13.5px;line-height:1.6;max-width:300px}
+@media(max-width:700px){.shelf-layout{grid-template-columns:1fr}.shelf-sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border2);padding:1rem 0}.shelf-sidebar-header{padding:0 1rem .75rem}.shelf-sidebar-section{padding:.5rem 1rem .3rem}.shelf-main{padding:1.25rem 1rem 3rem}}
 </style>
 </head>
 <body>
@@ -914,6 +1068,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
   </a>
   <div class="topbar-right" style="display:flex;align-items:center;gap:8px">
     <button class="home-nav-btn" id="homeNavBtn" onclick="showHome()">⌂ Inicio</button>
+    <button class="home-nav-btn" id="shelfNavBtn" onclick="location.href='https://xxmadwavs.github.io/Tinta-Sapphic-La-Estanter-a-2.0/?section=thais'" style="display:none">📚 Estantería</button>
     <div id="authArea">
       <button class="btn-login" onclick="openAuthModal()">Entrar para votar</button>
     </div>
@@ -1037,6 +1192,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
     <button class="tab-btn" id="tabMyrec" onclick="switchTab('myrec')">💌 Mis Recomendaciones</button>
     <button class="tab-btn" id="tabSolicitudes" onclick="switchTab('solicitudes')">📬 Solicitudes</button>
     <button class="tab-btn" id="tabRuleta" onclick="switchTab('ruleta')">🎡 Ruleta</button>
+    <button class="tab-btn" id="tabBingo" onclick="switchTab('bingo')">🎲 Bingo</button>
     <button class="tab-share-btn" id="tabShareBtn" onclick="copyTabLink()" title="Copiar enlace a esta sección">🔗 Copiar enlace</button>
   </div>
 
@@ -1079,7 +1235,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
         <button class="dd-btn" onclick="toggleDD('ddSubgenre')">Temática <span class="dd-count" id="cntSubgenre" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('subgenres','listSubgenre',this.value)"></div><div class="dd-list" id="listSubgenre"></div></div>
       </div>
-      <div class="dd-wrap auth-only" id="ddDinamica">
+      <div class="dd-wrap" id="ddDinamica">
         <button class="dd-btn" onclick="toggleDD('ddDinamica')">Dinámica <span class="dd-count" id="cntDinamica" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('dinamicas','listDinamica',this.value)"></div><div class="dd-list" id="listDinamica"></div></div>
       </div>
@@ -1371,7 +1527,58 @@ body.home-active .hero,body.home-active .main{display:none!important}
     </div>
   </div>
 
+  <!-- PANEL BINGO -->
+  <div id="panelBingo" style="display:none">
+    <div class="bingo-wrap" id="bingoWrap">
+      <div class="loading"><div class="spinner"></div>Cargando bingo…</div>
+    </div>
+  </div>
+
 </main>
+
+<!-- SHELF VIEW -->
+<div id="shelfView">
+  <div class="shelf-layout">
+    <aside class="shelf-sidebar">
+      <div class="shelf-sidebar-header">
+        <div class="shelf-sidebar-name">Mi estantería</div>
+        <div class="shelf-sidebar-sub">📚 Tinta Sapphic</div>
+      </div>
+      <div class="shelf-sidebar-section">
+        <div class="shelf-sidebar-label">Estanterías</div>
+        <button class="shelf-nav-item active" id="shelfNavAll" onclick="switchShelf('all')">
+          <span>Todos los libros</span>
+          <span class="shelf-nav-count" id="shelfCountAll">0</span>
+        </button>
+        <button class="shelf-nav-item" id="shelfNavWant" onclick="switchShelf('want')">
+          <span>＋ Quiero leer</span>
+          <span class="shelf-nav-count" id="shelfWantCount">0</span>
+        </button>
+        <button class="shelf-nav-item" id="shelfNavRead" onclick="switchShelf('read')">
+          <span>✓ Leídos</span>
+          <span class="shelf-nav-count" id="shelfReadCount">0</span>
+        </button>
+      </div>
+      <div class="shelf-sidebar-section" style="margin-top:auto;padding-top:1.5rem">
+        <button class="shelf-back-link" onclick="closeShelf()">← Volver al catálogo</button>
+      </div>
+    </aside>
+    <div class="shelf-main">
+      <div class="shelf-main-header">
+        <div class="shelf-main-title" id="shelfMainTitle">Todos los libros <span id="shelfMainCount"></span></div>
+        <div class="shelf-view-toggle">
+          <button class="shelf-view-btn active" id="shelfBtnGrid" onclick="setShelfView('grid')" title="Cuadrícula">
+            <svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+          </button>
+          <button class="shelf-view-btn" id="shelfBtnList" onclick="setShelfView('list')" title="Listado">
+            <svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="14" height="2" rx="1"/><rect x="1" y="7" width="14" height="2" rx="1"/><rect x="1" y="12" width="14" height="2" rx="1"/></svg>
+          </button>
+        </div>
+      </div>
+      <div id="shelfBooksContainer"></div>
+    </div>
+  </div>
+</div>
 
 <!-- BOOK MODAL -->
 <div class="modal-bg" id="bookModal">
@@ -1439,6 +1646,14 @@ body.home-active .hero,body.home-active .main{display:none!important}
   </div>
 </div>
 
+<!-- BINGO CELL MODAL -->
+<div class="modal-bg" id="bingoCellModal">
+  <div class="modal" style="max-width:440px">
+    <button class="modal-close" onclick="closeBingoCellModal()">✕</button>
+    <div class="bingo-cell-modal-body" id="bingoCellModalBody"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1454,6 +1669,11 @@ const SPICY_UNKNOWN_LABEL = '? Nivel desconocido';
 const SPICY_UNKNOWN_ICON  = '❓';
 
 let allBooks=[], ratingsMap={}, myRatings={}, currentUser=null, activeBook=null;
+let myReadingStatus={}; // bookId -> 'want' | 'read'
+let myReadingReadAt={}; // bookId -> fecha ISO en que se marcó como leído
+let shelfFilter='all'; // 'all' | 'want' | 'read'
+let shelfViewMode='grid'; // 'grid' | 'list'
+let bingoChallenges=[], bingoActiveChallengeId=null, bingoProgress=[], bingoActiveCellIdx=null, bingoLinkMode='catalogo', bingoPendingBookId=null, bingoPendingBookTitle=null, bingoPendingBookCover=null, bingoManualConfirmed=false;
 let activeSection='thais';
 let authMode='login', pendingStar=0;
 let spicyMap={}, mySpicy={}, pendingSpicy=0;
@@ -1524,12 +1744,14 @@ async function init(){
   renderAuthUI();
   await loadBooks();
   if(currentUser) await loadMyRatings();
+  if(currentUser) await loadMyReadingStatus();
   buildDropdowns();
   loadState();   // restaurar filtros y página desde la URL
   // Pintar visualmente la sección activa restaurada
   const _secTabs={thais:'tabThais',other:'tabOther',spanish:'tabSpanish',baihee:'tabBaihee',asian:'tabAsian',african:'tabAfrican'};
   const _secCls={thais:'active-thais',other:'active-other',spanish:'active-spanish',baihee:'active-baihee',asian:'active-asian',african:'active-african'};
   Object.entries(_secTabs).forEach(([key,id])=>{const el=document.getElementById(id);if(el)el.className='section-tab'+(key===activeSection?' '+_secCls[key]:'');});
+  renderAuthUI(); // re-aplicar estado auth tras cargar dropdowns
   applyFilters(false);
   updateDDCounts();renderActivePills();
   if(filters.pages){const _cp=document.getElementById('cntPages');if(_cp)_cp.style.display='';}
@@ -1556,7 +1778,7 @@ async function init(){
   }
   const debouncedLoadRatings=debounce(()=>{
     if(currentUser) loadMyRatings().then(()=>{applyFilters(false);if(activeBook)renderBookModal();checkSolicitudesNotif();});
-    else{myRatings={};applyFilters(false);}
+    else{myRatings={};myReadingStatus={};myReadingReadAt={};applyFilters(false);}
   },300);
   sb.auth.onAuthStateChange((_e,session)=>{
     if(_e==='PASSWORD_RECOVERY'){
@@ -1568,6 +1790,7 @@ async function init(){
     debouncedLoadRatings();
     if(activeTab==='solicitudes') renderSolicitudes();
     if(activeTab==='ruleta') ruletaInit();
+    if(activeTab==='bingo') bingoInit();
   });
   document.addEventListener('click',e=>{if(!e.target.closest('.dd-wrap')&&!e.target.closest('.ruleta-dd-wrap')){closeAllDD();closeAllRDD();}});
 }
@@ -1961,13 +2184,14 @@ function renderGrid(books, total, totalPages){
         <div class="book-title">${b.title}</div>
         ${cardSagaSub}
         <div class="book-author">${authorStr}</div>
-        <div class="book-tags">${genreTags}${dinamicaTag}${tropeTags}${yearTag}${formatoTag}${adaptTag}</div>
+        <div class="book-tags">${genreTags}${yearTag}</div>
         <div class="book-footer">
           ${currentUser
             ? (r.count>0?`<span style="color:var(--gold);font-size:11px">★ ${r.avg.toFixed(1)}</span>`:`<span class="no-ratings">Sin valoraciones</span>`)
             : `<span class="no-ratings" style="cursor:pointer" onclick="event.stopPropagation();openAuthModal()">🔒 Regístrate</span>`}
           <button class="vote-mini-btn${myScore>0?' voted':''}" onclick="event.stopPropagation();openBook('${b.id}')">${voteLabel}</button>
         </div>
+        ${currentUser?buildCardShelfBtnsHTML(b.id):''}
       </div>
     </div>`;
   }).join('')}</div>`;
@@ -2064,6 +2288,7 @@ function renderBookModal(){
       </div>
       ${sagaSubtitle}
       <p class="modal-author">por ${authorStr}</p>
+      ${currentUser?buildShelfButtonsHTML(b.id):''}
       <div class="modal-tags">${genreTags}${subgenreTags}${spicyTag}${formatoTag}${adaptTag}</div>
       ${dinamicaTags?`<div class="modal-tags" style="margin-top:.3rem">${dinamicaTags}</div>`:''}
       ${(tropeTags||identidadTags||characterTags)?`<div class="modal-tags" style="margin-top:.3rem">${tropeTags}${identidadTags}${characterTags}</div>`:''}
@@ -2429,7 +2654,18 @@ function renderAuthUI(){
   const authOnlyFilters=document.querySelectorAll('.dd-wrap.auth-only');
   if(currentUser){
     const tg=currentUser.user_metadata?.telegram_username||currentUser.email.split('@')[0];
-    el.innerHTML=`<div class="user-chip"><div class="user-avatar">${tg.slice(0,2).toUpperCase()}</div><span class="user-name">@${tg}</span><button class="btn-logout" onclick="logout()">salir</button></div>`;
+    el.innerHTML=`<div class="user-chip-wrap" id="userChipWrap">
+      <div class="user-chip" onclick="toggleUserDropdown()">
+        <div class="user-avatar">${tg.slice(0,2).toUpperCase()}</div>
+        <span class="user-name">@${tg}</span>
+        <span class="user-chip-caret">▾</span>
+      </div>
+      <div class="user-dropdown">
+        <button class="user-dd-item" onclick="toggleUserDropdown();openShelf()">📚 Mi estantería</button>
+        <div class="user-dd-sep"></div>
+        <button class="user-dd-item danger" onclick="logout()">Cerrar sesión</button>
+      </div>
+    </div>`;
     document.getElementById('valoracionFilter').style.display='flex';
     document.getElementById('valoracionFilter').style.gap='.4rem';
     authOnlyFilters.forEach(f=>f.classList.add('visible'));
@@ -2437,6 +2673,8 @@ function renderAuthUI(){
     if(hint) hint.classList.add('hidden');
     const svi=document.getElementById('statVotesItem');
     if(svi) svi.style.display='';
+    const snb=document.getElementById('shelfNavBtn');
+    if(snb) snb.style.display='';
   }else{
     el.innerHTML=`<button class="btn-login" onclick="openAuthModal()">Entrar para votar</button>`;
     document.getElementById('valoracionFilter').style.display='none';
@@ -2447,10 +2685,12 @@ function renderAuthUI(){
     if(hint) hint.classList.remove('hidden');
     // Limpiar filtros restringidos si estaban activos
     filters.spicy=[];filters.spicyUnknown=false;
-    filters.dinamicas=[];filters.edad=[];filters.pais_cultura=[];
+    filters.edad=[];filters.pais_cultura=[];
     renderActivePills();applyFilters(false);
     const svi=document.getElementById('statVotesItem');
     if(svi) svi.style.display='none';
+    const snb=document.getElementById('shelfNavBtn');
+    if(snb) snb.style.display='none';
   }
 }
 function openAuthModal(){authMode='login';updateAuthUI();document.getElementById('authModal').classList.add('open');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('authEmail').focus(),100);}
@@ -2513,13 +2753,24 @@ async function handleAuth(){
     if(!error){closeAuthModal();showToast('¡Cuenta creada! Revisa tu email 🌹','success');}
   }else{
     ({error}=await sb.auth.signInWithPassword({email,password:pass}));
-    if(!error){await loadMyRatings();closeAuthModal();showToast('¡Bienvenida de vuelta! 🌹','success');applyFilters();}
+    if(!error){await Promise.all([loadMyRatings(),loadMyReadingStatus()]);closeAuthModal();showToast('¡Bienvenida de vuelta! 🌹','success');applyFilters();}
   }
   if(error) setAuthError(error.message==='Invalid login credentials'?'Email o contraseña incorrectos.':error.message);
   btn.disabled=false;btn.textContent=authMode==='register'?'Registrarse':'Entrar';
 }
 function setAuthError(msg){document.getElementById('authError').textContent=msg;}
-async function logout(){await sb.auth.signOut();myRatings={};showToast('Hasta pronto 🌹','success');applyFilters();}
+async function logout(){await sb.auth.signOut();myRatings={};myReadingStatus={};myReadingReadAt={};showToast('Hasta pronto 🌹','success');applyFilters();}
+
+function toggleUserDropdown(){
+  const wrap=document.getElementById('userChipWrap');
+  if(!wrap) return;
+  wrap.classList.toggle('open');
+}
+// Cerrar dropdown al clicar fuera
+document.addEventListener('click',e=>{
+  const wrap=document.getElementById('userChipWrap');
+  if(wrap && !wrap.contains(e.target)) wrap.classList.remove('open');
+});
 
 /* ── RESET PASSWORD ── */
 function openResetModal(){
@@ -2612,6 +2863,7 @@ function switchTab(tab, silent){
   document.getElementById('tabMyrec').classList.toggle('active',tab==='myrec');
   document.getElementById('tabSolicitudes').classList.toggle('active',tab==='solicitudes');
   document.getElementById('tabRuleta').classList.toggle('active',tab==='ruleta');
+  document.getElementById('tabBingo').classList.toggle('active',tab==='bingo');
   document.getElementById('panelEstanteria').style.display=tab==='estanteria'?'':'none';
   document.getElementById('panelTop10').style.display=tab==='top10'?'':'none';
   document.getElementById('panelSafi').style.display=tab==='safi'?'':'none';
@@ -2619,12 +2871,14 @@ function switchTab(tab, silent){
   document.getElementById('panelMyrec').style.display=tab==='myrec'?'':'none';
   document.getElementById('panelSolicitudes').style.display=tab==='solicitudes'?'':'none';
   document.getElementById('panelRuleta').style.display=tab==='ruleta'?'':'none';
+  document.getElementById('panelBingo').style.display=tab==='bingo'?'':'none';
   if(tab==='top10') renderTop10();
   if(tab==='safi') renderSafi();
   if(tab==='canal') renderCanal();
   if(tab==='myrec') renderMyrec();
   if(tab==='solicitudes') renderSolicitudes();
   if(tab==='ruleta') ruletaInit();
+  if(tab==='bingo') bingoInit();
   // Update URL so the tab is shareable and the back button works
   if(!silent) try{
     const params=new URLSearchParams(location.search);
@@ -3241,6 +3495,7 @@ window.addEventListener('popstate', ()=>{
   document.getElementById('tabMyrec').classList.toggle('active',tab==='myrec');
   document.getElementById('tabSolicitudes').classList.toggle('active',tab==='solicitudes');
   document.getElementById('tabRuleta').classList.toggle('active',tab==='ruleta');
+  document.getElementById('tabBingo').classList.toggle('active',tab==='bingo');
   document.getElementById('panelEstanteria').style.display=tab==='estanteria'?'':'none';
   document.getElementById('panelTop10').style.display=tab==='top10'?'':'none';
   document.getElementById('panelSafi').style.display=tab==='safi'?'':'none';
@@ -3248,12 +3503,14 @@ window.addEventListener('popstate', ()=>{
   document.getElementById('panelMyrec').style.display=tab==='myrec'?'':'none';
   document.getElementById('panelSolicitudes').style.display=tab==='solicitudes'?'':'none';
   document.getElementById('panelRuleta').style.display=tab==='ruleta'?'':'none';
+  document.getElementById('panelBingo').style.display=tab==='bingo'?'':'none';
   if(tab==='top10') renderTop10();
   if(tab==='safi') renderSafi();
   if(tab==='canal') renderCanal();
   if(tab==='myrec') renderMyrec();
   if(tab==='solicitudes') renderSolicitudes();
   if(tab==='ruleta') ruletaInit();
+  if(tab==='bingo') bingoInit();
   // If on estantería, restore section without pushing history
   if(tab==='estanteria' && section!==activeSection){
     activeSection=section;
@@ -4012,6 +4269,541 @@ function ruletaOpenBook() {
   if (!ruletaSelectedBook) return;
   openBook(ruletaSelectedBook.id);
 }
+
+/* ══════════════════════════════════
+   READING STATUS & ESTANTERÍA
+══════════════════════════════════ */
+
+async function loadMyReadingStatus(){
+  if(!currentUser) return;
+  const {data,error}=await sb.from('reading_status').select('book_id,status,read_at').eq('user_id',currentUser.id);
+  if(error){ console.error('reading_status load error:',error); return; }
+  myReadingStatus={};
+  myReadingReadAt={};
+  (data||[]).forEach(row=>{
+    myReadingStatus[row.book_id]=row.status;
+    if(row.read_at) myReadingReadAt[row.book_id]=row.read_at;
+  });
+}
+
+async function setReadingStatus(bookId, newStatus){
+  if(!currentUser){ openAuthModal(); return; }
+  const current=myReadingStatus[bookId];
+  const next=current===newStatus?null:newStatus; // clic en el activo = quitar
+
+  if(next){
+    const payload={user_id:currentUser.id, book_id:bookId, status:next, read_at: next==='read' ? new Date().toISOString() : null};
+    const {error}=await sb.from('reading_status')
+      .upsert(payload,{onConflict:'user_id,book_id'});
+    if(error){ showToast('Error al guardar 😞','error'); console.error(error); return; }
+    myReadingStatus[bookId]=next;
+    if(next==='read') myReadingReadAt[bookId]=payload.read_at; else delete myReadingReadAt[bookId];
+    showToast(next==='want'?'Añadido a «Quiero leer» ＋':'Marcado como leído ✓','success');
+  } else {
+    const {error}=await sb.from('reading_status')
+      .delete().eq('user_id',currentUser.id).eq('book_id',bookId);
+    if(error){ showToast('Error al eliminar 😞','error'); console.error(error); return; }
+    delete myReadingStatus[bookId];
+    delete myReadingReadAt[bookId];
+    showToast('Eliminado de tu estantería','success');
+  }
+  _refreshShelfUI(bookId);
+}
+
+async function updateReadDate(bookId, dateValue){
+  if(!currentUser) return;
+  // dateValue es "YYYY-MM-DD", convertimos a ISO con hora mediodía para evitar desfases de zona horaria
+  const isoDate=new Date(dateValue+'T12:00:00').toISOString();
+  const {error}=await sb.from('reading_status')
+    .update({read_at:isoDate})
+    .eq('user_id',currentUser.id).eq('book_id',bookId);
+  if(error){ showToast('Error al guardar la fecha 😞','error'); return; }
+  myReadingReadAt[bookId]=isoDate;
+  _refreshShelfUI(bookId);
+  showToast('Fecha de lectura actualizada 📅','success');
+}
+
+function _refreshShelfUI(bookId){
+  // Botones en modal
+  const modalWrap=document.getElementById('shelfBtns_'+bookId);
+  if(modalWrap && activeBook && activeBook.id===bookId) modalWrap.outerHTML=buildShelfButtonsHTML(bookId);
+  // Botones en tarjeta
+  const cardWrap=document.getElementById('cardShelf_'+bookId);
+  if(cardWrap) cardWrap.outerHTML=buildCardShelfBtnsHTML(bookId);
+  // Si el shelf está abierto, refrescar contadores
+  if(document.getElementById('shelfView').classList.contains('active')) renderShelf();
+}
+
+function buildShelfButtonsHTML(bookId){
+  const s=myReadingStatus[bookId];
+  const ra=myReadingReadAt[bookId];
+  const readDateStr=ra?new Date(ra).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}):'';
+  const todayISO=new Date().toISOString().slice(0,10);
+  const currentDateISO=ra?new Date(ra).toISOString().slice(0,10):todayISO;
+  const readDatePicker=s==='read'?`
+    <div class="shelf-read-date" style="margin:.4rem 0 .2rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+      <span style="font-size:11px;color:var(--teal);display:flex;align-items:center;gap:.3em">📅 Leído el ${readDateStr||'—'}</span>
+      <input type="date" id="readDateInput_${bookId}" value="${currentDateISO}" max="${todayISO}"
+        style="padding:4px 8px;border-radius:8px;border:1px solid rgba(91,188,176,.4);background:var(--surface2);color:var(--text);font-size:11px;font-family:var(--font-body);cursor:pointer;outline:none"
+        onchange="updateReadDate('${bookId}',this.value)" onclick="event.stopPropagation()">
+    </div>`:'';
+  return `<div class="shelf-btns" id="shelfBtns_${bookId}">
+    <button class="shelf-btn${s==='want'?' want':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','want')">＋ Quiero leer</button>
+    <button class="shelf-btn${s==='read'?' read':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','read')">✓ Leído</button>
+    ${readDatePicker}
+  </div>`;
+}
+
+function buildCardShelfBtnsHTML(bookId){
+  const s=myReadingStatus[bookId];
+  return `<div class="card-shelf-btns" id="cardShelf_${bookId}">
+    <button class="card-shelf-btn${s==='want'?' want':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','want')"><span class="card-shelf-icon">${s==='want'?'♥':'♡'}</span> Quiero leer</button>
+    <button class="card-shelf-btn${s==='read'?' read':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','read')"><span class="card-shelf-icon">${s==='read'?'✓':'○'}</span> Leído</button>
+  </div>`;
+}
+
+/* ── Vista estantería ── */
+function openShelf(){
+  document.querySelectorAll('main > *').forEach(el=>el.style.display='none');
+  document.getElementById('shelfView').classList.add('active');
+  renderShelf();
+}
+
+function closeShelf(){
+  document.getElementById('shelfView').classList.remove('active');
+  document.querySelectorAll('main > *').forEach(el=>el.style.display='');
+}
+
+function switchShelf(filter){
+  shelfFilter=filter;
+  document.querySelectorAll('.shelf-nav-item').forEach(el=>el.classList.remove('active'));
+  const map={all:'shelfNavAll',want:'shelfNavWant',read:'shelfNavRead'};
+  document.getElementById(map[filter])?.classList.add('active');
+  _renderShelfBooks();
+}
+
+function setShelfView(mode){
+  shelfViewMode=mode;
+  document.getElementById('shelfBtnGrid').classList.toggle('active',mode==='grid');
+  document.getElementById('shelfBtnList').classList.toggle('active',mode==='list');
+  _renderShelfBooks();
+}
+
+function renderShelf(){
+  const wantBooks=allBooks.filter(b=>myReadingStatus[b.id]==='want');
+  const readBooks=allBooks.filter(b=>myReadingStatus[b.id]==='read');
+  document.getElementById('shelfCountAll').textContent=wantBooks.length+readBooks.length;
+  document.getElementById('shelfWantCount').textContent=wantBooks.length;
+  document.getElementById('shelfReadCount').textContent=readBooks.length;
+  _renderShelfBooks();
+}
+
+function _renderShelfBooks(){
+  const wantBooks=allBooks.filter(b=>myReadingStatus[b.id]==='want');
+  const readBooks=allBooks.filter(b=>myReadingStatus[b.id]==='read');
+  let books=shelfFilter==='want'?wantBooks:shelfFilter==='read'?readBooks:[...wantBooks,...readBooks];
+  const titleMap={all:'Todos los libros',want:'Quiero leer',read:'Leídos'};
+  document.getElementById('shelfMainTitle').innerHTML=`${titleMap[shelfFilter]} <span>(${books.length})</span>`;
+  const container=document.getElementById('shelfBooksContainer');
+  if(!books.length){
+    const msgs={all:'Tu estantería está vacía. ¡Añade libros desde el catálogo!',want:'Aún no tienes libros en «Quiero leer».',read:'Aún no has marcado ningún libro como leído.'};
+    container.innerHTML=`<div class="shelf-empty"><span class="shelf-empty-icon">${shelfFilter==='read'?'✨':'📖'}</span><p>${msgs[shelfFilter]}</p></div>`;
+    return;
+  }
+  if(shelfViewMode==='grid'){
+    container.innerHTML=`<div class="shelf-grid">${books.map(b=>{
+      const cov=b.cover?`<img src="${b.cover}" alt="${b.title}" loading="lazy">`:`<div class="shelf-book-cover-ph">📖</div>`;
+      const auth=(b.authors||[]).join(', ');
+      return `<div class="shelf-book" onclick="openBook('${b.id}')">
+        <div class="shelf-book-cover">${cov}</div>
+        <div class="shelf-book-body">
+          <div class="shelf-book-title">${b.title}</div>
+          <div class="shelf-book-author">${auth}</div>
+        </div>
+      </div>`;
+    }).join('')}</div>`;
+  } else {
+    container.innerHTML=`<div class="shelf-list">${books.map(b=>{
+      const cov=b.cover?`<img class="shelf-list-cover" src="${b.cover}" alt="${b.title}" loading="lazy">`:`<div class="shelf-list-cover-ph">📖</div>`;
+      const auth=(b.authors||[]).join(', ');
+      const r=ratingsMap[b.id]||{avg:0,count:0};
+      const badge=myReadingStatus[b.id]==='want'
+        ?`<span style="font-size:11px;color:var(--accent2)">＋ Quiero leer</span>`
+        :(()=>{
+          const ra=myReadingReadAt[b.id];
+          const dateStr=ra?new Date(ra).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}):'';
+          return `<span style="font-size:11px;color:var(--teal)">✓ Leído${dateStr?' · '+dateStr:''}</span>`;
+        })();
+      return `<div class="shelf-list-item" onclick="openBook('${b.id}')">
+        ${cov}
+        <div class="shelf-list-info">
+          <div class="shelf-list-title">${b.title}</div>
+          <div class="shelf-list-author">${auth}</div>
+          ${badge}
+        </div>
+        <div class="shelf-list-right">
+          ${r.count>0?`<span style="color:var(--gold);font-size:1.1rem;font-weight:300">★ ${r.avg.toFixed(1)}</span><span style="font-size:10px;color:var(--muted)">${r.count} votos</span>`:''}
+        </div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+}
+
+/* ══════════════════════════ BINGO DE LECTURA ══════════════════════════ */
+
+// Fecha mínima de lectura para que un libro cuente en el bingo (inclusive)
+const BINGO_FECHA_MINIMA=new Date('2026-06-01T00:00:00');
+
+// Libros que cuentan para el bingo: marcados como "Leído" Y con fecha de lectura
+// a partir del 1 de junio de 2026 (no sirven los marcados leídos el 31 de mayo o antes)
+function bingoEligibleBooks(){
+  return allBooks.filter(b=>{
+    if(myReadingStatus[b.id]!=='read') return false;
+    const ra=myReadingReadAt[b.id];
+    if(!ra) return false;
+    return new Date(ra)>=BINGO_FECHA_MINIMA;
+  });
+}
+
+async function bingoInit(){
+  const wrap=document.getElementById('bingoWrap');
+  wrap.innerHTML='<div class="loading"><div class="spinner"></div>Cargando bingo…</div>';
+  try{
+    const {data:chData,error:chErr}=await sb.from('bingo_challenges').select('*').eq('activo',true).order('fecha_inicio',{ascending:false});
+    if(chErr) throw chErr;
+    bingoChallenges=chData||[];
+  }catch(e){
+    wrap.innerHTML='<div class="bingo-empty">No se ha podido cargar el bingo. Inténtalo de nuevo en un momento.</div>';
+    return;
+  }
+  if(bingoChallenges.length===0){
+    wrap.innerHTML='<div class="bingo-empty">Aún no hay ningún bingo activo. ¡Vuelve pronto! 🎲</div>';
+    return;
+  }
+  if(!bingoActiveChallengeId || !bingoChallenges.find(c=>c.id===bingoActiveChallengeId)){
+    bingoActiveChallengeId=bingoChallenges[0].id;
+  }
+  if(currentUser) await bingoLoadProgress();
+  else bingoProgress=[];
+  bingoRender();
+}
+
+async function bingoLoadProgress(){
+  try{
+    const {data,error}=await sb.from('bingo_progreso').select('*').eq('user_id',currentUser.id);
+    if(error) throw error;
+    bingoProgress=data||[];
+  }catch(e){
+    bingoProgress=[];
+  }
+}
+
+function bingoSwitchChallenge(id){
+  bingoActiveChallengeId=id;
+  bingoRender();
+}
+
+function bingoGetActiveChallenge(){
+  return bingoChallenges.find(c=>c.id===bingoActiveChallengeId);
+}
+
+function bingoFmtDate(d){
+  if(!d) return '';
+  try{
+    const dt=new Date(d+'T00:00:00');
+    return dt.toLocaleDateString('es-ES',{day:'numeric',month:'short'});
+  }catch(e){ return ''; }
+}
+
+function bingoRender(){
+  const wrap=document.getElementById('bingoWrap');
+  const challenge=bingoGetActiveChallenge();
+  if(!challenge){ wrap.innerHTML='<div class="bingo-empty">Bingo no encontrado.</div>'; return; }
+
+  if(!currentUser){
+    let selectorHtml='';
+    if(bingoChallenges.length>1){
+      selectorHtml='<div class="bingo-selector">'+bingoChallenges.map(c=>
+        `<button class="bingo-chal-btn ${c.id===bingoActiveChallengeId?'active':''}" onclick="bingoSwitchChallenge('${c.id}')">${escHtml(c.nombre)}</button>`
+      ).join('')+'</div>';
+    }
+    wrap.innerHTML=selectorHtml+`
+      <div class="bingo-login-card">
+        <div style="font-size:2rem;margin-bottom:.5rem">🎲</div>
+        <div class="bingo-title" style="font-size:1.3rem">${escHtml(challenge.nombre)}</div>
+        <p>Inicia sesión para empezar a marcar casillas y seguir tu progreso en este bingo de lectura.</p>
+        <button class="sol-submit" onclick="openAuthModal()">Iniciar sesión 🌹</button>
+      </div>`;
+    return;
+  }
+
+  const casillas=challenge.casillas||[];
+  const myProgress=bingoProgress.filter(p=>p.challenge_id===challenge.id);
+  const markedIdx=new Set(myProgress.map(p=>p.casilla_index));
+  const total=casillas.length;
+  const marked=markedIdx.size;
+  const pct=total?Math.round(marked/total*100):0;
+  const hasLine=bingoCheckLine(casillas,markedIdx);
+
+  let selectorHtml='';
+  if(bingoChallenges.length>1){
+    selectorHtml='<div class="bingo-selector">'+bingoChallenges.map(c=>
+      `<button class="bingo-chal-btn ${c.id===bingoActiveChallengeId?'active':''}" onclick="bingoSwitchChallenge('${c.id}')">${escHtml(c.nombre)}</button>`
+    ).join('')+'</div>';
+  }
+
+  const datesStr=(challenge.fecha_inicio||challenge.fecha_fin)
+    ? `${bingoFmtDate(challenge.fecha_inicio)} — ${bingoFmtDate(challenge.fecha_fin)}` : '';
+
+  const headerHtml=`
+    <div class="bingo-header-card">
+      <div class="bingo-header-top">
+        <div>
+          <div class="bingo-title">${escHtml(challenge.nombre)}</div>
+          ${datesStr?`<div class="bingo-dates">${datesStr}</div>`:''}
+        </div>
+        <div class="bingo-progress-pill"><b>${marked}/${total}</b><span>casillas</span></div>
+      </div>
+      <div class="bingo-progress-bar"><div class="bingo-progress-fill" style="width:${pct}%"></div></div>
+      <div class="bingo-line-badge ${hasLine?'show':''}">✨ ¡Línea completada!</div>
+    </div>`;
+
+  const sizeClass=total===16?'size-16':'';
+  const gridHtml=`<div class="bingo-grid ${sizeClass}">`+casillas.map((c,i)=>{
+    const isMarked=markedIdx.has(i);
+    const entry=myProgress.find(p=>p.casilla_index===i);
+    const colorClass=c.color?`c-${c.color}`:'';
+    const freeClass=c.libre?'free':'';
+    const cover=isMarked&&entry?.book_id ? allBooks.find(b=>b.id===entry.book_id)?.cover : null;
+    const coverHtml=cover?`<img class="bingo-cell-cover" src="${cover}" alt="">`:'';
+    const autoDot=c.tipo==='auto'&&!isMarked?'<div class="bingo-cell-auto-dot" title="Esta casilla se puede sugerirte automáticamente"></div>':'';
+    const checkHtml=isMarked?'<div class="bingo-cell-check">✓</div>':'';
+    const label=(c.label||'').replace(/\n/g,'<br>');
+    return `<div class="bingo-cell ${isMarked?'marked':''} ${colorClass} ${freeClass}" onclick="openBingoCellModal(${i})">
+      ${coverHtml}${autoDot}${checkHtml}
+      <div class="bingo-cell-label">${label}</div>
+    </div>`;
+  }).join('')+'</div>';
+
+  wrap.innerHTML=selectorHtml+headerHtml+gridHtml+
+    `<p style="font-size:11px;color:var(--muted);text-align:center;margin-top:.5rem">🟢 = esta casilla puede sugerirte libros que la cumplen · solo cuentan libros marcados como leídos a partir del 1 de junio de 2026</p>`;
+}
+
+// Comprueba si hay alguna fila/columna/diagonal completa (solo aplica a grids cuadradas 5x5 o 4x4)
+function bingoCheckLine(casillas,markedIdx){
+  const n=casillas.length;
+  const size=Math.sqrt(n);
+  if(size!==Math.floor(size)) return false;
+  for(let r=0;r<size;r++){
+    let full=true;
+    for(let c=0;c<size;c++){ if(!markedIdx.has(r*size+c)){full=false;break;} }
+    if(full) return true;
+  }
+  for(let c=0;c<size;c++){
+    let full=true;
+    for(let r=0;r<size;r++){ if(!markedIdx.has(r*size+c)){full=false;break;} }
+    if(full) return true;
+  }
+  let diag1=true,diag2=true;
+  for(let i=0;i<size;i++){
+    if(!markedIdx.has(i*size+i)) diag1=false;
+    if(!markedIdx.has(i*size+(size-1-i))) diag2=false;
+  }
+  return diag1||diag2;
+}
+
+// Devuelve los libros leídos ESTE AÑO que cumplen el filtro "auto" de una casilla
+function bingoMatchBooks(filtro){
+  if(!filtro) return [];
+  const {campo,valor}=filtro;
+  return bingoEligibleBooks().filter(b=>{
+    if(campo==='pages_min') return (b.pages||0)>=valor;
+    if(campo==='pages_max') return (b.pages||0)>0 && (b.pages||0)<=valor;
+    if(campo==='source') return b.source===valor;
+    if(campo==='authors') return (b.authors||[]).some(a=>a.toLowerCase().includes(String(valor).toLowerCase()));
+    if(Array.isArray(b[campo])) return b[campo].includes(valor);
+    return b[campo]===valor;
+  });
+}
+
+function openBingoCellModal(idx){
+  if(!currentUser){ openAuthModal(); return; }
+  bingoActiveCellIdx=idx;
+  bingoLinkMode='catalogo';
+  bingoPendingBookId=null;
+  bingoPendingBookTitle=null;
+  bingoPendingBookCover=null;
+  bingoManualConfirmed=false;
+  renderBingoCellModal();
+  document.getElementById('bingoCellModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeBingoCellModal(){
+  document.getElementById('bingoCellModal').classList.remove('open');
+  document.body.style.overflow='';
+  bingoActiveCellIdx=null;
+}
+
+function renderBingoCellModal(){
+  const challenge=bingoGetActiveChallenge();
+  const casilla=challenge.casillas[bingoActiveCellIdx];
+  const entry=bingoProgress.find(p=>p.challenge_id===challenge.id && p.casilla_index===bingoActiveCellIdx);
+  const body=document.getElementById('bingoCellModalBody');
+  const label=(casilla.label||'').replace(/\n/g,' ');
+
+  if(entry){
+    const linkedBook=entry.book_id?allBooks.find(b=>b.id===entry.book_id):null;
+    const coverHtml=linkedBook?.cover?`<img src="${linkedBook.cover}" alt="">`:'<div style="width:34px;height:50px;border-radius:5px;background:var(--surface3);flex-shrink:0"></div>';
+    const titleStr=linkedBook?linkedBook.title:(entry.book_title_manual||'Sin libro vinculado');
+    const authorStr=linkedBook?(linkedBook.authors||[]).join(', '):'';
+    body.innerHTML=`
+      <div class="bingo-cell-modal-label">${label}</div>
+      <p class="bingo-cell-modal-hint">Ya tienes marcada esta casilla.</p>
+      <div class="bingo-cell-marked-info">
+        ${coverHtml}
+        <div class="bingo-cell-marked-info-text">${escHtml(titleStr)}${authorStr?`<small>${escHtml(authorStr)}</small>`:''}</div>
+      </div>
+      <div class="bingo-btn-row">
+        <button class="bingo-btn-danger" style="flex:1" onclick="bingoUnmarkCell()">Desmarcar casilla</button>
+      </div>`;
+    return;
+  }
+
+  const matches=casilla.tipo==='auto' ? bingoMatchBooks(casilla.filtro).slice(0,8) : [];
+  const suggestedHtml=matches.length?`
+    <div class="bingo-book-suggested-tag">🟢 Libros que cumplen esta casilla</div>
+    <div class="bingo-book-results" style="margin-bottom:1rem">
+      ${matches.map(b=>bingoBookResultHtml(b)).join('')}
+    </div>` : '';
+
+  body.innerHTML=`
+    <div class="bingo-cell-modal-label">${label}</div>
+    <p class="bingo-cell-modal-hint">Elige el libro con el que cumples esta casilla. Solo cuentan libros marcados como leídos a partir del 1 de junio de 2026.</p>
+    <div class="bingo-link-tabs">
+      <button class="bingo-link-tab ${bingoLinkMode==='catalogo'?'active':''}" onclick="bingoSetLinkMode('catalogo')">📚 Buscar en catálogo</button>
+      <button class="bingo-link-tab ${bingoLinkMode==='manual'?'active':''}" onclick="bingoSetLinkMode('manual')">✍️ Escribir título</button>
+    </div>
+    ${suggestedHtml}
+    <div id="bingoLinkModeContent"></div>
+    <div class="bingo-btn-row">
+      <button class="bingo-btn-primary" id="bingoSaveBtn" disabled onclick="bingoSaveCell()">Marcar casilla</button>
+    </div>`;
+  bingoRenderLinkModeContent();
+}
+
+function bingoBookResultHtml(b){
+  const authorStr=(b.authors||[]).join(', ');
+  const coverHtml=b.cover?`<img src="${b.cover}" alt="">`:'<div style="width:30px;height:44px;border-radius:4px;background:var(--surface3)"></div>';
+  return `<div class="bingo-book-result" onclick='bingoPickBook("${b.id}")'>
+    ${coverHtml}
+    <div class="bingo-book-result-info">
+      <div class="bingo-book-result-title">${escHtml(b.title)}</div>
+      <div class="bingo-book-result-author">${escHtml(authorStr)}</div>
+    </div>
+  </div>`;
+}
+
+function bingoSetLinkMode(mode){
+  bingoLinkMode=mode;
+  bingoPendingBookId=null;
+  bingoPendingBookTitle=null;
+  bingoPendingBookCover=null;
+  bingoManualConfirmed=false;
+  renderBingoCellModal();
+}
+
+function bingoRenderLinkModeContent(){
+  const el=document.getElementById('bingoLinkModeContent');
+  if(!el) return;
+  if(bingoLinkMode==='catalogo'){
+    el.innerHTML=`
+      <div class="bingo-book-search">
+        <input type="text" id="bingoBookSearchInput" placeholder="Busca entre tus libros leídos desde el 1 de junio…" oninput="bingoSearchBooks(this.value)" autocomplete="off">
+      </div>
+      <div class="bingo-book-results" id="bingoBookSearchResults"></div>`;
+  }else{
+    el.innerHTML=`<input type="text" class="bingo-manual-input" id="bingoManualTitle" placeholder="Título del libro (no está en el catálogo)" oninput="bingoManualTitleChanged(this.value)">
+      <label class="bingo-manual-confirm">
+        <input type="checkbox" id="bingoManualConfirm" onchange="bingoManualConfirmChanged(this.checked)">
+        <span>Confirmo que he terminado de leer este libro a partir del 1 de junio de 2026. Las lecturas anteriores a esa fecha no cuentan para este bingo.</span>
+      </label>`;
+  }
+}
+
+function bingoSearchBooks(q){
+  const resEl=document.getElementById('bingoBookSearchResults');
+  const query=q.trim().toLowerCase();
+  if(query.length<2){ resEl.innerHTML=''; return; }
+  const eligible=bingoEligibleBooks();
+  const results=eligible.filter(b=>
+    b.title.toLowerCase().includes(query) || (b.authors||[]).some(a=>a.toLowerCase().includes(query))
+  ).slice(0,8);
+  resEl.innerHTML=results.length?results.map(b=>bingoBookResultHtml(b)).join('')
+    :`<p style="font-size:12px;color:var(--muted);padding:.5rem">Sin resultados entre tus libros marcados como leídos a partir del 1 de junio de 2026. Si lo has leído en esas fechas y no aparece, márcalo como «Leído ✓» desde su ficha primero.</p>`;
+}
+
+function bingoPickBook(bookId){
+  const book=allBooks.find(b=>b.id===bookId);
+  if(!book) return;
+  bingoPendingBookId=book.id;
+  bingoPendingBookTitle=book.title;
+  bingoPendingBookCover=book.cover;
+  const btn=document.getElementById('bingoSaveBtn');
+  if(btn) btn.disabled=false;
+  showToast(`Seleccionado: ${book.title}`,'success');
+}
+
+function bingoManualTitleChanged(val){
+  bingoPendingBookId=null;
+  bingoPendingBookTitle=val.trim();
+  bingoPendingBookCover=null;
+  bingoUpdateManualSaveState();
+}
+
+function bingoManualConfirmChanged(checked){
+  bingoManualConfirmed=checked;
+  bingoUpdateManualSaveState();
+}
+
+function bingoUpdateManualSaveState(){
+  const btn=document.getElementById('bingoSaveBtn');
+  if(btn) btn.disabled=!(bingoPendingBookTitle && bingoPendingBookTitle.length>=2 && bingoManualConfirmed);
+}
+
+async function bingoSaveCell(){
+  if(!currentUser||bingoActiveCellIdx==null) return;
+  const challenge=bingoGetActiveChallenge();
+  if(!bingoPendingBookId && !bingoPendingBookTitle) return;
+  if(!bingoPendingBookId && !bingoManualConfirmed) return; // libro manual sin confirmar año
+  const payload={
+    user_id:currentUser.id,
+    challenge_id:challenge.id,
+    casilla_index:bingoActiveCellIdx,
+    book_id:bingoPendingBookId||null,
+    book_title_manual:bingoPendingBookId?null:bingoPendingBookTitle
+  };
+  const {error}=await sb.from('bingo_progreso').insert(payload);
+  if(error){ showToast('No se ha podido marcar la casilla','error'); return; }
+  await bingoLoadProgress();
+  closeBingoCellModal();
+  bingoRender();
+  showToast('¡Casilla marcada! 🎲','success');
+}
+
+async function bingoUnmarkCell(){
+  if(!currentUser||bingoActiveCellIdx==null) return;
+  const challenge=bingoGetActiveChallenge();
+  const {error}=await sb.from('bingo_progreso').delete()
+    .eq('user_id',currentUser.id).eq('challenge_id',challenge.id).eq('casilla_index',bingoActiveCellIdx);
+  if(error){ showToast('No se ha podido desmarcar','error'); return; }
+  await bingoLoadProgress();
+  closeBingoCellModal();
+  bingoRender();
+  showToast('Casilla desmarcada','success');
+}
+
+document.getElementById('bingoCellModal').addEventListener('click',e=>{if(e.target.id==='bingoCellModal')closeBingoCellModal();});
 
 </script>
 

@@ -443,6 +443,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="main-tab-bar">
     <button class="main-tab-btn active" id="tabBtnLibros" onclick="switchMainTab('libros')">📚 Libros</button>
     <button class="main-tab-btn" id="tabBtnSolicitudes" onclick="switchMainTab('solicitudes')">📬 Solicitudes <span class="tab-badge" id="tabBadgeSol">—</span></button>
+    <button class="main-tab-btn" id="tabBtnBingo" onclick="switchMainTab('bingo')">🎲 Bingo</button>
   </div>
 
   <!-- ── PANEL LIBROS ── -->
@@ -607,7 +608,76 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
   </div><!-- /panelSolicitudes -->
 
-</div>
+  <!-- ── PANEL BINGO ── -->
+  <div class="main-panel" id="panelBingo">
+
+    <!-- Gestión de challenges -->
+    <div class="card" style="margin-bottom:1.25rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:1.2rem">
+        <div class="card-title" style="margin-bottom:0">🎲 Bingos / Challenges</div>
+        <button class="btn primary small" onclick="abrirNuevoBingo()">+ Nuevo bingo</button>
+      </div>
+      <div id="bingoAdminList"><div class="empty">Cargando…</div></div>
+    </div>
+
+    <!-- Progreso de usuarias -->
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:1.2rem">
+        <div class="card-title" style="margin-bottom:0">👥 Progreso de usuarias</div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+          <select id="bingoSelectChallenge" onchange="cargarProgresoUsuarias()" style="padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12px;font-family:'Instrument Sans',sans-serif;cursor:pointer;outline:none">
+            <option value="">— Selecciona un bingo —</option>
+          </select>
+          <button class="btn small teal" onclick="exportarBingoCSV()">⬇ Exportar CSV</button>
+        </div>
+      </div>
+      <div id="bingoProgresoList"><div class="empty">Selecciona un bingo para ver el progreso.</div></div>
+    </div>
+
+  </div><!-- /panelBingo -->
+
+  <!-- MODAL NUEVO/EDITAR BINGO -->
+  <div class="modal-bg" id="bingoModal" style="display:none;align-items:flex-start;justify-content:center">
+    <div class="modal" style="max-width:700px">
+      <div class="modal-top">
+        <div class="modal-title" id="bingoModalTitle">Nuevo bingo</div>
+        <button class="modal-close" onclick="cerrarBingoModal()">✕</button>
+      </div>
+      <div style="padding:1.5rem;overflow-y:auto;max-height:calc(100vh - 180px)">
+        <div class="form-row">
+          <label class="form-label">Nombre *</label>
+          <input type="text" id="bfNombre" placeholder="Ej: Bingo 2026">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Descripción</label>
+          <input type="text" id="bfDesc" placeholder="Descripción opcional">
+        </div>
+        <div class="form-row-half" style="margin-bottom:10px">
+          <div class="form-row" style="margin-bottom:0">
+            <label class="form-label">Fecha inicio</label>
+            <input type="date" id="bfInicio" style="color-scheme:dark">
+          </div>
+          <div class="form-row" style="margin-bottom:0">
+            <label class="form-label">Fecha fin</label>
+            <input type="date" id="bfFin" style="color-scheme:dark">
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.2rem">
+          <input type="checkbox" id="bfActivo" style="accent-color:var(--accent);width:16px;height:16px;cursor:pointer">
+          <label for="bfActivo" style="font-size:13px;cursor:pointer;color:var(--muted)">Marcar como <strong style="color:var(--accent2)">activo</strong> (solo uno puede estar activo a la vez)</label>
+        </div>
+
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:600;margin-bottom:.7rem;padding-bottom:.35rem;border-bottom:1px solid var(--border)">Casillas (25) — una por línea</div>
+        <p style="font-size:11.5px;color:var(--muted);margin-bottom:.8rem;line-height:1.6">Escribe cada casilla en una línea. Para casillas automáticas que sugieren libros añade <code style="background:var(--surface3);padding:1px 5px;border-radius:4px;color:var(--accent2)">|filtro:campo=valor</code> al final.<br>Ejemplo: <code style="background:var(--surface3);padding:1px 5px;border-radius:4px;color:var(--teal)">Un libro Thai|filtro:pais_cultura=Tailandia</code></p>
+        <textarea id="bfCasillas" rows="25" style="width:100%;padding:10px 13px;border-radius:10px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:13px;font-family:'Instrument Sans',sans-serif;outline:none;resize:vertical;line-height:1.7" placeholder="Un libro Thai|filtro:pais_cultura=Tailandia&#10;Enemies to lovers|filtro:tropes=Enemies to lovers&#10;CASILLA LIBRE ⭐&#10;..."></textarea>
+        <div style="font-size:11px;color:var(--muted);margin-top:.4rem" id="bfCasillasCount">0 / 25 casillas</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="cerrarBingoModal()">Cancelar</button>
+        <button class="btn primary" onclick="guardarBingo()">Guardar bingo</button>
+      </div>
+    </div>
+  </div>
 
 <!-- MODAL -->
 <div class="modal-bg" id="bookModal">
@@ -2030,6 +2100,7 @@ function switchMainTab(tab) {
   document.getElementById('tabBtn' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
   document.getElementById('panel' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
   if (tab === 'solicitudes') renderAdminSolicitudes();
+  if (tab === 'bingo') cargarBingosAdmin();
 }
 
 function admSelChip(groupId, btn){
@@ -2166,6 +2237,307 @@ async function exportarSolicitudesAdmin(){
   const a=document.createElement('a');
   a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
   a.download='solicitudes_tintasapphic.csv';a.click();
+  showToast('CSV exportado ✓');
+}
+
+/* ══════════════════════════ BINGO ADMIN ══════════════════════════ */
+
+let bingoAdminChallenges = [];
+let bingoEditingId = null; // null = nuevo, uuid = editar
+
+async function cargarBingosAdmin(){
+  const list = document.getElementById('bingoAdminList');
+  list.innerHTML = '<div class="empty">Cargando…</div>';
+  const {data, error} = await sb.from('bingo_challenges').select('*').order('fecha_inicio',{ascending:false});
+  if(error){ list.innerHTML='<div class="empty" style="color:var(--rose)">Error al cargar bingos.</div>'; return; }
+  bingoAdminChallenges = data || [];
+
+  // Rellenar selector de challenges en la sección de progreso
+  const sel = document.getElementById('bingoSelectChallenge');
+  const selVal = sel.value;
+  sel.innerHTML = '<option value="">— Selecciona un bingo —</option>';
+  bingoAdminChallenges.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id;
+    opt.textContent = c.nombre + (c.activo?' ✦ ACTIVO':'');
+    sel.appendChild(opt);
+  });
+  if(selVal) sel.value = selVal;
+
+  if(!bingoAdminChallenges.length){
+    list.innerHTML='<div class="empty">No hay bingos creados todavía.</div>';
+    return;
+  }
+
+  list.innerHTML = bingoAdminChallenges.map(c => {
+    const fi = c.fecha_inicio ? new Date(c.fecha_inicio+'T00:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+    const ff = c.fecha_fin   ? new Date(c.fecha_fin+'T00:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+    const ncas = Array.isArray(c.casillas) ? c.casillas.length : 0;
+    return `<div class="book-item" style="flex-wrap:wrap;gap:.75rem">
+      <div class="book-info">
+        <div class="book-name">
+          ${escH(c.nombre)}
+          ${c.activo ? '<span class="badge" style="background:rgba(192,111,196,0.2);color:var(--accent2);border:1px solid rgba(192,111,196,0.35)">✦ ACTIVO</span>' : ''}
+        </div>
+        <div class="book-meta">${fi} → ${ff} · ${ncas} casillas${c.descripcion?' · '+escH(c.descripcion):''}</div>
+      </div>
+      <div class="book-actions">
+        ${!c.activo ? `<button class="btn small teal" onclick="activarBingo('${c.id}')">▶ Activar</button>` : `<button class="btn small" onclick="desactivarBingo('${c.id}')">⏸ Desactivar</button>`}
+        <button class="btn small" onclick="editarBingo('${c.id}')">✏ Editar</button>
+        <button class="btn small danger" onclick="borrarBingo('${c.id}')">✕ Borrar</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function activarBingo(id){
+  await sb.from('bingo_challenges').update({activo:false}).eq('activo',true);
+  await sb.from('bingo_challenges').update({activo:true}).eq('id',id);
+  showToast('Bingo activado ✦','success');
+  cargarBingosAdmin();
+}
+
+async function desactivarBingo(id){
+  await sb.from('bingo_challenges').update({activo:false}).eq('id',id);
+  showToast('Bingo desactivado','success');
+  cargarBingosAdmin();
+}
+
+async function borrarBingo(id){
+  if(!confirm('¿Borrar este bingo? Se borrará también todo el progreso de las usuarias en él.')) return;
+  await sb.from('bingo_progreso').delete().eq('challenge_id',id);
+  const {error} = await sb.from('bingo_challenges').delete().eq('id',id);
+  if(error){ showToast('Error al borrar','error'); return; }
+  showToast('Bingo borrado','success');
+  cargarBingosAdmin();
+}
+
+function abrirNuevoBingo(){
+  bingoEditingId = null;
+  document.getElementById('bingoModalTitle').textContent = 'Nuevo bingo';
+  document.getElementById('bfNombre').value = '';
+  document.getElementById('bfDesc').value = '';
+  document.getElementById('bfInicio').value = '';
+  document.getElementById('bfFin').value = '';
+  document.getElementById('bfActivo').checked = false;
+  document.getElementById('bfCasillas').value = '';
+  document.getElementById('bfCasillasCount').textContent = '0 / 25 casillas';
+  document.getElementById('bingoModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function editarBingo(id){
+  const c = bingoAdminChallenges.find(x=>x.id===id);
+  if(!c) return;
+  bingoEditingId = id;
+  document.getElementById('bingoModalTitle').textContent = 'Editar: ' + c.nombre;
+  document.getElementById('bfNombre').value = c.nombre || '';
+  document.getElementById('bfDesc').value = c.descripcion || '';
+  document.getElementById('bfInicio').value = c.fecha_inicio || '';
+  document.getElementById('bfFin').value = c.fecha_fin || '';
+  document.getElementById('bfActivo').checked = !!c.activo;
+
+  // Convertir JSON de casillas a texto legible
+  const casillas = Array.isArray(c.casillas) ? c.casillas : [];
+  const texto = casillas.map(ca => {
+    if(ca.tipo === 'libre') return ca.label;
+    if(ca.tipo === 'auto' && ca.filtro) {
+      const filtroStr = Object.entries(ca.filtro).map(([k,v])=>`${k}=${Array.isArray(v)?v[0]:v}`).join(',');
+      return `${ca.label}|filtro:${filtroStr}`;
+    }
+    return ca.label;
+  }).join('\n');
+  document.getElementById('bfCasillas').value = texto;
+  document.getElementById('bfCasillasCount').textContent = `${casillas.length} / 25 casillas`;
+  document.getElementById('bingoModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarBingoModal(){
+  document.getElementById('bingoModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// Actualizar contador de casillas en tiempo real
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.getElementById('bfCasillas')?.addEventListener('input', function(){
+    const n = this.value.split('\n').filter(l=>l.trim()).length;
+    const el = document.getElementById('bfCasillasCount');
+    el.textContent = `${n} / 25 casillas`;
+    el.style.color = n===25 ? 'var(--teal)' : n>25 ? 'var(--rose)' : 'var(--muted)';
+  });
+});
+
+function parsearCasillas(texto){
+  return texto.split('\n')
+    .map(l=>l.trim()).filter(Boolean)
+    .map(l => {
+      const partes = l.split('|filtro:');
+      const label = partes[0].trim();
+      if(partes.length < 2) return {label, tipo:'libre'};
+      const filtroRaw = partes[1].trim();
+      const filtro = {};
+      filtroRaw.split(',').forEach(par => {
+        const [campo, valor] = par.split('=');
+        if(campo && valor) filtro[campo.trim()] = [valor.trim()];
+      });
+      return {label, tipo:'auto', filtro};
+    });
+}
+
+async function guardarBingo(){
+  const nombre = document.getElementById('bfNombre').value.trim();
+  if(!nombre){ showToast('El nombre es obligatorio','error'); return; }
+  const texto = document.getElementById('bfCasillas').value;
+  const casillas = parsearCasillas(texto);
+  if(casillas.length !== 25){ showToast(`Necesitas exactamente 25 casillas (tienes ${casillas.length})`,'error'); return; }
+
+  const activo = document.getElementById('bfActivo').checked;
+  if(activo){
+    // Desactivar el resto
+    await sb.from('bingo_challenges').update({activo:false}).eq('activo',true);
+  }
+
+  const payload = {
+    nombre,
+    descripcion: document.getElementById('bfDesc').value.trim() || null,
+    fecha_inicio: document.getElementById('bfInicio').value || null,
+    fecha_fin: document.getElementById('bfFin').value || null,
+    activo,
+    casillas
+  };
+
+  let error;
+  if(bingoEditingId){
+    ({error} = await sb.from('bingo_challenges').update(payload).eq('id', bingoEditingId));
+  } else {
+    ({error} = await sb.from('bingo_challenges').insert(payload));
+  }
+
+  if(error){ showToast('Error al guardar: '+error.message,'error'); return; }
+  showToast(bingoEditingId ? 'Bingo actualizado ✓' : 'Bingo creado ✓','success');
+  cerrarBingoModal();
+  cargarBingosAdmin();
+}
+
+/* ── Progreso de usuarias ── */
+async function cargarProgresoUsuarias(){
+  const challengeId = document.getElementById('bingoSelectChallenge').value;
+  const list = document.getElementById('bingoProgresoList');
+  if(!challengeId){ list.innerHTML='<div class="empty">Selecciona un bingo para ver el progreso.</div>'; return; }
+
+  list.innerHTML = '<div class="empty">Cargando…</div>';
+
+  const challenge = bingoAdminChallenges.find(c=>c.id===challengeId);
+  const casillas = Array.isArray(challenge?.casillas) ? challenge.casillas : [];
+
+  // Cargar todo el progreso del challenge
+  const {data:progreso, error:pErr} = await sb.from('bingo_progreso').select('*').eq('challenge_id', challengeId);
+  if(pErr){ list.innerHTML='<div class="empty" style="color:var(--rose)">Error al cargar progreso.</div>'; return; }
+
+  // Cargar info de usuarias
+  const userIds = [...new Set((progreso||[]).map(p=>p.user_id))];
+  if(!userIds.length){ list.innerHTML='<div class="empty">Ninguna usuaria ha empezado este bingo.</div>'; return; }
+
+  // Agrupar por usuario
+  const porUsuario = {};
+  (progreso||[]).forEach(p => {
+    if(!porUsuario[p.user_id]) porUsuario[p.user_id] = [];
+    porUsuario[p.user_id].push(p);
+  });
+
+  // Cargar emails desde Supabase Auth (solo disponible desde service role, usamos workaround con profiles si existe)
+  // Intentamos con la tabla auth.users via RPC o mostramos el user_id
+  const {data:profiles} = await sb.from('profiles').select('id,username,email').in('id', userIds).catch(()=>({data:null}));
+  const profileMap = {};
+  if(profiles) profiles.forEach(p=>{ profileMap[p.id]={username:p.username,email:p.email}; });
+
+  // Ordenar por casillas marcadas desc
+  const usuariasSorted = Object.entries(porUsuario)
+    .map(([uid, entradas]) => ({uid, entradas, count: entradas.length}))
+    .sort((a,b) => b.count - a.count);
+
+  list.innerHTML = `
+    <div style="margin-bottom:1rem;font-size:12px;color:var(--muted)">${usuariasSorted.length} usuaria(s) participando en este bingo</div>
+    <div style="display:flex;flex-direction:column;gap:.6rem">
+    ${usuariasSorted.map(({uid, entradas, count}) => {
+      const prof = profileMap[uid] || {};
+      const nombreUsuaria = prof.username ? '@'+prof.username : prof.email || uid.slice(0,8)+'…';
+      const pct = Math.round(count/25*100);
+      const hasBingo = tieneBingo(entradas, casillas.length);
+
+      // Grid 5x5 mini del bingo
+      const gridCells = casillas.map((cas, i) => {
+        const marcada = entradas.find(e=>e.casilla_index===i);
+        const libroStr = marcada
+          ? (marcada.book_id ? marcada.book_id.slice(0,6)+'…' : (marcada.book_title_manual||'Manual'))
+          : '';
+        return `<div title="${cas.label}${marcada?'\n📖 '+libroStr:''}" style="width:100%;aspect-ratio:1;border-radius:4px;font-size:8px;display:flex;align-items:center;justify-content:center;border:1px solid ${marcada?'rgba(91,188,176,0.5)':'var(--border)'};background:${marcada?'rgba(91,188,176,0.15)':'var(--surface3)'};color:${marcada?'var(--teal)':'var(--muted)'};cursor:default;overflow:hidden;text-align:center;padding:1px;line-height:1.1">${marcada?'✓':''}</div>`;
+      });
+
+      return `<div class="book-item" style="flex-direction:column;align-items:stretch;gap:.75rem;cursor:default">
+        <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--rose));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0">${(prof.username||'?')[0].toUpperCase()}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:600;font-size:13.5px">${escH(nombreUsuaria)} ${hasBingo?'<span style="color:var(--gold)">🏆 ¡BINGO!</span>':''}</div>
+            <div style="font-size:11.5px;color:var(--muted)">${count} / 25 casillas · ${pct}%</div>
+          </div>
+          <div style="width:80px;height:6px;border-radius:3px;background:var(--surface3);overflow:hidden;flex-shrink:0">
+            <div style="height:100%;width:${pct}%;background:${pct===100?'var(--gold)':'var(--teal)'};border-radius:3px;transition:width .3s"></div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:3px">${gridCells.join('')}</div>
+        <details style="font-size:12px;color:var(--muted)">
+          <summary style="cursor:pointer;color:var(--accent2)">Ver libros marcados (${count})</summary>
+          <div style="margin-top:.5rem;display:flex;flex-direction:column;gap:.3rem">
+            ${entradas.sort((a,b)=>a.casilla_index-b.casilla_index).map(e=>{
+              const cas = casillas[e.casilla_index];
+              const libro = e.book_title_manual || (e.book_id ? 'ID: '+e.book_id.slice(0,12)+'…' : '—');
+              return `<div style="display:flex;gap:.5rem;padding:4px 8px;border-radius:8px;background:var(--surface2)">
+                <span style="color:var(--teal);flex-shrink:0">[${e.casilla_index+1}]</span>
+                <span style="flex:1">${escH(cas?.label||'?')}</span>
+                <span style="color:var(--muted)">📖 ${escH(libro)}</span>
+              </div>`;
+            }).join('')}
+          </div>
+        </details>
+      </div>`;
+    }).join('')}
+    </div>`;
+}
+
+function tieneBingo(entradas, totalCasillas){
+  if(totalCasillas < 25) return false;
+  const marcadas = new Set(entradas.map(e=>e.casilla_index));
+  // Filas
+  for(let r=0;r<5;r++){ if([0,1,2,3,4].map(c=>r*5+c).every(i=>marcadas.has(i))) return true; }
+  // Columnas
+  for(let c=0;c<5;c++){ if([0,1,2,3,4].map(r=>r*5+c).every(i=>marcadas.has(i))) return true; }
+  // Diagonales
+  if([0,6,12,18,24].every(i=>marcadas.has(i))) return true;
+  if([4,8,12,16,20].every(i=>marcadas.has(i))) return true;
+  return false;
+}
+
+async function exportarBingoCSV(){
+  const challengeId = document.getElementById('bingoSelectChallenge').value;
+  if(!challengeId){ showToast('Selecciona un bingo primero','warn'); return; }
+  const challenge = bingoAdminChallenges.find(c=>c.id===challengeId);
+  const casillas = Array.isArray(challenge?.casillas) ? challenge.casillas : [];
+
+  const {data:progreso} = await sb.from('bingo_progreso').select('*').eq('challenge_id', challengeId);
+  if(!progreso?.length){ showToast('No hay progreso para exportar','warn'); return; }
+
+  const cols = ['user_id','casilla_index','casilla_label','tipo','book_id','book_title_manual','created_at'];
+  const rows = progreso.map(p => {
+    const cas = casillas[p.casilla_index]||{};
+    return [p.user_id, p.casilla_index, cas.label||'', cas.tipo||'', p.book_id||'', p.book_title_manual||'', new Date(p.created_at).toLocaleString('es-ES')];
+  });
+  const csv = [cols,...rows].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download = `bingo_${challenge.nombre.replace(/\s+/g,'_')}.csv`;
+  a.click();
   showToast('CSV exportado ✓');
 }
 
