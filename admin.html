@@ -606,6 +606,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
 
     </div>
+  </div>
   </div><!-- /panelSolicitudes -->
 
   <!-- ── PANEL BINGO ── -->
@@ -2446,11 +2447,16 @@ async function cargarProgresoUsuarias(){
     porUsuario[p.user_id].push(p);
   });
 
-  // Cargar emails desde Supabase Auth (solo disponible desde service role, usamos workaround con profiles si existe)
-  // Intentamos con la tabla auth.users via RPC o mostramos el user_id
-  const {data:profiles} = await sb.from('profiles').select('id,username,email').in('id', userIds).catch(()=>({data:null}));
+  // Cargar usuario de Telegram desde Supabase Auth vía RPC (solo accesible para el admin, ver función admin_get_user_telegrams)
+  let profiles = null;
+  try{
+    const res = await sb.rpc('admin_get_user_telegrams');
+    profiles = res.data;
+  }catch(e){
+    profiles = null;
+  }
   const profileMap = {};
-  if(profiles) profiles.forEach(p=>{ profileMap[p.id]={username:p.username,email:p.email}; });
+  if(profiles) profiles.forEach(p=>{ profileMap[p.id]={username:p.telegram_username,email:p.email}; });
 
   // Ordenar por casillas marcadas desc
   const usuariasSorted = Object.entries(porUsuario)
