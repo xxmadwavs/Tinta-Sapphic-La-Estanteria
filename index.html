@@ -1671,7 +1671,8 @@ const SPICY_UNKNOWN_ICON  = '❓';
 
 let allBooks=[], ratingsMap={}, myRatings={}, currentUser=null, activeBook=null;
 let myReadingStatus={}; // bookId -> 'want' | 'read'
-let myReadingReadAt={}; // bookId -> fecha ISO en que se marcó como leído
+let myReadingReadAt={}; // bookId -> fecha ISO de la lectura MÁS RECIENTE (derivado de myReadingLog, para compatibilidad)
+let myReadingLog={}; // bookId -> [{id, read_at}, ...] historial completo de lecturas, ordenado ascendente
 let shelfFilter='all'; // 'all' | 'want' | 'read'
 let shelfViewMode='grid'; // 'grid' | 'list'
 let bingoChallenges=[], bingoActiveChallengeId=null, bingoProgress=[], bingoActiveCellIdx=null, bingoLinkMode='catalogo', bingoPendingBookId=null, bingoPendingBookTitle=null, bingoPendingBookCover=null, bingoManualConfirmed=false;
@@ -1779,7 +1780,7 @@ async function init(){
   }
   const debouncedLoadRatings=debounce(()=>{
     if(currentUser) loadMyRatings().then(()=>{applyFilters(false);if(activeBook)renderBookModal();checkSolicitudesNotif();});
-    else{myRatings={};myReadingStatus={};myReadingReadAt={};applyFilters(false);}
+    else{myRatings={};myReadingStatus={};myReadingReadAt={};myReadingLog={};applyFilters(false);}
   },300);
   sb.auth.onAuthStateChange((_e,session)=>{
     if(_e==='PASSWORD_RECOVERY'){
@@ -2761,7 +2762,7 @@ async function handleAuth(){
   btn.disabled=false;btn.textContent=authMode==='register'?'Registrarse':'Entrar';
 }
 function setAuthError(msg){document.getElementById('authError').textContent=msg;}
-async function logout(){await sb.auth.signOut();myRatings={};myReadingStatus={};myReadingReadAt={};showToast('Hasta pronto 🌹','success');applyFilters();}
+async function logout(){await sb.auth.signOut();myRatings={};myReadingStatus={};myReadingReadAt={};myReadingLog={};showToast('Hasta pronto 🌹','success');applyFilters();}
 
 function toggleUserDropdown(){
   const wrap=document.getElementById('userChipWrap');
@@ -4284,7 +4285,18 @@ async function loadMyReadingStatus(){
   myReadingReadAt={};
   (data||[]).forEach(row=>{
     myReadingStatus[row.book_id]=row.status;
-    if(row.read_at) myReadingReadAt[row.book_id]=row.read_at;
+  });
+  const {data:logData,error:logError}=await sb.from('reading_log').select('id,book_id,read_at').eq('user_id',currentUser.id).order('read_at',{ascending:true});
+  if(logError){ console.error('reading_log load error:',logError); }
+  myReadingLog={};
+  (logData||[]).forEach(row=>{
+    if(!myReadingLog[row.book_id]) myReadingLog[row.book_id]=[];
+    myReadingLog[row.book_id].push({id:row.id,read_at:row.read_at});
+  });
+  // myReadingReadAt se mantiene como atajo a la lectura MÁS RECIENTE de cada libro (compatibilidad con el resto del código)
+  Object.keys(myReadingLog).forEach(bookId=>{
+    const entries=myReadingLog[bookId];
+    if(entries.length) myReadingReadAt[bookId]=entries[entries.length-1].read_at;
   });
 }
 
@@ -4294,39 +4306,55 @@ async function setReadingStatus(bookId, newStatus){
   const next=current===newStatus?null:newStatus; // clic en el activo = quitar
 
   if(next){
-    // Si ya tenía una fecha de lectura guardada (p.ej. se desmarcó y se vuelve a marcar), se conserva.
-    // Si es la primera vez que se marca como "Leído", no se asigna fecha: la persona debe indicarla manualmente.
-    const existingReadAt = next==='read' ? (myReadingReadAt[bookId]||null) : null;
-    const payload={user_id:currentUser.id, book_id:bookId, status:next, read_at: existingReadAt};
+    const payload={user_id:currentUser.id, book_id:bookId, status:next};
     const {error}=await sb.from('reading_status')
       .upsert(payload,{onConflict:'user_id,book_id'});
     if(error){ showToast('Error al guardar 😞','error'); console.error(error); return; }
     myReadingStatus[bookId]=next;
-    if(next==='read' && payload.read_at) myReadingReadAt[bookId]=payload.read_at; else delete myReadingReadAt[bookId];
-    showToast(next==='want'?'Añadido a «Quiero leer» ＋':'Marcado como leído ✓ — indica la fecha en que lo terminaste','success');
+    const tieneFechas=(myReadingLog[bookId]||[]).length>0;
+    showToast(next==='want'?'Añadido a «Quiero leer» ＋':(tieneFechas?'Marcado como leído ✓':'Marcado como leído ✓ — indica la fecha en que lo terminaste'),'success');
   } else {
     const {error}=await sb.from('reading_status')
       .delete().eq('user_id',currentUser.id).eq('book_id',bookId);
     if(error){ showToast('Error al eliminar 😞','error'); console.error(error); return; }
     delete myReadingStatus[bookId];
-    delete myReadingReadAt[bookId];
+    // El historial de lecturas (reading_log) NO se borra: si vuelve a marcarlo como leído, conserva sus fechas anteriores.
     showToast('Eliminado de tu estantería','success');
   }
   _refreshShelfUI(bookId);
 }
 
-async function updateReadDate(bookId, dateValue){
+async function addReadLogEntry(bookId, dateValue){
   if(!currentUser) return;
   if(!dateValue){ showToast('Elige una fecha primero 📅','error'); return; }
   // dateValue es "YYYY-MM-DD", convertimos a ISO con hora mediodía para evitar desfases de zona horaria
   const isoDate=new Date(dateValue+'T12:00:00').toISOString();
-  const {error}=await sb.from('reading_status')
-    .update({read_at:isoDate})
-    .eq('user_id',currentUser.id).eq('book_id',bookId);
-  if(error){ showToast('Error al guardar la fecha 😞','error'); return; }
-  myReadingReadAt[bookId]=isoDate;
+  const {data,error}=await sb.from('reading_log')
+    .insert({user_id:currentUser.id, book_id:bookId, read_at:isoDate})
+    .select('id,read_at').single();
+  if(error){ showToast('Error al guardar la fecha 😞','error'); console.error(error); return; }
+  if(!myReadingLog[bookId]) myReadingLog[bookId]=[];
+  myReadingLog[bookId].push({id:data.id, read_at:data.read_at});
+  myReadingLog[bookId].sort((a,b)=>new Date(a.read_at)-new Date(b.read_at));
+  myReadingReadAt[bookId]=myReadingLog[bookId][myReadingLog[bookId].length-1].read_at;
+  // Si el libro no estaba ya marcado como "Leído", lo marcamos automáticamente al guardar una fecha.
+  if(myReadingStatus[bookId]!=='read'){
+    await sb.from('reading_status').upsert({user_id:currentUser.id, book_id:bookId, status:'read'},{onConflict:'user_id,book_id'});
+    myReadingStatus[bookId]='read';
+  }
   _refreshShelfUI(bookId);
-  showToast('Fecha de lectura actualizada 📅','success');
+  showToast(myReadingLog[bookId].length>1?'Relectura añadida 📅':'Fecha de lectura guardada 📅','success');
+}
+
+async function deleteReadLogEntry(bookId, logId){
+  if(!currentUser) return;
+  const {error}=await sb.from('reading_log').delete().eq('id',logId).eq('user_id',currentUser.id);
+  if(error){ showToast('Error al borrar la fecha 😞','error'); console.error(error); return; }
+  myReadingLog[bookId]=(myReadingLog[bookId]||[]).filter(e=>e.id!==logId);
+  if(myReadingLog[bookId].length) myReadingReadAt[bookId]=myReadingLog[bookId][myReadingLog[bookId].length-1].read_at;
+  else delete myReadingReadAt[bookId];
+  _refreshShelfUI(bookId);
+  showToast('Fecha eliminada','success');
 }
 
 function _refreshShelfUI(bookId){
@@ -4342,18 +4370,28 @@ function _refreshShelfUI(bookId){
 
 function buildShelfButtonsHTML(bookId){
   const s=myReadingStatus[bookId];
-  const ra=myReadingReadAt[bookId];
-  const readDateStr=ra?new Date(ra).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}):'';
+  const log=myReadingLog[bookId]||[];
   const todayISO=new Date().toISOString().slice(0,10);
-  const currentDateISO=ra?new Date(ra).toISOString().slice(0,10):'';
+  const historyHtml=log.map(entry=>{
+    const dStr=new Date(entry.read_at).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+    return `<div style="display:flex;align-items:center;gap:.4rem;font-size:11px;color:var(--teal)">
+      <span>📅 ${dStr}</span>
+      <button title="Eliminar esta fecha" onclick="event.stopPropagation();deleteReadLogEntry('${bookId}','${entry.id}')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:11px;padding:0;line-height:1">✕</button>
+    </div>`;
+  }).join('');
+  const addLabel=log.length?'+ Añadir relectura':'Guardar fecha';
+  const pickerHint=log.length?'':'<span style="font-size:11px;color:var(--gold);display:flex;align-items:center;gap:.3em">📅 ¿Cuándo lo terminaste?</span>';
   const readDatePicker=s==='read'?`
-    <div class="shelf-read-date" style="margin:.4rem 0 .2rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
-      <span style="font-size:11px;color:${ra?'var(--teal)':'var(--gold)'};display:flex;align-items:center;gap:.3em">📅 ${ra?`Leído el ${readDateStr}`:'¿Cuándo lo terminaste?'}</span>
-      <input type="date" id="readDateInput_${bookId}" value="${currentDateISO}" max="${todayISO}"
-        style="padding:4px 8px;border-radius:8px;border:1px solid rgba(91,188,176,.4);background:var(--surface2);color:var(--text);font-size:11px;font-family:var(--font-body);cursor:pointer;outline:none"
-        onclick="event.stopPropagation()">
-      <button class="shelf-btn" style="padding:4px 10px;font-size:11px"
-        onclick="event.stopPropagation();updateReadDate('${bookId}',document.getElementById('readDateInput_${bookId}').value)">Guardar fecha</button>
+    <div class="shelf-read-date" style="margin:.4rem 0 .2rem;display:flex;flex-direction:column;gap:.35rem">
+      ${historyHtml}
+      <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+        ${pickerHint}
+        <input type="date" id="readDateInput_${bookId}" max="${todayISO}"
+          style="padding:4px 8px;border-radius:8px;border:1px solid rgba(91,188,176,.4);background:var(--surface2);color:var(--text);font-size:11px;font-family:var(--font-body);cursor:pointer;outline:none"
+          onclick="event.stopPropagation()">
+        <button class="shelf-btn" style="padding:4px 10px;font-size:11px"
+          onclick="event.stopPropagation();addReadLogEntry('${bookId}',document.getElementById('readDateInput_${bookId}').value)">${addLabel}</button>
+      </div>
     </div>`:'';
   return `<div class="shelf-btns" id="shelfBtns_${bookId}">
     <button class="shelf-btn${s==='want'?' want':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','want')">＋ Quiero leer</button>
@@ -4439,8 +4477,10 @@ function _renderShelfBooks(){
         ?`<span style="font-size:11px;color:var(--accent2)">＋ Quiero leer</span>`
         :(()=>{
           const ra=myReadingReadAt[b.id];
+          const n=(myReadingLog[b.id]||[]).length;
           const dateStr=ra?new Date(ra).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}):'';
-          return `<span style="font-size:11px;color:${ra?'var(--teal)':'var(--gold)'}">✓ Leído${dateStr?' · '+dateStr:' · falta fecha'}</span>`;
+          const vecesStr=n>1?` · ${n} veces`:'';
+          return `<span style="font-size:11px;color:${ra?'var(--teal)':'var(--gold)'}">✓ Leído${dateStr?' · '+dateStr:' · falta fecha'}${vecesStr}</span>`;
         })();
       return `<div class="shelf-list-item" onclick="openBook('${b.id}')">
         ${cov}
@@ -4462,14 +4502,13 @@ function _renderShelfBooks(){
 // Fecha mínima de lectura para que un libro cuente en el bingo (inclusive)
 const BINGO_FECHA_MINIMA=new Date('2026-06-01T00:00:00');
 
-// Libros que cuentan para el bingo: marcados como "Leído" Y con fecha de lectura
-// a partir del 1 de junio de 2026 (no sirven los marcados leídos el 31 de mayo o antes)
+// Libros que cuentan para el bingo: marcados como "Leído" Y con AL MENOS UNA fecha de lectura
+// (de la lectura original o de una relectura) a partir del 1 de junio de 2026
 function bingoEligibleBooks(){
   return allBooks.filter(b=>{
     if(myReadingStatus[b.id]!=='read') return false;
-    const ra=myReadingReadAt[b.id];
-    if(!ra) return false;
-    return new Date(ra)>=BINGO_FECHA_MINIMA;
+    const log=myReadingLog[b.id]||[];
+    return log.some(entry=>new Date(entry.read_at)>=BINGO_FECHA_MINIMA);
   });
 }
 
