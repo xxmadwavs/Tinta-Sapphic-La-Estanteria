@@ -318,6 +318,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tag-year{background:var(--surface3);color:var(--muted);border:1px solid var(--border)}
 .tag-formato{background:rgba(91,188,176,0.12);color:var(--teal);border:1px solid rgba(91,188,176,0.25)}
 .tag-adaptacion{background:rgba(155,130,201,0.12);color:#c4b0e8;border:1px solid rgba(155,130,201,0.3)}
+.tag-edad{background:rgba(201,151,90,0.12);color:var(--gold);border:1px solid rgba(201,151,90,0.3)}
 .book-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.4rem}
 .vote-mini-btn{padding:4px 12px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:11px;font-family:var(--font-body);cursor:pointer;transition:all .18s}
 .vote-mini-btn:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
@@ -2265,6 +2266,7 @@ function renderBookModal(){
   const tropeTags=(b.tropes||[]).map(t=>`<span class="tag tag-trope tag-clickable" onclick="filterByTagFromModal('tropes',decodeURIComponent('${encodeURIComponent(t)}'))">${t}</span>`).join('');
   const identidadTags=(b.identidades||[]).map(i=>`<span class="tag tag-identidad tag-clickable" onclick="filterByTagFromModal('identidades',decodeURIComponent('${encodeURIComponent(i)}'))">${i}</span>`).join('');
   const characterTags=(b.characters||[]).map(c=>`<span class="tag tag-character tag-clickable" onclick="filterByTagFromModal('characters',decodeURIComponent('${encodeURIComponent(c)}'))">${c}</span>`).join('');
+  const edadTags=(b.edad||[]).map(e=>`<span class="tag tag-edad tag-clickable" onclick="filterByTagFromModal('edad',decodeURIComponent('${encodeURIComponent(e)}'))">🎂 ${e}</span>`).join('');
   const spicyEff=effectiveSpicy(b);
   const spicyIsUnknown=spicyEff==null;
   const spicyTag=currentUser
@@ -2291,7 +2293,7 @@ function renderBookModal(){
       ${currentUser?buildShelfButtonsHTML(b.id):''}
       <div class="modal-tags">${genreTags}${subgenreTags}${spicyTag}${formatoTag}${adaptTag}</div>
       ${dinamicaTags?`<div class="modal-tags" style="margin-top:.3rem">${dinamicaTags}</div>`:''}
-      ${(tropeTags||identidadTags||characterTags)?`<div class="modal-tags" style="margin-top:.3rem">${tropeTags}${identidadTags}${characterTags}</div>`:''}
+      ${(tropeTags||identidadTags||characterTags||edadTags)?`<div class="modal-tags" style="margin-top:.3rem">${tropeTags}${identidadTags}${characterTags}${edadTags}</div>`:''}
       <div class="modal-meta-grid">
         ${b.year?`<div class="meta-item"><span class="meta-key">Año</span><span class="meta-val">${b.year}</span></div>`:''}
         ${b.pages?`<div class="meta-item"><span class="meta-key">Páginas</span><span class="meta-val">${b.pages}</span></div>`:''}
@@ -4292,13 +4294,16 @@ async function setReadingStatus(bookId, newStatus){
   const next=current===newStatus?null:newStatus; // clic en el activo = quitar
 
   if(next){
-    const payload={user_id:currentUser.id, book_id:bookId, status:next, read_at: next==='read' ? new Date().toISOString() : null};
+    // Si ya tenía una fecha de lectura guardada (p.ej. se desmarcó y se vuelve a marcar), se conserva.
+    // Si es la primera vez que se marca como "Leído", no se asigna fecha: la persona debe indicarla manualmente.
+    const existingReadAt = next==='read' ? (myReadingReadAt[bookId]||null) : null;
+    const payload={user_id:currentUser.id, book_id:bookId, status:next, read_at: existingReadAt};
     const {error}=await sb.from('reading_status')
       .upsert(payload,{onConflict:'user_id,book_id'});
     if(error){ showToast('Error al guardar 😞','error'); console.error(error); return; }
     myReadingStatus[bookId]=next;
-    if(next==='read') myReadingReadAt[bookId]=payload.read_at; else delete myReadingReadAt[bookId];
-    showToast(next==='want'?'Añadido a «Quiero leer» ＋':'Marcado como leído ✓','success');
+    if(next==='read' && payload.read_at) myReadingReadAt[bookId]=payload.read_at; else delete myReadingReadAt[bookId];
+    showToast(next==='want'?'Añadido a «Quiero leer» ＋':'Marcado como leído ✓ — indica la fecha en que lo terminaste','success');
   } else {
     const {error}=await sb.from('reading_status')
       .delete().eq('user_id',currentUser.id).eq('book_id',bookId);
@@ -4339,10 +4344,10 @@ function buildShelfButtonsHTML(bookId){
   const ra=myReadingReadAt[bookId];
   const readDateStr=ra?new Date(ra).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}):'';
   const todayISO=new Date().toISOString().slice(0,10);
-  const currentDateISO=ra?new Date(ra).toISOString().slice(0,10):todayISO;
+  const currentDateISO=ra?new Date(ra).toISOString().slice(0,10):'';
   const readDatePicker=s==='read'?`
     <div class="shelf-read-date" style="margin:.4rem 0 .2rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
-      <span style="font-size:11px;color:var(--teal);display:flex;align-items:center;gap:.3em">📅 Leído el ${readDateStr||'—'}</span>
+      <span style="font-size:11px;color:${ra?'var(--teal)':'var(--gold)'};display:flex;align-items:center;gap:.3em">📅 ${ra?`Leído el ${readDateStr}`:'¿Cuándo lo terminaste?'}</span>
       <input type="date" id="readDateInput_${bookId}" value="${currentDateISO}" max="${todayISO}"
         style="padding:4px 8px;border-radius:8px;border:1px solid rgba(91,188,176,.4);background:var(--surface2);color:var(--text);font-size:11px;font-family:var(--font-body);cursor:pointer;outline:none"
         onchange="updateReadDate('${bookId}',this.value)" onclick="event.stopPropagation()">
@@ -4432,7 +4437,7 @@ function _renderShelfBooks(){
         :(()=>{
           const ra=myReadingReadAt[b.id];
           const dateStr=ra?new Date(ra).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}):'';
-          return `<span style="font-size:11px;color:var(--teal)">✓ Leído${dateStr?' · '+dateStr:''}</span>`;
+          return `<span style="font-size:11px;color:${ra?'var(--teal)':'var(--gold)'}">✓ Leído${dateStr?' · '+dateStr:' · falta fecha'}</span>`;
         })();
       return `<div class="shelf-list-item" onclick="openBook('${b.id}')">
         ${cov}
