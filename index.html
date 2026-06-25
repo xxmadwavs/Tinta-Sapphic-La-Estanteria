@@ -4317,6 +4317,7 @@ async function setReadingStatus(bookId, newStatus){
 
 async function updateReadDate(bookId, dateValue){
   if(!currentUser) return;
+  if(!dateValue){ showToast('Elige una fecha primero 📅','error'); return; }
   // dateValue es "YYYY-MM-DD", convertimos a ISO con hora mediodía para evitar desfases de zona horaria
   const isoDate=new Date(dateValue+'T12:00:00').toISOString();
   const {error}=await sb.from('reading_status')
@@ -4350,7 +4351,9 @@ function buildShelfButtonsHTML(bookId){
       <span style="font-size:11px;color:${ra?'var(--teal)':'var(--gold)'};display:flex;align-items:center;gap:.3em">📅 ${ra?`Leído el ${readDateStr}`:'¿Cuándo lo terminaste?'}</span>
       <input type="date" id="readDateInput_${bookId}" value="${currentDateISO}" max="${todayISO}"
         style="padding:4px 8px;border-radius:8px;border:1px solid rgba(91,188,176,.4);background:var(--surface2);color:var(--text);font-size:11px;font-family:var(--font-body);cursor:pointer;outline:none"
-        onchange="updateReadDate('${bookId}',this.value)" onclick="event.stopPropagation()">
+        onclick="event.stopPropagation()">
+      <button class="shelf-btn" style="padding:4px 10px;font-size:11px"
+        onclick="event.stopPropagation();updateReadDate('${bookId}',document.getElementById('readDateInput_${bookId}').value)">Guardar fecha</button>
     </div>`:'';
   return `<div class="shelf-btns" id="shelfBtns_${bookId}">
     <button class="shelf-btn${s==='want'?' want':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','want')">＋ Quiero leer</button>
