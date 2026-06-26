@@ -755,6 +755,18 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .myrec-back-btn:hover{border-color:rgba(212,96,122,0.45);color:#e0909e;background:var(--accent-soft)}
 .myrec-detail-title{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
 @media(max-width:600px){.myrec-chip-label{max-width:140px}}
+.similar-section{margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--border)}
+.similar-title{font-family:var(--font-display);font-size:1.05rem;font-style:italic;font-weight:600;color:#e0909e;margin-bottom:.8rem}
+.similar-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem}
+.similar-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .18s;display:flex;flex-direction:column}
+.similar-item:hover{border-color:rgba(212,96,122,0.35);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.similar-item-cover{aspect-ratio:2/3;overflow:hidden;background:var(--surface3);position:relative}
+.similar-item-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.similar-item:hover .similar-item-cover img{transform:scale(1.04)}
+.similar-item-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:var(--muted)}
+.similar-item-body{padding:.5rem .6rem}
+.similar-item-title{font-size:11.5px;font-weight:500;line-height:1.3;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:2px}
+.similar-item-author{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media(max-width:600px){.canal-items,.myrec-items{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}.canal-hero-strip,.myrec-hero-strip{padding:1rem 1.2rem}}
 .rec-ver-mas-wrap{padding:.6rem 1.1rem 1rem;text-align:center}
 .rec-ver-mas-btn{background:transparent;border:1px solid var(--border2);border-radius:30px;color:var(--muted);font-size:12px;font-family:var(--font-body);padding:6px 20px;cursor:pointer;transition:all .18s}
@@ -2240,9 +2252,11 @@ function goToPage(n){
 }
 
 /* ── BOOK MODAL ── */
+let _scrollBeforeModal=0;
 function openBook(id, pushState=true){
   activeBook=allBooks.find(b=>b.id===id);
   if(!activeBook) return;
+  _scrollBeforeModal=window.scrollY;
   pendingStar=myRatings[id]||0;
   pendingSpicy=mySpicy[id]!=null?mySpicy[id]:0;
   renderBookModal();
@@ -2256,6 +2270,7 @@ function closeBookModal(){
   document.getElementById('bookModal').classList.remove('open');
   document.body.style.overflow='';
   if(location.hash.startsWith('#libro/')) history.pushState({},'',location.pathname+location.search);
+  window.scrollTo(0,_scrollBeforeModal);
 }
 
 function renderBookModal(){
@@ -2346,7 +2361,42 @@ function renderBookModal(){
            </div>`}
       <div id="modalSpicySection">${currentUser?buildSpicySectionHTML():''}</div>
       <div id="modalCommunityTagsSection">${buildCommunityTagsHTML()}</div>
+      ${buildSimilarBooksHTML(b)}
     </div>`;
+}
+
+/* ── SI TE GUSTÓ ESTE LIBRO… (recomendaciones dinámicas por género/trope) ── */
+function getSimilarBooks(book, limit){
+  limit=limit||6;
+  const baseTropes=new Set([...(book.tropes||[]),...((communityTagsMap[book.id]||{}).trope||[])]);
+  const baseGenres=new Set(book.genres||[]);
+  if(!baseTropes.size && !baseGenres.size) return [];
+  const scored=[];
+  allBooks.forEach(function(other){
+    if(other.id===book.id) return;
+    const otherTropes=[...(other.tropes||[]),...((communityTagsMap[other.id]||{}).trope||[])];
+    const otherGenres=other.genres||[];
+    let tropeMatches=0, genreMatches=0;
+    otherTropes.forEach(function(t){ if(baseTropes.has(t)) tropeMatches++; });
+    otherGenres.forEach(function(g){ if(baseGenres.has(g)) genreMatches++; });
+    const score=tropeMatches*2+genreMatches*1;
+    if(score>0) scored.push({book:other,score:score});
+  });
+  scored.sort(function(a,b){ return b.score-a.score; });
+  return scored.slice(0,limit).map(function(s){ return s.book; });
+}
+
+function buildSimilarBooksHTML(book){
+  const similar=getSimilarBooks(book,6);
+  if(!similar.length) return '';
+  const cards=similar.map(function(sb){
+    const r=ratingsMap[sb.id];
+    const ab=r&&r.count>0?'<div style="position:absolute;bottom:6px;right:6px;background:rgba(14,11,16,.8);backdrop-filter:blur(6px);border:1px solid var(--border2);border-radius:20px;padding:2px 7px;font-size:10.5px;display:flex;align-items:center;gap:3px;z-index:2"><span style="color:var(--gold);font-size:10px">★</span><span style="font-weight:600">'+r.avg.toFixed(1)+'</span></div>':'';
+    const cov=sb.cover?'<img src="'+sb.cover+'" alt="'+sb.title+'" onerror="this.outerHTML=\'<div class=similar-item-ph>📖</div>\'">':'<div class="similar-item-ph">📖</div>';
+    const auth=(sb.authors||[]).join(', ')||'—';
+    return '<div class="similar-item" onclick="openBook(\''+sb.id+'\')"><div class="similar-item-cover">'+cov+ab+'</div><div class="similar-item-body"><div class="similar-item-title">'+sb.title+'</div><div class="similar-item-author">'+auth+'</div></div></div>';
+  }).join('');
+  return '<div class="similar-section"><div class="similar-title">💕 Si te gustó este libro…</div><div class="similar-items">'+cards+'</div></div>';
 }
 
 /* Actualiza solo el bloque de valoración sin rerenderizar todo el modal */
@@ -3550,6 +3600,7 @@ window.addEventListener('popstate', ()=>{
   // Close book modal if open
   document.getElementById('bookModal').classList.remove('open');
   document.body.style.overflow='';
+  window.scrollTo(0,_scrollBeforeModal);
   // Restore tab and section from URL
   const params=new URLSearchParams(location.search);
   const tab=params.get('tab')||'estanteria';
