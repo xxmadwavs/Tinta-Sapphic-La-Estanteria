@@ -742,6 +742,19 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .myrec-hero-text h2{font-family:var(--font-display);font-size:1.6rem;font-weight:300;font-style:italic;color:var(--text);margin-bottom:.2rem}
 .myrec-hero-text h2 em{color:var(--rose);font-weight:600}
 .myrec-hero-text p{font-size:13px;color:var(--muted);line-height:1.7}
+.myrec-chip-grid{display:flex;flex-wrap:wrap;gap:.6rem}
+.myrec-chip{display:flex;align-items:center;gap:.55rem;background:var(--surface);border:1px solid var(--border2);border-radius:30px;padding:.4rem .9rem .4rem .4rem;cursor:pointer;transition:all .18s;font-family:var(--font-body);color:var(--text);max-width:100%}
+.myrec-chip:hover{border-color:rgba(212,96,122,0.45);background:var(--surface2);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.myrec-chip-thumb{width:34px;height:34px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--surface3);display:flex;align-items:center;justify-content:center}
+.myrec-chip-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.myrec-chip-ph{font-size:15px;color:var(--muted)}
+.myrec-chip-label{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+.myrec-chip-count{font-size:10.5px;color:var(--muted);background:var(--surface3);border-radius:20px;padding:1px 7px;flex-shrink:0}
+.myrec-detail-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;margin-bottom:1rem}
+.myrec-back-btn{background:transparent;border:1px solid var(--border2);border-radius:30px;color:var(--muted);font-size:12.5px;font-family:var(--font-body);padding:7px 16px;cursor:pointer;transition:all .18s}
+.myrec-back-btn:hover{border-color:rgba(212,96,122,0.45);color:#e0909e;background:var(--accent-soft)}
+.myrec-detail-title{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
+@media(max-width:600px){.myrec-chip-label{max-width:140px}}
 @media(max-width:600px){.canal-items,.myrec-items{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}.canal-hero-strip,.myrec-hero-strip{padding:1rem 1.2rem}}
 .rec-ver-mas-wrap{padding:.6rem 1.1rem 1rem;text-align:center}
 .rec-ver-mas-btn{background:transparent;border:1px solid var(--border2);border-radius:30px;color:var(--muted);font-size:12px;font-family:var(--font-body);padding:6px 20px;cursor:pointer;transition:all .18s}
@@ -1721,6 +1734,7 @@ function loadState(){
   const params=new URLSearchParams(location.search);
   if(params.get('tab')) activeTab=params.get('tab');
   if(params.get('section')) activeSection=params.get('section');
+  if(params.get('cat')) activeMyrecCat=params.get('cat');
   if(params.get('page')) currentPage=parseInt(params.get('page'))||1;
   if(params.get('q')){filters.q=params.get('q');document.getElementById('searchInput').value=filters.q;}
   ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura'].forEach(k=>{
@@ -2856,8 +2870,10 @@ function copyTabLink(){
 
 /* ── TABS ── */
 let activeTab='estanteria';
+let activeMyrecCat=null;
 function switchTab(tab, silent){
   activeTab=tab;
+  if(!silent) activeMyrecCat=null;
   sessionStorage.setItem('ts_active_tab', tab);
   document.getElementById('tabEstanteria').classList.toggle('active',tab==='estanteria');
   document.getElementById('tabTop10').classList.toggle('active',tab==='top10');
@@ -2886,6 +2902,7 @@ function switchTab(tab, silent){
   if(!silent) try{
     const params=new URLSearchParams(location.search);
     if(tab==='estanteria') params.delete('tab'); else params.set('tab',tab);
+    params.delete('cat');
     const url=params.toString()?'?'+params.toString():location.pathname;
     history.pushState({tab},'',url);
   }catch(e){}
@@ -3033,30 +3050,79 @@ function renderCanal(){
 }
 
 /* ── MIS RECOMENDACIONES ── */
-function renderMyrec(){
-  const c=document.getElementById('myrecContainer');
+function myrecCatSlug(cat){ return cat.replace(/\s+/g,'-').replace(/\//g,'_'); }
+
+function getMyrecCatMap(){
   const myData=allBooks.filter(function(b){return b.my_rec;});
-  const hero='<div class="myrec-hero-strip"><div class="myrec-hero-icon">💌</div><div class="myrec-hero-text"><h2>Mis <em>Recomendaciones</em></h2><p>Libros que recomiendo personalmente, organizados por género y estilo.</p></div></div>';
-  if(!myData.length){c.innerHTML=hero+'<div class="myrec-empty">Aún no hay recomendaciones personales. 💌<br><br>Márcalos desde el admin para añadirlos.</div>';return;}
   const catMap=new Map();
   myData.forEach(function(b){(b.my_rec_categories||['Sin categoría']).forEach(function(cat){if(!catMap.has(cat))catMap.set(cat,[]);if(!catMap.get(cat).find(function(x){return x.id===b.id;}))catMap.get(cat).push(b);});});
-  let html=hero;
-  const MYREC_LIMIT=7;
+  return catMap;
+}
+
+function renderMyrec(){
+  const c=document.getElementById('myrecContainer');
+  const catMap=getMyrecCatMap();
+  const hero='<div class="myrec-hero-strip"><div class="myrec-hero-icon">💌</div><div class="myrec-hero-text"><h2>Mis <em>Recomendaciones</em></h2><p>Libros que recomiendo personalmente, organizados por género y estilo.</p></div></div>';
+  if(!catMap.size){c.innerHTML=hero+'<div class="myrec-empty">Aún no hay recomendaciones personales. 💌<br><br>Márcalos desde el admin para añadirlos.</div>';return;}
+
+  // Resolve which category (if any) matches activeMyrecCat
+  let matchedCat=null;
+  if(activeMyrecCat){
+    for(const cat of catMap.keys()){ if(myrecCatSlug(cat)===activeMyrecCat){ matchedCat=cat; break; } }
+  }
+
+  if(matchedCat){
+    renderMyrecCatDetail(c,hero,catMap,matchedCat);
+  } else {
+    renderMyrecChips(c,hero,catMap);
+  }
+}
+
+function renderMyrecChips(c,hero,catMap){
+  let chips='<div class="myrec-chip-grid">';
   catMap.forEach(function(items,cat){
-    const gid='myrec-g-'+cat.replace(/\s+/g,'_');
-    let itemsHtml='';
-    items.forEach(function(b,i){
-      const r=ratingsMap[b.id];
-      const ab=r&&r.count>0?'<div style="position:absolute;bottom:6px;right:6px;background:rgba(14,11,16,.8);backdrop-filter:blur(6px);border:1px solid var(--border2);border-radius:20px;padding:2px 7px;font-size:10.5px;display:flex;align-items:center;gap:3px;z-index:2"><span style="color:var(--gold);font-size:10px">★</span><span style="font-weight:600">'+r.avg.toFixed(1)+'</span></div>':'';
-      const cov=b.cover?'<img src="'+b.cover+'" alt="'+b.title+'" onerror="this.outerHTML=\'<div class=myrec-item-ph>📖</div>\'">'+'':'<div class="myrec-item-ph">📖</div>';
-      const auth=(b.authors||[]).join(', ')||'—';
-      const hideCls=i>=MYREC_LIMIT?' rec-item-hidden':'';
-      itemsHtml+='<div class="myrec-item'+hideCls+'" onclick="openBook(\''+b.id+'\')"><div class="myrec-item-cover">'+cov+ab+'</div><div class="myrec-item-body"><div class="myrec-item-title">'+b.title+'</div><div class="myrec-item-author">'+auth+'</div></div></div>';
-    });
-    const verMas=items.length>MYREC_LIMIT?'<div class="rec-ver-mas-wrap"><button class="rec-ver-mas-btn" onclick="recVerMas(\''+gid+'\',this)">Ver más ('+(items.length-MYREC_LIMIT)+' libros)</button></div>':'';
-    html+='<div class="myrec-section-group" id="'+gid+'"><div class="myrec-section-head"><span class="myrec-section-name">'+cat+'</span><span class="myrec-section-count">'+items.length+' libro'+(items.length!==1?'s':'')+'</span></div><div class="myrec-items">'+itemsHtml+'</div>'+verMas+'</div>';
+    const cover=items.find(function(b){return b.cover;});
+    const thumb=cover?'<img src="'+cover.cover+'" alt="">':'<span class="myrec-chip-ph">📖</span>';
+    chips+='<button class="myrec-chip" onclick="openMyrecCat(\''+myrecCatSlug(cat).replace(/'/g,"\\'")+'\')"><span class="myrec-chip-thumb">'+thumb+'</span><span class="myrec-chip-label">'+cat+'</span><span class="myrec-chip-count">'+items.length+'</span></button>';
   });
-  c.innerHTML=html;
+  chips+='</div>';
+  c.innerHTML=hero+chips;
+}
+
+function renderMyrecCatDetail(c,hero,catMap,cat){
+  const items=catMap.get(cat)||[];
+  let itemsHtml='';
+  items.forEach(function(b){
+    const r=ratingsMap[b.id];
+    const ab=r&&r.count>0?'<div style="position:absolute;bottom:6px;right:6px;background:rgba(14,11,16,.8);backdrop-filter:blur(6px);border:1px solid var(--border2);border-radius:20px;padding:2px 7px;font-size:10.5px;display:flex;align-items:center;gap:3px;z-index:2"><span style="color:var(--gold);font-size:10px">★</span><span style="font-weight:600">'+r.avg.toFixed(1)+'</span></div>':'';
+    const cov=b.cover?'<img src="'+b.cover+'" alt="'+b.title+'" onerror="this.outerHTML=\'<div class=myrec-item-ph>📖</div>\'">'+'':'<div class="myrec-item-ph">📖</div>';
+    const auth=(b.authors||[]).join(', ')||'—';
+    itemsHtml+='<div class="myrec-item" onclick="openBook(\''+b.id+'\')"><div class="myrec-item-cover">'+cov+ab+'</div><div class="myrec-item-body"><div class="myrec-item-title">'+b.title+'</div><div class="myrec-item-author">'+auth+'</div></div></div>';
+  });
+  const head='<div class="myrec-detail-head"><button class="myrec-back-btn" onclick="closeMyrecCat()">← Todas las categorías</button><div class="myrec-detail-title"><span class="myrec-section-name">'+cat+'</span><span class="myrec-section-count">'+items.length+' libro'+(items.length!==1?'s':'')+'</span></div></div>';
+  c.innerHTML=hero+head+'<div class="myrec-items">'+itemsHtml+'</div>';
+}
+
+function openMyrecCat(slug){
+  activeMyrecCat=slug;
+  renderMyrec();
+  try{
+    const params=new URLSearchParams(location.search);
+    params.set('tab','myrec');
+    params.set('cat',slug);
+    history.pushState({tab:'myrec',cat:slug},'',location.pathname+'?'+params.toString());
+  }catch(e){}
+}
+
+function closeMyrecCat(){
+  activeMyrecCat=null;
+  renderMyrec();
+  try{
+    const params=new URLSearchParams(location.search);
+    params.delete('cat');
+    const url=params.toString()?'?'+params.toString():location.pathname;
+    history.pushState({tab:'myrec'},'',url);
+  }catch(e){}
 }
 
 function recVerMas(groupId, btn){
@@ -3490,6 +3556,7 @@ window.addEventListener('popstate', ()=>{
   const section=params.get('section')||'thais';
   // Switch tab without pushing a new history entry (we're already restoring)
   activeTab=tab;
+  activeMyrecCat=tab==='myrec'?params.get('cat'):null;
   sessionStorage.setItem('ts_active_tab', tab);
   document.getElementById('tabEstanteria').classList.toggle('active',tab==='estanteria');
   document.getElementById('tabTop10').classList.toggle('active',tab==='top10');
