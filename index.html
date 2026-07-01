@@ -4709,6 +4709,7 @@ function bingoRender(){
   const marked=markedIdx.size;
   const pct=total?Math.round(marked/total*100):0;
   const hasLine=bingoCheckLine(casillas,markedIdx);
+  const hasBingo=total>0&&marked===total;
 
   let selectorHtml='';
   if(bingoChallenges.length>1){
@@ -4730,7 +4731,8 @@ function bingoRender(){
         <div class="bingo-progress-pill"><b>${marked}/${total}</b><span>casillas</span></div>
       </div>
       <div class="bingo-progress-bar"><div class="bingo-progress-fill" style="width:${pct}%"></div></div>
-      <div class="bingo-line-badge ${hasLine?'show':''}">✨ ¡Línea completada!</div>
+      <div class="bingo-line-badge ${hasBingo?'show':''}" style="${hasBingo?'background:var(--gold-soft);border-color:rgba(201,151,90,0.5);color:var(--gold)':''}">🎉 ¡BINGO! Cartón completo</div>
+      <div class="bingo-line-badge ${(hasLine&&!hasBingo)?'show':''}">✨ ¡Línea completada!</div>
     </div>`;
 
   const sizeClass=total===16?'size-16':'';

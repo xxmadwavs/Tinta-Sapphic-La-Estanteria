@@ -2471,6 +2471,7 @@ async function cargarProgresoUsuarias(){
       const nombreUsuaria = prof.username ? '@'+prof.username : prof.email || uid.slice(0,8)+'…';
       const pct = Math.round(count/25*100);
       const hasBingo = tieneBingo(entradas, casillas.length);
+      const hasLinea = !hasBingo && tieneLinea(entradas, casillas.length);
 
       // Grid 5x5 mini del bingo
       const gridCells = casillas.map((cas, i) => {
@@ -2485,7 +2486,7 @@ async function cargarProgresoUsuarias(){
         <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
           <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--rose));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0">${(prof.username||'?')[0].toUpperCase()}</div>
           <div style="flex:1;min-width:0">
-            <div style="font-weight:600;font-size:13.5px">${escH(nombreUsuaria)} ${hasBingo?'<span style="color:var(--gold)">🏆 ¡BINGO!</span>':''}</div>
+            <div style="font-weight:600;font-size:13.5px">${escH(nombreUsuaria)} ${hasBingo?'<span style="color:var(--gold)">🏆 ¡BINGO!</span>':(hasLinea?'<span style="color:var(--accent2)">✨ Línea</span>':'')}</div>
             <div style="font-size:11.5px;color:var(--muted)">${count} / 25 casillas · ${pct}%</div>
           </div>
           <div style="width:80px;height:6px;border-radius:3px;background:var(--surface3);overflow:hidden;flex-shrink:0">
@@ -2512,17 +2513,21 @@ async function cargarProgresoUsuarias(){
     </div>`;
 }
 
-function tieneBingo(entradas, totalCasillas){
-  if(totalCasillas < 25) return false;
+function tieneLinea(entradas, totalCasillas){
+  const size=Math.sqrt(totalCasillas);
+  if(size!==Math.floor(size)) return false;
   const marcadas = new Set(entradas.map(e=>e.casilla_index));
-  // Filas
-  for(let r=0;r<5;r++){ if([0,1,2,3,4].map(c=>r*5+c).every(i=>marcadas.has(i))) return true; }
-  // Columnas
-  for(let c=0;c<5;c++){ if([0,1,2,3,4].map(r=>r*5+c).every(i=>marcadas.has(i))) return true; }
-  // Diagonales
-  if([0,6,12,18,24].every(i=>marcadas.has(i))) return true;
-  if([4,8,12,16,20].every(i=>marcadas.has(i))) return true;
+  for(let r=0;r<size;r++){ if(Array.from({length:size},(_,c)=>r*size+c).every(i=>marcadas.has(i))) return true; }
+  for(let c=0;c<size;c++){ if(Array.from({length:size},(_,r)=>r*size+c).every(i=>marcadas.has(i))) return true; }
+  if(Array.from({length:size},(_,i)=>i*size+i).every(i=>marcadas.has(i))) return true;
+  if(Array.from({length:size},(_,i)=>i*size+(size-1-i)).every(i=>marcadas.has(i))) return true;
   return false;
+}
+function tieneBingo(entradas, totalCasillas){
+  // Bingo = cartón completo, no solo una línea
+  if(!totalCasillas) return false;
+  const marcadas = new Set(entradas.map(e=>e.casilla_index));
+  return marcadas.size >= totalCasillas;
 }
 
 async function exportarBingoCSV(){
