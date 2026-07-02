@@ -1787,6 +1787,26 @@ function loadState(){
   if(params.get('pages')) filters.pages=params.get('pages');
 }
 
+/* ── URL de la estantería personal (Mi estantería: todos/quiero leer/leídos) ── */
+function shelfUrlSync(filter,addEntry){
+  try{
+    const params=new URLSearchParams(location.search);
+    params.set('myshelf',filter);
+    const url='?'+params.toString();
+    if(addEntry) history.pushState({myshelf:filter},'',url);
+    else history.replaceState({myshelf:filter},'',url);
+  }catch(e){}
+}
+function shelfUrlClear(addEntry){
+  try{
+    const params=new URLSearchParams(location.search);
+    params.delete('myshelf');
+    const url=params.toString()?'?'+params.toString():location.pathname;
+    if(addEntry) history.pushState(null,'',url);
+    else history.replaceState(null,'',url);
+  }catch(e){}
+}
+
 // Extract saga name from book
 function getSaga(b){
   if(b.sagaName) return b.sagaName;
@@ -1831,6 +1851,19 @@ async function init(){
   } else {
     // primera visita o venía del home
     showHome();
+  }
+  // Si la URL trae ?myshelf=all|want|read, abrir directamente esa vista de "Mi estantería".
+  // Nota: showHome()/switchTab() de arriba pueden haber limpiado la query string,
+  // así que reaplicamos el parámetro myshelf sobre la URL resultante antes de abrir.
+  const _shelfParam=urlParams.get('myshelf');
+  if(_shelfParam && ['all','want','read'].includes(_shelfParam)){
+    if(currentUser){
+      shelfUrlSync(_shelfParam,false);
+      openShelf(_shelfParam, true);
+    } else {
+      // Sin sesión no podemos mostrar la estantería personal: limpiamos el parámetro
+      shelfUrlClear(false);
+    }
   }
   const debouncedLoadRatings=debounce(()=>{
     if(currentUser) loadMyRatings().then(()=>{applyFilters(false);if(activeBook)renderBookModal();checkSolicitudesNotif();});
@@ -3629,6 +3662,14 @@ window.addEventListener('popstate', ()=>{
   document.getElementById('bookModal').classList.remove('open');
   document.body.style.overflow='';
   window.scrollTo(0,_scrollBeforeModal);
+  // Restaurar (o cerrar) la estantería personal según la URL
+  const shelfParam=new URLSearchParams(location.search).get('myshelf');
+  if(shelfParam && currentUser && ['all','want','read'].includes(shelfParam)){
+    openShelf(shelfParam, true);
+    return;
+  } else if(document.getElementById('shelfView').classList.contains('active')){
+    closeShelf(true);
+  }
   // Restore tab and section from URL
   const params=new URLSearchParams(location.search);
   const tab=params.get('tab')||'estanteria';
@@ -4555,18 +4596,24 @@ function buildCardShelfBtnsHTML(bookId){
 }
 
 /* ── Vista estantería ── */
-function openShelf(){
+function openShelf(filter,silent){
+  shelfFilter=filter||shelfFilter||'all';
   document.querySelectorAll('main > *').forEach(el=>el.style.display='none');
   document.getElementById('shelfView').classList.add('active');
+  document.querySelectorAll('.shelf-nav-item').forEach(el=>el.classList.remove('active'));
+  const map={all:'shelfNavAll',want:'shelfNavWant',read:'shelfNavRead'};
+  document.getElementById(map[shelfFilter])?.classList.add('active');
   renderShelf();
+  if(!silent) shelfUrlSync(shelfFilter,true);
 }
 
-function closeShelf(){
+function closeShelf(silent){
   document.getElementById('shelfView').classList.remove('active');
   document.querySelectorAll('main > *').forEach(el=>el.style.display='');
+  if(!silent) shelfUrlClear(true);
 }
 
-function switchShelf(filter){
+function switchShelf(filter,silent){
   shelfFilter=filter;
   shelfPage=1;
   document.querySelectorAll('.shelf-nav-item').forEach(el=>el.classList.remove('active'));
@@ -4574,6 +4621,7 @@ function switchShelf(filter){
   document.getElementById(map[filter])?.classList.add('active');
   shelfPopulateGenres();
   _renderShelfBooks();
+  if(!silent) shelfUrlSync(filter,true);
 }
 
 function setShelfView(mode){
