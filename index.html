@@ -1050,7 +1050,12 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .shelf-back-link{display:flex;align-items:center;gap:.4em;padding:6px 10px;border-radius:8px;color:var(--muted);font-size:12.5px;cursor:pointer;font-family:var(--font-body);background:transparent;border:none;width:100%;transition:all .15s;margin-top:.5rem}
 .shelf-back-link:hover{color:var(--accent2)}
 .shelf-main{padding:2rem 2rem 4rem;min-width:0}
-.shelf-main-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
+.shelf-main-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem}
+.shelf-toolbar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem}
+.shelf-toolbar .search-wrap{flex:1;min-width:180px}
+.shelf-toolbar .sort-select{max-width:200px}
+.shelf-clear-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);border-radius:10px;padding:8px 12px;font-size:12px;font-family:var(--font-body);cursor:pointer;transition:all .15s;white-space:nowrap}
+.shelf-clear-btn:hover{border-color:var(--accent);color:var(--accent2)}
 .shelf-main-title{font-family:var(--font-display);font-size:1.6rem;font-weight:600;font-style:italic;color:var(--text)}
 .shelf-main-title span{color:var(--muted);font-weight:300;font-size:1.1rem;margin-left:.4rem}
 .shelf-view-toggle{display:flex;gap:2px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:3px}
@@ -1601,6 +1606,24 @@ body.home-active .hero,body.home-active .main{display:none!important}
           </button>
         </div>
       </div>
+      <div class="shelf-toolbar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input class="search-input" id="shelfSearchInput" type="search" placeholder="Buscar por título o autora…" oninput="shelfApplyFilters()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </div>
+        <select class="sort-select" id="shelfGenreSelect" onchange="shelfApplyFilters()">
+          <option value="">Todos los géneros</option>
+        </select>
+        <select class="sort-select" id="shelfSortSelect" onchange="shelfApplyFilters()">
+          <option value="recent">✨ Recién añadidos</option>
+          <option value="az">A → Z</option>
+          <option value="za">Z → A</option>
+          <option value="author">Autora (A → Z)</option>
+          <option value="year_desc">Año: más recientes</option>
+          <option value="year_asc">Año: más antiguos</option>
+        </select>
+        <button class="shelf-clear-btn" onclick="shelfClearFilters()">✕ Limpiar</button>
+      </div>
       <div id="shelfBooksContainer"></div>
     </div>
   </div>
@@ -1700,6 +1723,11 @@ let myReadingReadAt={}; // bookId -> fecha ISO de la lectura MÁS RECIENTE (deri
 let myReadingLog={}; // bookId -> [{id, read_at}, ...] historial completo de lecturas, ordenado ascendente
 let shelfFilter='all'; // 'all' | 'want' | 'read'
 let shelfViewMode='grid'; // 'grid' | 'list'
+let shelfSearch='';
+let shelfGenreFilter='';
+let shelfSort='recent';
+let shelfPage=1;
+const SHELF_PAGE_SIZE=18;
 let bingoChallenges=[], bingoActiveChallengeId=null, bingoProgress=[], bingoActiveCellIdx=null, bingoLinkMode='catalogo', bingoPendingBookId=null, bingoPendingBookTitle=null, bingoPendingBookCover=null, bingoManualConfirmed=false;
 let activeSection='thais';
 let authMode='login', pendingStar=0;
@@ -4540,9 +4568,11 @@ function closeShelf(){
 
 function switchShelf(filter){
   shelfFilter=filter;
+  shelfPage=1;
   document.querySelectorAll('.shelf-nav-item').forEach(el=>el.classList.remove('active'));
   const map={all:'shelfNavAll',want:'shelfNavWant',read:'shelfNavRead'};
   document.getElementById(map[filter])?.classList.add('active');
+  shelfPopulateGenres();
   _renderShelfBooks();
 }
 
@@ -4553,29 +4583,88 @@ function setShelfView(mode){
   _renderShelfBooks();
 }
 
+function shelfBaseBooks(){
+  const wantBooks=allBooks.filter(b=>myReadingStatus[b.id]==='want');
+  const readBooks=allBooks.filter(b=>myReadingStatus[b.id]==='read');
+  return shelfFilter==='want'?wantBooks:shelfFilter==='read'?readBooks:[...wantBooks,...readBooks];
+}
+
+function shelfPopulateGenres(){
+  const base=shelfBaseBooks();
+  const genres=[...new Set(base.flatMap(b=>b.genres||[]))].sort((a,b)=>a.localeCompare(b,'es'));
+  const sel=document.getElementById('shelfGenreSelect');
+  if(!genres.includes(shelfGenreFilter)) shelfGenreFilter='';
+  sel.innerHTML='<option value="">Todos los géneros</option>'+genres.map(g=>`<option value="${g}" ${g===shelfGenreFilter?'selected':''}>${g}</option>`).join('');
+}
+
+function shelfApplyFilters(){
+  shelfPage=1;
+  shelfSearch=document.getElementById('shelfSearchInput').value.toLowerCase().trim();
+  shelfGenreFilter=document.getElementById('shelfGenreSelect').value;
+  shelfSort=document.getElementById('shelfSortSelect').value;
+  _renderShelfBooks();
+}
+
+function shelfClearFilters(){
+  shelfSearch='';shelfGenreFilter='';shelfSort='recent';shelfPage=1;
+  document.getElementById('shelfSearchInput').value='';
+  document.getElementById('shelfGenreSelect').value='';
+  document.getElementById('shelfSortSelect').value='recent';
+  _renderShelfBooks();
+}
+
+function shelfGoToPage(n){
+  shelfPage=n;
+  _renderShelfBooks();
+  document.querySelector('.shelf-main')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
 function renderShelf(){
   const wantBooks=allBooks.filter(b=>myReadingStatus[b.id]==='want');
   const readBooks=allBooks.filter(b=>myReadingStatus[b.id]==='read');
   document.getElementById('shelfCountAll').textContent=wantBooks.length+readBooks.length;
   document.getElementById('shelfWantCount').textContent=wantBooks.length;
   document.getElementById('shelfReadCount').textContent=readBooks.length;
+  shelfPopulateGenres();
   _renderShelfBooks();
 }
 
 function _renderShelfBooks(){
-  const wantBooks=allBooks.filter(b=>myReadingStatus[b.id]==='want');
-  const readBooks=allBooks.filter(b=>myReadingStatus[b.id]==='read');
-  let books=shelfFilter==='want'?wantBooks:shelfFilter==='read'?readBooks:[...wantBooks,...readBooks];
   const titleMap={all:'Todos los libros',want:'Quiero leer',read:'Leídos'};
+  let books=shelfBaseBooks();
+  const hadBooksBeforeFilters=books.length>0;
+
+  if(shelfSearch) books=books.filter(b=>(b.title+' '+(b.authors||[]).join(' ')).toLowerCase().includes(shelfSearch));
+  if(shelfGenreFilter) books=books.filter(b=>(b.genres||[]).includes(shelfGenreFilter));
+
+  if(shelfSort==='az') books=[...books].sort((a,b)=>a.title.localeCompare(b.title,'es'));
+  else if(shelfSort==='za') books=[...books].sort((a,b)=>b.title.localeCompare(a.title,'es'));
+  else if(shelfSort==='author') books=[...books].sort((a,b)=>((a.authors||[])[0]||'').localeCompare((b.authors||[])[0]||'','es'));
+  else if(shelfSort==='year_desc') books=[...books].sort((a,b)=>(b.year||0)-(a.year||0));
+  else if(shelfSort==='year_asc') books=[...books].sort((a,b)=>(a.year||0)-(b.year||0));
+  else books=[...books].sort((a,b)=>b.id.localeCompare(a.id));
+
   document.getElementById('shelfMainTitle').innerHTML=`${titleMap[shelfFilter]} <span>(${books.length})</span>`;
   const container=document.getElementById('shelfBooksContainer');
+
   if(!books.length){
-    const msgs={all:'Tu estantería está vacía. ¡Añade libros desde el catálogo!',want:'Aún no tienes libros en «Quiero leer».',read:'Aún no has marcado ningún libro como leído.'};
-    container.innerHTML=`<div class="shelf-empty"><span class="shelf-empty-icon">${shelfFilter==='read'?'✨':'📖'}</span><p>${msgs[shelfFilter]}</p></div>`;
+    if(hadBooksBeforeFilters){
+      container.innerHTML=`<div class="shelf-empty"><span class="shelf-empty-icon">🔍</span><p>Ningún libro coincide con tu búsqueda o filtro.</p></div>`;
+    } else {
+      const msgs={all:'Tu estantería está vacía. ¡Añade libros desde el catálogo!',want:'Aún no tienes libros en «Quiero leer».',read:'Aún no has marcado ningún libro como leído.'};
+      container.innerHTML=`<div class="shelf-empty"><span class="shelf-empty-icon">${shelfFilter==='read'?'✨':'📖'}</span><p>${msgs[shelfFilter]}</p></div>`;
+    }
     return;
   }
+
+  const totalPages=Math.max(1,Math.ceil(books.length/SHELF_PAGE_SIZE));
+  if(shelfPage>totalPages) shelfPage=totalPages;
+  const start=(shelfPage-1)*SHELF_PAGE_SIZE;
+  const pageBooks=books.slice(start,start+SHELF_PAGE_SIZE);
+
+  let html='';
   if(shelfViewMode==='grid'){
-    container.innerHTML=`<div class="shelf-grid">${books.map(b=>{
+    html=`<div class="shelf-grid">${pageBooks.map(b=>{
       const cov=b.cover?`<img src="${b.cover}" alt="${b.title}" loading="lazy">`:`<div class="shelf-book-cover-ph">📖</div>`;
       const auth=(b.authors||[]).join(', ');
       return `<div class="shelf-book" onclick="openBook('${b.id}')">
@@ -4587,7 +4676,7 @@ function _renderShelfBooks(){
       </div>`;
     }).join('')}</div>`;
   } else {
-    container.innerHTML=`<div class="shelf-list">${books.map(b=>{
+    html=`<div class="shelf-list">${pageBooks.map(b=>{
       const cov=b.cover?`<img class="shelf-list-cover" src="${b.cover}" alt="${b.title}" loading="lazy">`:`<div class="shelf-list-cover-ph">📖</div>`;
       const auth=(b.authors||[]).join(', ');
       const r=ratingsMap[b.id]||{avg:0,count:0};
@@ -4613,6 +4702,26 @@ function _renderShelfBooks(){
       </div>`;
     }).join('')}</div>`;
   }
+
+  if(totalPages>1){
+    const p=shelfPage;
+    const show=new Set([1,totalPages,p,p-1,p+1].filter(n=>n>=1&&n<=totalPages));
+    const sorted=[...show].sort((a,b)=>a-b);
+    let btns='';let prev=-1;
+    for(const n of sorted){
+      if(prev!==-1&&n-prev>1) btns+=`<span class="pg-dots">…</span>`;
+      btns+=`<button class="pg-btn${n===p?' active':''}" onclick="shelfGoToPage(${n})">${n}</button>`;
+      prev=n;
+    }
+    html+=`<p class="pg-info">Página ${p} de ${totalPages} · ${books.length} libros</p>
+    <div class="pagination">
+      <button class="pg-btn pg-arrow" onclick="shelfGoToPage(${p-1})" ${p<=1?'disabled':''}>‹</button>
+      ${btns}
+      <button class="pg-btn pg-arrow" onclick="shelfGoToPage(${p+1})" ${p>=totalPages?'disabled':''}>›</button>
+    </div>`;
+  }
+
+  container.innerHTML=html;
 }
 
 /* ══════════════════════════ BINGO DE LECTURA ══════════════════════════ */
