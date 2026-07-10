@@ -1380,8 +1380,8 @@
     ],
     "saficlub": false,
     "safi_categories": [],
-    "canal_rec": false,
-    "canal_month": null,
+    "canal_rec": true,
+    "canal_month": "2026",
     "my_rec": false,
     "my_rec_categories": []
   },
@@ -55861,6 +55861,553 @@
         "url": "https://en.mebmarket.com/?action=book_details&book_id=413114"
       }
     ],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783148284207_4yrj6",
+    "title": "Portada falsa",
+    "authors": [
+      "Mónica Benítez"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1780379645i/252972637.jpg",
+    "synopsis": "Brynn Mitchell no cree en las segundas oportunidades. Como periodista mordaz, vive de señalar las mentiras de quienes construyen su imagen sobre medias verdades.\nCuando una de sus columnas destroza públicamente a la actriz más intocable del momento, no se imagina que está firmando lo que puede ser el fin de su carrera.\n\nCameron Felton ha convertido el control en su única defensa. Fría, perfecta e inalcanzable… todo en ella está controlado, pero un escándalo amenaza con derrumbar la carrera que ha construido a base de silencios. Y la única forma de salvarlo implica acercarse demasiado a la mujer que más la ha expuesto.\n\nUn contrato. Tres meses. Una relación falsa para convencer al mundo.\nLo que empieza como estrategia pronto se convierte en algo más peligroso.\nPorque fingir es fácil. Lo difícil es saber cuándo dejar de hacerlo.",
+    "pages": 243,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ambientacion": [],
+    "content_warnings": [
+      "Abuso de Poder",
+      "Alcohol",
+      "Ansiedad / Ataques de Pánico",
+      "Conflictos Familiares"
+    ],
+    "spicy": 4,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783148650057_3edb0",
+    "title": "Atrevidas",
+    "authors": [
+      "Eva Gonzay"
+    ],
+    "year": 2022,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1656666621i/61376524.jpg",
+    "synopsis": "Un ataque de rebeldía, un poco de tequila y una mala decisión. Esa desastrosa combinación hará que los caminos de Abigail y Gretel se crucen en el momento menos oportuno.\nLa primera está cansada de hacer siempre lo correcto, la segunda ha sido la mujer perfecta para un marido capullo que la ha abandonado por otra.\nLa casualidad hace que ambas decidan ahogar las penas en el mismo bar. Una se convierte en el pañuelo de la otra y viceversa y, al final, algo perjudicadas por el alcohol, concluyen que ha llegado el momento de rebelarse y hacer una travesura que las haga sentirse vivas.\nSu pequeña fechoría consistirá en robar un coche, nada grave, piensan ellas. Lo robarán, se darán una vuelta y lo dejarán aparcado en un lugar seguro. A su modo de ver, nada puede salir mal. Enseguida eligen a su víctima y elaboran un pequeño plan de distracción hasta que consiguen su objetivo.\nTodo va sobre ruedas y las dos mujeres se sienten eufóricas por haberlo logrado, hasta que descubren que no viajan solas.",
+    "pages": 220,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Age Gap"
+    ],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "content_warnings": [
+      "Abuso de Poder",
+      "Ansiedad / Ataques de Pánico",
+      "Alcohol"
+    ],
+    "spicy": 3,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783148830629_n75ga",
+    "title": "Te traeré a casa",
+    "authors": [
+      "Raquel Arbeteta García"
+    ],
+    "year": 2021,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1614022952i/57175803.jpg",
+    "synopsis": "Dikê está muerta. Murió el día de su boda.\n\nEs lo único que sabe Lyra, de lo único que canta cada noche en el Ragweed. Al menos, hasta que uno de los Doce le dice la verdad:\n\nDikê está viva. Se la llevaron a Inferno.\n\nAsí que allí irá, a recuperarla. Más allá de las mentiras y amenazas de la mafia de los Doce, más allá de las sucias calles de la capital, más allá del C.A.N., más allá de la muerte. Armada con una guitarra y el recuerdo del oro en los labios de su esposa, Lyra compone una nueva canción:\n\nDikê está viva.\n\nY la traerá a casa.",
+    "pages": 171,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Ciencia Ficción",
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Andrógina",
+      "Femme"
+    ],
+    "characters": [],
+    "dinamicas": [
+      "Andrógina × Femme"
+    ],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [
+      "Mundo fantástico"
+    ],
+    "ambientacion": [],
+    "content_warnings": [
+      "Ansiedad / Ataques de Pánico",
+      "Depresión",
+      "Muerte",
+      "Enfermedad Terminal",
+      "Guerra / Conflicto Armado"
+    ],
+    "spicy": 3,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783149503443_pf00i",
+    "title": "Tú en mi corazón",
+    "authors": [
+      "L. Farinelli"
+    ],
+    "year": 2021,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1618504008i/57747536.jpg",
+    "synopsis": "El amor mueve al mundo, eso dicen; pero para María Fernanda, el amor no ha sido más que dolor, amargura e incomprensión. Para escapar de su sufrimiento, se aleja de todo lo que ha sido su vida, dispuesta a encontrar un poco de sosiego. ¿Encontrará lo que busca? ¿Se olvidará de ese amor que le causó tanto dolor? ¿Hallará a la mujer perfecta? ¿Será Valeria, su compañera de cuarto, quien le muestre que el amor no es solo dolor? Al final, será su corazón quien le muestre el camino.",
+    "pages": 296,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "content_warnings": [
+      "Ansiedad / Ataques de Pánico",
+      "Homofobia",
+      "Conflictos Familiares",
+      "Depresión"
+    ],
+    "spicy": 3,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783150254774_e341q",
+    "title": "A Rising Tide",
+    "authors": [
+      "Haley J. Munroe"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1776613858i/251202194.jpg",
+    "synopsis": "Ella rompió la maldición, solo para convertirse en prisionera de la mujer que ama .\n\nTras romper la maldición, Briar se encuentra en un barco rumbo a la fortaleza de la Corte de la Tierra.\n\nAl llegar, se topa con las mujeres que ha buscado durante la última década: su tripulación. Pero hay un problema: la culpan de todo.\n\nA medida que se acerca su ejecución, el castillo es atacado por una horda de wyverns que, según los rumores, se extinguieron con la caída de la Corte del Fuego. En medio del caos, una integrante de la tripulación de Briar es secuestrada, junto con la esmeralda de la Corte de la Tierra, su fuente de poder. Tras chantajear a Kressa para que la acoja, Briar se embarca en una misión para encontrar a su compañera desaparecida. Sin embargo, una vez en alta mar y cerca unas de otras, Briar y Kressa no pueden negar el vínculo que crece entre ellas.\n\nY cuando Briar recibe correspondencia secreta de Isolde pidiéndole ayuda, Briar debe decidir si ayudará a la mujer a la que está unida por el destino o a aquella a la que prometió su vida.",
+    "pages": 448,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Fantasía",
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [
+      "Mundo fantástico"
+    ],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 3,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Ends of the Earth",
+    "sagaNum": 2,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783242403788_sk70e",
+    "title": "The Echoes of Her Silence",
+    "authors": [
+      "Skye Von Triessen"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1745535543i/231924784.jpg",
+    "synopsis": "Para el mundo, Dominique Fournier es la mujer perfecta, casada con un hombre poderoso, rodeada de riqueza y con una vida que muchos envidiarían. Pero a puerta cerrada, su mundo dista mucho de ser idílico. Atrapada en un matrimonio asfixiante y sin amor, cada día es una pesadilla cuidadosamente oculta, hasta que la persona menos esperada acude en su ayuda.\n\nCuando Robyn Diamont acepta un trabajo con la enigmática señora Fournier, jamás imagina que aquella mujer tranquila y elegante ocupará todos sus pensamientos. Desearla es peligroso, pero cuanto más vislumbra Robyn la verdad tras la impecable apariencia de Dominique, más difícil le resulta ignorarla, o su creciente atracción.\n\nEntonces, en un día fatídico, Robyn lo arriesga todo por Dominique. Pero ante las consecuencias, ¿luchará Dominique con la misma intensidad por ella? ¿O acaso ese momento de sacrificio es todo lo que les depara el futuro?\nAlgunas historias de amor arden con intensidad. Otras dejan cicatrices imborrables.",
+    "pages": 469,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Contemporánea"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Age Gap",
+      "Friends to Lovers"
+    ],
+    "edad": [
+      "25–39",
+      "+40"
+    ],
+    "pais_cultura": [
+      "Canadá"
+    ],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 4,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783242883764_r1m2c",
+    "title": "Not Exactly Tenants",
+    "authors": [
+      "Giny Morales"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1761084959i/243016902.jpg",
+    "synopsis": "Cuando la perfección se encuentra con el caos, saltan chispas... y se rompen corazones.\n\nKate Sullivan ha construido la vida perfecta dentro de su casa impecable. Cada objeto colocado con precisión, cada habitación meticulosamente controlada, cada visitante cuidadosamente atendido. La exitosa diseñadora de interiores trata su hogar como un santuario y un museo a la vez, manteniendo al mundo —y a su corazón— a una distancia prudencial.\n\nLo que no sabe es que... lleva semanas compartiéndolo.\n\nGina Moore es una estafadora reformada con un don para el engaño y un talento para justificar lo injustificable. Cuando lo pierde todo de la forma más ridícula imaginable, decide que el ala sin usar de Kate simplemente se está desperdiciando... y se muda allí. En silencio.\n\nAhora, hace malabares con el encanto, la culpa y una creciente pila de secretos. Porque decir la verdad es fácil. ¿Enamorarse? Esa es la verdadera estafa.",
+    "pages": 309,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Comedia Romántica",
+      "Contemporánea"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": null,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783243061627_4h2de",
+    "title": "Not Until Her",
+    "authors": [
+      "Miranda Melanie"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1718843135i/213782019.jpg",
+    "synopsis": "La nueva vecina de Reya Barry es insoportable.\n\nEs grosera, egoísta y grita a todo pulmón a todas horas de la noche.\n\nAdemás, es esquiva, lo que hace casi imposible que hablen cara a cara sobre sus problemas.\n\nHasta que, de repente, aparece una noche,\n\ny Reya se siente irresistiblemente atraída por ella.\n\nEl sentimiento es mutuo, y sus encuentros nocturnos se convierten en algo habitual. Lo que empieza como una extraña incapacidad para mantenerse alejadas la una de la otra, poco a poco se transforma en un proceso de desvelamiento de todo lo que ambas creían saber sobre sí mismas.\n\nPero Reya se da cuenta demasiado tarde de que cuando algo parece demasiado bueno para ser verdad, probablemente lo sea. No podría haberse preparado para la terrible verdad y todo el daño que causa al salir a la luz.",
+    "pages": 372,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Contemporánea",
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [
+      "Madre Soltera"
+    ],
+    "dinamicas": [],
+    "tropes": [
+      "Enemies to Lovers"
+    ],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": null,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783243851089_28731",
+    "title": "The Goodmans",
+    "authors": [
+      "Clare Ashton"
+    ],
+    "year": 2018,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1527977889i/40365200.jpg",
+    "synopsis": "La encantadora doctora Abby Hart vive en la casa de sus sueños en Ludbury, un típico pueblo fronterizo inglés, hogar de los Goodman.\n\nMaggie Goodman, llena de fuego y pasión, es como una segunda madre para ella; el afable Richard, su pilar; y Celia, una chica de los 60, la abuela que nunca tuvo.\n\nPero Abby guarda un secreto. Su mejor amigo, Jude Goodman, es el amor de su vida, y muy, muy heterosexual. Incluso si Jude alguna vez se hubiera fijado en una mujer, estaría el pequeño problema de Maggie: sin duda, no lo aprobaría.\n\nPero los secretos siempre acaban saliendo a la luz, y Abby no es la única que tiene algo que ocultar. La vida está a punto de volverse muy interesante para los Goodman.\n\nLas cosas ya no son como antes, pero ¿podrían ser aún mejores?",
+    "pages": 376,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Contemporánea",
+      "Drama"
+    ],
+    "subgenres": [
+      "Small Town"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Profesora"
+    ],
+    "dinamicas": [],
+    "tropes": [
+      "Friends to Lovers",
+      "Second Chance Romance",
+      "Opposites Attract"
+    ],
+    "edad": [
+      "+40"
+    ],
+    "pais_cultura": [
+      "Reino Unido",
+      "Ambientación europea"
+    ],
+    "ambientacion": [],
+    "content_warnings": [
+      "Queerofobia / LGTBfobia"
+    ],
+    "spicy": 4,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783244944393_irsf2",
+    "title": "Interitus",
+    "authors": [
+      "Ruby Roe"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1779635366i/241552078.jpg",
+    "synopsis": "Cuatro almas condenadas, dos pactos imposibles y un romance lo suficientemente poderoso como para derrocar los reinos.\n\nMercedes Midnight debería estar muerta.\n\nSu año ha terminado, su deuda está saldada, pero aquí está: viva, maldita y crepitante con magia demoníaca que no sabe cómo manejar.\n\nLucy Corvine, la hija rota del diablo, se abrió paso a duras penas para liberarse de un contrato que nunca debió romperse. Ahora es algo para lo que el inframundo no tiene nombre. Algo que su padre destrozará el reino por encontrar.\n\nCuando dos ángeles se estrellan en Ora City, las reglas cambian de la noche a la mañana.\n\nUno quiere ver arder los reinos.\nEl otro quiere salvarlos.\nNadie está a salvo.\n\nReunidos y huyendo, Midnight y Lucy sellan un nuevo pacto: confiar el uno en el otro, sin importar lo que surja de la oscuridad. Pero la confianza es frágil. Y cada beso en bibliotecas a la luz de las velas esconde una traición que podría condenarlos a ambos de nuevo.\n\nSolo queda una verdad… alguien está mintiendo.\n\nDescubre quién es, antes de que pierdan su ciudad, su mundo y sus corazones.\n\nTres reinos. Dos corazones malditos. Una cosecha final. Este es el segundo (y último) libro de una oscura y muy apasionante novela romántica lésbica sobre demonios, con hombres masculinos dominantes, pactos para segar almas, ángeles caídos, estética dark academia, batallas góticas, una familia elegida, heroínas moralmente ambiguas, traición, obsesión sáfica y un amor capaz de arrasar ciudades. Solo para mayores de 18 años.",
+    "pages": 355,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Fantasía Urbana",
+      "Fantasía"
+    ],
+    "subgenres": [
+      "Dark Romance"
+    ],
+    "identidades": [
+      "Femme",
+      "Butch"
+    ],
+    "characters": [
+      "Demonio"
+    ],
+    "dinamicas": [],
+    "tropes": [
+      "Age Gap"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Mundo fantástico"
+    ],
+    "ambientacion": [],
+    "content_warnings": [
+      "Guerra / Conflicto Armado",
+      "Muerte",
+      "Muerte de un Ser Querido",
+      "Violencia Gráfica"
+    ],
+    "spicy": 5,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Deals of Dark Desire",
+    "sagaNum": 2,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783245588760_7xfwv",
+    "title": "FAN THIP (SUCCESS IN 7 DAYS)",
+    "authors": [
+      "Madam Fer"
+    ],
+    "year": 2026,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/426560/Thumbnail/book_detail_large.gif?2",
+    "synopsis": "¿Qué pasa cuando una mujer soltera (a regañadientes) supersticiosa reza a la deidad local por un novio, solo para que le envíen a 'ella misma' como su novio imaginario?!\n=============================\nCuando una oración 'premium' por un novio\nllega accidentalmente a los oídos de la 'hermosa y genial' deidad local del condominio,\n¡comienza una misión para que su discípula se case en 7 días!\nPero, ¿por qué, cuanto más enseña y más se acerca,\neste reacio Cupido quiere 'abandonar' su misión?\n\"Recuerda esto, idiota... ¡nadie es tan premium como yo!\"\n=============================\nUna novela Yuri para sentirse bien que te mostrará... ¡\nla deidad más hermosa y genial del mundo! ¡\nEstá justo enfrente del condominio!",
+    "pages": 122,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Comedia Romántica",
+      "Contemporánea",
+      "Fantasía Urbana"
+    ],
+    "subgenres": [
+      "Autodescubrimiento",
+      "Magia",
+      "Mitología"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Diosa",
+      "Empresaria"
+    ],
+    "dinamicas": [
+      "Diosa × Devota",
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Fake Relationship",
+      "Forced Proximity",
+      "Secret Relationship"
+    ],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 1,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "thais",
+    "editions": [],
     "saficlub": false,
     "safi_categories": [],
     "canal_rec": false,
