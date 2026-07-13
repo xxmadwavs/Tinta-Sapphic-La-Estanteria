@@ -53,14 +53,36 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-logout:hover{color:var(--rose)}
 .btn-shelf{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:15px;padding:2px 4px;transition:opacity .15s;line-height:1}
 .btn-shelf:hover{opacity:.75}
-@media(max-width:600px){.topbar{padding:0 1rem}.logo{font-size:17px}.logo-sep,.logo-sub{display:none}}
 @media(max-width:600px){
-  .hero{padding:2.5rem 1rem 2rem}
-  .filter-top{padding:.85rem 1rem .8rem}
-  .filter-dropdowns{padding:.7rem 1rem .75rem;gap:.3rem}
-  .filter-bottom{padding:.6rem 1rem}
+  .topbar{padding:0 .75rem;height:56px}
+  .logo{font-size:15px}
+  .logo-sep,.logo-sub{display:none}
+  .home-nav-btn{padding:5px 9px;font-size:10.5px}
+  .btn-login{padding:5px 11px;font-size:10.5px}
+  .user-chip{padding:3px 7px 3px 3px;gap:5px}
+  .user-avatar{width:22px;height:22px;font-size:10px}
+  .user-name{max-width:64px;font-size:11px}
+  .user-chip-caret{display:none}
+}
+@media(max-width:600px){
+  .hero{padding:1.6rem 1rem 1.2rem}
+  .hero-eyebrow{margin-bottom:.5rem;font-size:9.5px}
+  .hero-title{font-size:2.1rem;margin-bottom:.3rem}
+  .hero-sub{display:none}
+  .hero-stats{gap:1.5rem}
+  .stat-num{font-size:1.5rem}
+  .stat-label{font-size:9.5px}
+  .main{padding-top:1rem}
+  .filter-shell{margin-bottom:1rem}
+  .filter-top{padding:.65rem .85rem .6rem;gap:.5rem;flex-wrap:nowrap}
+  .search-wrap{min-width:0}
+  .search-input{padding:7px 10px 7px 34px;font-size:12.5px}
+  .search-icon{left:11px;font-size:12px}
+  .sort-select{padding:7px 26px 7px 10px;font-size:11.5px;background-position:right 8px center;flex-shrink:0}
+  .filter-dropdowns{padding:.55rem .85rem .6rem;gap:.3rem}
+  .filter-label-txt{display:none}
+  .filter-bottom{padding:.5rem .85rem}
   .dd-btn{font-size:11px;padding:4px 9px}
-  .search-input{font-size:13px}
 }
 
 .hero{position:relative;z-index:1;padding:4rem 2rem 3rem;text-align:center;overflow:hidden}
@@ -235,6 +257,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* ── Filtros solo para usuarias registradas ── */
 .dd-wrap.auth-only{display:none}
 .dd-wrap.auth-only.visible{display:inline-block}
+.fp-section.auth-only{display:none}
+.fp-section.auth-only.visible{display:block}
+#leidoFilter{display:none}
 
 /* Aviso filtros ocultos */
 .filters-auth-hint{
@@ -250,6 +275,116 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .filters-auth-hint:hover{color:var(--accent2);border-color:rgba(192,111,196,0.5);background:rgba(192,111,196,0.1)}
 .filters-auth-hint a{color:var(--accent2);text-decoration:underline;cursor:pointer}
 .filters-auth-hint.hidden{display:none}
+
+/* ── "+ Filtros" panel — acordeón desplegable en listado ── */
+.more-filters-btn{font-weight:600}
+.more-filters-btn .dd-count{margin-left:2px}
+.more-filters-panel{
+  left:auto;right:0;
+  width:min(360px,92vw);min-width:min(320px,92vw);max-width:none;
+  max-height:min(72vh,600px);
+  padding:0;
+  border-radius:16px;
+  overflow:hidden;
+  flex-direction:column;
+}
+.dd-wrap.open .more-filters-panel{display:flex}
+
+.fp-panel-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px 16px;
+  border-bottom:1px solid var(--border2);
+  background:linear-gradient(180deg,var(--surface2),var(--surface));
+  flex-shrink:0;
+}
+.fp-panel-title{
+  font-family:var(--font-display);font-size:17px;font-weight:600;
+  color:var(--text);letter-spacing:.01em;
+}
+.fp-panel-clear{
+  font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--rose);cursor:pointer;background:none;border:none;
+  padding:4px 8px;border-radius:6px;transition:background .12s;font-family:var(--font-body);
+}
+.fp-panel-clear:hover{background:var(--rose-soft)}
+
+.fp-body{overflow-y:auto;flex:1;min-height:0}
+.fp-section{border-bottom:1px solid var(--border)}
+.fp-section:last-child{border-bottom:none}
+.fp-sec-label{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:12px 16px;cursor:pointer;user-select:none;
+  font-size:12.5px;font-weight:600;letter-spacing:.02em;color:var(--text);
+  transition:background .12s,color .15s;
+}
+.fp-sec-label:hover{background:var(--surface2);color:var(--accent2)}
+.fp-section.collapsed .fp-sec-label:hover{background:var(--surface2)}
+.fp-sec-left{display:flex;align-items:center;gap:8px;min-width:0}
+.fp-sec-dot{width:6px;height:6px;border-radius:50%;background:var(--rose);box-shadow:0 0 0 3px var(--rose-soft);display:none;flex-shrink:0}
+.fp-section.has-active .fp-sec-dot{display:block}
+.fp-section.has-active .fp-sec-label{color:var(--accent2)}
+.fp-sec-chevron{font-size:9px;opacity:.4;transition:transform .18s;flex-shrink:0;color:var(--accent2)}
+.fp-section.collapsed .fp-sec-chevron{transform:rotate(-90deg)}
+.fp-section.collapsed .fp-sec-body{display:none}
+.fp-section.no-accordion .fp-sec-chevron{display:none}
+.fp-section.no-accordion .fp-sec-label{cursor:default}
+.fp-section.no-accordion .fp-sec-label:hover{background:none;color:var(--text)}
+.fp-sec-body{padding-bottom:10px;animation:ddFadeIn .16s ease}
+.fp-sec-body .dd-search{position:static;background:transparent;backdrop-filter:none;padding:0 16px 8px}
+.fp-sec-body .dd-list{max-height:200px;overflow-y:auto;padding:0 6px}
+.fp-toggle-row{display:flex;gap:.4rem;flex-wrap:wrap;padding:0 16px 4px}
+
+/* Filas de lista con checkbox/radio totalmente personalizados */
+.fp-sec-body .dd-item, .fp-sec-body .spicy-dd-item{
+  margin:1px 0;padding:8px 10px;border-radius:9px;gap:10px;
+}
+.fp-sec-body .dd-item:hover, .fp-sec-body .spicy-dd-item:hover{background:var(--surface2)}
+.fp-sec-body .dd-item:has(input:checked), .fp-sec-body .spicy-dd-item:has(input:checked){
+  background:var(--accent-soft);
+}
+.fp-sec-body .dd-item:has(input:checked) label,
+.fp-sec-body .spicy-dd-item:has(input:checked) label{color:var(--accent2);font-weight:600}
+.fp-sec-body input[type=checkbox],.fp-sec-body input[type=radio]{
+  appearance:none;-webkit-appearance:none;
+  width:16px;height:16px;flex-shrink:0;margin:0;
+  border:1.5px solid var(--border2);border-radius:5px;
+  background:var(--surface2);cursor:pointer;position:relative;
+  transition:border-color .15s,background .15s;
+}
+.fp-sec-body input[type=radio]{border-radius:50%}
+.fp-sec-body input[type=checkbox]:hover,.fp-sec-body input[type=radio]:hover{border-color:var(--accent)}
+.fp-sec-body input[type=checkbox]:checked,.fp-sec-body input[type=radio]:checked{
+  background:var(--accent);border-color:var(--accent);
+}
+.fp-sec-body input[type=checkbox]:checked::after{
+  content:'';position:absolute;left:5px;top:2px;width:4px;height:8px;
+  border:solid var(--bg);border-width:0 2px 2px 0;transform:rotate(38deg);
+}
+.fp-sec-body input[type=radio]:checked::after{
+  content:'';position:absolute;left:4px;top:4px;width:6px;height:6px;border-radius:50%;background:var(--bg);
+}
+.fp-sec-body .dd-clear{margin:2px 6px 4px;border-radius:8px;border-bottom:none;background:var(--surface2)}
+.fp-sec-body .dd-empty{padding:10px 16px}
+
+/* ── Mobile: el panel se centra en pantalla en vez de anclarse al botón ── */
+@media (max-width:600px){
+  .more-filters-panel{
+    position:fixed !important;
+    top:50% !important;left:50% !important;right:auto !important;
+    transform:translate(-50%,-50%) !important;
+    animation:mfFadeIn .16s ease !important;
+    width:92vw;max-width:400px;
+    max-height:80vh;
+  }
+  .fp-body{max-height:calc(80vh - 54px)}
+}
+@keyframes mfFadeIn{from{opacity:0}to{opacity:1}}
+.mf-backdrop{
+  display:none;position:fixed;inset:0;background:rgba(10,7,12,0.6);
+  backdrop-filter:blur(2px);z-index:199;
+}
+.mf-backdrop.open{display:block}
+
 
 /* Fila inferior: pills activos + resultados */
 .filter-bottom{
@@ -802,7 +937,15 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .section-tab.active-asian .tab-count{background:var(--gold);color:var(--bg)}
 .section-tab.active-african .tab-count{background:#5ba45b;color:#fff}
 .section-tab .tab-count.hidden{display:none}
-@media(max-width:600px){.section-tabs{gap:.35rem;flex-wrap:wrap}.section-tab{padding:6px 12px;font-size:11.5px;flex:1 1 calc(50% - .35rem);justify-content:center}}
+@media(max-width:600px){
+  .section-tabs{
+    gap:.35rem;flex-wrap:nowrap;overflow-x:auto;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+    padding-bottom:2px;margin-bottom:.6rem;
+  }
+  .section-tabs::-webkit-scrollbar{display:none}
+  .section-tab{padding:6px 14px;font-size:11.5px;flex:0 0 auto}
+}
 
 /* FOOTER */
 .tab-share-btn{
@@ -1262,22 +1405,6 @@ body.home-active .hero,body.home-active .main{display:none!important}
         <button class="dd-btn" onclick="toggleDD('ddGenre')">Género <span class="dd-count" id="cntGenre" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('genres','listGenre',this.value)"></div><div class="dd-list" id="listGenre"></div></div>
       </div>
-      <div class="dd-wrap" id="ddSubgenre">
-        <button class="dd-btn" onclick="toggleDD('ddSubgenre')">Temática <span class="dd-count" id="cntSubgenre" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
-        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('subgenres','listSubgenre',this.value)"></div><div class="dd-list" id="listSubgenre"></div></div>
-      </div>
-      <div class="dd-wrap" id="ddDinamica">
-        <button class="dd-btn" onclick="toggleDD('ddDinamica')">Dinámica <span class="dd-count" id="cntDinamica" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
-        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('dinamicas','listDinamica',this.value)"></div><div class="dd-list" id="listDinamica"></div></div>
-      </div>
-      <div class="dd-wrap" id="ddTrope">
-        <button class="dd-btn" onclick="toggleDD('ddTrope')">Tropo <span class="dd-count" id="cntTrope" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
-        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('tropes','listTrope',this.value)"></div><div class="dd-list" id="listTrope"></div></div>
-      </div>
-      <div class="dd-wrap" id="ddCharacter">
-        <button class="dd-btn" onclick="toggleDD('ddCharacter')">Personaje <span class="dd-count" id="cntCharacter" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
-        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('characters','listCharacter',this.value)"></div><div class="dd-list" id="listCharacter"></div></div>
-      </div>
       <div class="dd-wrap" id="ddAuthor">
         <button class="dd-btn" onclick="toggleDD('ddAuthor')">Autora <span class="dd-count" id="cntAuthor" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('authors','listAuthor',this.value)"></div><div class="dd-list" id="listAuthor"></div></div>
@@ -1290,29 +1417,80 @@ body.home-active .hero,body.home-active .main{display:none!important}
         <button class="dd-btn" onclick="toggleDD('ddSpicy')">Spicy <span class="dd-count" id="cntSpicy" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="dd-panel" id="listSpicy"></div>
       </div>
-      <div class="dd-wrap" id="ddSaga">
-        <button class="dd-btn" onclick="toggleDD('ddSaga')">Saga <span class="dd-count" id="cntSaga" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
-        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('sagas','listSaga',this.value)"></div><div class="dd-list" id="listSaga"></div></div>
+      <div id="leidoFilter">
+        <button class="dd-btn" id="btnNoLeido" onclick="toggleNoLeido()" title="Mostrar libros que aún no he marcado como leídos">📖 No leído</button>
       </div>
-      <div class="dd-wrap auth-only" id="ddEdad">
-        <button class="dd-btn" onclick="toggleDD('ddEdad')">Edad <span class="dd-count" id="cntEdad" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
-        <div class="dd-panel"><div class="dd-list" id="listEdad"></div></div>
-      </div>
-      <div class="dd-wrap auth-only" id="ddPais">
-        <button class="dd-btn" onclick="toggleDD('ddPais')">País <span class="dd-count" id="cntPais" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
-        <div class="dd-panel"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('pais_cultura','listPais',this.value)"></div><div class="dd-list" id="listPais"></div></div>
-      </div>
-      <div id="valoracionFilter" style="display:none">
-        <button class="dd-btn" id="btnValorado" onclick="toggleValoracion('valorado')" title="Mostrar solo libros que ya valoré">★ Valorados</button>
-        <button class="dd-btn" id="btnNoValorado" onclick="toggleValoracion('no_valorado')" title="Mostrar libros que aún no he valorado">☆ Sin valorar</button>
-      </div>
-      <button class="dd-btn" id="btnConSerie" onclick="toggleAdaptacion('serie')" title="Solo libros con serie de televisión">Con serie</button>
-      <div class="dd-wrap" id="ddPages">
-        <button class="dd-btn" id="btnPages" onclick="toggleDD('ddPages')">Páginas <span class="dd-count" id="cntPages" style="display:none">1</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
-        <div class="dd-panel"><div class="dd-list" id="listPages"></div></div>
+
+      <!-- + Filtros: acordeón desplegable con el resto de filtros, en listado -->
+      <div class="dd-wrap" id="ddMoreFilters">
+        <button class="dd-btn more-filters-btn" onclick="toggleDD('ddMoreFilters')">+ Filtros <span class="dd-count" id="cntMoreFilters" style="display:none">0</span><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="dd-panel more-filters-panel">
+          <div class="fp-panel-header">
+            <span class="fp-panel-title">Filtros</span>
+            <button class="fp-panel-clear" onclick="clearMoreFilters()">✕ Limpiar</button>
+          </div>
+          <div class="fp-body" id="fpBody">
+            <!-- Temática -->
+            <div class="fp-section collapsed" data-field="subgenres">
+              <div class="fp-sec-label" onclick="toggleFpSection(this)"><span class="fp-sec-left"><span class="fp-sec-dot"></span>Temática <span class="dd-count" id="cntSubgenre" style="display:none">0</span></span><span class="fp-sec-chevron">▼</span></div>
+              <div class="fp-sec-body"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('subgenres','listSubgenre',this.value)"></div><div class="dd-list" id="listSubgenre"></div></div>
+            </div>
+            <!-- Dinámica -->
+            <div class="fp-section collapsed" data-field="dinamicas">
+              <div class="fp-sec-label" onclick="toggleFpSection(this)"><span class="fp-sec-left"><span class="fp-sec-dot"></span>Dinámica <span class="dd-count" id="cntDinamica" style="display:none">0</span></span><span class="fp-sec-chevron">▼</span></div>
+              <div class="fp-sec-body"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('dinamicas','listDinamica',this.value)"></div><div class="dd-list" id="listDinamica"></div></div>
+            </div>
+            <!-- Tropo -->
+            <div class="fp-section collapsed" data-field="tropes">
+              <div class="fp-sec-label" onclick="toggleFpSection(this)"><span class="fp-sec-left"><span class="fp-sec-dot"></span>Tropo <span class="dd-count" id="cntTrope" style="display:none">0</span></span><span class="fp-sec-chevron">▼</span></div>
+              <div class="fp-sec-body"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('tropes','listTrope',this.value)"></div><div class="dd-list" id="listTrope"></div></div>
+            </div>
+            <!-- Personaje -->
+            <div class="fp-section collapsed" data-field="characters">
+              <div class="fp-sec-label" onclick="toggleFpSection(this)"><span class="fp-sec-left"><span class="fp-sec-dot"></span>Personaje <span class="dd-count" id="cntCharacter" style="display:none">0</span></span><span class="fp-sec-chevron">▼</span></div>
+              <div class="fp-sec-body"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('characters','listCharacter',this.value)"></div><div class="dd-list" id="listCharacter"></div></div>
+            </div>
+            <!-- Saga -->
+            <div class="fp-section collapsed" data-field="sagas">
+              <div class="fp-sec-label" onclick="toggleFpSection(this)"><span class="fp-sec-left"><span class="fp-sec-dot"></span>Saga <span class="dd-count" id="cntSaga" style="display:none">0</span></span><span class="fp-sec-chevron">▼</span></div>
+              <div class="fp-sec-body"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('sagas','listSaga',this.value)"></div><div class="dd-list" id="listSaga"></div></div>
+            </div>
+            <!-- Edad (solo registradas) -->
+            <div class="fp-section collapsed auth-only" data-field="edad">
+              <div class="fp-sec-label" onclick="toggleFpSection(this)"><span class="fp-sec-left"><span class="fp-sec-dot"></span>Edad <span class="dd-count" id="cntEdad" style="display:none">0</span></span><span class="fp-sec-chevron">▼</span></div>
+              <div class="fp-sec-body"><div class="dd-list" id="listEdad"></div></div>
+            </div>
+            <!-- País (solo registradas) -->
+            <div class="fp-section collapsed auth-only" data-field="pais_cultura">
+              <div class="fp-sec-label" onclick="toggleFpSection(this)"><span class="fp-sec-left"><span class="fp-sec-dot"></span>País <span class="dd-count" id="cntPais" style="display:none">0</span></span><span class="fp-sec-chevron">▼</span></div>
+              <div class="fp-sec-body"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('pais_cultura','listPais',this.value)"></div><div class="dd-list" id="listPais"></div></div>
+            </div>
+            <!-- Valoración (solo registradas) -->
+            <div class="fp-section no-accordion auth-only" id="secValoracion" data-field="valoracion">
+              <div class="fp-sec-label"><span class="fp-sec-left"><span class="fp-sec-dot"></span>Valoración</span></div>
+              <div class="fp-sec-body"><div class="fp-toggle-row" id="valoracionFilter">
+                <button class="dd-btn" id="btnValorado" onclick="toggleValoracion('valorado')" title="Mostrar solo libros que ya valoré">★ Valorados</button>
+                <button class="dd-btn" id="btnNoValorado" onclick="toggleValoracion('no_valorado')" title="Mostrar libros que aún no he valorado">☆ Sin valorar</button>
+              </div></div>
+            </div>
+            <!-- Adaptación -->
+            <div class="fp-section no-accordion" data-field="adaptacion">
+              <div class="fp-sec-label"><span class="fp-sec-left"><span class="fp-sec-dot"></span>Adaptación</span></div>
+              <div class="fp-sec-body"><div class="fp-toggle-row">
+                <button class="dd-btn" id="btnConSerie" onclick="toggleAdaptacion('serie')" title="Solo libros con serie de televisión">📺 Con serie</button>
+              </div></div>
+            </div>
+            <!-- Páginas -->
+            <div class="fp-section collapsed" data-field="pages">
+              <div class="fp-sec-label" onclick="toggleFpSection(this)"><span class="fp-sec-left"><span class="fp-sec-dot"></span>Páginas <span class="dd-count" id="cntPages" style="display:none">0</span></span><span class="fp-sec-chevron">▼</span></div>
+              <div class="fp-sec-body"><div class="dd-list" id="listPages"></div></div>
+            </div>
+          </div>
+        </div>
       </div>
       <span class="filters-auth-hint" id="filtersAuthHint" onclick="openAuthModal()">🔒 Más filtros al <a>registrarte</a></span>
     </div>
+    <div class="mf-backdrop" id="mfBackdrop" onclick="closeAllDD()"></div>
     <div class="filter-bottom">
       <div class="active-filters" id="activeFilters"></div>
       <button class="clear-all-btn" id="clearAllBtn" onclick="clearAllFilters()" style="display:none">✕ Limpiar todo</button>
@@ -1740,7 +1918,7 @@ const VALID_TAGS={
   identidad:['Asexual','Bisexual','Butch','Femme','Grumpy','Ice Queen','Introvertida','Lesbiana','Masc','Nerd','Queer','Soft Butch','Sunshine']
 };
 const SPICY_MIN_VOTES=2;
-let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null,pages:null};
+let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null,pages:null,leido:null};
 let currentPage=1;
 const PAGE_SIZE=24;
 
@@ -1765,6 +1943,7 @@ function pushState(addEntry){
     if(filters.adaptacion) params.set('adaptacion',filters.adaptacion);
     if(filters.valoracion) params.set('valoracion',filters.valoracion);
     if(filters.pages) params.set('pages',filters.pages);
+    if(filters.leido) params.set('leido',filters.leido);
     const url=params.toString()?'?'+params.toString():location.pathname;
     if(addEntry) history.pushState(null,'',url);
     else history.replaceState(null,'',url);
@@ -1785,6 +1964,7 @@ function loadState(){
   if(params.get('adaptacion')) filters.adaptacion=params.get('adaptacion');
   if(params.get('valoracion')) filters.valoracion=params.get('valoracion');
   if(params.get('pages')) filters.pages=params.get('pages');
+  if(params.get('leido')) filters.leido=params.get('leido');
 }
 
 /* ── URL de la estantería personal (Mi estantería: todos/quiero leer/leídos) ── */
@@ -1830,11 +2010,12 @@ async function init(){
   renderAuthUI(); // re-aplicar estado auth tras cargar dropdowns
   applyFilters(false);
   updateDDCounts();renderActivePills();
+  updateValoracionBtns();updateAdaptacionBtn();updateLeidoBtn();
   if(filters.pages){const _cp=document.getElementById('cntPages');if(_cp)_cp.style.display='';}
   // Restore active tab from URL if present, otherwise use sessionStorage or home
   const urlParams=new URLSearchParams(location.search);
   const urlTab=urlParams.get('tab');
-  const hasCatalogParams=['section','q','genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura','spicy','spicyUnknown','adaptacion','valoracion','pages'].some(k=>urlParams.has(k));
+  const hasCatalogParams=['section','q','genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura','spicy','spicyUnknown','adaptacion','valoracion','pages','leido'].some(k=>urlParams.has(k));
   const savedTab = urlTab || sessionStorage.getItem('ts_active_tab');
   if(savedTab && savedTab !== 'home') {
     // estaba en el catálogo — restaurar sin ir al home
@@ -1986,6 +2167,7 @@ function buildDropdowns(){
     else buildDDList(listId, uniqVals(key), key);
   });
   buildSpicyDD();
+  buildPagesDD();
   updateDDCounts();
 }
 
@@ -2050,9 +2232,8 @@ function clearDDFilter(key){
 }
 
 function updateDDCounts(){
-  [['Genre','genres'],['Subgenre','subgenres'],['Dinamica','dinamicas'],
-   ['Trope','tropes'],['Character','characters'],['Author','authors'],
-   ['Year','years'],['Saga','sagas'],['Edad','edad'],['Pais','pais_cultura']].forEach(([k,fk])=>{
+  // Género / Autora / Año / Spicy — dropdowns rápidos que siguen visibles
+  [['Genre','genres'],['Author','authors'],['Year','years']].forEach(([k,fk])=>{
     const cnt=document.getElementById('cnt'+k);
     const btn=document.querySelector('#dd'+k+' .dd-btn');
     if(!cnt||!btn) return;
@@ -2068,11 +2249,71 @@ function updateDDCounts(){
     spicyCnt.textContent=n;spicyCnt.style.display=n?'':'none';
     spicyBtn.classList.toggle('has-sel',n>0);
   }
+  // Filtros que viven dentro del panel "+ Filtros"
+  [['Subgenre','subgenres'],['Dinamica','dinamicas'],['Trope','tropes'],
+   ['Character','characters'],['Saga','sagas'],['Edad','edad'],['Pais','pais_cultura']].forEach(([k,fk])=>{
+    const cnt=document.getElementById('cnt'+k);
+    const sec=document.querySelector('.fp-section[data-field="'+fk+'"]');
+    if(!cnt) return;
+    const n=filters[fk].length;
+    cnt.textContent=n;cnt.style.display=n?'':'none';
+    if(sec) sec.classList.toggle('has-active',n>0);
+  });
+  updateMoreFiltersBadge();
+}
+
+// Badge del botón "+ Filtros" + puntos activos de Valoración/Adaptación/Páginas
+function updateMoreFiltersBadge(){
+  const n=filters.subgenres.length+filters.dinamicas.length+filters.tropes.length+
+    filters.characters.length+filters.sagas.length+filters.edad.length+filters.pais_cultura.length+
+    (filters.valoracion?1:0)+(filters.adaptacion==='serie'?1:0)+(filters.pages?1:0);
+  const cnt=document.getElementById('cntMoreFilters');
+  const btn=document.querySelector('#ddMoreFilters .dd-btn');
+  if(cnt) { cnt.textContent=n; cnt.style.display=n?'':'none'; }
+  if(btn) btn.classList.toggle('has-sel', n>0);
+  const secVal=document.getElementById('secValoracion');
+  if(secVal) secVal.classList.toggle('has-active', !!filters.valoracion);
+  const secPages=document.querySelector('.fp-section[data-field="pages"]');
+  if(secPages) secPages.classList.toggle('has-active', !!filters.pages);
+  const secAdapt=document.querySelector('.fp-section[data-field="adaptacion"]');
+  if(secAdapt) secAdapt.classList.toggle('has-active', filters.adaptacion==='serie');
+}
+
+// Acordeón del panel "+ Filtros": expande/colapsa una sección al pulsar su título
+function toggleFpSection(labelEl){
+  const sec=labelEl.closest('.fp-section');
+  if(!sec||sec.classList.contains('no-accordion')) return;
+  sec.classList.toggle('collapsed');
+}
+
+// Toggle "No leído" (requiere sesión iniciada)
+// Limpia solo los filtros que viven dentro del panel "+ Filtros"
+// (deja intactos Género, Autora, Año, Spicy y No leído, que están fuera)
+function clearMoreFilters(){
+  filters.subgenres=[];filters.dinamicas=[];filters.tropes=[];filters.characters=[];
+  filters.sagas=[];filters.edad=[];filters.pais_cultura=[];
+  filters.valoracion=null;filters.adaptacion=null;filters.pages=null;
+  const _cp=document.getElementById('cntPages'); if(_cp) _cp.style.display='none';
+  updateValoracionBtns();
+  updateAdaptacionBtn();
+  buildDropdowns();renderActivePills();applyFilters();
+}
+
+function toggleNoLeido(){
+  filters.leido = filters.leido==='no_leido' ? null : 'no_leido';
+  updateLeidoBtn();
+  renderActivePills();
+  applyFilters();
+}
+function updateLeidoBtn(){
+  const b=document.getElementById('btnNoLeido');
+  if(b) b.classList.toggle('has-sel', filters.leido==='no_leido');
 }
 
 function toggleValoracion(val){
   filters.valoracion = filters.valoracion===val ? null : val;
   updateValoracionBtns();
+  updateMoreFiltersBadge();
   renderActivePills();
   applyFilters();
 }
@@ -2080,6 +2321,7 @@ function toggleValoracion(val){
 function toggleAdaptacion(val){
   filters.adaptacion = filters.adaptacion===val ? null : val;
   updateAdaptacionBtn();
+  updateMoreFiltersBadge();
   renderActivePills();
   applyFilters();
 }
@@ -2112,6 +2354,7 @@ function togglePagesFilter(key){
   const cnt=document.getElementById('cntPages');
   if(cnt) cnt.style.display=filters.pages?'':'none';
   buildPagesDD();
+  updateMoreFiltersBadge();
   renderActivePills();
   applyFilters();
   if(!key) closeAllDD();
@@ -2129,9 +2372,19 @@ function toggleDD(id){
   const wrap=document.getElementById(id);
   const wasOpen=wrap.classList.contains('open');
   closeAllDD();
-  if(!wasOpen){ wrap.classList.add('open'); if(id==='ddPages') buildPagesDD(); }
+  if(!wasOpen){
+    wrap.classList.add('open');
+    if(id==='ddMoreFilters'){
+      const bd=document.getElementById('mfBackdrop');
+      if(bd) bd.classList.add('open');
+    }
+  }
 }
-function closeAllDD(){document.querySelectorAll('.dd-wrap.open').forEach(w=>w.classList.remove('open'));}
+function closeAllDD(){
+  document.querySelectorAll('.dd-wrap.open').forEach(w=>w.classList.remove('open'));
+  const bd=document.getElementById('mfBackdrop');
+  if(bd) bd.classList.remove('open');
+}
 
 function renderActivePills(){
   const af=document.getElementById('activeFilters');
@@ -2142,7 +2395,7 @@ function renderActivePills(){
   };
   const pills=[];
   Object.entries(filters).forEach(([key,arr])=>{
-    if(key==='q'||key==='valoracion'||key==='adaptacion'||key==='pages') return;
+    if(key==='q'||key==='valoracion'||key==='adaptacion'||key==='pages'||key==='leido') return;
     if(!arr.length) return;
     arr.forEach(v=>{
       const display=key==='spicy'?SPICY_LABELS[v]:v;
@@ -2164,16 +2417,20 @@ function renderActivePills(){
     const r=PAGE_RANGES.find(x=>x.key===filters.pages);
     if(r) pills.push(`<span class="af-pill">📄 ${r.label} págs<button onclick="togglePagesFilter(null)">×</button></span>`);
   }
+  if(filters.leido==='no_leido'){
+    pills.push(`<span class="af-pill">📖 No leído<button onclick="toggleNoLeido()">×</button></span>`);
+  }
   af.innerHTML=pills.join('');
   document.getElementById('clearAllBtn').style.display=(pills.length||filters.q)?'':'none';
 }
 
 function clearAllFilters(){
-  filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null,pages:null};
+  filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null,pages:null,leido:null};
   document.getElementById('searchInput').value='';
   const _cp=document.getElementById('cntPages'); if(_cp) _cp.style.display='none';
   updateValoracionBtns();
   updateAdaptacionBtn();
+  updateLeidoBtn();
   buildDropdowns();renderActivePills();applyFilters();
 }
 
@@ -2210,6 +2467,7 @@ function applyFilters(resetPage=true){
   }
   if(filters.valoracion==='valorado') books=books.filter(b=>!!myRatings[b.id]);
   if(filters.valoracion==='no_valorado') books=books.filter(b=>!myRatings[b.id]);
+  if(filters.leido==='no_leido') books=books.filter(b=>myReadingStatus[b.id]!=='read');
   const sort=document.getElementById('sortSel').value;
   if(sort==='nuevo') books.sort((a,b)=>b.id.localeCompare(a.id));
   else if(sort==='top'){
@@ -2779,7 +3037,7 @@ async function removeMyTag(tagType, value, event){
 /* ── AUTH ── */
 function renderAuthUI(){
   const el=document.getElementById('authArea');
-  const authOnlyFilters=document.querySelectorAll('.dd-wrap.auth-only');
+  const authOnlyFilters=document.querySelectorAll('.dd-wrap.auth-only, .fp-section.auth-only');
   if(currentUser){
     const tg=currentUser.user_metadata?.telegram_username||currentUser.email.split('@')[0];
     el.innerHTML=`<div class="user-chip-wrap" id="userChipWrap">
@@ -2796,6 +3054,7 @@ function renderAuthUI(){
     </div>`;
     document.getElementById('valoracionFilter').style.display='flex';
     document.getElementById('valoracionFilter').style.gap='.4rem';
+    document.getElementById('leidoFilter').style.display='inline-block';
     authOnlyFilters.forEach(f=>f.classList.add('visible'));
     const hint=document.getElementById('filtersAuthHint');
     if(hint) hint.classList.add('hidden');
@@ -2806,8 +3065,11 @@ function renderAuthUI(){
   }else{
     el.innerHTML=`<button class="btn-login" onclick="openAuthModal()">Entrar para votar</button>`;
     document.getElementById('valoracionFilter').style.display='none';
+    document.getElementById('leidoFilter').style.display='none';
     filters.valoracion=null;
+    filters.leido=null;
     updateValoracionBtns();
+    updateLeidoBtn();
     authOnlyFilters.forEach(f=>f.classList.remove('visible'));
     const hint=document.getElementById('filtersAuthHint');
     if(hint) hint.classList.remove('hidden');
@@ -2820,6 +3082,7 @@ function renderAuthUI(){
     const snb=document.getElementById('shelfNavBtn');
     if(snb) snb.style.display='none';
   }
+  updateDDCounts();
 }
 function openAuthModal(){authMode='login';updateAuthUI();document.getElementById('authModal').classList.add('open');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('authEmail').focus(),100);}
 function closeAuthModal(){document.getElementById('authModal').classList.remove('open');document.body.style.overflow='';document.getElementById('authError').textContent='';}
@@ -4181,7 +4444,7 @@ function ruletaUpdateUI() {
   const labelMap = { genres:'Género', subgenres:'Temática', dinamicas:'Dinámica', tropes:'Tropo', characters:'Personaje', authors:'Autora', years:'Año', spicy:'Spicy', sagas:'Saga', edad:'Edad', pais_cultura:'País' };
   const pills = [];
   Object.entries(filters).forEach(([key, arr]) => {
-    if (key === 'q' || key === 'valoracion' || key === 'adaptacion') return;
+    if (key === 'q' || key === 'valoracion' || key === 'adaptacion' || key === 'pages' || key === 'leido') return;
     if (!arr.length) return;
     arr.forEach(v => {
       const display = key === 'spicy' ? SPICY_LABELS[v] : v;
