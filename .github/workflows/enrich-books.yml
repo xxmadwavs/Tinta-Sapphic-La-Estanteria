@@ -7,9 +7,59 @@ on:
         description: "Ruta del books_data.json dentro del repo"
         required: false
         default: "books_data.json"
+      num_chunks:
+        description: "En cuantos trozos dividir el trabajo (mas trozos = jobs mas cortos y en paralelo). Con ~1360 libros, 8-10 va sobrado para no tocar el limite de 6h por job."
+        required: false
+        default: "8"
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      chunks: ${{ steps.gen.outputs.chunks }}
+    steps:
+      - id: gen
+        run: |
+          python3 -c "
+import json
+n = int('${{ github.event.inputs.num_chunks }}')
+print(json.dumps(list(range(n))))
+" > chunks.json
+          echo "chunks=$(cat chunks.json)" >> "$GITHUB_OUTPUT"
+
   enrich:
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        chunk_index: ${{ fromJson(needs.setup.outputs.chunks) }}
+    steps:
+      - name: Descargar repo
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Ejecutar script de enriquecimiento (chunk ${{ matrix.chunk_index }})
+        run: |
+          python3 enrich_books.py "${{ github.event.inputs.ruta_json }}" \
+            --num-chunks "${{ github.event.inputs.num_chunks }}" \
+            --chunk-index "${{ matrix.chunk_index }}"
+
+      - name: Subir resultados de este chunk
+        uses: actions/upload-artifact@v4
+        with:
+          name: chunk-${{ matrix.chunk_index }}
+          path: |
+            books_data.cambios.chunk${{ matrix.chunk_index }}.json
+            sugerencias_revisar.chunk${{ matrix.chunk_index }}.json
+            enrich_log.chunk${{ matrix.chunk_index }}.txt
+
+  merge:
+    needs: [setup, enrich]
     runs-on: ubuntu-latest
     steps:
       - name: Descargar repo
@@ -20,10 +70,17 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Ejecutar script de enriquecimiento
-        run: python3 enrich_books.py "${{ github.event.inputs.ruta_json }}"
+      - name: Descargar todos los chunks
+        uses: actions/download-artifact@v4
+        with:
+          path: chunks_descargados
+          pattern: chunk-*
+          merge-multiple: true
 
-      - name: Subir resultados como artefacto
+      - name: Fusionar chunks sobre el JSON original
+        run: python3 merge_chunks.py "${{ github.event.inputs.ruta_json }}" chunks_descargados
+
+      - name: Subir resultado final
         uses: actions/upload-artifact@v4
         with:
           name: resultado-enriquecimiento-libros
