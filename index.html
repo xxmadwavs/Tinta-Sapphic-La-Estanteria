@@ -2611,10 +2611,17 @@ function renderBookModal(){
 
   const genreTags=(b.genres||[]).map(g=>`<span class="tag tag-genre tag-clickable" onclick="filterByTagFromModal('genres',decodeURIComponent('${encodeURIComponent(g)}'))">${g}</span>`).join('');
   const subgenreTags=(b.subgenres||[]).map(s=>`<span class="tag tag-subgenre tag-clickable" onclick="filterByTagFromModal('subgenres',decodeURIComponent('${encodeURIComponent(s)}'))">${s}</span>`).join('');
-  const dinamicaTags=(b.dinamicas||[]).map(d=>`<span class="tag tag-dinamica tag-clickable" onclick="filterByTagFromModal('dinamicas',decodeURIComponent('${encodeURIComponent(d)}'))">${d}</span>`).join('');
-  const tropeTags=(b.tropes||[]).map(t=>`<span class="tag tag-trope tag-clickable" onclick="filterByTagFromModal('tropes',decodeURIComponent('${encodeURIComponent(t)}'))">${t}</span>`).join('');
-  const identidadTags=(b.identidades||[]).map(i=>`<span class="tag tag-identidad tag-clickable" onclick="filterByTagFromModal('identidades',decodeURIComponent('${encodeURIComponent(i)}'))">${i}</span>`).join('');
-  const characterTags=(b.characters||[]).map(c=>`<span class="tag tag-character tag-clickable" onclick="filterByTagFromModal('characters',decodeURIComponent('${encodeURIComponent(c)}'))">${c}</span>`).join('');
+  const buildTopTag=(tagType,filterKey,tagClass)=>{
+    const {official,merged}=getEffectiveTags(b,tagType);
+    return merged.map(v=>{
+      const isComm=!official.includes(v);
+      return `<span class="tag ${tagClass} tag-clickable${isComm?' tag-comm-added':''}" onclick="filterByTagFromModal('${filterKey}',decodeURIComponent('${encodeURIComponent(v)}'))">${v}${isComm?`<span class="tag-comm-dot"> ·com</span>`:''}</span>`;
+    }).join('');
+  };
+  const dinamicaTags=buildTopTag('dinamica','dinamicas','tag-dinamica');
+  const tropeTags=buildTopTag('trope','tropes','tag-trope');
+  const identidadTags=buildTopTag('identidad','identidades','tag-identidad');
+  const characterTags=buildTopTag('character','characters','tag-character');
   const edadTags=(b.edad||[]).map(e=>`<span class="tag tag-edad tag-clickable" onclick="filterByTagFromModal('edad',decodeURIComponent('${encodeURIComponent(e)}'))">🎂 ${e}</span>`).join('');
   const spicyEff=effectiveSpicy(b);
   const spicyIsUnknown=spicyEff==null;
