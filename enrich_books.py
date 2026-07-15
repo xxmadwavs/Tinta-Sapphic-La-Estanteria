@@ -4,10 +4,11 @@ enrich_books.py
 ----------------
 Rellena campos vacios de books_data.json usando Google Books y Open Library
 (las dos unicas fuentes gratuitas con API publica real que existen para
-libros), y genera enlaces de BUSQUEDA en Amazon.es y Casa del Libro para
-que sea facil encontrar donde comprar cada titulo. Tambien genera un
-archivo aparte con sugerencias de sinopsis en espanol y generos en ingles
-para revisar a mano.
+libros), y genera enlaces de BUSQUEDA en Amazon.es, Casa del Libro, Fnac y
+Todostuslibros (agregador que indexa muchas librerias espanolas, util para
+titulos de nicho/autopublicados) para que sea facil encontrar donde
+comprar cada titulo. Tambien genera un archivo aparte con sugerencias de
+sinopsis en espanol y generos en ingles para revisar a mano.
 
 IMPORTANTE - por que no se usa Goodreads ni romance.io directamente:
 Goodreads cerro su API publica para claves nuevas en 2020 y romance.io
@@ -276,6 +277,33 @@ def build_casadellibro_search_url(isbn, title, author):
     return f"https://www.casadellibro.com/busqueda-generica?{urllib.parse.urlencode(params)}"
 
 
+def build_fnac_search_url(isbn, title, author):
+    query = isbn if isbn else f"{title} {author or ''}".strip()
+    return f"https://www.fnac.es/SearchResult/ResultList.aspx?Search={urllib.parse.quote(query)}"
+
+
+def build_todostuslibros_search_url(isbn, title, author):
+    # Todostuslibros.com es un buscador/agregador que indexa el catalogo de
+    # decenas de librerias espanolas (incluidas muchas pequenas e indie),
+    # asi que suele encontrar mejor los titulos de nicho o autopublicados
+    # que Amazon o Casa del Libro por separado.
+    query = isbn if isbn else f"{title} {author or ''}".strip()
+    params = {"q": query}
+    return f"https://www.todostuslibros.com/busqueda?{urllib.parse.urlencode(params)}"
+
+
+# Tiendas para las que se generan enlaces de busqueda. Cada tupla es
+# (nombre_tienda, alias_antiguos_a_reconocer, funcion_constructora).
+# "alias_antiguos" evita duplicar enlaces si una ejecucion anterior ya
+# guardo el mismo enlace con un nombre de tienda ligeramente distinto.
+STORES = [
+    ("Amazon (buscar)", {"Amazon"}, build_amazon_search_url),
+    ("Casa del Libro (buscar)", {"Casa del Libro"}, build_casadellibro_search_url),
+    ("Fnac (buscar)", {"Fnac"}, build_fnac_search_url),
+    ("Todostuslibros (buscar)", {"Todostuslibros"}, build_todostuslibros_search_url),
+]
+
+
 # ---------------------------------------------------------------------------
 # Fusion de resultados y aplicacion a la entrada
 # ---------------------------------------------------------------------------
@@ -341,17 +369,13 @@ def enrich_entry(entry, logfile):
     isbn_para_link = isbn_encontrado or entry.get("isbn")
 
     nuevos_enlaces = []
-    if "Amazon" not in tiendas_existentes:
+    for store_name, alias_antiguos, builder in STORES:
+        if store_name in tiendas_existentes or (tiendas_existentes & alias_antiguos):
+            continue
         nuevos_enlaces.append({
             "lang": "ES",
-            "store": "Amazon (buscar)",
-            "url": build_amazon_search_url(isbn_para_link, titulo, autor0),
-        })
-    if "Casa del Libro" not in tiendas_existentes and "Casa del Libro (buscar)" not in tiendas_existentes:
-        nuevos_enlaces.append({
-            "lang": "ES",
-            "store": "Casa del Libro (buscar)",
-            "url": build_casadellibro_search_url(isbn_para_link, titulo, autor0),
+            "store": store_name,
+            "url": builder(isbn_para_link, titulo, autor0),
         })
 
     if nuevos_enlaces:

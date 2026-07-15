@@ -27,6 +27,23 @@ import sys
 from pathlib import Path
 
 
+def sanitize(obj):
+    """
+    Recorre recursivamente dicts/listas/strings y limpia caracteres
+    'surrogate' sueltos (p. ej. \\udc98) que a veces aparecen cuando un
+    texto llega truncado o mal decodificado desde una API externa.
+    Esos surrogates no son UTF-8 valido y rompen json.dump si no se
+    limpian antes de escribir el archivo.
+    """
+    if isinstance(obj, str):
+        return obj.encode("utf-8", errors="replace").decode("utf-8")
+    if isinstance(obj, list):
+        return [sanitize(x) for x in obj]
+    if isinstance(obj, dict):
+        return {k: sanitize(v) for k, v in obj.items()}
+    return obj
+
+
 def main():
     if len(sys.argv) < 3:
         print("Uso: python3 merge_chunks.py books_data.json /ruta/a/artifacts_descargados")
@@ -58,13 +75,20 @@ def main():
             if entry is None:
                 print(f"AVISO: id {item['id']} de {cf.name} no existe en {json_path.name}, se ignora.")
                 continue
-            entry.update(item["changes"])
+            changes_limpios = sanitize(item["changes"])
+            if changes_limpios != item["changes"]:
+                print(f"AVISO: se han limpiado caracteres invalidos (surrogates) en el id {item['id']} de {cf.name}.")
+            entry.update(changes_limpios)
             total_updated += 1
 
     all_suggestions = []
     for sf in sugerencias_files:
         with open(sf, encoding="utf-8") as f:
-            all_suggestions.extend(json.load(f))
+            all_suggestions.extend(sanitize(json.load(f)))
+
+    # Red de seguridad final: por si quedara algun surrogate suelto que
+    # no viniera de "changes" (p. ej. ya presente en el JSON original).
+    data = sanitize(data)
 
     with open("books_data.actualizado.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
