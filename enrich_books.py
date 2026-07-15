@@ -25,20 +25,38 @@ NOTA: los libros con "source": "thais" se SALTAN por completo (no se
 consulta ninguna API para ellos) porque tardan mucho y casi nunca dan
 resultados utiles. Se pueden reincluir quitandolos de SKIP_SOURCES.
 
-Uso:
+--- PROCESAMIENTO POR LOTES (chunks) ---
+Con ~1360 libros, ejecutar todo en un solo job de GitHub Actions puede
+superar el limite maximo de 6 horas por job (sobre todo si Google Books
+empieza a devolver 429 y el script reintenta con backoff). Por eso el
+script admite --num-chunks / --chunk-index para procesar solo una porcion
+del archivo en cada ejecucion. El workflow .yml lanza varios chunks en
+paralelo (cada uno muy por debajo de 6h) y un job final los fusiona.
+
+Uso normal (todo en un chunk, comportamiento identico al original):
     python3 enrich_books.py books_data.json
 
-Genera:
-    books_data.actualizado.json   -> listo para "Importar JSON" en el admin
-    sugerencias_revisar.json      -> sinopsis en espanol y generos en ingles
-                                      encontrados, para revisar a mano
-    enrich_log.txt                -> log de que se encontro/no se encontro
-                                      por titulo, incluyendo el motivo del
-                                      fallo
+Uso por lotes (procesa solo el chunk 0 de 8):
+    python3 enrich_books.py books_data.json --num-chunks 8 --chunk-index 0
 
-No requiere librerias externas (solo stdlib: urllib, json, time, difflib).
+Genera (con sufijo .chunkN si se usa --num-chunks > 1):
+    books_data.cambios[.chunkN].json  -> lista de {id, changes} SOLO para
+                                          las entradas de ese chunk que
+                                          tuvieron cambios. Un job aparte
+                                          (merge_chunks.py) los aplica
+                                          sobre el books_data.json original.
+    sugerencias_revisar[.chunkN].json -> sinopsis en espanol y generos en
+                                          ingles encontrados, para revisar
+                                          a mano
+    enrich_log[.chunkN].txt           -> log de que se encontro/no se
+                                          encontro por titulo, incluyendo
+                                          el motivo del fallo
+
+No requiere librerias externas (solo stdlib: urllib, json, time, difflib,
+argparse).
 """
 
+import argparse
 import json
 import sys
 import time
@@ -60,6 +78,12 @@ OPENLIB_DELAY = 1.0
 
 MAX_RETRIES_429 = 2
 BACKOFF_SECONDS = [4, 10]
+
+# Timeout por request. 20s originales podian hacer que, si una peticion se
+# quedaba colgada (problema de red del runner), se comiera mucho tiempo sin
+# avanzar. Con reintentos incluidos, el peor caso por request es ahora
+# TIMEOUT_SECONDS + sum(BACKOFF_SECONDS) en vez de 20s + eso.
+TIMEOUT_SECONDS = 12
 
 MATCH_THRESHOLD = 0.5
 
@@ -89,7 +113,7 @@ def http_get_json(url, source=None):
     attempt = 0
     while True:
         try:
-            with urllib.request.urlopen(req, timeout=20) as resp:
+            with urllib.request.urlopen(req, timeout=TIMEOUT_SECONDS) as resp:
                 return json.loads(resp.read().decode("utf-8")), None
         except urllib.error.HTTPError as e:
             if e.code == 429 and attempt < MAX_RETRIES_429:
@@ -354,37 +378,71 @@ def enrich_entry(entry, logfile):
     return changes, suggestions
 
 
+def compute_slice(total, num_chunks, chunk_index):
+    """Devuelve (start, end) del chunk chunk_index sobre 'total' elementos,
+    repartiendo el resto lo mas parejo posible entre los primeros chunks."""
+    base_size = total // num_chunks
+    remainder = total % num_chunks
+    start = chunk_index * base_size + min(chunk_index, remainder)
+    extra = 1 if chunk_index < remainder else 0
+    end = start + base_size + extra
+    return start, end
+
+
+def suffix_for(chunk_index, num_chunks):
+    return f".chunk{chunk_index}" if num_chunks > 1 else ""
+
+
 def main():
-    if len(sys.argv) < 2:
-        print("Uso: python3 enrich_books.py books_data.json")
+    parser = argparse.ArgumentParser(description="Enriquece books_data.json con Google Books / Open Library.")
+    parser.add_argument("json_path", help="Ruta a books_data.json")
+    parser.add_argument("--num-chunks", type=int, default=1,
+                         help="En cuantos trozos dividir el archivo (para paralelizar en varios jobs).")
+    parser.add_argument("--chunk-index", type=int, default=0,
+                         help="Indice (0-based) del trozo que procesa esta ejecucion.")
+    args = parser.parse_args()
+
+    if args.num_chunks < 1:
+        print("--num-chunks debe ser >= 1")
+        sys.exit(1)
+    if not (0 <= args.chunk_index < args.num_chunks):
+        print("--chunk-index debe estar entre 0 y --num-chunks - 1")
         sys.exit(1)
 
-    path = sys.argv[1]
-    with open(path, encoding="utf-8") as f:
+    with open(args.json_path, encoding="utf-8") as f:
         data = json.load(f)
 
-    logfile = open("enrich_log.txt", "w", encoding="utf-8")
-    all_suggestions = []
-    updated = 0
-    saltados = sum(1 for e in data if e.get("source") in SKIP_SOURCES)
+    start, end = compute_slice(len(data), args.num_chunks, args.chunk_index)
+    suf = suffix_for(args.chunk_index, args.num_chunks)
 
-    for i, entry in enumerate(data):
+    print(f"Chunk {args.chunk_index}/{args.num_chunks}: procesando entradas [{start}:{end}] de {len(data)} totales.")
+
+    logfile = open(f"enrich_log{suf}.txt", "w", encoding="utf-8")
+    all_suggestions = []
+    all_changes = []  # lista de {"id":..., "changes": {...}} solo para las entradas de este chunk
+    updated = 0
+    saltados = 0
+
+    subset = data[start:end]
+    for i, entry in enumerate(subset):
+        if entry.get("source") in SKIP_SOURCES:
+            saltados += 1
         changes, suggestions = enrich_entry(entry, logfile)
         if changes:
-            entry.update(changes)
+            all_changes.append({"id": entry["id"], "changes": changes})
             updated += 1
         if suggestions:
             all_suggestions.append(suggestions)
         if (i + 1) % 20 == 0:
-            print(f"... {i + 1}/{len(data)} procesados")
+            print(f"... {i + 1}/{len(subset)} procesados en este chunk")
 
-    with open("books_data.actualizado.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    with open(f"books_data.cambios{suf}.json", "w", encoding="utf-8") as f:
+        json.dump(all_changes, f, ensure_ascii=False, indent=2)
 
-    with open("sugerencias_revisar.json", "w", encoding="utf-8") as f:
+    with open(f"sugerencias_revisar{suf}.json", "w", encoding="utf-8") as f:
         json.dump(all_suggestions, f, ensure_ascii=False, indent=2)
 
-    resumen = ["", "===== RESUMEN POR FUENTE ====="]
+    resumen = ["", f"===== RESUMEN CHUNK {args.chunk_index}/{args.num_chunks} ====="]
     for src, s in STATS.items():
         resumen.append(f"{src}: {s['ok']} encontrados, {s['sin_match']} sin coincidencia, errores={s['error']}")
     resumen.append("===============================")
@@ -392,14 +450,10 @@ def main():
         log(line, logfile)
 
     logfile.close()
-    print(f"\nListo. {updated} entradas con campos/enlaces anadidos.")
+    print(f"\nListo (chunk {args.chunk_index}). {updated} entradas con campos/enlaces anadidos.")
     if saltados:
         print(f"{saltados} entradas saltadas por pertenecer a SKIP_SOURCES ({', '.join(SKIP_SOURCES)}).")
-    print(f"{len(all_suggestions)} entradas con sugerencias para revisar en sugerencias_revisar.json")
-    print("Revisa el RESUMEN POR FUENTE al final de enrich_log.txt si algo sigue sin funcionar:")
-    print("  - muchos 'http_429' = Google Books/Open Library estan limitando al runner")
-    print("  - muchos 'conn_error' = problema de red/DNS en el runner")
-    print("  - muchos 'sin_resultados'/'sin_match_confiable' = titulos que esas fuentes no tienen (normal en autopublicados)")
+    print(f"{len(all_suggestions)} entradas con sugerencias para revisar.")
 
 
 if __name__ == "__main__":
