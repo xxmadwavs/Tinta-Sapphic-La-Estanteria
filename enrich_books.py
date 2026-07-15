@@ -21,6 +21,10 @@ de BUSQUEDA (no de producto exacto) para Amazon y Casa del Libro, que es
 lo mas fiable que se puede automatizar sin arriesgarse a poner un enlace
 roto o incorrecto.
 
+NOTA: los libros con "source": "thais" se SALTAN por completo (no se
+consulta ninguna API para ellos) porque tardan mucho y casi nunca dan
+resultados utiles. Se pueden reincluir quitandolos de SKIP_SOURCES.
+
 Uso:
     python3 enrich_books.py books_data.json
 
@@ -263,11 +267,21 @@ def first_truthy(*vals):
     return None
 
 
+# Libros cuyo "source" este en esta lista se saltan por completo (no se
+# llama a Google Books ni Open Library para ellos). Se usa para libros
+# como los de "thais" que tardan mucho y/o casi nunca dan resultados.
+SKIP_SOURCES = {"thais"}
+
+
 def enrich_entry(entry, logfile):
     titulo = entry["title"]
     authors = entry.get("authors") or []
     changes = {}
     suggestions = {}
+
+    if entry.get("source") in SKIP_SOURCES:
+        log(f"[SALTADO] {titulo}  (source={entry.get('source')})", logfile)
+        return changes, suggestions
 
     gb, gb_err = query_google_books(titulo, authors)
     ol, ol_err = query_open_library(titulo, authors)
@@ -352,6 +366,7 @@ def main():
     logfile = open("enrich_log.txt", "w", encoding="utf-8")
     all_suggestions = []
     updated = 0
+    saltados = sum(1 for e in data if e.get("source") in SKIP_SOURCES)
 
     for i, entry in enumerate(data):
         changes, suggestions = enrich_entry(entry, logfile)
@@ -378,6 +393,8 @@ def main():
 
     logfile.close()
     print(f"\nListo. {updated} entradas con campos/enlaces anadidos.")
+    if saltados:
+        print(f"{saltados} entradas saltadas por pertenecer a SKIP_SOURCES ({', '.join(SKIP_SOURCES)}).")
     print(f"{len(all_suggestions)} entradas con sugerencias para revisar en sugerencias_revisar.json")
     print("Revisa el RESUMEN POR FUENTE al final de enrich_log.txt si algo sigue sin funcionar:")
     print("  - muchos 'http_429' = Google Books/Open Library estan limitando al runner")
