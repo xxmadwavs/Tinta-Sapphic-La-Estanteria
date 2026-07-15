@@ -19,12 +19,14 @@ jobs:
       chunks: ${{ steps.gen.outputs.chunks }}
     steps:
       - id: gen
+        env:
+          NUM_CHUNKS: ${{ github.event.inputs.num_chunks }}
         run: |
-          python3 -c "
-import json
-n = int('${{ github.event.inputs.num_chunks }}')
-print(json.dumps(list(range(n))))
-" > chunks.json
+          python3 - <<'PY' > chunks.json
+          import json, os
+          n = int(os.environ["NUM_CHUNKS"])
+          print(json.dumps(list(range(n))))
+          PY
           echo "chunks=$(cat chunks.json)" >> "$GITHUB_OUTPUT"
 
   enrich:
