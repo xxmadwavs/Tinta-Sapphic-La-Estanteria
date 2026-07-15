@@ -1,0 +1,33 @@
+name: Enriquecer books_data.json
+
+on:
+  workflow_dispatch:
+    inputs:
+      ruta_json:
+        description: "Ruta del books_data.json dentro del repo"
+        required: false
+        default: "books_data.json"
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repo
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Ejecutar script de enriquecimiento
+        run: python3 enrich_books.py "${{ github.event.inputs.ruta_json }}"
+
+      - name: Subir resultados como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultado-enriquecimiento-libros
+          path: |
+            books_data.actualizado.json
+            sugerencias_revisar.json
+            enrich_log.txt
