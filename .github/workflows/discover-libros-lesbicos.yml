@@ -1,0 +1,43 @@
+name: Descubrir libros lesbicos nuevos
+
+on:
+  workflow_dispatch:
+    inputs:
+      ruta_json:
+        description: "Ruta del books_data.json dentro del repo (tu catalogo actual)"
+        required: false
+        default: "books_data.json"
+      max_pages_openlibrary:
+        description: "Paginas maximas por subject en Open Library (50 obras por pagina, hay 4 subjects)"
+        required: false
+        default: "20"
+      max_pages_googlebooks:
+        description: "Paginas maximas por query en Google Books (40 obras por pagina, hay 4 queries)"
+        required: false
+        default: "20"
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repo
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Ejecutar script de descubrimiento
+        run: >
+          python3 discover_libros_lesbicos.py "${{ github.event.inputs.ruta_json }}"
+          --max-pages-openlibrary "${{ github.event.inputs.max_pages_openlibrary }}"
+          --max-pages-googlebooks "${{ github.event.inputs.max_pages_googlebooks }}"
+
+      - name: Subir resultados como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: descubrimiento-libros-lesbicos
+          path: |
+            discoveries_libros_lesbicos.json
+            discover_log.txt
