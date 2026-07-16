@@ -296,8 +296,20 @@ def build_todostuslibros_search_url(isbn, title, author):
 # (nombre_tienda, alias_antiguos_a_reconocer, funcion_constructora).
 # "alias_antiguos" evita duplicar enlaces si una ejecucion anterior ya
 # guardo el mismo enlace con un nombre de tienda ligeramente distinto.
-STORES = [
+# Amazon es marketplace y SI vende bastante self-pub/Kindle de nicho, asi
+# que generamos ese enlace siempre que falte, tenga ISBN o no.
+STORES_SIEMPRE = [
     ("Amazon (buscar)", {"Amazon"}, build_amazon_search_url),
+]
+
+# Casa del Libro, Fnac y Todostuslibros son catalogos de libreria "normal"
+# (distribucion editorial en Espana). Casi nunca tienen indexado un titulo
+# self-published/Kindle-only sin ISBN, asi que el enlace de busqueda en
+# esos casos suele devolver 0 resultados o libros que no tienen nada que
+# ver. Solo se generan cuando SI hay un ISBN real (Google Books/Open
+# Library), que es la senal de que el libro tiene distribucion normal y
+# es razonablemente probable que estas tiendas lo tengan.
+STORES_SOLO_CON_ISBN = [
     ("Casa del Libro (buscar)", {"Casa del Libro"}, build_casadellibro_search_url),
     ("Fnac (buscar)", {"Fnac"}, build_fnac_search_url),
     ("Todostuslibros (buscar)", {"Todostuslibros"}, build_todostuslibros_search_url),
@@ -368,12 +380,26 @@ def enrich_entry(entry, logfile):
     autor0 = authors[0] if authors else None
     isbn_para_link = isbn_encontrado or entry.get("isbn")
 
+    stores_a_generar = list(STORES_SIEMPRE)
+    if isbn_para_link:
+        stores_a_generar += STORES_SOLO_CON_ISBN
+
     nuevos_enlaces = []
-    for store_name, alias_antiguos, builder in STORES:
+    for store_name, alias_antiguos, builder in stores_a_generar:
         if store_name in tiendas_existentes or (tiendas_existentes & alias_antiguos):
             continue
         nuevos_enlaces.append({
-            "lang": "ES",
+            # NOTA: antes aqui iba "lang": "ES", pero ese campo en
+            # 'editions' significa el idioma DE LA EDICION DEL LIBRO (ver
+            # los enlaces ya existentes en el catalogo), no el idioma de
+            # la web de la tienda. Poner "ES" hacia parecer que existia
+            # una edicion en espanol del libro aunque fuera un titulo
+            # 100% en ingles sin ninguna edicion en espanol confirmada.
+            # Un enlace de busqueda no confirma el idioma de ninguna
+            # edicion real, asi que no se incluye "lang" y se marca
+            # explicitamente como busqueda para que la UI lo distinga de
+            # una edicion verificada.
+            "busqueda": True,
             "store": store_name,
             "url": builder(isbn_para_link, titulo, autor0),
         })
