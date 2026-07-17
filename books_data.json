@@ -49169,10 +49169,10 @@
       "Abuso Sexual"
     ],
     "spicy": 5,
-    "formato": null,
+    "formato": "Saga",
     "adaptacion": null,
-    "sagaName": null,
-    "sagaNum": null,
+    "sagaName": "The Girl Who Bit Me",
+    "sagaNum": 1,
     "source": "other",
     "editions": [],
     "saficlub": false,
@@ -56404,6 +56404,573 @@
     "spicy": 1,
     "formato": null,
     "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "thais",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783770751381_5pqur",
+    "title": "Me prohíbo mirarte así",
+    "authors": [
+      "Eva Gonzay",
+      "Julia C. Brown"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1781091479i/253700241.jpg",
+    "synopsis": "Juliette Baxter lleva cincuenta años sobreviviendo detrás de una fachada de ejecutiva implacable, especialista en recortes de personal y experta en mantener a todo el mundo a distancia. Ha viajado a Nueva York a hacer lo que mejor sabe despedir gente, mantenerse fría y volver a Chicago antes de que los fantasmas del pasado vuelvan a alcanzarla.\nVivianne Fox dirige la oficina de Axis en Nueva York y no piensa entregar a su equipo sin luchar. Acostumbrada a controlar cualquier crisis, lo último que necesita es a una mujer arrogante, insoportablemente atractiva y capaz de desarmarla con una sola mirada entrando en su despacho.\nPorque Juliette no solo amenaza su trabajo. Amenaza todo lo que Vivianne creía saber sobre sí misma.\nTres semanas, un beso que jamás debió ocurrir y dos ejecutivas con carácter atrapadas en un despacho demasiado pequeño. Las dos tendrán que decidir si siguen escondiéndose detrás de sus fachadas profesionales o si se atreven a admitir lo que ya no pueden negar.",
+    "pages": 191,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Masc",
+      "Femme"
+    ],
+    "characters": [],
+    "dinamicas": [
+      "Masc × Femme",
+      "Boss × Employee",
+      "Jefa × Subordinada"
+    ],
+    "tropes": [
+      "Workplace Romance",
+      "Rivals to Lovers",
+      "Age Gap",
+      "Forbidden Love"
+    ],
+    "edad": [
+      "+40"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ambientacion": [],
+    "content_warnings": [
+      "Abandono",
+      "Misoginia",
+      "Gordofobia / Fobia Corporal"
+    ],
+    "spicy": 4,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783775996949_fhz0h",
+    "title": "Akademie Vítek",
+    "authors": [
+      "Hurley Kent"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1778003081i/251856575.jpg",
+    "synopsis": "En la Akademie Vitek, las normas no se cuestionan.\nY quien las rompe, paga el precio.\nSadie Novák ha aprendido a sobrevivir en internados de élite sin dejar que nadie la controle, pero en Praga todo cambia cuando cruza la mirada con Margaret Blazek, la jefa de estudios: brillante, implacable e imposible de desafiar. Nadie sale indemne de su radar.\nExcepto Sadie.\nUn año después, tras un lago viaje que debía marcar un nuevo comienzo, Sadie descubre que hay decisiones —y personas— que no se quedan atrás.\nY que algunas historias solo empiezan cuando crees que han terminado.",
+    "pages": 176,
+    "isbn": null,
+    "ship": [],
+    "genres": [],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Profesora",
+      "Estudiante"
+    ],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Age Gap",
+      "Student × Teacher",
+      "Slow Burn",
+      "Secret Relationship",
+      "Hurt/Comfort"
+    ],
+    "edad": [
+      "25–39",
+      "Young Adult (15–18)"
+    ],
+    "pais_cultura": [
+      "Ambientación europea"
+    ],
+    "ambientacion": [],
+    "content_warnings": [
+      "Adulto con Menor (relación)",
+      "Grooming",
+      "Abuso de Poder"
+    ],
+    "spicy": 5,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783776369704_8piwu",
+    "title": "Lo que dicen las tormentas",
+    "authors": [
+      "Lorena Murién"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1782043243i/254387014.jpg",
+    "synopsis": "Camila Bennet se gana la vida persiguiendo tormentas, pero su regreso al pueblo de su infancia la va a meter de lleno en el ojo del huracán. Enviada a investigar un inusual y peligroso patrón eléctrico en un valle de Australia, su base de operaciones resulta ser el mismísimo Birdsong Hills, el lugar donde creció... y donde dejó atrás su antigua vida y un matrimonio roto con el hermano de Darana Calloway.\n\nDarana es ahora la jefa indiscutible de la extensión, una mujer de armas tomar con alergia a las explicaciones científicas y cero ganas de aguantar a su excuñada. No quería a Camila de vuelta, y mucho menos instalando aparatos científicos en sus tierras. Para ella, es la personificación de un pasado incómodo y de unos sentimientos que nunca reveló.\n\nObligadas a convivir, la fricción entre la meticulosa meteoróloga y la testaruda terrateniente se vuelve inevitable. Ambas han cambiado. Ambas han perdido. Sin embargo, bajo la amenaza de la tormenta y los recuerdos que no terminan de morir, renace algo que siempre estuvo ahí: una peligrosa electricidad que no está en las nubes, sino entre ellas.",
+    "pages": 312,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [],
+    "dinamicas": [
+      "Femme × Femme",
+      "Fría × Cálida"
+    ],
+    "tropes": [
+      "Rivals to Lovers",
+      "Second Chance Romance",
+      "Childhood Friends",
+      "Slow Burn",
+      "Forced Proximity"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Australia"
+    ],
+    "ambientacion": [],
+    "content_warnings": [
+      "Muerte de un Ser Querido"
+    ],
+    "spicy": 4,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Birdsong Hills",
+    "sagaNum": 1,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783776656443_dlkod",
+    "title": "Despertar en Los Hamptons",
+    "authors": [
+      "Martha Reagan"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1778799527i/252232549.jpg",
+    "synopsis": "Harper Delaney lo tiene todo: un prometido perfecto, un futuro asegurado en la alta sociedad neoyorquina y una boda de ensueño a la vuelta de la esquina. Sin embargo, bajo esa fachada de éxito, Harper siente que se ahoga en una jaula de cristal, atada a un hombre que la exhibe como un trofeo y a un mundo al que no pertenece.\n\nCuando viaja a la imponente mansión de los Vance en los Hamptons para ultimar los preparativos del enlace, se encuentra a solas con la última persona a la que desearía enfrentarse: Victoria Vance. Su futura suegra no solo es la viuda implacable y CEO de un imperio tecnológico; es una mujer fría, dominante y peligrosamente perspicaz que parece capaz de leer cada una de sus inseguridades.\n\nLo que comienza como un cruce de miradas afiladas y una tensa convivencia se transforma en un juego psicológico que ninguna de las dos puede controlar. Aisladas durante una tormenta, la armadura de hielo de Victoria se resquebraja, dando paso a una pasión abrasadora, clandestina y absolutamente prohibida.\n\nA escasos días de caminar hacia el altar, Harper deberá enfrentarse a la decisión más difícil de su vida: cumplir el contrato social que asegura su futuro, o dejarse devorar por un incendio que amenaza con reducirlas a ambas a cenizas.",
+    "pages": 312,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [],
+    "dinamicas": [
+      "Femme × Femme",
+      "Rich × Poor",
+      "Dominante × Sumisa",
+      "Ice Queen × Softie"
+    ],
+    "tropes": [
+      "Age Gap",
+      "Rich / Poor Romance",
+      "Forbidden Love",
+      "Secret Relationship",
+      "Hurt/Comfort"
+    ],
+    "edad": [
+      "+40",
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ambientacion": [],
+    "content_warnings": [
+      "Infidelidad",
+      "Abuso Emocional / Gaslighting",
+      "Clasismo"
+    ],
+    "spicy": 3,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783777126645_wnx86",
+    "title": "Sitio para tres",
+    "authors": [
+      "Clara Ann Simons"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1782239211i/254485132.jpg",
+    "synopsis": "Cuando Natalia Costa Oliveira llega a Seattle, cree que solo está de paso: una cláusula obligatoria para lavar su imagen y un nuevo club donde todavía nadie sabe quién es de verdad.\nHasta que conoce a Holland Callow.\nCalma, control y una mirada que le roba el aire… Un choque. Un acuerdo. Un beso que lo cambia todo. Y, de pronto, Seattle amenaza con no ser algo temporal.\nPero cuando Holland debe luchar por la custodia de su hija y Natalia recibe una gran oferta desde Europa, el “para siempre” deja de ser un sueño. Se convierte en una elección que hay que construir cada día.",
+    "pages": null,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [
+      "Deporte"
+    ],
+    "identidades": [
+      "Masc",
+      "Femme"
+    ],
+    "characters": [
+      "Futbolista"
+    ],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
+    "tropes": [
+      "Slow Burn"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 3,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Seattle Emerals",
+    "sagaNum": 4,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783778083902_76nf8",
+    "title": "Where the heart is",
+    "authors": [
+      "Roslyn Sinclair"
+    ],
+    "year": 2024,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1759361899i/242296497.jpg",
+    "synopsis": "La magnate editorial Vivian tiene una carrera exitosa, una hija pequeña feliz y a su adorada amante, Jules. Lo único que le falta es la aprobación familiar. ¿Podrá Vivian reconciliarse con su familia durante un tenso viaje al Medio Oeste con Jules?\n\nUn relato corto lésbico de la serie Carlisle, con una diferencia de edad considerable, que plantea la pregunta de si realmente se puede volver a casa.",
+    "pages": 47,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Bisexual"
+    ],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [
+      "Age Gap"
+    ],
+    "edad": [],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 2,
+    "formato": "Trilogía",
+    "adaptacion": null,
+    "sagaName": "Carlisle",
+    "sagaNum": 3,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783778469063_s09qt",
+    "title": "She's My Eternity",
+    "authors": [
+      "Valerie Hunter"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1781385821i/248973248.jpg",
+    "synopsis": "Yasmine Sokolov ha construido una vida envidiable. Es la vampira más rica del planeta, profesora con financiación casi ilimitada para su investigación y dueña de una mansión frente a Central Park. ¿\n\nLo único que no ha conseguido en mil años? Una novia estable.\n\nTras mudarse a Nueva York para ayudar a Sylvia y Aster a adaptarse a la inesperada paternidad, Yasmine vuelve a usar VampireMatch, donde una docena de citas decepcionantes la convencen de que su destino podría ser pasar otros mil años sola.\n\nHasta que conoce a alguien de quien no puede enamorarse: la deslumbrantemente bella y, a la vez, deslumbrantemente humana barista, Bella Dragomir.\n\nPero a medida que una serie de asesinatos vampíricos se extienden por Nueva York —asesinatos que parecen acercarse cada vez más a la propia Bella— Yasmine empieza a preguntarse si la verdad es más compleja de lo que quiere creer. Sobre todo cuando se trata de Bella.",
+    "pages": 385,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Fantasía"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Vampira"
+    ],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Roommates",
+      "Forced Proximity",
+      "Slow Burn"
+    ],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "content_warnings": [
+      "Secuestro / Cautiverio"
+    ],
+    "spicy": 3,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "The Girl Who Bit Me",
+    "sagaNum": 2,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783779684326_ws6ss",
+    "title": "No Rings Attached",
+    "authors": [
+      "Rachel Lacey"
+    ],
+    "year": 2022,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1633624423i/58957683.jpg",
+    "synopsis": "Lia Harris está harta de ser la oveja negra. Nunca ha encajado del todo con su estricta familia, y ahora que sus compañeras de piso han encontrado el amor, empieza a sentirse como la tercera rueda en su propio apartamento. Harta de la constante intromisión de su madre en su vida amorosa, Lia insinúa que tiene novia. Pero con la boda de su hermano en Londres cada vez más cerca, necesita encontrar pareja para salvar las apariencias. Lia recurre a su mejor amiga, Rosie, en busca de ayuda, y Rosie cumple: con la divertida y guapísima Grace Poston.\n\nA Grace le encanta pasarlo bien, ocultando sus inseguridades tras una sonrisa radiante. Su reciente mudanza a Londres le ha proporcionado un nuevo comienzo muy necesario. Grace no busca el amor y odia las bodas, pues ha sufrido más de un desengaño amoroso. Las amistades son diferentes, así que, por el bien de Rosie, acepta a regañadientes hacerse pasar por la novia devota de Lia durante las celebraciones de la boda.\n\nTanto Grace como Lia están preparadas para un fin de semana incómodo, con familiares entrometidos y una habitación de invitados con una sola cama. Resulta que se llevan de maravilla, de hecho, de forma espectacular. Sin darse cuenta, la química que fingen se siente demasiado real. Pero, ¿será su fin de semana de bodas una actuación fugaz o el ensayo de un amor destinado a durar?",
+    "pages": 315,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Contemporánea"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [
+      "Fake Relationship",
+      "Forced Proximity"
+    ],
+    "edad": [],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 4,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Ms. Right",
+    "sagaNum": 2,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783780667175_3687t",
+    "title": "A Game of Love and Hate",
+    "authors": [
+      "Ruby Roe"
+    ],
+    "year": 2023,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1676562066i/122496760.jpg",
+    "synopsis": "Descubre cómo Scarlett Grey conoció a Quinn Adams. Cómo surgió su odio mutuo. Y todas las peleas y encuentros sexuales que llevaron al primer libro de la serie Girl Games: Un juego de corazones y robos.",
+    "pages": 61,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Fantasía"
+    ],
+    "subgenres": [
+      "Magia"
+    ],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [
+      "Enemies to Lovers"
+    ],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 5,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Girl Games",
+    "sagaNum": 0.5,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783780982096_isxi2",
+    "title": "A Game of Proposals and Parties",
+    "authors": [
+      "Ruby Roe"
+    ],
+    "year": 2023,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1676656895i/122752671.jpg",
+    "synopsis": "Un epílogo apasionante para «Juego de corazones y robos». Descubre cómo Scarlett y Quinn se comprometen.",
+    "pages": 18,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Fantasía",
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [],
+    "characters": [],
+    "dinamicas": [],
+    "tropes": [
+      "Enemies to Lovers"
+    ],
+    "edad": [],
+    "pais_cultura": [],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 5,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Girl Games",
+    "sagaNum": 1.5,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1783782287465_7mzwu",
+    "title": "Beauty and The Bike",
+    "authors": [
+      "Lawliet30101979"
+    ],
+    "year": 2026,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/448449/Thumbnail/book_detail_large.gif?5",
+    "synopsis": "De repente, Ingdao, una joven hermosa y dulce, se ve envuelta en una fuerte discusión con su familia, tan intensa que huye de casa. ¿El motivo? Algo que nadie esperaría. Sueña con convertirse en novelista erótica, un camino que su familia se niega rotundamente a aceptar. Decidida a demostrar su valía, abandona su lujosa vida para perseguir ese sueño. \n\nPero la realidad resulta ser mucho más difícil de lo que imaginaba, empezando por alquilar una casa con un pasado dudoso, lidiar con cortes de luz e incluso una invasión de geckos. \n\nEn medio de todo el caos, aparece Earth, una motera genial y cautivadora, que siempre está ahí para ayudarla. Sin embargo, justo cuando Ingdao empieza a sentirse tranquila, se encuentra constantemente siendo objeto de burlas, mientras presiente que algo se esconde tras la sonrisa despreocupada de Earth. \n\nCon alguien tan impredecible, ¿se convertirá en el mayor apoyo de Ingdao o en la causante de sus problemas?",
+    "pages": 449,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Masc",
+      "Femme"
+    ],
+    "characters": [
+      "Escritora"
+    ],
+    "dinamicas": [
+      "Masc × Femme"
+    ],
+    "tropes": [
+      "Opposites Attract",
+      "Forced Proximity"
+    ],
+    "edad": [
+      "25–39",
+      "New Adult (18–24)"
+    ],
+    "pais_cultura": [
+      "Tailandia"
+    ],
+    "ambientacion": [],
+    "content_warnings": [
+      "Conflictos Familiares",
+      "Distanciamiento Familiar / Rechazo",
+      "Acoso Cibernético",
+      "Clasismo",
+      "Ansiedad / Ataques de Pánico"
+    ],
+    "spicy": 3,
+    "formato": null,
+    "adaptacion": "Tiene serie",
     "sagaName": null,
     "sagaNum": null,
     "source": "thais",
