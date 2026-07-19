@@ -1202,6 +1202,22 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .shelf-badges-row{display:flex;gap:.6rem;flex-wrap:wrap;padding:.2rem 0}
 .shelf-badge{width:52px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4))}
 .shelf-badge.locked{opacity:.25;filter:grayscale(1)}
+.shelf-badges-more{background:none;border:none;color:var(--accent2);font-size:11.5px;font-family:var(--font-body);cursor:pointer;padding:.3rem 0;text-align:left;width:100%}
+.shelf-badges-more:hover{text-decoration:underline}
+
+/* modal "Mis logros" — historial por edición/temporada */
+.logros-modal-header{margin-bottom:1.1rem}
+.logros-modal-title{font-family:var(--font-display);font-size:1.35rem;font-weight:600;color:var(--text)}
+.logros-modal-sub{font-size:12px;color:var(--muted);margin-top:.25rem;line-height:1.5}
+.logros-edition{display:flex;align-items:center;gap:1rem;padding:.9rem 0;border-bottom:1px solid var(--border)}
+.logros-edition:last-child{border-bottom:none}
+.logros-edition-info{flex:1;min-width:0}
+.logros-edition-name{font-size:13.5px;font-weight:600;color:var(--text)}
+.logros-edition-dates{font-size:11px;color:var(--muted);margin-top:1px}
+.logros-edition-badges{display:flex;gap:.5rem;flex-shrink:0}
+.logros-badge-mini{width:38px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.4))}
+.logros-badge-mini.locked{opacity:.22;filter:grayscale(1)}
+.logros-empty{padding:2.5rem 0;text-align:center;color:var(--muted);font-size:13px;line-height:1.6}
 
 /* ── SHELF BUTTONS (modal) ── */
 .shelf-btns{display:flex;gap:.5rem;margin:.4rem 0 1rem;flex-wrap:wrap}
@@ -1919,6 +1935,18 @@ body.home-active .hero,body.home-active .main{display:none!important}
       <p class="auth-toggle" style="margin-top:.5rem"><a onclick="showResetStep1()">← Volver</a></p>
     </div>
 
+  </div>
+</div>
+
+<!-- MIS LOGROS MODAL (historial completo por edición) -->
+<div class="modal-bg" id="logrosModal">
+  <div class="modal" style="max-width:420px">
+    <button class="modal-close" onclick="closeLogrosModal()">✕</button>
+    <div class="logros-modal-header">
+      <div class="logros-modal-title">Mis logros</div>
+      <p class="logros-modal-sub">Línea y bingo se guardan por cada edición/temporada — si consigues línea en una edición pasada, se queda ahí para siempre.</p>
+    </div>
+    <div id="logrosModalBody"><div class="logros-empty">Cargando…</div></div>
   </div>
 </div>
 
@@ -3120,6 +3148,7 @@ function renderAuthUI(){
       </div>
       <div class="user-dropdown">
         <button class="user-dd-item" onclick="toggleUserDropdown();openShelf()">📚 Mi estantería</button>
+        <button class="user-dd-item" onclick="toggleUserDropdown();openLogrosModal()">🏅 Mis logros</button>
         <div class="user-dd-sep"></div>
         <button class="user-dd-item danger" onclick="logout()">Cerrar sesión</button>
       </div>
@@ -5259,11 +5288,72 @@ function bingoUpdateNotifDot(){
 function renderShelfBadges(){
   const row=document.getElementById('shelfBadgesRow');
   if(!row || !currentUser) return;
-  const mine=(tipo)=>bingoHitos.find(h=>h.tipo===tipo);
-  row.innerHTML=['linea','bingo'].map(tipo=>{
+  // En la estantería solo mostramos un resumen de la edición de bingo activa
+  // (bingoChallenges ya viene ordenado por fecha_inicio desc en bingoInit).
+  const challenge=bingoChallenges.find(c=>c.id===bingoActiveChallengeId)||bingoChallenges[0];
+  const mine=(tipo)=>challenge && bingoHitos.some(h=>h.tipo===tipo && h.challenge_id===challenge.id);
+  const badgesHtml=['linea','bingo'].map(tipo=>{
     const got=mine(tipo);
     const cfg=HITO_CONFIG[tipo];
     return `<img class="shelf-badge ${got?'':'locked'}" src="${cfg.img}" title="${got?cfg.title:'Aún no conseguido'}">`;
+  }).join('');
+  row.innerHTML=badgesHtml+`<button class="shelf-badges-more" onclick="openLogrosModal()">Ver historial completo →</button>`;
+}
+
+let bingoAllChallenges=[];
+
+// Carga TODAS las ediciones de bingo (activas e históricas), para poder
+// mostrar el historial completo de logros por temporada/año.
+async function bingoLoadAllChallenges(){
+  try{
+    const {data,error}=await sb.from('bingo_challenges').select('*').order('fecha_inicio',{ascending:false});
+    if(error) throw error;
+    bingoAllChallenges=data||[];
+  }catch(e){
+    bingoAllChallenges=[];
+  }
+}
+
+async function openLogrosModal(){
+  if(!currentUser){ openAuthModal(); return; }
+  document.getElementById('logrosModal').classList.add('open');
+  document.body.style.overflow='hidden';
+  document.getElementById('logrosModalBody').innerHTML='<div class="logros-empty">Cargando…</div>';
+  await Promise.all([bingoLoadHitos(), bingoLoadAllChallenges()]);
+  renderLogrosModal();
+  bingoUpdateNotifDot();
+}
+
+function closeLogrosModal(){
+  document.getElementById('logrosModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('logrosModal').addEventListener('click',e=>{if(e.target.id==='logrosModal')closeLogrosModal();});
+
+// Pinta un renglón por cada edición de bingo (pasada o presente), con sus
+// dos badges (línea/bingo) a color si se consiguieron en ESA edición
+// concreta, en gris si no. Cada edición conserva sus logros para siempre,
+// aunque llegue una edición nueva.
+function renderLogrosModal(){
+  const body=document.getElementById('logrosModalBody');
+  if(!bingoAllChallenges.length){
+    body.innerHTML='<div class="logros-empty">Todavía no hay ninguna edición de bingo publicada.</div>';
+    return;
+  }
+  body.innerHTML=bingoAllChallenges.map(ch=>{
+    const datesStr=(ch.fecha_inicio||ch.fecha_fin)?`${bingoFmtDate(ch.fecha_inicio)} — ${bingoFmtDate(ch.fecha_fin)}`:'';
+    const badgesHtml=['linea','bingo'].map(tipo=>{
+      const got=bingoHitos.some(h=>h.challenge_id===ch.id && h.tipo===tipo);
+      const cfg=HITO_CONFIG[tipo];
+      return `<img class="logros-badge-mini ${got?'':'locked'}" src="${cfg.img}" title="${got?cfg.title:'Aún no conseguido en esta edición'}">`;
+    }).join('');
+    return `<div class="logros-edition">
+      <div class="logros-edition-info">
+        <div class="logros-edition-name">${escHtml(ch.nombre)}</div>
+        ${datesStr?`<div class="logros-edition-dates">${datesStr}</div>`:''}
+      </div>
+      <div class="logros-edition-badges">${badgesHtml}</div>
+    </div>`;
   }).join('');
 }
 
