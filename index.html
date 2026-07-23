@@ -1251,6 +1251,8 @@ body.home-active .hero,body.home-active .main{display:none!important}
 /* ── SHELF VIEW ── */
 #shelfView{display:none;position:relative;z-index:1;padding:0 0 5rem}
 #shelfView.active{display:block}
+#logrosView{display:none;position:relative;z-index:1;padding:2rem 2rem 5rem}
+#logrosView.active{display:block}
 .shelf-layout{display:grid;grid-template-columns:220px 1fr;gap:0;max-width:1200px;margin:0 auto;min-height:80vh}
 .shelf-sidebar{border-right:1px solid var(--border2);padding:2rem 0;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto}
 .shelf-sidebar-header{padding:0 1.5rem 1.2rem;border-bottom:1px solid var(--border)}
@@ -1302,7 +1304,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .shelf-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem;color:var(--muted);text-align:center;gap:.75rem}
 .shelf-empty-icon{font-size:2.5rem;opacity:.5}
 .shelf-empty p{font-size:13.5px;line-height:1.6;max-width:300px}
-@media(max-width:700px){.shelf-layout{grid-template-columns:1fr}.shelf-sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border2);padding:1rem 0}.shelf-sidebar-header{padding:0 1rem .75rem}.shelf-sidebar-section{padding:.5rem 1rem .3rem}.shelf-main{padding:1.25rem 1rem 3rem}}
+@media(max-width:700px){.shelf-layout{grid-template-columns:1fr}.shelf-sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border2);padding:1rem 0}.shelf-sidebar-header{padding:0 1rem .75rem}.shelf-sidebar-section{padding:.5rem 1rem .3rem}.shelf-main{padding:1.25rem 1rem 3rem}#logrosView{padding:1.25rem 1rem 3rem}}
 </style>
 </head>
 <body>
@@ -1315,7 +1317,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
   </a>
   <div class="topbar-right" style="display:flex;align-items:center;gap:8px">
     <button class="home-nav-btn" id="homeNavBtn" onclick="showHome()">⌂ Inicio</button>
-    <button class="home-nav-btn" id="shelfNavBtn" onclick="location.href='https://xxmadwavs.github.io/Tinta-Sapphic-La-Estanteria/?section=thais'" style="display:none">📚 Estantería</button>
+    <button class="home-nav-btn" id="shelfNavBtn" onclick="location.href='https://xxmadwavs.github.io/Tinta-Sapphic-La-Estanter-a-2.0/?section=thais'" style="display:none">📚 Estantería</button>
     <div id="authArea">
       <button class="btn-login" onclick="openAuthModal()">Entrar para votar</button>
     </div>
@@ -1950,14 +1952,14 @@ body.home-active .hero,body.home-active .main{display:none!important}
   </div>
 </div>
 
-<!-- MIS LOGROS MODAL (historial completo por edición) -->
-<div class="modal-bg" id="logrosModal">
-  <div class="modal" style="max-width:420px">
-    <button class="modal-close" onclick="closeLogrosModal()">✕</button>
-    <div class="logros-modal-header">
-      <div class="logros-modal-title">Mis logros</div>
-      <p class="logros-modal-sub">Línea y bingo se guardan por cada edición/temporada — si consigues línea en una edición pasada, se queda ahí para siempre.</p>
+<!-- MIS LOGROS — vista de página completa (historial por edición), estilo "Mi estantería" -->
+<div id="logrosView">
+  <div class="shelf-main" style="max-width:820px;margin:0 auto">
+    <button class="shelf-back-link" style="margin:0 0 1.5rem;padding:6px 10px" onclick="closeLogrosModal()">← Volver al catálogo</button>
+    <div class="shelf-main-header">
+      <div class="shelf-main-title">Mis logros</div>
     </div>
+    <p class="logros-modal-sub" style="margin-bottom:1.75rem">Línea y bingo se guardan por cada edición/temporada — si consigues línea en una edición pasada, se queda ahí para siempre.</p>
     <div class="logros-section-label">Insignias</div>
     <div class="logros-general-grid" id="logrosGeneralGrid"><div class="logros-empty">Cargando…</div></div>
     <div class="logros-section-label">Bingo por edición</div>
@@ -5428,10 +5430,21 @@ function renderLogrosGeneralGrid(){
   }).join('');
 }
 
+let _logrosPrevState=null;
 async function openLogrosModal(){
   if(!currentUser){ openAuthModal(); return; }
-  document.getElementById('logrosModal').classList.add('open');
-  document.body.style.overflow='hidden';
+  _logrosPrevState={
+    home:document.body.classList.contains('home-active'),
+    shelf:document.getElementById('shelfView').classList.contains('active'),
+    shelfFilter:shelfFilter
+  };
+  document.getElementById('homeView').classList.remove('active');
+  document.body.classList.remove('home-active');
+  document.getElementById('homeNavBtn')?.classList.remove('active');
+  document.getElementById('shelfView').classList.remove('active');
+  document.querySelectorAll('main > *').forEach(el=>el.style.display='none');
+  document.getElementById('logrosView').classList.add('active');
+  window.scrollTo({top:0});
   document.getElementById('logrosGeneralGrid').innerHTML='<div class="logros-empty">Cargando…</div>';
   document.getElementById('logrosModalBody').innerHTML='<div class="logros-empty">Cargando…</div>';
   await Promise.all([bingoLoadHitos(), bingoLoadAllChallenges(), loadLogrosCatalog(), loadUserLogros()]);
@@ -5441,10 +5454,12 @@ async function openLogrosModal(){
 }
 
 function closeLogrosModal(){
-  document.getElementById('logrosModal').classList.remove('open');
-  document.body.style.overflow='';
+  document.getElementById('logrosView').classList.remove('active');
+  const prev=_logrosPrevState;
+  if(prev?.home){ showHome(); }
+  else if(prev?.shelf){ openShelf(prev.shelfFilter,true); }
+  else{ switchTab(activeTab, true); }
 }
-document.getElementById('logrosModal').addEventListener('click',e=>{if(e.target.id==='logrosModal')closeLogrosModal();});
 
 // Pinta un renglón por cada edición de bingo (pasada o presente), con sus
 // dos badges (línea/bingo) a color si se consiguieron en ESA edición
