@@ -1219,7 +1219,8 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .logros-edition-name{font-size:16px;font-weight:600;color:var(--text);font-family:var(--font-display);font-style:italic}
 .logros-edition-dates{font-size:12px;color:var(--muted);margin-top:3px;letter-spacing:.02em}
 .logros-edition-badges{display:flex;gap:.75rem;flex-shrink:0}
-.logros-badge-mini{width:56px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.4));transition:transform .15s}
+.logros-badge-mini-imgbox{width:56px;height:56px;display:flex;align-items:center;justify-content:center}
+.logros-badge-mini{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 3px 8px rgba(0,0,0,.4));transition:transform .15s}
 .logros-edition:hover .logros-badge-mini:not(.locked){transform:translateY(-2px)}
 .logros-badge-mini.locked{opacity:.22;filter:grayscale(1)}
 .logros-empty{padding:2.5rem 0;text-align:center;color:var(--muted);font-size:13px;line-height:1.6}
@@ -1229,7 +1230,8 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .logros-general-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.9rem;padding-bottom:1.75rem;margin-bottom:1.75rem;border-bottom:1px solid var(--border)}
 .logros-general-badge{display:flex;flex-direction:column;align-items:center;gap:.65rem;text-align:center;padding:1.4rem 1rem 1.15rem;background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,0.85) 100%);border:1px solid var(--border2);border-radius:var(--radius);transition:transform .18s,border-color .18s}
 .logros-general-badge:hover{transform:translateY(-3px);border-color:rgba(192,111,196,0.4)}
-.logros-general-badge img{width:76px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.45));transition:transform .15s}
+.logros-general-badge-imgbox{width:76px;height:76px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logros-general-badge img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.45));transition:transform .15s}
 .logros-general-badge:hover img{transform:scale(1.06)}
 .logros-general-badge.locked{opacity:.55}
 .logros-general-badge.locked img{opacity:.3;filter:grayscale(1)}
@@ -1238,9 +1240,9 @@ body.home-active .hero,body.home-active .main{display:none!important}
 @media(max-width:600px){
   .logros-general-grid{grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:.6rem}
   .logros-general-badge{padding:1.1rem .6rem .9rem}
-  .logros-general-badge img{width:60px}
+  .logros-general-badge-imgbox{width:60px;height:60px}
   .logros-edition{padding:.9rem 1rem;gap:.75rem}
-  .logros-badge-mini{width:46px}
+  .logros-badge-mini-imgbox{width:46px;height:46px}
 }
 
 /* ── SHELF BUTTONS (modal) ── */
@@ -5436,7 +5438,7 @@ function renderLogrosGeneralGrid(){
     const got=userLogros.some(ul=>ul.logro_id===l.id);
     const tip=got?(l.descripcion||l.nombre):'Aún no conseguido';
     return `<div class="logros-general-badge ${got?'':'locked'}" title="${escHtml(tip)}">
-      <img src="assets/logros/${l.icono}" alt="${escHtml(l.nombre)}">
+      <div class="logros-general-badge-imgbox"><img src="assets/logros/${l.icono}" alt="${escHtml(l.nombre)}"></div>
       <div class="logros-general-badge-name">${escHtml(l.nombre)}</div>
     </div>`;
   }).join('');
@@ -5488,7 +5490,7 @@ function renderLogrosModal(){
     const badgesHtml=['linea','bingo'].map(tipo=>{
       const got=bingoHitos.some(h=>h.challenge_id===ch.id && h.tipo===tipo);
       const cfg=HITO_CONFIG[tipo];
-      return `<img class="logros-badge-mini ${got?'':'locked'}" src="${cfg.img}" title="${got?cfg.title:'Aún no conseguido en esta edición'}">`;
+      return `<div class="logros-badge-mini-imgbox"><img class="logros-badge-mini ${got?'':'locked'}" src="${cfg.img}" title="${got?cfg.title:'Aún no conseguido en esta edición'}"></div>`;
     }).join('');
     return `<div class="logros-edition">
       <div class="logros-edition-info">
