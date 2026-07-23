@@ -1172,11 +1172,12 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .hito-halo{position:absolute;inset:-30% -60%;border-radius:50%;z-index:1;opacity:0;pointer-events:none;filter:blur(18px)}
 .hito-card.linea .hito-halo{background:radial-gradient(circle,var(--gold) 0%,transparent 65%)}
 .hito-card.bingo .hito-halo{background:radial-gradient(circle,var(--accent) 0%,transparent 65%)}
+.hito-card.logro .hito-halo{background:radial-gradient(circle,var(--rose) 0%,transparent 65%)}
 
 .hito-sweep{position:absolute;top:-20%;left:-60%;width:40%;height:140%;background:linear-gradient(75deg,transparent 0%,rgba(255,255,255,0) 35%,rgba(255,238,205,.85) 50%,rgba(255,255,255,0) 65%,transparent 100%);transform:skewX(-18deg);z-index:3;opacity:0;pointer-events:none}
-.hito-card.linea.play .hito-halo{animation:hitoHaloPulse 1.1s ease-out}
-.hito-card.linea.play .hito-sweep{animation:hitoSweep 1.05s cubic-bezier(.3,.7,.3,1)}
-.hito-card.linea.play .hito-pin-wrap{animation:hitoPinRise .6s cubic-bezier(.2,1.4,.4,1)}
+.hito-card.linea.play .hito-halo,.hito-card.logro.play .hito-halo{animation:hitoHaloPulse 1.1s ease-out}
+.hito-card.linea.play .hito-sweep,.hito-card.logro.play .hito-sweep{animation:hitoSweep 1.05s cubic-bezier(.3,.7,.3,1)}
+.hito-card.linea.play .hito-pin-wrap,.hito-card.logro.play .hito-pin-wrap{animation:hitoPinRise .6s cubic-bezier(.2,1.4,.4,1)}
 @keyframes hitoSweep{0%{opacity:0;left:-60%}12%{opacity:1}55%{opacity:1;left:120%}100%{opacity:0;left:120%}}
 @keyframes hitoHaloPulse{0%{opacity:0}30%{opacity:.55}100%{opacity:0}}
 @keyframes hitoPinRise{0%{transform:translateY(6px) scale(.96)}55%{transform:translateY(-4px) scale(1.03)}100%{transform:translateY(0) scale(1)}}
@@ -1192,6 +1193,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
 
 .hito-ribbon{position:absolute;top:20px;left:50%;transform:translateX(-50%) translateY(-10px);font-family:var(--font-display);font-weight:600;font-size:11.5px;letter-spacing:.04em;background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,151,90,.4);padding:5px 13px;border-radius:30px;opacity:0;z-index:5;white-space:nowrap}
 .hito-card.bingo .hito-ribbon{background:var(--accent-soft);color:var(--accent2);border-color:rgba(192,111,196,.4)}
+.hito-card.logro .hito-ribbon{background:var(--rose-soft);color:var(--rose);border-color:rgba(212,96,122,.4)}
 .hito-card.play .hito-ribbon{animation:hitoRibbonIn .6s .15s cubic-bezier(.2,1.4,.4,1) forwards}
 @keyframes hitoRibbonIn{0%{opacity:0;transform:translateX(-50%) translateY(-14px) scale(.8)}100%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
 
@@ -1218,6 +1220,16 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .logros-badge-mini{width:38px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.4))}
 .logros-badge-mini.locked{opacity:.22;filter:grayscale(1)}
 .logros-empty{padding:2.5rem 0;text-align:center;color:var(--muted);font-size:13px;line-height:1.6}
+
+/* insignias generales (bienvenida, primera valoración, spicy, comunidad…) */
+.logros-section-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 .6rem}
+.logros-general-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:1.1rem 0.5rem;padding-bottom:1.3rem;margin-bottom:1.1rem;border-bottom:1px solid var(--border)}
+.logros-general-badge{display:flex;flex-direction:column;align-items:center;gap:.4rem;text-align:center}
+.logros-general-badge img{width:52px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4));transition:transform .15s}
+.logros-general-badge:hover img{transform:translateY(-2px)}
+.logros-general-badge.locked img{opacity:.25;filter:grayscale(1)}
+.logros-general-badge-name{font-size:10.5px;color:var(--text);line-height:1.3}
+.logros-general-badge.locked .logros-general-badge-name{color:var(--muted);opacity:.6}
 
 /* ── SHELF BUTTONS (modal) ── */
 .shelf-btns{display:flex;gap:.5rem;margin:.4rem 0 1rem;flex-wrap:wrap}
@@ -1942,13 +1954,14 @@ body.home-active .hero,body.home-active .main{display:none!important}
 <div class="modal-bg" id="logrosModal">
   <div class="modal" style="max-width:420px">
     <button class="modal-close" onclick="closeLogrosModal()">✕</button>
-    <div class="modal-body">
-      <div class="logros-modal-header">
-        <div class="logros-modal-title">Mis logros</div>
-        <p class="logros-modal-sub">Línea y bingo se guardan por cada edición/temporada — si consigues línea en una edición pasada, se queda ahí para siempre.</p>
-      </div>
-      <div id="logrosModalBody"><div class="logros-empty">Cargando…</div></div>
+    <div class="logros-modal-header">
+      <div class="logros-modal-title">Mis logros</div>
+      <p class="logros-modal-sub">Línea y bingo se guardan por cada edición/temporada — si consigues línea en una edición pasada, se queda ahí para siempre.</p>
     </div>
+    <div class="logros-section-label">Insignias</div>
+    <div class="logros-general-grid" id="logrosGeneralGrid"><div class="logros-empty">Cargando…</div></div>
+    <div class="logros-section-label">Bingo por edición</div>
+    <div id="logrosModalBody"><div class="logros-empty">Cargando…</div></div>
   </div>
 </div>
 
@@ -2094,7 +2107,7 @@ async function init(){
   await loadBooks();
   if(currentUser) await loadMyRatings();
   if(currentUser) await loadMyReadingStatus();
-  if(currentUser){ await bingoLoadHitos(); bingoUpdateNotifDot(); }
+  if(currentUser){ await bingoLoadHitos(); bingoUpdateNotifDot(); checkNewLogros(); }
   buildDropdowns();
   loadState();   // restaurar filtros y página desde la URL
   // Pintar visualmente la sección activa restaurada
@@ -2152,7 +2165,7 @@ async function init(){
     currentUser=session?.user||null;
     renderAuthUI();
     debouncedLoadRatings();
-    if(currentUser){ bingoLoadHitos().then(bingoUpdateNotifDot); } else { bingoHitos=[]; bingoUpdateNotifDot(); }
+    if(currentUser){ bingoLoadHitos().then(bingoUpdateNotifDot); checkNewLogros(); } else { bingoHitos=[]; bingoUpdateNotifDot(); }
     if(activeTab==='solicitudes') renderSolicitudes();
     if(activeTab==='ruleta') ruletaInit();
     if(activeTab==='bingo') bingoInit();
@@ -2903,6 +2916,7 @@ async function submitVote(){
   myRatings[activeBook.id]=pendingStar;
   showToast('¡Valoración guardada! ✓','success');
   updateStats();applyFilters(false);renderVoteSection();
+  checkNewLogros();
 }
 
 async function deleteVote(){
@@ -3031,6 +3045,7 @@ async function submitSpicyVote(){
   mySpicy[activeBook.id]=pendingSpicy;
   showToast('¡Spicy guardado! 🌶','success');
   applyFilters(false);renderSpicySection();
+  checkNewLogros();
 }
 
 async function deleteSpicyVote(){
@@ -3833,6 +3848,7 @@ async function enviarSolicitud(){
   document.getElementById('solAutorField').style.display='';
   setTimeout(()=>{msg.textContent='';},5000);
   renderSolicitudes();
+  checkNewLogros();
 }
 
 async function renderSolicitudes(){
@@ -5269,6 +5285,7 @@ function showHitoModal(tipo){
 function closeHitoModal(){
   document.getElementById('hitoModal').classList.remove('open');
   document.body.style.overflow='';
+  if(logroQueue.length) setTimeout(playNextLogroHito,320); // deja terminar la transición de cierre antes de encolar el siguiente
 }
 document.getElementById('hitoModal').addEventListener('click',e=>{if(e.target.id==='hitoModal')closeHitoModal();});
 
@@ -5316,12 +5333,109 @@ async function bingoLoadAllChallenges(){
   }
 }
 
+// ── LOGROS GENERALES (bienvenida, primera valoración, spicy, comunidad…) ──
+let logrosCatalog=[];
+let userLogros=[];
+
+async function loadLogrosCatalog(){
+  try{
+    const {data,error}=await sb.from('logros').select('*').order('created_at');
+    if(error) throw error;
+    logrosCatalog=data||[];
+  }catch(e){
+    logrosCatalog=[];
+  }
+}
+
+async function loadUserLogros(){
+  if(!currentUser){ userLogros=[]; return; }
+  try{
+    const {data,error}=await sb.from('user_logros').select('logro_id,awarded_at').eq('user_id',currentUser.id);
+    if(error) throw error;
+    userLogros=data||[];
+  }catch(e){
+    userLogros=[];
+  }
+}
+
+// ── Animación automática al desbloquear una insignia general ──
+// (Bienvenida, Primera valoración, Primera valoración spicy, Primera ayuda
+// a la comunidad, etc.) Reutiliza el mismo hitoModal de línea/bingo, con una
+// variante visual propia (.hito-card.logro) y sin confetti.
+let logroQueue=[];
+
+function showLogroHitoModal(logro){
+  const card=document.getElementById('hitoCard');
+  card.className='hito-card logro';
+  document.getElementById('hitoRibbon').textContent='🏅 ¡Nuevo logro!';
+  document.getElementById('hitoPinImg').src='assets/logros/'+logro.icono;
+  document.getElementById('hitoTitle').textContent=logro.nombre;
+  document.getElementById('hitoSubtitle').textContent=logro.descripcion||'Insignia conseguida';
+  document.getElementById('hitoConfetti').innerHTML='';
+  document.getElementById('hitoModal').classList.add('open');
+  document.body.style.overflow='hidden';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>card.classList.add('play')));
+}
+
+function playNextLogroHito(){
+  if(!logroQueue.length) return;
+  showLogroHitoModal(logroQueue.shift());
+}
+
+// Compara los logros del usuario contra los que ya se le mostraron (guardados
+// en localStorage) y encola/anima los nuevos. Se llama tras cargar sesión y
+// tras acciones que puedan desbloquear una insignia (valorar, votar spicy,
+// enviar solicitud…), para dar feedback inmediato sin esperar a abrir "Mis logros".
+async function checkNewLogros(){
+  if(!currentUser) return;
+  await Promise.all([loadLogrosCatalog(),loadUserLogros()]);
+  if(!userLogros.length) return;
+  const seenKey='logrosSeenIds_'+currentUser.id;
+  const rawSeen=localStorage.getItem(seenKey);
+  const allIds=userLogros.map(ul=>ul.logro_id);
+  if(rawSeen===null){
+    // primera vez que se comprueba en este navegador: fijamos línea base con
+    // los logros que ya tuviera, para no animar de golpe cosas conseguidas
+    // antes de existir esta animación. A partir de aquí sí se animan los nuevos.
+    localStorage.setItem(seenKey, JSON.stringify(allIds));
+    return;
+  }
+  let seen=[];
+  try{ seen=JSON.parse(rawSeen)||[]; }catch(e){ seen=[]; }
+  const nuevos=userLogros.filter(ul=>!seen.includes(ul.logro_id))
+    .map(ul=>logrosCatalog.find(l=>l.id===ul.logro_id))
+    .filter(Boolean);
+  localStorage.setItem(seenKey, JSON.stringify(allIds));
+  if(!nuevos.length) return;
+  logroQueue.push(...nuevos);
+  if(!document.getElementById('hitoModal').classList.contains('open')) playNextLogroHito();
+}
+
+function renderLogrosGeneralGrid(){
+  const grid=document.getElementById('logrosGeneralGrid');
+  if(!grid) return;
+  if(!logrosCatalog.length){
+    grid.innerHTML='<div class="logros-empty">Todavía no hay insignias disponibles.</div>';
+    return;
+  }
+  grid.innerHTML=logrosCatalog.map(l=>{
+    const got=userLogros.some(ul=>ul.logro_id===l.id);
+    const tip=got?(l.descripcion||l.nombre):'Aún no conseguido';
+    return `<div class="logros-general-badge ${got?'':'locked'}" title="${escHtml(tip)}">
+      <img src="assets/logros/${l.icono}" alt="${escHtml(l.nombre)}">
+      <div class="logros-general-badge-name">${escHtml(l.nombre)}</div>
+    </div>`;
+  }).join('');
+}
+
 async function openLogrosModal(){
   if(!currentUser){ openAuthModal(); return; }
   document.getElementById('logrosModal').classList.add('open');
   document.body.style.overflow='hidden';
+  document.getElementById('logrosGeneralGrid').innerHTML='<div class="logros-empty">Cargando…</div>';
   document.getElementById('logrosModalBody').innerHTML='<div class="logros-empty">Cargando…</div>';
-  await Promise.all([bingoLoadHitos(), bingoLoadAllChallenges()]);
+  await Promise.all([bingoLoadHitos(), bingoLoadAllChallenges(), loadLogrosCatalog(), loadUserLogros()]);
+  renderLogrosGeneralGrid();
   renderLogrosModal();
   bingoUpdateNotifDot();
 }
