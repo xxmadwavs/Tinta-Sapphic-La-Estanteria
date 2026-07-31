@@ -58171,5 +58171,61 @@
     "canal_month": null,
     "my_rec": false,
     "my_rec_categories": []
+  },
+  {
+    "id": "b_1785513496986_1cen0",
+    "title": "Her Spell That Cursed Me",
+    "authors": [
+      "Luna Oblonsky"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1753162428i/233504824.jpg",
+    "synopsis": "Un amor sáfico nacido en la adversidad y unido por lazos de sangre… Un mal latente que amenaza con destrozar el mundo… Un cuento mágico de destino maldito y caos implacable.\n\nIona lucha por la armonía en tiempos de discordia absoluta.\nAhora imbuida de una magia abundante, se le brinda una oportunidad única para reformar la jerarquía corrupta que ha llegado a despreciar, pero los grandes aquelarres se aferran a la tradición y amenazan con obstaculizar su labor. Debe aprender a controlar su poder y cumplir con las abrumadoras expectativas de los demás, o arriesgarse a perder todo lo que ama.\n\nAriadne está atormentada por los horrores de su pasado.\nUna parte de ella siempre supo que su familia no la dejaría ir tan fácilmente, a pesar de sus amenazas de exilio. Cuando se revelan secretos ancestrales largamente ocultos, su propia percepción de la libertad se ve alterada para siempre. Los rencores deben dejarse de lado cuando se enfrenta a un enemigo común, un ajuste de cuentas que supera sus peores pesadillas.\n\nCuando un adversario malévolo siembra el caos entre los inocentes, Iona es llamada a defenderlos.\nEl colgante de Morgan Le Faye la identifica como una futura líder de su pueblo, pero tras solo un año de estudio, se encuentra en clara desventaja en sus esfuerzos por preservar la paz. Ariadne busca ayudarla y jura protegerla, pero cuando el destino parece volverse en su contra, sus difíciles circunstancias ponen a prueba su vínculo eterno. Las lealtades se ponen a prueba, los misterios se desvelan y el tiempo se agota rápidamente.",
+    "pages": 566,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Fantasía",
+      "Romance",
+      "Fantasía Urbana"
+    ],
+    "subgenres": [
+      "Magia"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Bruja"
+    ],
+    "dinamicas": [
+      "Femme × Femme",
+      "Grumpy × Sunshine"
+    ],
+    "tropes": [
+      "Forced Proximity",
+      "Destined Lovers"
+    ],
+    "edad": [
+      "New Adult (18–24)"
+    ],
+    "pais_cultura": [
+      "Ambientación europea"
+    ],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 5,
+    "formato": "Trilogía",
+    "adaptacion": null,
+    "sagaName": "Her Spell Trilogy",
+    "sagaNum": 2,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
   }
 ]
