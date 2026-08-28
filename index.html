@@ -23,6 +23,12 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
+
+/* ── Iconos de línea (sustituyen a los emojis en zona de marca) ── */
+.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
+.icon svg{width:100%;height:100%;display:block}
+.nav-icon{width:14px;height:14px;color:currentColor;opacity:.85}
+.cta-icon{width:15px;height:15px;color:currentColor}
 body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.6;min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 0%,rgba(192,111,196,0.08) 0%,transparent 55%),radial-gradient(ellipse at 85% 100%,rgba(91,188,176,0.06) 0%,transparent 55%);pointer-events:none;z-index:0}
 
@@ -241,6 +247,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   border-radius:4px;
 }
 .dd-item label{cursor:pointer;flex:1;color:var(--text);line-height:1.4}
+.dd-exclude-btn{width:20px;height:20px;flex-shrink:0;border:none;background:transparent;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--muted);opacity:.3;cursor:pointer;transition:all .15s;padding:0}
+.dd-exclude-btn svg{width:12px;height:12px}
+.dd-item:hover .dd-exclude-btn{opacity:.7}
+.dd-exclude-btn:hover{opacity:1!important;background:var(--rose-soft);color:var(--rose)}
+.dd-exclude-btn.active{opacity:1;background:var(--rose-soft);color:var(--rose)}
+.dd-item.excluded{background:rgba(212,96,122,.06)}
+.dd-item.excluded label{color:var(--rose);text-decoration:line-through;text-decoration-color:rgba(212,96,122,.5);opacity:.8}
+.dd-item.excluded input[type=checkbox]{opacity:.3}
 .dd-empty{padding:12px 14px;font-size:12px;color:var(--muted);font-style:italic}
 .dd-clear{
   padding:7px 14px;border-bottom:1px solid var(--border);
@@ -366,17 +380,32 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .fp-sec-body .dd-clear{margin:2px 6px 4px;border-radius:8px;border-bottom:none;background:var(--surface2)}
 .fp-sec-body .dd-empty{padding:10px 16px}
 
-/* ── Mobile: el panel se centra en pantalla en vez de anclarse al botón ── */
+/* ── Mobile: cualquier panel de dropdown se centra en pantalla en vez de anclarse al botón,
+   y los items ganan tamaño de toque (antes eran demasiado densos para dedo) ── */
 @media (max-width:600px){
-  .more-filters-panel{
+  .more-filters-panel,.dd-panel{
     position:fixed !important;
     top:50% !important;left:50% !important;right:auto !important;
     transform:translate(-50%,-50%) !important;
     animation:mfFadeIn .16s ease !important;
     width:92vw;max-width:400px;
-    max-height:80vh;
+    max-height:75vh;
   }
   .fp-body{max-height:calc(80vh - 54px)}
+  .dd-item,.spicy-dd-item{padding:12px 16px;font-size:14px;gap:12px}
+  .dd-item input[type=checkbox],.spicy-dd-item input[type=checkbox]{width:19px;height:19px}
+  .spicy-dd-item label{font-size:14px}
+  .spicy-dd-item label small{font-size:12px}
+  .dd-exclude-btn{width:32px;height:32px;opacity:.55}
+  .dd-exclude-btn svg{width:14px;height:14px}
+  .dd-clear{padding:12px 16px;font-size:13px}
+  .dd-search{padding:.75rem .9rem}
+  .dd-search input{padding:10px 12px;font-size:14px}
+  .dd-empty{padding:16px}
+  .fp-sec-body .dd-item,.fp-sec-body .spicy-dd-item{padding:11px 12px;font-size:14px}
+  .fp-sec-body input[type=checkbox],.fp-sec-body input[type=radio]{width:19px;height:19px}
+  .fp-sec-label{padding:12px 16px;font-size:13.5px}
+  .fp-toggle-row .dd-btn{padding:8px 14px;font-size:13px}
 }
 @keyframes mfFadeIn{from{opacity:0}to{opacity:1}}
 .mf-backdrop{
@@ -408,6 +437,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   transition:opacity .15s;
 }
 .af-pill button:hover{opacity:1}
+.af-pill.excluded{background:var(--rose-soft);border-color:rgba(212,96,122,0.3);color:var(--rose)}
+.af-pill.excluded button{color:var(--rose)}
 .clear-all-btn{
   padding:4px 12px;border-radius:7px;
   border:1px solid rgba(212,96,122,0.25);
@@ -430,6 +461,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .book-cover{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .book-card:hover .book-cover{transform:scale(1.04)}
 .book-cover-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:2.5rem}
+
+/* Tratamiento uniforme de portadas (crop consistente ya lo daba aspect-ratio+object-fit;
+   aquí añadimos viñeta + filtro compartido para que el grid se sienta un catálogo curado
+   y no un collage de fuentes distintas — se aplica a estantería, SafiClub, similares y Mi estantería) */
+.book-cover-wrap::after,.safi-item-cover::after,.similar-item-cover::after,.shelf-book .shelf-book-cover::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 45%,rgba(10,8,12,0) 55%,rgba(10,8,12,.32) 100%),
+             linear-gradient(180deg,rgba(10,8,12,0) 76%,rgba(10,8,12,.38) 100%);
+}
+.book-cover,.safi-item-cover img,.similar-item-cover img,.shelf-book .shelf-book-cover img{
+  filter:saturate(1.08) contrast(1.04) brightness(.97);
+}
 .rank-badge{position:absolute;top:10px;left:10px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;z-index:2}
 .rank-1{background:linear-gradient(135deg,#c9975a,#f0c070);color:#2a1800}
 .rank-2{background:linear-gradient(135deg,#8a9aaa,#b8c8d8);color:#1a2530}
@@ -482,8 +525,46 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .modal-title{font-family:var(--font-display);font-size:2rem;font-weight:600;line-height:1.1;margin-bottom:.1rem}
 .modal-title-row{margin-bottom:0}
 .modal-saga-sub{margin-bottom:.2rem}
+.modal-saga-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
 .modal-saga-link{background:none;border:none;padding:0;font-size:12.5px;color:var(--muted);font-family:var(--font-body);cursor:pointer;transition:color .15s;font-style:italic}
 .modal-saga-link:hover{color:var(--teal);text-decoration:underline}
+.saga-map-trigger{background:none;border:1px solid var(--border2);border-radius:20px;padding:2px 10px 2px 8px;font-size:10.5px;color:var(--teal);font-family:var(--font-body);cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:all .15s;white-space:nowrap}
+.saga-map-trigger:hover{background:rgba(91,188,176,0.12);border-color:var(--teal)}
+
+/* ── SAGA MAP (constelación de orden de lectura) ── */
+.sagamap-modal{max-width:600px;overflow:visible}
+.sagamap-body{padding:1.8rem 1.5rem 2.2rem}
+.sagamap-header{text-align:center;margin-bottom:.3rem}
+.sagamap-eyebrow{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.sagamap-title{font-family:var(--font-display);font-size:1.9rem;font-weight:300;margin:.2rem 0 .15rem}
+.sagamap-title em{font-style:italic;font-weight:600;color:var(--accent)}
+.sagamap-sub{font-size:12.5px;color:var(--muted)}
+.sagamap-legend{display:flex;gap:1.2rem;justify-content:center;margin:.9rem 0 1.4rem;font-size:11px;color:var(--muted)}
+.sagamap-legend span{display:inline-flex;align-items:center;gap:6px}
+.sm-leg-line{width:18px;height:2px;background:linear-gradient(90deg,var(--accent),var(--teal));display:inline-block}
+.sm-leg-line.dashed{background:none;border-top:2px dashed var(--gold)}
+.sagamap-map{position:relative;width:100%}
+.sagamap-map svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.sagamap-map svg path{fill:none;stroke-width:2.5}
+.sm-path-main{stroke:url(#smLineGrad)}
+.sm-path-branch{stroke:var(--gold);stroke-dasharray:5 6;opacity:.75}
+.sm-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;cursor:pointer;z-index:2;width:128px}
+.sm-node-ring{width:84px;height:84px;border-radius:50%;padding:3px;background:conic-gradient(from 180deg,var(--accent),var(--rose),var(--teal),var(--accent));box-shadow:0 0 20px rgba(192,111,196,.3);transition:transform .15s,box-shadow .15s}
+.sm-node.branch .sm-node-ring{width:62px;height:62px;background:conic-gradient(from 180deg,var(--gold),rgba(201,151,90,.4));box-shadow:0 0 15px rgba(201,151,90,.22)}
+.sm-node-ring-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;border:2.5px solid var(--surface);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:1.6rem}
+.sm-node-ring-inner img{width:100%;height:100%;object-fit:cover;display:block}
+.sm-node:hover .sm-node-ring,.sm-node.active .sm-node-ring{transform:scale(1.08);box-shadow:0 0 26px rgba(192,111,196,.5)}
+.sm-node-num{font-family:var(--font-display);font-style:italic;font-weight:600;font-size:13.5px;color:var(--accent2);background:rgba(14,11,16,.85);border:1px solid var(--border2);border-radius:20px;padding:2px 9px}
+.sm-node.branch .sm-node-num{color:var(--gold);font-size:12px}
+.sm-node-label{font-size:11.5px;color:var(--muted);text-align:center;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media(max-width:600px){
+  .sm-node{width:100px}
+  .sm-node-ring{width:68px;height:68px}
+  .sm-node.branch .sm-node-ring{width:50px;height:50px}
+  .sm-node-label{font-size:10.5px}
+  .sagamap-title{font-size:1.6rem}
+  .sagamap-body{padding:1.5rem 1rem 1.9rem}
+}
 .modal-author{font-size:13px;color:var(--muted);margin-bottom:1rem}
 .modal-author-link{background:none;border:none;font:inherit;color:var(--muted);cursor:pointer;padding:0;transition:color .15s}
 .modal-author-link:hover{color:var(--accent2);text-decoration:underline}
@@ -653,7 +734,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 #homeView.active{display:block}
 body.home-active .hero,body.home-active .main{display:none!important}
 
-.home-nav-btn{padding:7px 16px;border-radius:30px;background:transparent;border:1px solid var(--border2);color:var(--muted);font-size:12.5px;font-weight:500;cursor:pointer;font-family:var(--font-body);transition:all .18s}
+.home-nav-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:30px;background:transparent;border:1px solid var(--border2);color:var(--muted);font-size:12.5px;font-weight:500;cursor:pointer;font-family:var(--font-body);transition:all .18s}
 .home-nav-btn:hover{border-color:var(--accent);color:var(--accent2)}
 .home-nav-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2)}
 
@@ -679,12 +760,18 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .hv-cta-sec:hover{border-color:var(--accent);color:var(--accent2);transform:translateY(-2px)}
 
 /* Stats band con animación counter-up */
-.hv-stats-band{background:var(--surface);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);padding:1.75rem 2rem;display:flex;justify-content:center;gap:0;flex-wrap:wrap}
-.hv-stat{display:flex;flex-direction:column;align-items:center;padding:0 3rem;border-right:1px solid var(--border)}
+.hv-stats-band{position:relative;background:linear-gradient(180deg,var(--surface) 0%,rgba(22,18,26,.6) 100%);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);padding:2.4rem 2rem;display:flex;justify-content:center;gap:0;flex-wrap:wrap;overflow:hidden}
+.hv-stats-band::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--rose),var(--teal));opacity:.6}
+.hv-stats-band::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,234,245,0.05) 1px,transparent 1px);background-size:20px 20px;-webkit-mask-image:radial-gradient(ellipse at 50% 40%,rgba(0,0,0,.7) 0%,transparent 72%);mask-image:radial-gradient(ellipse at 50% 40%,rgba(0,0,0,.7) 0%,transparent 72%);pointer-events:none}
+.hv-stat{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;padding:.2rem 3.2rem;border-right:1px solid var(--border);transition:transform .25s ease}
 .hv-stat:last-child{border-right:none}
-.hv-stat-n{font-family:var(--font-display);font-size:2.8rem;font-weight:300;line-height:1;color:var(--text);transition:color .3s}
+.hv-stat:hover{transform:translateY(-3px)}
+.hv-stat-icon{width:24px;height:24px;margin-bottom:.7rem;color:var(--accent2);opacity:.8;transition:opacity .25s}
+.hv-stat:hover .hv-stat-icon{opacity:1}
+.hv-stat-n{font-family:var(--font-display);font-size:3.2rem;font-weight:300;line-height:1;color:var(--text);transition:color .3s;text-shadow:0 0 24px rgba(192,111,196,0.18)}
 .hv-stat-n em{font-style:italic;color:var(--accent)}
-.hv-stat-l{font-size:10.5px;color:var(--muted);letter-spacing:.09em;text-transform:uppercase;margin-top:4px}
+.hv-stat:hover .hv-stat-n{color:var(--accent2)}
+.hv-stat-l{font-size:10.5px;color:var(--muted);letter-spacing:.09em;text-transform:uppercase;margin-top:6px}
 
 /* Feature cards */
 .hv-features{max-width:1100px;margin:0 auto;padding:4.5rem 2rem 0;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
@@ -692,7 +779,12 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .hv-feat-card::before{content:attr(data-n);position:absolute;bottom:-14px;right:6px;font-family:var(--font-display);font-size:6rem;font-weight:800;font-style:italic;color:transparent;-webkit-text-stroke:1.5px rgba(180,120,200,.06);pointer-events:none;line-height:1}
 .hv-feat-card.clickable{cursor:pointer;transition:background .18s,border-color .18s}
 .hv-feat-card.clickable:hover{background:var(--surface2)}
-.hv-feat-icon{font-size:1.9rem;margin-bottom:1.1rem;display:block}
+.hv-feat-icon{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;background:radial-gradient(circle,var(--accent-soft) 0%,transparent 72%);border:1px solid var(--border2);position:relative}
+.hv-feat-icon svg{width:24px;height:24px;color:var(--accent2)}
+.hv-feat-card[data-n="02"] .hv-feat-icon{background:radial-gradient(circle,var(--gold-soft) 0%,transparent 72%)}
+.hv-feat-card[data-n="02"] .hv-feat-icon svg{color:var(--gold)}
+.hv-feat-card[data-n="03"] .hv-feat-icon{background:radial-gradient(circle,rgba(91,188,176,0.16) 0%,transparent 72%)}
+.hv-feat-card[data-n="03"] .hv-feat-icon svg{color:var(--teal)}
 .hv-feat-h3{font-family:var(--font-display);font-size:1.4rem;font-weight:600;color:var(--text);margin-bottom:.65rem}
 .hv-feat-p{font-size:13px;color:var(--muted);line-height:1.8}
 .hv-feat-link{display:inline-flex;align-items:center;gap:.35em;margin-top:1.1rem;font-size:12.5px;font-weight:600;color:var(--accent2);background:none;border:none;cursor:pointer;font-family:var(--font-body);padding:0;transition:opacity .15s;text-decoration:none}
@@ -765,9 +857,10 @@ body.home-active .hero,body.home-active .main{display:none!important}
   .hv-safi-left{padding:2rem 1.5rem 1.5rem}
   .hv-safi-right{padding:0 1.5rem 2rem;border-top:1px solid var(--border)}
   .hv-how-grid{grid-template-columns:1fr}
-  .hv-stat{padding:.85rem 1.5rem;border-right:none;border-bottom:1px solid var(--border)}
+  .hv-stat{padding:1rem 1.5rem;border-right:none;border-bottom:1px solid var(--border)}
   .hv-stat:last-child{border-bottom:none}
   .hv-stats-band{flex-direction:column}
+  .hv-stat-n{font-size:2.4rem}
   .safi-items{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
 }
 .sol-form-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1.5rem 1.75rem 1.75rem}
@@ -1202,6 +1295,47 @@ body.home-active .hero,body.home-active .main{display:none!important}
 
 /* badges de logros en "Mi estantería" */
 .shelf-badges-row{display:flex;gap:.6rem;flex-wrap:wrap;padding:.2rem 0}
+
+/* ── Calendario de lecturas ── */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;gap:.75rem;flex-wrap:wrap}
+.cal-title{font-family:var(--font-display);font-size:1.5rem;font-weight:600;color:var(--text);text-transform:capitalize}
+.cal-nav{display:flex;align-items:center;gap:.5rem}
+.cal-nav-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .15s}
+.cal-nav-btn:hover{background:var(--surface3);border-color:rgba(192,111,196,.4)}
+.cal-today-btn{padding:6px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--muted);font-size:12px;cursor:pointer;font-family:var(--font-body);transition:all .15s}
+.cal-today-btn:hover{color:var(--text);border-color:rgba(192,111,196,.4)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-weekday{text-align:center;font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding-bottom:6px}
+.cal-day{min-height:132px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);padding:6px;cursor:default;display:flex;flex-direction:column;gap:4px;transition:all .15s}
+.cal-day.has-books{cursor:pointer;border-color:rgba(192,111,196,.25)}
+.cal-day.has-books:hover{border-color:rgba(192,111,196,.55);background:var(--surface3)}
+.cal-day.is-today{border-color:rgba(201,151,90,.6);box-shadow:0 0 0 1px rgba(201,151,90,.3) inset}
+.cal-day.is-selected{border-color:var(--accent2);background:var(--accent-soft)}
+.cal-day.empty-cell{background:transparent;border:none}
+.cal-day-num{font-size:12px;color:var(--muted);font-weight:500}
+.cal-day.is-today .cal-day-num{color:var(--gold);font-weight:700}
+.cal-day-covers{display:flex;flex-wrap:wrap;gap:3px;align-items:flex-end;flex:1}
+.cal-cover-thumb{width:44px;height:62px;border-radius:5px;object-fit:cover;flex-shrink:0;border:2px solid transparent;display:block;background:var(--surface3)}
+.cal-cover-thumb.dot-reading{border-color:var(--gold)}
+.cal-cover-thumb.dot-read{border-color:var(--teal)}
+.cal-cover-ph{width:44px;height:62px;border-radius:5px;flex-shrink:0;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:16px;border:2px solid transparent}
+.cal-cover-ph.dot-reading{border-color:var(--gold)}
+.cal-cover-ph.dot-read{border-color:var(--teal)}
+.cal-day-more{font-size:9px;color:var(--muted);align-self:flex-end;padding-bottom:2px}
+.cal-legend{display:flex;gap:1.2rem;flex-wrap:wrap;margin:1rem 0 1.5rem;font-size:12px;color:var(--muted)}
+.cal-legend span{display:inline-flex;align-items:center;gap:.4rem}
+.cal-legend .cal-dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.cal-legend .cal-dot.dot-reading{background:var(--gold)}
+.cal-legend .cal-dot.dot-read{background:var(--teal)}
+.cal-day-panel{margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid var(--border)}
+.cal-day-panel-title{font-family:var(--font-display);font-size:1.15rem;color:var(--text);margin-bottom:.8rem}
+.cal-panel-book{display:flex;align-items:center;gap:.7rem;padding:.5rem;border-radius:10px;cursor:pointer;transition:background .15s}
+.cal-panel-book:hover{background:var(--surface2)}
+.cal-panel-cover{width:36px;height:52px;border-radius:5px;object-fit:cover;flex-shrink:0;background:var(--surface3)}
+.cal-panel-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.cal-panel-title{font-size:13px;color:var(--text);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-panel-range{font-size:11px;color:var(--muted)}
+.cal-empty-msg{text-align:center;color:var(--muted);padding:2.5rem 0;font-size:13px}
 .shelf-badge{width:52px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4))}
 .shelf-badge.locked{opacity:.25;filter:grayscale(1)}
 .shelf-badges-more{background:none;border:none;color:var(--accent2);font-size:11.5px;font-family:var(--font-body);cursor:pointer;padding:.3rem 0;text-align:left;width:100%}
@@ -1227,20 +1361,24 @@ body.home-active .hero,body.home-active .main{display:none!important}
 
 /* insignias generales (bienvenida, primera valoración, spicy, comunidad…) */
 .logros-section-label{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 1rem}
-.logros-general-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.9rem;padding-bottom:1.75rem;margin-bottom:1.75rem;border-bottom:1px solid var(--border)}
-.logros-general-badge{display:flex;flex-direction:column;align-items:center;gap:.65rem;text-align:center;padding:1.4rem 1rem 1.15rem;background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,0.85) 100%);border:1px solid var(--border2);border-radius:var(--radius);transition:transform .18s,border-color .18s}
+.logros-general-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1.3rem;padding-bottom:1.75rem;margin-bottom:1.75rem;border-bottom:1px solid var(--border)}
+.logros-general-badge{display:flex;flex-direction:column;align-items:center;gap:.9rem;text-align:center;padding:2rem 1.2rem 1.6rem;background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,0.85) 100%);border:1px solid var(--border2);border-radius:var(--radius);transition:transform .18s,border-color .18s}
 .logros-general-badge:hover{transform:translateY(-3px);border-color:rgba(192,111,196,0.4)}
-.logros-general-badge-imgbox{width:76px;height:76px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logros-general-badge-imgbox{width:132px;height:132px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .logros-general-badge img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.45));transition:transform .15s}
 .logros-general-badge:hover img{transform:scale(1.06)}
 .logros-general-badge.locked{opacity:.55}
 .logros-general-badge.locked img{opacity:.3;filter:grayscale(1)}
-.logros-general-badge-name{font-size:12px;font-weight:500;color:var(--text);line-height:1.35}
+.logros-general-badge-name{font-size:14px;font-weight:500;color:var(--text);line-height:1.35}
 .logros-general-badge.locked .logros-general-badge-name{color:var(--muted);opacity:.7}
+.logros-badge-fallback{display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:3.4rem;opacity:.55}
+.logros-general-badge.locked .logros-badge-fallback{opacity:.22;filter:grayscale(1)}
+.hito-pin-fallback{display:none;font-size:3.4rem;text-align:center;line-height:1;filter:drop-shadow(0 10px 24px rgba(0,0,0,.55))}
 @media(max-width:600px){
-  .logros-general-grid{grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:.6rem}
-  .logros-general-badge{padding:1.1rem .6rem .9rem}
-  .logros-general-badge-imgbox{width:60px;height:60px}
+  .logros-general-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.8rem}
+  .logros-general-badge{padding:1.5rem .8rem 1.2rem}
+  .logros-general-badge-imgbox{width:100px;height:100px}
+  .logros-general-badge-name{font-size:12.5px}
   .logros-edition{padding:.9rem 1rem;gap:.75rem}
   .logros-badge-mini-imgbox{width:46px;height:46px}
 }
@@ -1250,13 +1388,16 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .shelf-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex:1;padding:8px 0;border-radius:10px;border:1px solid var(--border2);background:var(--surface2);color:var(--muted);font-size:12.5px;font-family:var(--font-body);font-weight:500;cursor:pointer;transition:all .18s;user-select:none}
 .shelf-btn:hover{border-color:rgba(192,111,196,.4);color:var(--text);background:var(--surface3)}
 .shelf-btn.want{background:var(--accent-soft);border-color:rgba(192,111,196,.45);color:var(--accent2)}
+.shelf-btn.reading{background:var(--gold-soft);border-color:rgba(201,151,90,.45);color:var(--gold)}
 .shelf-btn.read{background:rgba(91,188,176,.12);border-color:rgba(91,188,176,.4);color:var(--teal)}
 
 /* ── SHELF BUTTONS (tarjeta) ── */
-.card-shelf-btns{display:flex;gap:.4rem;margin-top:.6rem}
-.card-shelf-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex:1;padding:6px 4px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--muted);font-size:11px;font-family:var(--font-body);font-weight:500;cursor:pointer;transition:all .2s;user-select:none;letter-spacing:.01em}
+.card-shelf-btns{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
+.card-shelf-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex:1 1 calc(50% - .2rem);padding:6px 4px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--muted);font-size:11px;font-family:var(--font-body);font-weight:500;cursor:pointer;transition:all .2s;user-select:none;letter-spacing:.01em}
 .card-shelf-btn:hover{border-color:rgba(192,111,196,.5);color:var(--accent2);background:var(--accent-soft)}
 .card-shelf-btn.want{background:var(--accent-soft);border-color:rgba(192,111,196,.5);color:var(--accent2)}
+.card-shelf-btn.reading{background:var(--gold-soft);border-color:rgba(201,151,90,.5);color:var(--gold)}
+.card-shelf-btn.reading:hover{background:rgba(201,151,90,.2);border-color:rgba(201,151,90,.65);color:var(--gold)}
 .card-shelf-btn.read{background:rgba(91,188,176,.12);border-color:rgba(91,188,176,.45);color:var(--teal)}
 .card-shelf-btn.read:hover{background:rgba(91,188,176,.2);border-color:rgba(91,188,176,.65);color:var(--teal)}
 .card-shelf-icon{font-size:12px;line-height:1}
@@ -1267,6 +1408,117 @@ body.home-active .hero,body.home-active .main{display:none!important}
 #shelfView.active{display:block}
 #logrosView{display:none;position:relative;z-index:1;padding:2rem 2rem 5rem}
 #logrosView.active{display:block}
+#statsView{display:none;position:relative;z-index:1;padding:2rem 2rem 5rem}
+#statsView.active{display:block}
+#cartasView{display:none;position:relative;z-index:1;padding:2rem 2rem 5rem}
+#cartasView.active{display:block}
+
+/* ── CARTAS DE AUTORA ── */
+.cartas-sub{color:var(--muted);font-size:13px;max-width:640px;margin:.3rem 0 1.5rem}
+.cartas-progress-bar-wrap{display:flex;align-items:center;gap:.9rem;margin-bottom:1.6rem;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg)}
+.cartas-progress-num{font-family:var(--font-display);font-size:1.5rem;font-weight:600;color:var(--accent2);white-space:nowrap}
+.cartas-progress-num span{font-size:.9rem;color:var(--muted);font-weight:400;font-family:var(--font-body)}
+.cartas-progress-track{flex:1;height:6px;border-radius:4px;background:var(--surface3);overflow:hidden}
+.cartas-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--teal))}
+.cartas-toolbar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1.4rem}
+.cartas-search{flex:1;min-width:180px;padding:8px 14px;border-radius:30px;background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-family:var(--font-body);font-size:13px}
+.cartas-search::placeholder{color:var(--muted)}
+.cartas-filter-btn{padding:7px 15px;border-radius:30px;background:var(--surface2);border:1px solid var(--border2);color:var(--muted);font-size:12.5px;font-family:var(--font-body);cursor:pointer;white-space:nowrap;transition:all .15s}
+.cartas-filter-btn:hover{color:var(--text)}
+.cartas-filter-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent2);font-weight:500}
+.cartas-legend{display:flex;justify-content:flex-start;gap:1.2rem;flex-wrap:wrap;margin-bottom:1.8rem}
+.cartas-legend-item{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted)}
+.cartas-legend-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+
+.cartas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.8rem;justify-items:center}
+.cartas-empty{color:var(--muted);font-size:13px;padding:2rem 0;text-align:center;grid-column:1/-1}
+
+.cartas-groups{display:flex;flex-direction:column;gap:2.6rem}
+.cartas-group-header{display:flex;align-items:baseline;gap:.6rem;margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid var(--border2)}
+.cartas-group-header-label{font-family:var(--font-display);font-size:1.15rem;font-weight:600;color:var(--text);letter-spacing:.01em}
+.cartas-group-header-count{font-size:11.5px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:2px 10px}
+
+.cc-scene{perspective:1600px;width:200px;height:325px}
+.cc-card{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1);cursor:pointer}
+.cc-scene.flipped .cc-card{transform:rotateY(180deg)}
+.cc-face{position:absolute;inset:0;border-radius:16px;backface-visibility:hidden;overflow:hidden;box-shadow:0 18px 45px rgba(0,0,0,.5),0 2px 10px rgba(0,0,0,.32)}
+.cc-front{background:var(--surface);border:1.5px solid var(--tier-c1)}
+.cc-front::after{content:'';position:absolute;inset:0;border-radius:16px;padding:1.5px;background:linear-gradient(135deg,var(--tier-c1),var(--tier-c2),var(--tier-c1));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.9}
+.cc-scene.legendaria .cc-front::after{animation:cc-shimmer 3.5s linear infinite}
+@keyframes cc-shimmer{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(45deg)}}
+.cc-back{background:var(--surface);border:1.5px solid var(--tier-c1);transform:rotateY(180deg);padding:1rem;display:flex;flex-direction:column}
+
+.cc-constellation{position:relative;height:118px;background:var(--tier-bgtop)}
+.cc-constellation svg{width:100%;height:100%;display:block}
+.cc-count{position:absolute;top:9px;left:10px;display:flex;align-items:center;gap:5px;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--tier-text);background:rgba(0,0,0,.32);padding:3px 8px;border-radius:20px;backdrop-filter:blur(3px)}
+.cc-gem{position:absolute;top:9px;right:10px;width:20px;height:20px}
+.cc-lock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,8,12,.4)}
+.cc-lock svg{width:26px;height:26px;opacity:.8}
+
+.cc-namewrap{padding:.7rem 1rem .1rem;text-align:center}
+.cc-name{font-family:var(--font-display);font-weight:600;font-size:17px;line-height:1.15;color:var(--text)}
+.cc-tier{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--tier-text);margin-top:3px;font-weight:600}
+.cc-read-badge{font-size:9px;color:var(--muted);margin-top:2px}
+
+.cc-chips{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;padding:.45rem .8rem 0}
+.cc-chip{font-size:9px;padding:2.5px 8px;border-radius:20px;background:var(--surface2);border:1px solid var(--border2);color:var(--muted);white-space:nowrap}
+
+.cc-covers{display:flex;justify-content:center;margin-top:auto;padding-bottom:.8rem;height:58px;position:relative}
+.cc-covers img{width:34px;height:50px;object-fit:cover;border-radius:4px;border:1.5px solid var(--surface);box-shadow:0 4px 10px rgba(0,0,0,.5);position:absolute;bottom:0}
+.cc-covers img:nth-child(1){transform:rotate(-11deg) translateX(-27px)}
+.cc-covers img:nth-child(2){transform:translateX(0);z-index:2}
+.cc-covers img:nth-child(3){transform:rotate(11deg) translateX(27px)}
+
+.cc-scene.locked .cc-front{filter:grayscale(1) brightness(.55)}
+
+.cc-back-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem}
+.cc-back-name{font-family:var(--font-display);font-weight:600;font-size:14px}
+.cc-back-seal{width:14px;height:14px;flex-shrink:0}
+.cc-back-titles{flex:1;overflow-y:auto;font-size:10px;line-height:1.85;padding-right:2px}
+.cc-back-titles li{list-style:none;display:flex;gap:6px;align-items:baseline;color:var(--muted)}
+.cc-back-titles li::before{content:'✦';font-size:7px;color:var(--muted)}
+.cc-back-titles li.read{color:var(--text)}
+.cc-back-titles li.read::before{color:var(--tier-text)}
+.cc-back-progress-label{font-size:9px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:4px;margin-top:.4rem}
+.cc-back-progress{height:4px;border-radius:3px;background:var(--surface3);overflow:hidden}
+.cc-back-progress-fill{height:100%;background:linear-gradient(90deg,var(--tier-c1),var(--tier-c2))}
+.cc-back-progress2{height:4px;border-radius:3px;background:var(--surface3);overflow:hidden;margin-top:2px}
+.cc-back-progress2-fill{height:100%;background:var(--teal)}
+.cc-flip-hint{text-align:center;font-size:9px;color:var(--muted);margin-top:.3rem;opacity:.7}
+.cc-locked-msg{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--muted);font-size:11px;padding:0 .3rem;line-height:1.6}
+@media(max-width:600px){.cc-scene{width:172px;height:280px}.cartas-grid{gap:1.3rem}}
+.stats-block{margin-bottom:2.5rem}
+.mystat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;margin:1.75rem 0 2.5rem}
+.mystat{position:relative;text-align:center;padding:1.3rem .8rem;background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,.85) 100%);border:1px solid var(--border2);border-radius:var(--radius-lg);overflow:hidden}
+.mystat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--rose),var(--teal));opacity:.5}
+.mystat-n{font-family:var(--font-display);font-size:1.9rem;font-weight:300;color:var(--text);line-height:1.15}
+.mystat-l{font-size:10.5px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-top:5px}
+@media(max-width:700px){.mystat-row{grid-template-columns:repeat(2,1fr)}}
+
+.ryear-chart{display:flex;align-items:flex-end;gap:1.1rem;padding:1.5rem 1rem .5rem;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);overflow-x:auto}
+.ryear-col{display:flex;flex-direction:column;align-items:center;gap:.5rem;min-width:38px}
+.ryear-bar-n{font-size:12px;font-weight:700;color:var(--text);line-height:1}
+.ryear-bar-track{width:30px;height:140px;display:flex;align-items:flex-end;background:var(--surface2);border-radius:8px;overflow:hidden}
+.ryear-bar-fill{width:100%;background:linear-gradient(180deg,var(--accent2),var(--accent));border-radius:8px 8px 0 0;transition:height .5s ease}
+.ryear-year{font-size:11px;color:var(--muted);letter-spacing:.02em}
+.ryear-year.is-best{color:var(--accent2);font-weight:600}
+.stats-block-note{font-size:11.5px;color:var(--muted);margin-top:.6rem}
+.curio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem}
+@media(max-width:700px){.curio-grid{grid-template-columns:1fr}}
+.curio-card{padding:1.1rem 1rem;background:linear-gradient(160deg,var(--surface) 0%,rgba(30,25,42,.85) 100%);border:1px solid var(--border2);border-radius:var(--radius-lg);display:flex;flex-direction:column;gap:.3rem}
+.curio-icon{font-size:1.1rem}
+.curio-label{font-size:10px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase}
+.curio-value{font-family:var(--font-display);font-size:1.15rem;color:var(--text);font-style:italic;line-height:1.25}
+.curio-sub{font-size:11.5px;color:var(--muted)}
+
+.rtag-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+@media(max-width:700px){.rtag-grid{grid-template-columns:1fr}}
+.rtag-col-title{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:.9rem}
+.rtag-row{display:grid;grid-template-columns:1fr 2fr auto;align-items:center;gap:.6rem;margin-bottom:.55rem}
+.rtag-label{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rtag-track{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden}
+.rtag-fill{height:100%;border-radius:6px;transition:width .5s ease}
+.rtag-count{font-size:11px;color:var(--muted);font-weight:600;min-width:14px;text-align:right}
 .shelf-layout{display:grid;grid-template-columns:220px 1fr;gap:0;max-width:1200px;margin:0 auto;min-height:80vh}
 .shelf-sidebar{border-right:1px solid var(--border2);padding:2rem 0;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto}
 .shelf-sidebar-header{padding:0 1.5rem 1.2rem;border-bottom:1px solid var(--border)}
@@ -1281,6 +1533,10 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .shelf-nav-item.active .shelf-nav-count{background:rgba(192,111,196,.2);color:var(--accent2)}
 .shelf-back-link{display:flex;align-items:center;gap:.4em;padding:6px 10px;border-radius:8px;color:var(--muted);font-size:12.5px;cursor:pointer;font-family:var(--font-body);background:transparent;border:none;width:100%;transition:all .15s;margin-top:.5rem}
 .shelf-back-link:hover{color:var(--accent2)}
+.shelf-progress-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;margin-bottom:2px;border:1px solid rgba(201,151,90,.3);background:rgba(201,151,90,.07);cursor:pointer;transition:all .15s;width:100%;text-align:left;font-family:var(--font-body);color:var(--text)}
+.shelf-progress-item:hover{background:rgba(201,151,90,.14);border-color:rgba(201,151,90,.5)}
+.shelf-progress-item-label{font-size:13px;display:flex;align-items:center;gap:6px}
+.shelf-progress-arrow{font-size:11px;color:#c9975a;white-space:nowrap;display:flex;align-items:center;gap:4px}
 .shelf-main{padding:2rem 2rem 4rem;min-width:0}
 .shelf-main-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem}
 .shelf-toolbar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem}
@@ -1298,7 +1554,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .shelf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.85rem}
 .shelf-book{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .22s}
 .shelf-book:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.5)}
-.shelf-book .shelf-book-cover{aspect-ratio:2/3;overflow:hidden;background:var(--surface2)}
+.shelf-book .shelf-book-cover{position:relative;aspect-ratio:2/3;overflow:hidden;background:var(--surface2)}
 .shelf-book .shelf-book-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .shelf-book:hover .shelf-book-cover img{transform:scale(1.04)}
 .shelf-book-cover-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--muted)}
@@ -1318,7 +1574,46 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .shelf-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem;color:var(--muted);text-align:center;gap:.75rem}
 .shelf-empty-icon{font-size:2.5rem;opacity:.5}
 .shelf-empty p{font-size:13.5px;line-height:1.6;max-width:300px}
-@media(max-width:700px){.shelf-layout{grid-template-columns:1fr}.shelf-sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border2);padding:1rem 0}.shelf-sidebar-header{padding:0 1rem .75rem}.shelf-sidebar-section{padding:.5rem 1rem .3rem}.shelf-main{padding:1.25rem 1rem 3rem}#logrosView{padding:1.25rem 1rem 3rem}}
+@media(max-width:700px){.shelf-layout{grid-template-columns:1fr}.shelf-sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border2);padding:1rem 0}.shelf-sidebar-header{padding:0 1rem .75rem}.shelf-sidebar-section{padding:.5rem 1rem .3rem}.shelf-main{padding:1.25rem 1rem 3rem}#logrosView{padding:1.25rem 1rem 3rem}#statsView{padding:1.25rem 1rem 3rem}}
+
+/* ══════════════════════════════════════════════════════════════
+   FIX MÓVIL — ventanas que no se cortan + proporciones uniformes
+   Este bloque va al final a propósito, para ganar en la cascada
+   a las reglas dispersas de arriba sin tener que tocarlas todas.
+   ══════════════════════════════════════════════════════════════ */
+@media(max-width:600px){
+
+  /* -- Modales: siempre dentro de la pantalla y con scroll propio -- */
+  .modal-bg,.info-modal-bg{padding:.6rem .5rem;align-items:flex-start}
+  .modal,.info-modal{
+    max-width:100%;
+    max-height:calc(100vh - 1.2rem);
+    max-height:calc(100dvh - 1.2rem);
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    border-radius:16px;
+  }
+  .modal-cover-strip,.modal-cover-ph{border-radius:16px 16px 0 0}
+  .info-modal-body{max-height:48vh;max-height:48dvh}
+  .hito-modal-bg{align-items:flex-start;padding:2.5rem .75rem;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .hito-card{margin:auto;width:100%;max-width:260px}
+
+  /* -- El modal de ficha de libro: mismo tamaño de letra que el resto -- */
+  .modal-title{font-size:1.55rem;line-height:1.1}
+  .modal-body{padding:1.1rem 1.1rem 1.5rem}
+  .modal-synopsis{font-size:12.5px}
+  .modal-meta-grid{gap:.5rem .6rem;margin-bottom:1.1rem}
+  .modal-tags{margin-bottom:.9rem}
+
+  /* -- Tarjetas/cajas que solían salirse del ancho o verse desiguales -- */
+  .bingo-login-card{padding:1.6rem 1.1rem;max-width:100%}
+  .filter-shell{border-radius:14px}
+  .info-highlight{padding:.8rem 1rem;font-size:12.5px}
+
+  /* -- Nada debe generar scroll horizontal -- */
+  .main,.hero{overflow-x:hidden}
+  img{max-width:100%}
+}
 </style>
 </head>
 <body>
@@ -1330,8 +1625,8 @@ body.home-active .hero,body.home-active .main{display:none!important}
     <span class="logo-sub">La Estantería</span>
   </a>
   <div class="topbar-right" style="display:flex;align-items:center;gap:8px">
-    <button class="home-nav-btn" id="homeNavBtn" onclick="showHome()">⌂ Inicio</button>
-    <button class="home-nav-btn" id="shelfNavBtn" onclick="location.href='https://xxmadwavs.github.io/Tinta-Sapphic-La-Estanteria/?section=thais'" style="display:none">📚 Estantería</button>
+    <button class="home-nav-btn" id="homeNavBtn" onclick="showHome()"><span class="icon nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5L12 4l8 7.5"/><path d="M6 10.3V20a1 1 0 0 0 1 1h3v-5h4v5h3a1 1 0 0 0 1-1v-9.7"/></svg></span> Inicio</button>
+    <button class="home-nav-btn" id="shelfNavBtn" onclick="location.href='https://xxmadwavs.github.io/Tinta-Sapphic-La-Estanteria/?section=thais'" style="display:none"><span class="icon nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.2c2-.9 5-.9 7 0v14c-2-.9-5-.9-7 0v-14Z"/><path d="M21 5.2c-2-.9-5-.9-7 0v14c2-.9 5-.9 7 0v-14Z"/></svg></span> Estantería</button>
     <div id="authArea">
       <button class="btn-login" onclick="openAuthModal()">Entrar para votar</button>
     </div>
@@ -1350,9 +1645,9 @@ body.home-active .hero,body.home-active .main{display:none!important}
       Vota tus favoritos, descubre el SafiClub y construye el ranking juntas.
     </p>
     <div class="hv-ctas">
-      <button class="hv-cta hv-cta-main" onclick="showCatalog()">✦ Ver la estantería</button>
-      <button class="hv-cta hv-cta-reads" onclick="showCatalog('safi')">🌹 SafiClub</button>
-      <button class="hv-cta hv-cta-sec" onclick="showCatalog('top10')">🏆 Top 10</button>
+      <button class="hv-cta hv-cta-main" onclick="showCatalog()"><span class="icon cta-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M12 3l1.8 5 5 1.8-5 1.8-1.8 5-1.8-5-5-1.8 5-1.8L12 3Z"/></svg></span> Ver la estantería</button>
+      <button class="hv-cta hv-cta-reads" onclick="showCatalog('safi')"><span class="icon cta-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.6c1.7 0 3.1 1.2 3.1 2.9 0 1.3-.9 2.3-1.9 2.8 1.2.2 2.3 1.1 2.3 2.5 0 1.5-1.5 2.6-3.5 2.6s-3.5-1.1-3.5-2.6c0-1.4 1.1-2.3 2.3-2.5-1-.5-1.9-1.5-1.9-2.8 0-1.7 1.4-2.9 3.1-2.9Z"/><path d="M12 14.4V21"/><path d="M12 16.9c-1.1 0-2.1-.6-2.6-1.6"/><path d="M12 18.9c1.2 0 2.2-.7 2.7-1.8"/></svg></span> SafiClub</button>
+      <button class="hv-cta hv-cta-sec" onclick="showCatalog('top10')"><span class="icon cta-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12c0 3.8 2.4 7.1 5.7 8.1"/><path d="M19.5 12c0 3.8-2.4 7.1-5.7 8.1"/><path d="M5.4 9.7l1.5.6M5.1 12.5l1.6.3M6 15.2l1.5-.1M7.3 17.6l1.5-.6"/><path d="M18.6 9.7l-1.5.6M18.9 12.5l-1.6.3M18 15.2l-1.5-.1M16.7 17.6l-1.5-.6"/></svg></span> Top 10</button>
     </div>
     <div class="hv-url-row">
       <a class="hv-url-link" href="https://xxmadwavs.github.io/Tinta-Sapphic-La-Estanteria" target="_blank">xxmadwavs.github.io/Tinta-Sapphic-La-Estanteria</a>
@@ -1360,27 +1655,39 @@ body.home-active .hero,body.home-active .main{display:none!important}
   </div>
 
   <div class="hv-stats-band">
-    <div class="hv-stat"><div class="hv-stat-n" id="hvStatTotal">—</div><div class="hv-stat-l">Libros</div></div>
-    <div class="hv-stat"><div class="hv-stat-n" id="hvStatVotos">—</div><div class="hv-stat-l">Valoraciones</div></div>
-    <div class="hv-stat"><div class="hv-stat-n" id="hvStatSafi">—</div><div class="hv-stat-l">SafiClub</div></div>
-    <div class="hv-stat"><div class="hv-stat-n" id="hvStatThais">—</div><div class="hv-stat-l">Libros Thais</div></div>
+    <div class="hv-stat">
+      <span class="icon hv-stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.2c2-.9 5-.9 7 0v14c-2-.9-5-.9-7 0v-14Z"/><path d="M21 5.2c-2-.9-5-.9-7 0v14c2-.9 5-.9 7 0v-14Z"/></svg></span>
+      <div class="hv-stat-n" id="hvStatTotal">—</div><div class="hv-stat-l">Libros</div>
+    </div>
+    <div class="hv-stat">
+      <span class="icon hv-stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"><path d="M12 2.7l2.85 6.15 6.65.62-5.02 4.55 1.5 6.46L12 17.1l-5.98 2.6 1.5-6.46-5.02-4.55 6.65-.62L12 2.7Z"/></svg></span>
+      <div class="hv-stat-n" id="hvStatVotos">—</div><div class="hv-stat-l">Valoraciones</div>
+    </div>
+    <div class="hv-stat">
+      <span class="icon hv-stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.6c1.7 0 3.1 1.2 3.1 2.9 0 1.3-.9 2.3-1.9 2.8 1.2.2 2.3 1.1 2.3 2.5 0 1.5-1.5 2.6-3.5 2.6s-3.5-1.1-3.5-2.6c0-1.4 1.1-2.3 2.3-2.5-1-.5-1.9-1.5-1.9-2.8 0-1.7 1.4-2.9 3.1-2.9Z"/><path d="M12 14.4V21"/><path d="M12 16.9c-1.1 0-2.1-.6-2.6-1.6"/><path d="M12 18.9c1.2 0 2.2-.7 2.7-1.8"/></svg></span>
+      <div class="hv-stat-n" id="hvStatSafi">—</div><div class="hv-stat-l">SafiClub</div>
+    </div>
+    <div class="hv-stat">
+      <span class="icon hv-stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 7.5 6 11a6 6 0 1 1-12 0c0-3.5 3-7 6-11Z"/></svg></span>
+      <div class="hv-stat-n" id="hvStatThais">—</div><div class="hv-stat-l">Libros Thais</div>
+    </div>
   </div>
 
   <div class="hv-features">
     <div class="hv-feat-card clickable" data-n="01" onclick="showCatalog()">
-      <span class="hv-feat-icon">📚</span>
+      <span class="hv-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.2c2-.9 5-.9 7 0v14c-2-.9-5-.9-7 0v-14Z"/><path d="M21 5.2c-2-.9-5-.9-7 0v14c2-.9 5-.9 7 0v-14Z"/></svg></span>
       <h3 class="hv-feat-h3">Explora la estantería</h3>
       <p class="hv-feat-p">Libros sapphic organizados por sección — Thais, Occidentales, En Español, Baihee y más. Filtra por género, dinámica, tropo y nivel spicy.</p>
       <button class="hv-feat-link" onclick="showCatalog()">→ Abrir estantería</button>
     </div>
     <div class="hv-feat-card clickable" data-n="02" onclick="showCatalog('top10')">
-      <span class="hv-feat-icon">★</span>
+      <span class="hv-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M12 2.7l2.85 6.15 6.65.62-5.02 4.55 1.5 6.46L12 17.1l-5.98 2.6 1.5-6.46-5.02-4.55 6.65-.62L12 2.7Z"/></svg></span>
       <h3 class="hv-feat-h3">Vota estrellas y nivel spicy</h3>
       <p class="hv-feat-p">Inicia sesión y puntúa del 1 al 5 cualquier libro. Además, puedes votar el nivel spicy 🌶 de cada libro — cuantas más lo voten, más preciso será el dato para toda la comunidad.</p>
       <button class="hv-feat-link" onclick="showCatalog('top10')">→ Ver el Top 10</button>
     </div>
     <div class="hv-feat-card clickable" data-n="03" onclick="showCatalog()">
-      <span class="hv-feat-icon">🔍</span>
+      <span class="hv-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.3" cy="10.3" r="6.3"/><path d="M20 20l-4.8-4.8"/></svg></span>
       <h3 class="hv-feat-h3">Filtros avanzados</h3>
       <p class="hv-feat-p">Busca por dinámica de pareja, tropos, nivel spicy, saga, año de publicación y más. Combina varios filtros para encontrar exactamente lo que buscas.</p>
       <button class="hv-feat-link" onclick="showCatalog()">→ Usar filtros</button>
@@ -1448,14 +1755,14 @@ body.home-active .hero,body.home-active .main{display:none!important}
 
   <!-- TABS -->
   <div class="tab-bar">
-    <button class="tab-btn active" id="tabEstanteria" onclick="switchTab('estanteria')">📚 Estantería</button>
-    <button class="tab-btn" id="tabTop10" onclick="switchTab('top10')">🏆 Top 10 Thais</button>
-    <button class="tab-btn" id="tabSafi" onclick="switchTab('safi')">🌹 SafiClub</button>
-    <button class="tab-btn" id="tabCanal" onclick="switchTab('canal')">📻 Recomendaciones del Canal</button>
-    <button class="tab-btn" id="tabMyrec" onclick="switchTab('myrec')">💌 Mis Recomendaciones</button>
-    <button class="tab-btn" id="tabSolicitudes" onclick="switchTab('solicitudes')">📬 Solicitudes</button>
-    <button class="tab-btn" id="tabRuleta" onclick="switchTab('ruleta')">🎡 Ruleta</button>
-    <button class="tab-btn" id="tabBingo" onclick="switchTab('bingo')">🎲 Bingo</button>
+    <button class="tab-btn active" id="tabEstanteria" onclick="switchTab('estanteria')">Estantería</button>
+    <button class="tab-btn" id="tabTop10" onclick="switchTab('top10')">Top 10 Thais</button>
+    <button class="tab-btn" id="tabSafi" onclick="switchTab('safi')">SafiClub</button>
+    <button class="tab-btn" id="tabCanal" onclick="switchTab('canal')">Recomendaciones del Canal</button>
+    <button class="tab-btn" id="tabMyrec" onclick="switchTab('myrec')">Mis Recomendaciones</button>
+    <button class="tab-btn" id="tabSolicitudes" onclick="switchTab('solicitudes')">Solicitudes</button>
+    <button class="tab-btn" id="tabRuleta" onclick="switchTab('ruleta')">Ruleta</button>
+    <button class="tab-btn" id="tabBingo" onclick="switchTab('bingo')">Bingo</button>
     <button class="tab-share-btn" id="tabShareBtn" onclick="copyTabLink()" title="Copiar enlace a esta sección">🔗 Copiar enlace</button>
   </div>
 
@@ -1553,6 +1860,11 @@ body.home-active .hero,body.home-active .main{display:none!important}
             <div class="fp-section collapsed auth-only" data-field="pais_cultura">
               <div class="fp-sec-label" onclick="toggleFpSection(this)"><span class="fp-sec-left"><span class="fp-sec-dot"></span>País <span class="dd-count" id="cntPais" style="display:none">0</span></span><span class="fp-sec-chevron">▼</span></div>
               <div class="fp-sec-body"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('pais_cultura','listPais',this.value)"></div><div class="dd-list" id="listPais"></div></div>
+            </div>
+            <!-- País de origen (solo registradas) -->
+            <div class="fp-section collapsed auth-only" data-field="pais_origen">
+              <div class="fp-sec-label" onclick="toggleFpSection(this)"><span class="fp-sec-left"><span class="fp-sec-dot"></span>País de origen <span class="dd-count" id="cntPaisOrigen" style="display:none">0</span></span><span class="fp-sec-chevron">▼</span></div>
+              <div class="fp-sec-body"><div class="dd-search"><input type="text" placeholder="Buscar…" oninput="filterDD('pais_origen','listPaisOrigen',this.value)"></div><div class="dd-list" id="listPaisOrigen"></div></div>
             </div>
             <!-- Valoración (solo registradas) -->
             <div class="fp-section no-accordion auth-only" id="secValoracion" data-field="valoracion">
@@ -1852,14 +2164,29 @@ body.home-active .hero,body.home-active .main{display:none!important}
           <span>＋ Quiero leer</span>
           <span class="shelf-nav-count" id="shelfWantCount">0</span>
         </button>
+        <button class="shelf-nav-item" id="shelfNavReading" onclick="switchShelf('reading')">
+          <span>📖 Leyendo</span>
+          <span class="shelf-nav-count" id="shelfReadingCount">0</span>
+        </button>
         <button class="shelf-nav-item" id="shelfNavRead" onclick="switchShelf('read')">
           <span>✓ Leídos</span>
           <span class="shelf-nav-count" id="shelfReadCount">0</span>
         </button>
       </div>
       <div class="shelf-sidebar-section">
-        <div class="shelf-sidebar-label">Logros</div>
-        <div class="shelf-badges-row" id="shelfBadgesRow"><!-- se rellena por JS --></div>
+        <div class="shelf-sidebar-label">Tu progreso</div>
+        <button class="shelf-progress-item" id="shelfNavCalendar" onclick="switchShelf('calendar')">
+          <span class="shelf-progress-item-label">📅 Calendario</span>
+          <span class="shelf-progress-arrow">→</span>
+        </button>
+        <button class="shelf-progress-item" onclick="openLogrosModal()">
+          <span class="shelf-progress-item-label">🏅 Logros</span>
+          <span class="shelf-progress-arrow">→</span>
+        </button>
+        <button class="shelf-progress-item" onclick="openStatsModal()">
+          <span class="shelf-progress-item-label">📊 Estadísticas</span>
+          <span class="shelf-progress-arrow">→</span>
+        </button>
       </div>
       <div class="shelf-sidebar-section" style="margin-top:auto;padding-top:1.5rem">
         <button class="shelf-back-link" onclick="closeShelf()">← Volver al catálogo</button>
@@ -1877,7 +2204,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
           </button>
         </div>
       </div>
-      <div class="shelf-toolbar">
+      <div class="shelf-toolbar" id="shelfToolbar">
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
           <input class="search-input" id="shelfSearchInput" type="search" placeholder="Buscar por título o autora…" oninput="shelfApplyFilters()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
@@ -1896,6 +2223,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
         <button class="shelf-clear-btn" onclick="shelfClearFilters()">✕ Limpiar</button>
       </div>
       <div id="shelfBooksContainer"></div>
+      <div id="shelfCalendarContainer" style="display:none"></div>
     </div>
   </div>
 </div>
@@ -1906,6 +2234,14 @@ body.home-active .hero,body.home-active .main{display:none!important}
     <button class="modal-close" onclick="closeBookModal()">✕</button>
     <button class="modal-share-btn" id="modalShareBtn" onclick="shareBook()" title="Copiar enlace a esta ficha">🔗</button>
     <div id="bookModalContent"></div>
+  </div>
+</div>
+
+<!-- SAGA MAP MODAL (constelación de orden de lectura) -->
+<div class="modal-bg" id="sagaModal">
+  <div class="modal sagamap-modal">
+    <button class="modal-close" onclick="closeSagaModal()">✕</button>
+    <div class="sagamap-body" id="sagaMapBody"></div>
   </div>
 </div>
 
@@ -1974,10 +2310,79 @@ body.home-active .hero,body.home-active .main{display:none!important}
       <div class="shelf-main-title">Mis logros</div>
     </div>
     <p class="logros-modal-sub">Cada insignia marca un paso en tu camino como lectora: tus valoraciones, tus casillas de bingo, tu paso por la comunidad. Línea y bingo quedan guardados por edición para siempre — si los consigues en una temporada pasada, ahí se quedan, aunque llegue una nueva.</p>
+    <div class="logros-section-label">Logros de lectura</div>
+    <div class="logros-general-grid" id="logrosLecturaGrid"><div class="logros-empty">Cargando…</div></div>
     <div class="logros-section-label">Insignias</div>
     <div class="logros-general-grid" id="logrosGeneralGrid"><div class="logros-empty">Cargando…</div></div>
     <div class="logros-section-label">Bingo por edición</div>
     <div class="logros-editions-list" id="logrosModalBody"><div class="logros-empty">Cargando…</div></div>
+  </div>
+</div>
+
+<!-- MIS ESTADÍSTICAS — dashboard personal de lectura -->
+<div id="statsView">
+  <div class="shelf-main" style="max-width:900px;margin:0 auto">
+    <button class="shelf-back-link" style="margin:0 0 1.5rem;padding:6px 10px" onclick="closeStatsModal()">← Volver al catálogo</button>
+    <div class="shelf-main-header">
+      <div class="shelf-main-title">Mis estadísticas</div>
+    </div>
+    <p class="logros-modal-sub">Un resumen de tu recorrido lector, construido a partir de tu historial de lecturas, valoraciones y votos de spicy.</p>
+
+    <div class="mystat-row" id="statsSummary"></div>
+
+    <div class="stats-block">
+      <div class="logros-section-label">Libros leídos por año</div>
+      <div id="statsYearChart"></div>
+      <div class="stats-block-note" id="statsYearNote"></div>
+    </div>
+
+    <div class="stats-block">
+      <div class="logros-section-label">Tu racha de lectura</div>
+      <div class="mystat-row" id="statsStreakRow"></div>
+    </div>
+
+    <div class="stats-block">
+      <div class="logros-section-label">Curiosidades de tu estantería</div>
+      <div class="curio-grid" id="statsCurioGrid"></div>
+    </div>
+
+    <div class="stats-block">
+      <div class="logros-section-label">Tus tropos y dinámicas favoritas</div>
+      <div class="rtag-grid" id="statsTagsGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CARTAS DE AUTORA — colección desbloqueable ligada a tu estantería -->
+<div id="cartasView">
+  <div class="shelf-main" style="max-width:1180px;margin:0 auto">
+    <button class="shelf-back-link" style="margin:0 0 1.5rem;padding:6px 10px" onclick="closeCartasModal()">← Volver al catálogo</button>
+    <div class="shelf-main-header">
+      <div class="shelf-main-title">Cartas de Autora</div>
+    </div>
+    <p class="cartas-sub">Una carta por cada autora con más de 3 libros en el catálogo. Se desbloquea en cuanto lees tu primer libro suyo — el reverso marca con ✦ los títulos que ya has leído. Haz clic en una carta para girarla.</p>
+
+    <div class="cartas-progress-bar-wrap">
+      <div class="cartas-progress-num" id="cartasProgressNum">0<span> / 0 coleccionadas</span></div>
+      <div class="cartas-progress-track"><div class="cartas-progress-fill" id="cartasProgressFill" style="width:0%"></div></div>
+    </div>
+
+    <div class="cartas-toolbar">
+      <input type="text" class="cartas-search" id="cartasSearch" placeholder="Buscar autora…" oninput="renderCartasGrid()">
+      <button class="cartas-filter-btn active" data-cf="all" onclick="setCartasFilter('all')">Todas</button>
+      <button class="cartas-filter-btn" data-cf="collected" onclick="setCartasFilter('collected')">Coleccionadas</button>
+      <button class="cartas-filter-btn" data-cf="inprogress" onclick="setCartasFilter('inprogress')">En proceso</button>
+      <button class="cartas-filter-btn" data-cf="locked" onclick="setCartasFilter('locked')">Por desbloquear</button>
+    </div>
+
+    <div class="cartas-legend">
+      <div class="cartas-legend-item"><span class="cartas-legend-dot" style="background:#c9895a"></span>Iniciada · 4–6 libros</div>
+      <div class="cartas-legend-item"><span class="cartas-legend-dot" style="background:#b9bfc9"></span>Devota · 7–11 libros</div>
+      <div class="cartas-legend-item"><span class="cartas-legend-dot" style="background:#e0b45a"></span>Consagrada · 12–19 libros</div>
+      <div class="cartas-legend-item"><span class="cartas-legend-dot" style="background:linear-gradient(90deg,#da99de,#5bbcb0)"></span>Legendaria · 20+ libros</div>
+    </div>
+
+    <div class="cartas-grid" id="cartasGrid"><div class="cartas-empty">Cargando…</div></div>
   </div>
 </div>
 
@@ -1989,7 +2394,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
     <div class="hito-halo"></div>
     <div class="hito-sweep" id="hitoSweep"></div>
     <div class="hito-confetti" id="hitoConfetti"></div>
-    <div class="hito-pin-wrap"><img id="hitoPinImg" src="" alt=""></div>
+    <div class="hito-pin-wrap"><img id="hitoPinImg" src="" alt="" onerror="this.style.display='none';document.getElementById('hitoPinFallback').style.display='flex'"><div id="hitoPinFallback" class="hito-pin-fallback">🏅</div></div>
     <h3 id="hitoTitle"></h3>
     <p id="hitoSubtitle"></p>
   </div>
@@ -2020,14 +2425,17 @@ const SPICY_UNKNOWN_ICON  = '❓';
 let allBooks=[], ratingsMap={}, myRatings={}, currentUser=null, activeBook=null;
 let myReadingStatus={}; // bookId -> 'want' | 'read'
 let myReadingReadAt={}; // bookId -> fecha ISO de la lectura MÁS RECIENTE (derivado de myReadingLog, para compatibilidad)
-let myReadingLog={}; // bookId -> [{id, read_at}, ...] historial completo de lecturas, ordenado ascendente
-let shelfFilter='all'; // 'all' | 'want' | 'read'
+let myReadingLog={}; // bookId -> [{id, started_at, read_at}, ...] historial completo de lecturas, ordenado ascendente. read_at null = lectura en curso
+let shelfFilter='all'; // 'all' | 'want' | 'reading' | 'read' | 'calendar'
 let shelfViewMode='grid'; // 'grid' | 'list'
 let shelfSearch='';
 let shelfGenreFilter='';
 let shelfSort='recent';
 let shelfPage=1;
 const SHELF_PAGE_SIZE=18;
+let calYear=new Date().getFullYear();
+let calMonth=new Date().getMonth(); // 0-11
+let calSelectedDay=null; // 'YYYY-MM-DD'
 let bingoChallenges=[], bingoActiveChallengeId=null, bingoProgress=[], bingoActiveCellIdx=null, bingoLinkMode='catalogo', bingoPendingBookId=null, bingoPendingBookTitle=null, bingoPendingBookCover=null, bingoManualConfirmed=false, bingoHitos=[];
 let activeSection='thais';
 let authMode='login', pendingStar=0;
@@ -2040,7 +2448,9 @@ const VALID_TAGS={
   identidad:['Asexual','Bisexual','Butch','Femme','Grumpy','Ice Queen','Introvertida','Lesbiana','Masc','Nerd','Queer','Soft Butch','Sunshine']
 };
 const SPICY_MIN_VOTES=2;
-let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null,pages:null,leido:null};
+function emptyExcl(){return {genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],sagas:[],edad:[],pais_cultura:[],pais_origen:[]};}
+let filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],pais_origen:[],adaptacion:null,valoracion:null,pages:null,leido:null,excl:emptyExcl()};
+const EXCL_KEYS=['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura','pais_origen'];
 let currentPage=1;
 const PAGE_SIZE=24;
 
@@ -2057,8 +2467,9 @@ function pushState(addEntry){
     if(activeSection) params.set('section',activeSection);
     if(currentPage>1) params.set('page',currentPage);
     if(filters.q) params.set('q',filters.q);
-    ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura'].forEach(k=>{
+    ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura','pais_origen'].forEach(k=>{
       if(filters[k].length) params.set(k,filters[k].join('|'));
+      if(filters.excl[k]&&filters.excl[k].length) params.set('x_'+k,filters.excl[k].join('|'));
     });
     if(filters.spicy.length) params.set('spicy',filters.spicy.join('|'));
     if(filters.spicyUnknown) params.set('spicyUnknown','1');
@@ -2078,8 +2489,9 @@ function loadState(){
   if(params.get('cat')) activeMyrecCat=params.get('cat');
   if(params.get('page')) currentPage=parseInt(params.get('page'))||1;
   if(params.get('q')){filters.q=params.get('q');document.getElementById('searchInput').value=filters.q;}
-  ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura'].forEach(k=>{
+  ['genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura','pais_origen'].forEach(k=>{
     if(params.get(k)) filters[k]=params.get(k).split('|');
+    if(params.get('x_'+k)) filters.excl[k]=params.get('x_'+k).split('|');
   });
   if(params.get('spicy')) filters.spicy=params.get('spicy').split('|').map(Number);
   if(params.get('spicyUnknown')) filters.spicyUnknown=true;
@@ -2103,6 +2515,26 @@ function shelfUrlClear(addEntry){
   try{
     const params=new URLSearchParams(location.search);
     params.delete('myshelf');
+    const url=params.toString()?'?'+params.toString():location.pathname;
+    if(addEntry) history.pushState(null,'',url);
+    else history.replaceState(null,'',url);
+  }catch(e){}
+}
+
+/* ── URL de las vistas especiales (Logros / Estadísticas / Cartas) ── */
+function viewUrlSync(view,addEntry){
+  try{
+    const params=new URLSearchParams(location.search);
+    params.set('view',view);
+    const url='?'+params.toString();
+    if(addEntry) history.pushState({view},'',url);
+    else history.replaceState({view},'',url);
+  }catch(e){}
+}
+function viewUrlClear(addEntry){
+  try{
+    const params=new URLSearchParams(location.search);
+    params.delete('view');
     const url=params.toString()?'?'+params.toString():location.pathname;
     if(addEntry) history.pushState(null,'',url);
     else history.replaceState(null,'',url);
@@ -2138,7 +2570,7 @@ async function init(){
   // Restore active tab from URL if present, otherwise use sessionStorage or home
   const urlParams=new URLSearchParams(location.search);
   const urlTab=urlParams.get('tab');
-  const hasCatalogParams=['section','q','genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura','spicy','spicyUnknown','adaptacion','valoracion','pages','leido'].some(k=>urlParams.has(k));
+  const hasCatalogParams=['section','q','genres','subgenres','dinamicas','tropes','characters','authors','years','sagas','edad','pais_cultura','pais_origen','spicy','spicyUnknown','adaptacion','valoracion','pages','leido'].some(k=>urlParams.has(k));
   const savedTab = urlTab || sessionStorage.getItem('ts_active_tab');
   if(savedTab && savedTab !== 'home') {
     // estaba en el catálogo — restaurar sin ir al home
@@ -2160,13 +2592,26 @@ async function init(){
   // Nota: showHome()/switchTab() de arriba pueden haber limpiado la query string,
   // así que reaplicamos el parámetro myshelf sobre la URL resultante antes de abrir.
   const _shelfParam=urlParams.get('myshelf');
-  if(_shelfParam && ['all','want','read'].includes(_shelfParam)){
+  if(_shelfParam && ['all','want','reading','read','calendar'].includes(_shelfParam)){
     if(currentUser){
       shelfUrlSync(_shelfParam,false);
       openShelf(_shelfParam, true);
     } else {
       // Sin sesión no podemos mostrar la estantería personal: limpiamos el parámetro
       shelfUrlClear(false);
+    }
+  }
+  // Si la URL trae ?view=logros|stats|cartas, abrir directamente esa vista especial.
+  const _viewParam=urlParams.get('view');
+  if(_viewParam && ['logros','stats','cartas'].includes(_viewParam)){
+    if(currentUser){
+      viewUrlSync(_viewParam,false);
+      if(_viewParam==='logros') await openLogrosModal(true);
+      else if(_viewParam==='stats') await openStatsModal(true);
+      else if(_viewParam==='cartas') await openCartasModal(true);
+    } else {
+      // Sin sesión no podemos mostrar estas vistas: limpiamos el parámetro
+      viewUrlClear(false);
     }
   }
   const debouncedLoadRatings=debounce(()=>{
@@ -2281,7 +2726,7 @@ function uniqVals(key){
 const DD_MAP = {
   genres:'listGenre', subgenres:'listSubgenre', dinamicas:'listDinamica',
   tropes:'listTrope', characters:'listCharacter', authors:'listAuthor',
-  years:'listYear', sagas:'listSaga', edad:'listEdad', pais_cultura:'listPais'
+  years:'listYear', sagas:'listSaga', edad:'listEdad', pais_cultura:'listPais', pais_origen:'listPaisOrigen'
 };
 
 function buildDropdowns(){
@@ -2298,21 +2743,27 @@ function buildDropdowns(){
 function buildEdadDD(){
   const el=document.getElementById('listEdad');
   if(!el) return;
-  el.innerHTML=(filters.edad.length?`<div class="dd-clear" onclick="clearDDFilter('edad')">✕ Limpiar selección</div>`:'')+
+  el.innerHTML=(filters.edad.length||filters.excl.edad.length?`<div class="dd-clear" onclick="clearDDFilter('edad')">✕ Limpiar selección</div>`:'')+
     EDAD_LABELS.map(v=>{
       const sid='dd_edad_'+v.replace(/\W/g,'_');
-      return `<div class="dd-item"><input type="checkbox" id="${sid}" ${filters.edad.includes(v)?'checked':''} onchange="toggleDDFilter('edad','${v.replace(/'/g,"\\'")}')"><label for="${sid}">${v}</label></div>`;
+      const esc=v.replace(/'/g,"\\'");
+      const excluded=filters.excl.edad.includes(v);
+      return `<div class="dd-item${excluded?' excluded':''}"><input type="checkbox" id="${sid}" ${filters.edad.includes(v)?'checked':''} ${excluded?'disabled':''} onchange="toggleDDFilter('edad','${esc}')"><label for="${sid}">${v}</label><button type="button" class="dd-exclude-btn${excluded?' active':''}" title="${excluded?'Quitar exclusión':'Excluir este valor de los resultados'}" onclick="event.preventDefault();event.stopPropagation();toggleExclFilter('edad','${esc}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>`;
     }).join('');
 }
 
 function buildDDList(listId,values,key,search=''){
   const el=document.getElementById(listId);
   const filtered=search?values.filter(v=>v.toLowerCase().includes(search.toLowerCase())):values;
+  const canExclude=!!filters.excl[key];
   if(!filtered.length){el.innerHTML='<div class="dd-empty">Sin resultados</div>';return;}
-  el.innerHTML=(filters[key].length?`<div class="dd-clear" onclick="clearDDFilter('${key}')">✕ Limpiar selección</div>`:'')+
+  el.innerHTML=(filters[key].length||(canExclude&&filters.excl[key].length)?`<div class="dd-clear" onclick="clearDDFilter('${key}')">✕ Limpiar selección</div>`:'')+
     filtered.map(v=>{
       const sid='dd_'+key+'_'+v.replace(/\W/g,'_');
-      return `<div class="dd-item"><input type="checkbox" id="${sid}" ${filters[key].includes(v)?'checked':''} onchange="toggleDDFilter('${key}','${v.replace(/'/g,"\\'")}')"><label for="${sid}">${v}</label></div>`;
+      const esc=v.replace(/'/g,"\\'");
+      const excluded=canExclude&&filters.excl[key].includes(v);
+      const exBtn=canExclude?`<button type="button" class="dd-exclude-btn${excluded?' active':''}" title="${excluded?'Quitar exclusión':'Excluir este valor de los resultados'}" onclick="event.preventDefault();event.stopPropagation();toggleExclFilter('${key}','${esc}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>`:'';
+      return `<div class="dd-item${excluded?' excluded':''}"><input type="checkbox" id="${sid}" ${filters[key].includes(v)?'checked':''} ${excluded?'disabled':''} onchange="toggleDDFilter('${key}','${esc}')"><label for="${sid}">${v}</label>${exBtn}</div>`;
     }).join('');
 }
 
@@ -2332,10 +2783,27 @@ function filterDD(key,listId,search){
 
 function toggleDDFilter(key,val){
   if(key==='spicy') val=parseInt(val);
+  if(filters.excl[key]){
+    const exIdx=filters.excl[key].indexOf(val);
+    if(exIdx>=0) filters.excl[key].splice(exIdx,1);
+  }
   const arr=filters[key],idx=arr.indexOf(val);
   idx>=0?arr.splice(idx,1):arr.push(val);
   if(key==='spicy') buildSpicyDD();
   else if(key==='edad') buildEdadDD();
+  else buildDDList(DD_MAP[key], uniqVals(key), key);
+  updateDDCounts();renderActivePills();applyFilters();
+}
+
+// Excluir un valor: lo saca de la selección positiva y lo marca para que
+// cualquier libro que lo tenga desaparezca de los resultados (ej. "no quiero Age Gap")
+function toggleExclFilter(key,val){
+  if(!filters.excl[key]) return;
+  const incIdx=filters[key].indexOf(val);
+  if(incIdx>=0) filters[key].splice(incIdx,1);
+  const arr=filters.excl[key],idx=arr.indexOf(val);
+  idx>=0?arr.splice(idx,1):arr.push(val);
+  if(key==='edad') buildEdadDD();
   else buildDDList(DD_MAP[key], uniqVals(key), key);
   updateDDCounts();renderActivePills();applyFilters();
 }
@@ -2348,6 +2816,7 @@ function toggleSpicyUnknown(){
 
 function clearDDFilter(key){
   filters[key]=[];
+  if(filters.excl[key]) filters.excl[key]=[];
   if(key==='spicy') filters.spicyUnknown=false;
   if(key==='spicy') buildSpicyDD();
   else if(key==='edad') buildEdadDD();
@@ -2361,7 +2830,7 @@ function updateDDCounts(){
     const cnt=document.getElementById('cnt'+k);
     const btn=document.querySelector('#dd'+k+' .dd-btn');
     if(!cnt||!btn) return;
-    const n=filters[fk].length;
+    const n=filters[fk].length+(filters.excl[fk]?filters.excl[fk].length:0);
     cnt.textContent=n;cnt.style.display=n?'':'none';
     btn.classList.toggle('has-sel',n>0);
   });
@@ -2375,11 +2844,11 @@ function updateDDCounts(){
   }
   // Filtros que viven dentro del panel "+ Filtros"
   [['Subgenre','subgenres'],['Dinamica','dinamicas'],['Trope','tropes'],
-   ['Character','characters'],['Saga','sagas'],['Edad','edad'],['Pais','pais_cultura']].forEach(([k,fk])=>{
+   ['Character','characters'],['Saga','sagas'],['Edad','edad'],['Pais','pais_cultura'],['PaisOrigen','pais_origen']].forEach(([k,fk])=>{
     const cnt=document.getElementById('cnt'+k);
     const sec=document.querySelector('.fp-section[data-field="'+fk+'"]');
     if(!cnt) return;
-    const n=filters[fk].length;
+    const n=filters[fk].length+(filters.excl[fk]?filters.excl[fk].length:0);
     cnt.textContent=n;cnt.style.display=n?'':'none';
     if(sec) sec.classList.toggle('has-active',n>0);
   });
@@ -2389,7 +2858,9 @@ function updateDDCounts(){
 // Badge del botón "+ Filtros" + puntos activos de Valoración/Adaptación/Páginas
 function updateMoreFiltersBadge(){
   const n=filters.subgenres.length+filters.dinamicas.length+filters.tropes.length+
-    filters.characters.length+filters.sagas.length+filters.edad.length+filters.pais_cultura.length+
+    filters.characters.length+filters.sagas.length+filters.edad.length+filters.pais_cultura.length+filters.pais_origen.length+
+    filters.excl.subgenres.length+filters.excl.dinamicas.length+filters.excl.tropes.length+
+    filters.excl.characters.length+filters.excl.sagas.length+filters.excl.edad.length+filters.excl.pais_cultura.length+filters.excl.pais_origen.length+
     (filters.valoracion?1:0)+(filters.adaptacion==='serie'?1:0)+(filters.pages?1:0);
   const cnt=document.getElementById('cntMoreFilters');
   const btn=document.querySelector('#ddMoreFilters .dd-btn');
@@ -2415,7 +2886,9 @@ function toggleFpSection(labelEl){
 // (deja intactos Género, Autora, Año, Spicy y No leído, que están fuera)
 function clearMoreFilters(){
   filters.subgenres=[];filters.dinamicas=[];filters.tropes=[];filters.characters=[];
-  filters.sagas=[];filters.edad=[];filters.pais_cultura=[];
+  filters.sagas=[];filters.edad=[];filters.pais_cultura=[];filters.pais_origen=[];
+  filters.excl.subgenres=[];filters.excl.dinamicas=[];filters.excl.tropes=[];filters.excl.characters=[];
+  filters.excl.sagas=[];filters.excl.edad=[];filters.excl.pais_cultura=[];filters.excl.pais_origen=[];
   filters.valoracion=null;filters.adaptacion=null;filters.pages=null;
   const _cp=document.getElementById('cntPages'); if(_cp) _cp.style.display='none';
   updateValoracionBtns();
@@ -2498,7 +2971,7 @@ function toggleDD(id){
   closeAllDD();
   if(!wasOpen){
     wrap.classList.add('open');
-    if(id==='ddMoreFilters'){
+    if(id==='ddMoreFilters'||window.innerWidth<=600){
       const bd=document.getElementById('mfBackdrop');
       if(bd) bd.classList.add('open');
     }
@@ -2515,16 +2988,22 @@ function renderActivePills(){
   const labelMap={
     genres:'Género', subgenres:'Temática', dinamicas:'Dinámica',
     tropes:'Tropo', characters:'Personaje', authors:'Autora',
-    years:'Año', spicy:'Spicy', sagas:'Saga', edad:'Edad', pais_cultura:'País'
+    years:'Año', spicy:'Spicy', sagas:'Saga', edad:'Edad', pais_cultura:'País', pais_origen:'País de origen'
   };
   const pills=[];
   Object.entries(filters).forEach(([key,arr])=>{
-    if(key==='q'||key==='valoracion'||key==='adaptacion'||key==='pages'||key==='leido') return;
+    if(key==='q'||key==='valoracion'||key==='adaptacion'||key==='pages'||key==='leido'||key==='excl') return;
     if(!arr.length) return;
     arr.forEach(v=>{
       const display=key==='spicy'?SPICY_LABELS[v]:v;
       const removeCall=key==='spicy'?`toggleDDFilter('spicy',${v})`:`toggleDDFilter('${key}','${v.replace(/'/g,"\\'")}')`;
       pills.push(`<span class="af-pill">${labelMap[key]}: ${display}<button onclick="${removeCall}">×</button></span>`);
+    });
+  });
+  Object.entries(filters.excl).forEach(([key,arr])=>{
+    arr.forEach(v=>{
+      const removeCall=`toggleExclFilter('${key}','${String(v).replace(/'/g,"\\'")}')`;
+      pills.push(`<span class="af-pill excluded" title="Excluido de los resultados">🚫 ${labelMap[key]||key}: ${v}<button onclick="${removeCall}">×</button></span>`);
     });
   });
   if(filters.valoracion){
@@ -2549,7 +3028,7 @@ function renderActivePills(){
 }
 
 function clearAllFilters(){
-  filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],adaptacion:null,valoracion:null,pages:null,leido:null};
+  filters={q:'',genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],spicy:[],spicyUnknown:false,sagas:[],edad:[],pais_cultura:[],pais_origen:[],adaptacion:null,valoracion:null,pages:null,leido:null,excl:emptyExcl()};
   document.getElementById('searchInput').value='';
   const _cp=document.getElementById('cntPages'); if(_cp) _cp.style.display='none';
   updateValoracionBtns();
@@ -2584,6 +3063,20 @@ function applyFilters(resetPage=true){
   if(filters.sagas.length)     books=books.filter(b=>filters.sagas.includes(getSaga(b)));
   if(filters.edad.length)       books=books.filter(b=>filters.edad.every(e=>(b.edad||[]).includes(e)));
   if(filters.pais_cultura.length) books=books.filter(b=>filters.pais_cultura.every(p=>(b.pais_cultura||[]).includes(p)));
+  if(filters.pais_origen.length) books=books.filter(b=>filters.pais_origen.includes(b.pais_origen));
+  // Exclusiones: fuera cualquier libro que tenga alguno de estos valores marcados como "no quiero verlo"
+  const ex=filters.excl;
+  if(ex.genres.length)     books=books.filter(b=>!ex.genres.some(g=>(b.genres||[]).includes(g)));
+  if(ex.subgenres.length)  books=books.filter(b=>!ex.subgenres.some(s=>(b.subgenres||[]).includes(s)));
+  if(ex.dinamicas.length)  books=books.filter(b=>!ex.dinamicas.some(d=>[...(b.dinamicas||[]),...((communityTagsMap[b.id]||{}).dinamica||[])].includes(d)));
+  if(ex.tropes.length)     books=books.filter(b=>!ex.tropes.some(t=>[...(b.tropes||[]),...((communityTagsMap[b.id]||{}).trope||[])].includes(t)));
+  if(ex.characters.length) books=books.filter(b=>!ex.characters.some(c=>[...(b.characters||[]),...((communityTagsMap[b.id]||{}).character||[])].includes(c)));
+  if(ex.authors.length)    books=books.filter(b=>!ex.authors.some(a=>(b.authors||[]).includes(a)));
+  if(ex.years.length)      books=books.filter(b=>!ex.years.includes(String(b.year)));
+  if(ex.sagas.length)      books=books.filter(b=>!ex.sagas.includes(getSaga(b)));
+  if(ex.edad.length)       books=books.filter(b=>!ex.edad.some(e=>(b.edad||[]).includes(e)));
+  if(ex.pais_cultura.length) books=books.filter(b=>!ex.pais_cultura.some(p=>(b.pais_cultura||[]).includes(p)));
+  if(ex.pais_origen.length) books=books.filter(b=>!ex.pais_origen.includes(b.pais_origen));
   if(filters.adaptacion==='serie') books=books.filter(b=>b.adaptacion==='Tiene serie');
   if(filters.pages){
     const r=PAGE_RANGES.find(x=>x.key===filters.pages);
@@ -2759,8 +3252,12 @@ function renderBookModal(){
   const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
   const sagaName=b.sagaName||(b.formato&&['Saga','Dúo','Trilogía'].includes(b.formato)?getSaga(b):null);
   const sagaNumStr=b.sagaNum!=null?' #'+b.sagaNum:'';
+  const sagaSiblingCount=b.sagaName?allBooks.filter(x=>x.sagaName===b.sagaName&&x.sagaNum!=null).length:0;
+  const sagaMapBtn=sagaSiblingCount>1
+    ?`<button class="saga-map-trigger" onclick="openSagaMap(decodeURIComponent('${encodeURIComponent(b.sagaName)}'))">✦ orden de lectura</button>`
+    :'';
   const sagaSubtitle=sagaName
-    ?`<p class="modal-saga-sub"><button class="modal-saga-link" onclick="filterBySagaFromModal(decodeURIComponent('${encodeURIComponent(sagaName)}'))">${sagaName}${sagaNumStr}</button></p>`
+    ?`<p class="modal-saga-sub"><span class="modal-saga-row"><button class="modal-saga-link" onclick="filterBySagaFromModal(decodeURIComponent('${encodeURIComponent(sagaName)}'))">${sagaName}${sagaNumStr}</button>${sagaMapBtn}</span></p>`
     :'';
 
   document.getElementById('bookModalContent').innerHTML=`${coverEl}
@@ -2890,6 +3387,90 @@ function filterBySagaFromModal(sagaName){
   currentPage=1;
   updateDDCounts();renderActivePills();applyFilters(false);
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── SAGA MAP: constelación de orden de lectura de una saga ── */
+function openSagaMap(sagaName){
+  const books=allBooks.filter(b=>b.sagaName===sagaName&&b.sagaNum!=null).sort((a,b)=>a.sagaNum-b.sagaNum);
+  if(books.length<2){ filterBySagaFromModal(sagaName); return; } // fallback si no hay suficientes datos
+  closeBookModal();
+  renderSagaMap(sagaName,books);
+  document.getElementById('sagaModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeSagaModal(){
+  document.getElementById('sagaModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('sagaModal').addEventListener('click',e=>{if(e.target.id==='sagaModal')closeSagaModal();});
+
+function renderSagaMap(sagaName,books){
+  // camino principal = números enteros (1,2,3…); "ramas" = especiales/precuelas (7.5, 0.5…)
+  let mainChain=books.filter(b=>Number.isInteger(b.sagaNum));
+  let branches=books.filter(b=>!Number.isInteger(b.sagaNum));
+  if(mainChain.length===0){ mainChain=books; branches=[]; } // si la saga es toda decimales, no separamos ramas
+
+  const xPattern=[50,78,22,70,16,58,30,74,12,54,86,8,42,64];
+  mainChain.forEach((b,i)=>{ b._x=xPattern[i%xPattern.length]; b._y=60+i*130; });
+
+  // agrupamos las ramas por a qué libro principal "cuelgan", para poder
+  // separarlas cuando dos especiales caen sobre el mismo hueco (p.ej. 0.5 y 1.5
+  // ambos antes del libro 1) y no se dibujen una encima de otra.
+  const groups=new Map();
+  branches.forEach(b=>{
+    let attach=mainChain[0];
+    mainChain.forEach(m=>{ if(m.sagaNum<=b.sagaNum) attach=m; });
+    b._attach=attach;
+    if(!groups.has(attach)) groups.set(attach,[]);
+    groups.get(attach).push(b);
+  });
+  groups.forEach(group=>{
+    group.forEach((b,gi)=>{
+      const dir=gi%2===0?1:-1;
+      const step=Math.floor(gi/2);
+      b._x=Math.min(92,Math.max(8,b._attach._x+dir*(34+step*8)));
+      b._y=b._attach._y+62+step*72;
+    });
+  });
+
+  const allY=[...mainChain,...branches].map(b=>b._y);
+  const H=Math.max(...allY)+70;
+
+  const coverHtml=b=>b.cover?`<img src="${b.cover}" alt="">`:'📖';
+  const nodeHtml=b=>`<div class="sm-node${b._attach?' branch':''}" style="left:${b._x}%;top:${b._y}px" onclick="openSagaBook('${b.id}')">
+      <div class="sm-node-ring"><div class="sm-node-ring-inner">${coverHtml(b)}</div></div>
+      <div class="sm-node-num">${b.sagaNum}</div>
+      <div class="sm-node-label">${escHtml(b.title)}</div>
+    </div>`;
+  const curve=(a,b)=>{const mx=(a._x+b._x)/2,my=(a._y+b._y)/2;return `M ${a._x} ${a._y} Q ${mx} ${my} ${b._x} ${b._y}`;};
+
+  let linesSvg='';
+  for(let i=0;i<mainChain.length-1;i++){
+    linesSvg+=`<path class="sm-path-main" d="${curve(mainChain[i],mainChain[i+1])}" vector-effect="non-scaling-stroke"/>`;
+  }
+  branches.forEach(b=>{
+    linesSvg+=`<path class="sm-path-branch" d="${curve(b._attach,b)}" vector-effect="non-scaling-stroke"/>`;
+  });
+
+  document.getElementById('sagaMapBody').innerHTML=`
+    <div class="sagamap-header">
+      <div class="sagamap-eyebrow">Orden de lectura</div>
+      <h2 class="sagamap-title">Saga <em>${escHtml(sagaName)}</em></h2>
+      <div class="sagamap-sub">${books.length} libro${books.length!==1?'s':''} · toca cada estrella para ver la ficha</div>
+    </div>
+    ${branches.length?`<div class="sagamap-legend"><span><i class="sm-leg-line"></i> orden principal</span><span><i class="sm-leg-line dashed"></i> especial / precuela</span></div>`:''}
+    <div class="sagamap-map" style="height:${H}px">
+      <svg viewBox="0 0 100 ${H}" preserveAspectRatio="none">
+        <defs><linearGradient id="smLineGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#c06fc4"/><stop offset="100%" stop-color="#5bbcb0"/></linearGradient></defs>
+        ${linesSvg}
+      </svg>
+      ${mainChain.map(nodeHtml).join('')}
+      ${branches.map(nodeHtml).join('')}
+    </div>`;
+}
+function openSagaBook(id){
+  closeSagaModal();
+  openBook(id);
 }
 function filterByAuthorFromModal(author){
   closeBookModal();
@@ -3180,8 +3761,10 @@ function renderAuthUI(){
         <span class="user-chip-caret">▾</span>
       </div>
       <div class="user-dropdown">
-        <button class="user-dd-item" onclick="toggleUserDropdown();openShelf()">📚 Mi estantería</button>
-        <button class="user-dd-item" onclick="toggleUserDropdown();openLogrosModal()">🏅 Mis logros</button>
+        <button class="user-dd-item" onclick="toggleUserDropdown();openShelf()">Mi estantería</button>
+        <button class="user-dd-item" onclick="toggleUserDropdown();openLogrosModal()">Mis logros</button>
+        <button class="user-dd-item" onclick="toggleUserDropdown();openStatsModal()">Mis estadísticas</button>
+        <button class="user-dd-item" onclick="toggleUserDropdown();openCartasModal()">Cartas de autora</button>
         <div class="user-dd-sep"></div>
         <button class="user-dd-item danger" onclick="logout()">Cerrar sesión</button>
       </div>
@@ -3379,10 +3962,25 @@ function copyTabLink(){
 /* ── TABS ── */
 let activeTab='estanteria';
 let activeMyrecCat=null;
+// Cierra todas las vistas especiales (home, estantería, logros, estadísticas, cartas)
+// para que abrir una nueva vista nunca deje otra apilada debajo.
+function closeAllSpecialViews(){
+  document.getElementById('homeView')?.classList.remove('active');
+  document.body.classList.remove('home-active');
+  document.getElementById('homeNavBtn')?.classList.remove('active');
+  document.getElementById('shelfView')?.classList.remove('active');
+  document.getElementById('logrosView')?.classList.remove('active');
+  document.getElementById('statsView')?.classList.remove('active');
+  document.getElementById('cartasView')?.classList.remove('active');
+}
+
 function switchTab(tab, silent){
   activeTab=tab;
   if(!silent) activeMyrecCat=null;
   sessionStorage.setItem('ts_active_tab', tab);
+  // Restaura cualquier hijo directo de <main> (p.ej. la barra de pestañas)
+  // que se haya quedado oculto al pasar por Logros/Estadísticas/Cartas.
+  document.querySelectorAll('main > *').forEach(el=>el.style.display='');
   document.getElementById('tabEstanteria').classList.toggle('active',tab==='estanteria');
   document.getElementById('tabTop10').classList.toggle('active',tab==='top10');
   document.getElementById('tabSafi').classList.toggle('active',tab==='safi');
@@ -3422,6 +4020,7 @@ function switchTab(tab, silent){
 /* ── HOME VIEW ── */
 function showHome(){
   sessionStorage.setItem('ts_active_tab', 'home');
+  closeAllSpecialViews();
   document.getElementById('homeView').classList.add('active');
   document.body.classList.add('home-active');
   document.getElementById('homeNavBtn').classList.add('active');
@@ -3432,9 +4031,7 @@ function showHome(){
 function showCatalog(tab){
   const t = tab || 'estanteria';
   sessionStorage.setItem('ts_active_tab', t);
-  document.getElementById('homeView').classList.remove('active');
-  document.body.classList.remove('home-active');
-  document.getElementById('homeNavBtn').classList.remove('active');
+  closeAllSpecialViews();
   switchTab(t);
 }
 
@@ -4063,6 +4660,18 @@ window.addEventListener('popstate', ()=>{
   document.getElementById('bookModal').classList.remove('open');
   document.body.style.overflow='';
   window.scrollTo(0,_scrollBeforeModal);
+  // Restaurar (o cerrar) las vistas especiales (Logros/Estadísticas/Cartas) según la URL
+  const viewParam=new URLSearchParams(location.search).get('view');
+  if(viewParam && currentUser && ['logros','stats','cartas'].includes(viewParam)){
+    if(viewParam==='logros') openLogrosModal(true);
+    else if(viewParam==='stats') openStatsModal(true);
+    else if(viewParam==='cartas') openCartasModal(true);
+    return;
+  } else {
+    if(document.getElementById('logrosView').classList.contains('active')) closeLogrosModal(true);
+    if(document.getElementById('statsView').classList.contains('active')) closeStatsModal(true);
+    if(document.getElementById('cartasView').classList.contains('active')) closeCartasModal(true);
+  }
   // Restaurar (o cerrar) la estantería personal según la URL
   const shelfParam=new URLSearchParams(location.search).get('myshelf');
   if(shelfParam && currentUser && ['all','want','read'].includes(shelfParam)){
@@ -4516,6 +5125,7 @@ function getFilteredBooksForRuleta() {
   if (filters.sagas.length)     books = books.filter(b => filters.sagas.includes(getSaga(b)));
   if (filters.edad.length)      books = books.filter(b => filters.edad.every(e => (b.edad||[]).includes(e)));
   if (filters.pais_cultura.length) books = books.filter(b => filters.pais_cultura.every(p => (b.pais_cultura||[]).includes(p)));
+  if (filters.pais_origen.length) books = books.filter(b => filters.pais_origen.includes(b.pais_origen));
   if (filters.adaptacion === 'serie') books = books.filter(b => b.adaptacion === 'Tiene serie');
   // section filter — la ruleta tiene su propio selector, independiente de la estantería
   if (ruletaSection !== 'all') {
@@ -4582,7 +5192,7 @@ function ruletaUpdateUI() {
   // Render active filter pills (from estantería)
   const pillsEl = document.getElementById('ruletaFiltrosPills');
   if (!pillsEl) return;
-  const labelMap = { genres:'Género', subgenres:'Temática', dinamicas:'Dinámica', tropes:'Tropo', characters:'Personaje', authors:'Autora', years:'Año', spicy:'Spicy', sagas:'Saga', edad:'Edad', pais_cultura:'País' };
+  const labelMap = { genres:'Género', subgenres:'Temática', dinamicas:'Dinámica', tropes:'Tropo', characters:'Personaje', authors:'Autora', years:'Año', spicy:'Spicy', sagas:'Saga', edad:'Edad', pais_cultura:'País', pais_origen:'País de origen' };
   const pills = [];
   Object.entries(filters).forEach(([key, arr]) => {
     if (key === 'q' || key === 'valoracion' || key === 'adaptacion' || key === 'pages' || key === 'leido') return;
@@ -4877,18 +5487,22 @@ async function loadMyReadingStatus(){
   (data||[]).forEach(row=>{
     myReadingStatus[row.book_id]=row.status;
   });
-  const {data:logData,error:logError}=await sb.from('reading_log').select('id,book_id,read_at').eq('user_id',currentUser.id).order('read_at',{ascending:true});
+  const {data:logData,error:logError}=await sb.from('reading_log').select('id,book_id,started_at,read_at').eq('user_id',currentUser.id).order('read_at',{ascending:true,nullsFirst:false});
   if(logError){ console.error('reading_log load error:',logError); }
   myReadingLog={};
   (logData||[]).forEach(row=>{
     if(!myReadingLog[row.book_id]) myReadingLog[row.book_id]=[];
-    myReadingLog[row.book_id].push({id:row.id,read_at:row.read_at});
+    myReadingLog[row.book_id].push({id:row.id,started_at:row.started_at,read_at:row.read_at});
   });
-  // myReadingReadAt se mantiene como atajo a la lectura MÁS RECIENTE de cada libro (compatibilidad con el resto del código)
+  // myReadingReadAt se mantiene como atajo a la lectura MÁS RECIENTE (completada) de cada libro (compatibilidad con el resto del código)
   Object.keys(myReadingLog).forEach(bookId=>{
-    const entries=myReadingLog[bookId];
-    if(entries.length) myReadingReadAt[bookId]=entries[entries.length-1].read_at;
+    const completed=myReadingLog[bookId].filter(e=>e.read_at);
+    if(completed.length) myReadingReadAt[bookId]=completed[completed.length-1].read_at;
   });
+}
+
+function getOpenLogEntry(bookId){
+  return (myReadingLog[bookId]||[]).find(e=>!e.read_at);
 }
 
 async function setReadingStatus(bookId, newStatus){
@@ -4902,8 +5516,22 @@ async function setReadingStatus(bookId, newStatus){
       .upsert(payload,{onConflict:'user_id,book_id'});
     if(error){ showToast('Error al guardar 😞','error'); console.error(error); return; }
     myReadingStatus[bookId]=next;
-    const tieneFechas=(myReadingLog[bookId]||[]).length>0;
-    showToast(next==='want'?'Añadido a «Quiero leer» ＋':(tieneFechas?'Marcado como leído ✓':'Marcado como leído ✓ — indica la fecha en que lo terminaste'),'success');
+    // Al marcar "Leyendo", abrimos automáticamente una entrada de lectura con fecha de inicio hoy (si no hay ya una en curso)
+    if(next==='reading' && !getOpenLogEntry(bookId)){
+      const todayISO=new Date().toISOString().slice(0,10)+'T12:00:00.000Z';
+      const {data,error:logErr}=await sb.from('reading_log')
+        .insert({user_id:currentUser.id, book_id:bookId, started_at:new Date().toISOString()})
+        .select('id,started_at,read_at').single();
+      if(!logErr && data){
+        if(!myReadingLog[bookId]) myReadingLog[bookId]=[];
+        myReadingLog[bookId].push({id:data.id, started_at:data.started_at, read_at:data.read_at});
+      } else if(logErr) console.error('reading_log start error:',logErr);
+    }
+    const tieneFechas=(myReadingLog[bookId]||[]).some(e=>e.read_at);
+    const msg=next==='want'?'Añadido a «Quiero leer» ＋'
+      :next==='reading'?'Marcado como «Leyendo» 📖'
+      :(tieneFechas?'Marcado como leído ✓':'Marcado como leído ✓ — indica la fecha en que lo terminaste');
+    showToast(msg,'success');
   } else {
     const {error}=await sb.from('reading_status')
       .delete().eq('user_id',currentUser.id).eq('book_id',bookId);
@@ -4915,34 +5543,80 @@ async function setReadingStatus(bookId, newStatus){
   _refreshShelfUI(bookId);
 }
 
+function _isCompleteDateStr(v){
+  // El <input type="date"> dispara "change" en cuanto pierde el foco, aunque el año
+  // no esté completo (p.ej. "2" se rellena como "0002"). Exigimos año de 4 dígitos y razonable.
+  if(!v) return false;
+  const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v);
+  if(!m) return false;
+  const year=parseInt(m[1],10);
+  if(year<1900||year>2100) return false;
+  const d=new Date(v+'T00:00:00');
+  return !isNaN(d.getTime());
+}
+
+async function setLogStartDate(bookId, entryId, dateValue){
+  if(!currentUser || !dateValue) return;
+  if(!_isCompleteDateStr(dateValue)) return; // año incompleto todavía, esperamos a que termine de escribir
+  const isoDate=new Date(dateValue+'T09:00:00').toISOString();
+  const log=myReadingLog[bookId]||[];
+  let entry=entryId?log.find(e=>e.id===entryId):getOpenLogEntry(bookId);
+  if(entry){
+    const {error}=await sb.from('reading_log').update({started_at:isoDate}).eq('id',entry.id).eq('user_id',currentUser.id);
+    if(error){ showToast('Error al guardar la fecha 😞','error'); console.error(error); return; }
+    entry.started_at=isoDate;
+  } else {
+    const {data,error}=await sb.from('reading_log')
+      .insert({user_id:currentUser.id, book_id:bookId, started_at:isoDate})
+      .select('id,started_at,read_at').single();
+    if(error){ showToast('Error al guardar la fecha 😞','error'); console.error(error); return; }
+    if(!myReadingLog[bookId]) myReadingLog[bookId]=[];
+    myReadingLog[bookId].push({id:data.id, started_at:data.started_at, read_at:data.read_at});
+  }
+  _refreshShelfUI(bookId);
+  showToast('Fecha de inicio guardada 📅','success');
+}
+
 async function addReadLogEntry(bookId, dateValue){
   if(!currentUser) return;
   if(!dateValue){ showToast('Elige una fecha primero 📅','error'); return; }
+  if(!_isCompleteDateStr(dateValue)){ showToast('Completa el año de la fecha 📅','error'); return; }
   // dateValue es "YYYY-MM-DD", convertimos a ISO con hora mediodía para evitar desfases de zona horaria
   const isoDate=new Date(dateValue+'T12:00:00').toISOString();
-  const {data,error}=await sb.from('reading_log')
-    .insert({user_id:currentUser.id, book_id:bookId, read_at:isoDate})
-    .select('id,read_at').single();
-  if(error){ showToast('Error al guardar la fecha 😞','error'); console.error(error); return; }
-  if(!myReadingLog[bookId]) myReadingLog[bookId]=[];
-  myReadingLog[bookId].push({id:data.id, read_at:data.read_at});
-  myReadingLog[bookId].sort((a,b)=>new Date(a.read_at)-new Date(b.read_at));
-  myReadingReadAt[bookId]=myReadingLog[bookId][myReadingLog[bookId].length-1].read_at;
+  const openEntry=getOpenLogEntry(bookId);
+  if(openEntry){
+    // Completa la lectura en curso (conserva la fecha de inicio ya guardada)
+    const {error}=await sb.from('reading_log').update({read_at:isoDate}).eq('id',openEntry.id).eq('user_id',currentUser.id);
+    if(error){ showToast('Error al guardar la fecha 😞','error'); console.error(error); return; }
+    openEntry.read_at=isoDate;
+  } else {
+    const {data,error}=await sb.from('reading_log')
+      .insert({user_id:currentUser.id, book_id:bookId, read_at:isoDate})
+      .select('id,started_at,read_at').single();
+    if(error){ showToast('Error al guardar la fecha 😞','error'); console.error(error); return; }
+    if(!myReadingLog[bookId]) myReadingLog[bookId]=[];
+    myReadingLog[bookId].push({id:data.id, started_at:data.started_at, read_at:data.read_at});
+  }
+  myReadingLog[bookId].sort((a,b)=>new Date(a.read_at||a.started_at)-new Date(b.read_at||b.started_at));
+  const completed=myReadingLog[bookId].filter(e=>e.read_at);
+  myReadingReadAt[bookId]=completed[completed.length-1].read_at;
   // Si el libro no estaba ya marcado como "Leído", lo marcamos automáticamente al guardar una fecha.
   if(myReadingStatus[bookId]!=='read'){
     await sb.from('reading_status').upsert({user_id:currentUser.id, book_id:bookId, status:'read'},{onConflict:'user_id,book_id'});
     myReadingStatus[bookId]='read';
   }
   _refreshShelfUI(bookId);
-  showToast(myReadingLog[bookId].length>1?'Relectura añadida 📅':'Fecha de lectura guardada 📅','success');
+  showToast(completed.length>1?'Relectura añadida 📅':'Fecha de lectura guardada 📅','success');
 }
+
 
 async function deleteReadLogEntry(bookId, logId){
   if(!currentUser) return;
   const {error}=await sb.from('reading_log').delete().eq('id',logId).eq('user_id',currentUser.id);
   if(error){ showToast('Error al borrar la fecha 😞','error'); console.error(error); return; }
   myReadingLog[bookId]=(myReadingLog[bookId]||[]).filter(e=>e.id!==logId);
-  if(myReadingLog[bookId].length) myReadingReadAt[bookId]=myReadingLog[bookId][myReadingLog[bookId].length-1].read_at;
+  const completed=myReadingLog[bookId].filter(e=>e.read_at);
+  if(completed.length) myReadingReadAt[bookId]=completed[completed.length-1].read_at;
   else delete myReadingReadAt[bookId];
   _refreshShelfUI(bookId);
   showToast('Fecha eliminada','success');
@@ -4955,25 +5629,52 @@ function _refreshShelfUI(bookId){
   // Botones en tarjeta
   const cardWrap=document.getElementById('cardShelf_'+bookId);
   if(cardWrap) cardWrap.outerHTML=buildCardShelfBtnsHTML(bookId);
-  // Si el shelf está abierto, refrescar contadores
-  if(document.getElementById('shelfView').classList.contains('active')) renderShelf();
+  // Si el shelf está abierto, refrescar contadores/listado (o calendario si esa es la vista activa)
+  if(document.getElementById('shelfView').classList.contains('active')) _shelfRenderCurrent();
+  // Si la vista de Cartas de Autora está abierta, refrescar colección (puede haberse desbloqueado una carta)
+  if(document.getElementById('cartasView')?.classList.contains('active')){
+    cartasAuthorsCache=computeAuthorsCollection();
+    renderCartasProgress(cartasAuthorsCache);
+    renderCartasGrid();
+  }
 }
 
 function buildShelfButtonsHTML(bookId){
   const s=myReadingStatus[bookId];
   const log=myReadingLog[bookId]||[];
+  const completedLog=log.filter(e=>e.read_at);
+  const openEntry=getOpenLogEntry(bookId);
   const todayISO=new Date().toISOString().slice(0,10);
-  const historyHtml=log.map(entry=>{
+  const historyHtml=completedLog.map(entry=>{
     const dStr=new Date(entry.read_at).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
-    return `<div style="display:flex;align-items:center;gap:.4rem;font-size:11px;color:var(--teal)">
-      <span>📅 ${dStr}</span>
+    const startVal=entry.started_at?new Date(entry.started_at).toISOString().slice(0,10):'';
+    return `<div style="display:flex;align-items:center;gap:.4rem;font-size:11px;color:var(--teal);flex-wrap:wrap">
+      <span style="display:flex;align-items:center;gap:.3em">📖
+        <input type="date" max="${todayISO}" value="${startVal}"
+          title="Fecha en que empezaste esta lectura"
+          style="padding:2px 6px;border-radius:8px;border:1px solid rgba(201,151,90,.4);background:var(--surface2);color:var(--text);font-size:11px;font-family:var(--font-body);cursor:pointer;outline:none"
+          onclick="event.stopPropagation()"
+          onchange="event.stopPropagation();setLogStartDate('${bookId}','${entry.id}',this.value)">
+      </span>
+      <span>→ 📅 ${dStr}</span>
       <button title="Eliminar esta fecha" onclick="event.stopPropagation();deleteReadLogEntry('${bookId}','${entry.id}')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:11px;padding:0;line-height:1">✕</button>
     </div>`;
   }).join('');
-  const addLabel=log.length?'+ Añadir relectura':'Guardar fecha';
-  const pickerHint=log.length?'':'<span style="font-size:11px;color:var(--gold);display:flex;align-items:center;gap:.3em">📅 ¿Cuándo lo terminaste?</span>';
-  const readDatePicker=s==='read'?`
+  const addLabel=completedLog.length?'+ Añadir relectura':'Guardar fecha';
+  const pickerHint=completedLog.length?'':'<span style="font-size:11px;color:var(--gold);display:flex;align-items:center;gap:.3em">📅 ¿Cuándo lo terminaste?</span>';
+  // Fecha de inicio editable mientras hay una lectura abierta sin terminar ("Leyendo")
+  const startDateBlock=openEntry?`
+    <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.3rem">
+      <span style="font-size:11px;color:var(--gold);display:flex;align-items:center;gap:.3em">📖 Empezado el</span>
+      <input type="date" id="startDateInput_${bookId}" max="${todayISO}"
+        value="${openEntry?.started_at?new Date(openEntry.started_at).toISOString().slice(0,10):''}"
+        style="padding:4px 8px;border-radius:8px;border:1px solid rgba(201,151,90,.4);background:var(--surface2);color:var(--text);font-size:11px;font-family:var(--font-body);cursor:pointer;outline:none"
+        onclick="event.stopPropagation()"
+        onchange="event.stopPropagation();setLogStartDate('${bookId}','${openEntry.id}',this.value)">
+    </div>`:'';
+  const readDatePicker=(s==='read'||s==='reading')?`
     <div class="shelf-read-date" style="margin:.4rem 0 .2rem;display:flex;flex-direction:column;gap:.35rem">
+      ${startDateBlock}
       ${historyHtml}
       <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
         ${pickerHint}
@@ -4981,11 +5682,12 @@ function buildShelfButtonsHTML(bookId){
           style="padding:4px 8px;border-radius:8px;border:1px solid rgba(91,188,176,.4);background:var(--surface2);color:var(--text);font-size:11px;font-family:var(--font-body);cursor:pointer;outline:none"
           onclick="event.stopPropagation()">
         <button class="shelf-btn" style="padding:4px 10px;font-size:11px"
-          onclick="event.stopPropagation();addReadLogEntry('${bookId}',document.getElementById('readDateInput_${bookId}').value)">${addLabel}</button>
+          onclick="event.stopPropagation();addReadLogEntry('${bookId}',document.getElementById('readDateInput_${bookId}').value)">${s==='reading'?'✓ Marcar como terminado':addLabel}</button>
       </div>
     </div>`:'';
   return `<div class="shelf-btns" id="shelfBtns_${bookId}">
     <button class="shelf-btn${s==='want'?' want':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','want')">＋ Quiero leer</button>
+    <button class="shelf-btn${s==='reading'?' reading':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','reading')">📖 Leyendo</button>
     <button class="shelf-btn${s==='read'?' read':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','read')">✓ Leído</button>
     ${readDatePicker}
   </div>`;
@@ -4995,6 +5697,7 @@ function buildCardShelfBtnsHTML(bookId){
   const s=myReadingStatus[bookId];
   return `<div class="card-shelf-btns" id="cardShelf_${bookId}">
     <button class="card-shelf-btn${s==='want'?' want':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','want')"><span class="card-shelf-icon">${s==='want'?'♥':'♡'}</span> Quiero leer</button>
+    <button class="card-shelf-btn${s==='reading'?' reading':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','reading')"><span class="card-shelf-icon">📖</span> Leyendo</button>
     <button class="card-shelf-btn${s==='read'?' read':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','read')"><span class="card-shelf-icon">${s==='read'?'✓':'○'}</span> Leído</button>
   </div>`;
 }
@@ -5002,19 +5705,20 @@ function buildCardShelfBtnsHTML(bookId){
 /* ── Vista estantería ── */
 function openShelf(filter,silent){
   shelfFilter=filter||shelfFilter||'all';
+  closeAllSpecialViews();
   document.querySelectorAll('main > *').forEach(el=>el.style.display='none');
   document.getElementById('shelfView').classList.add('active');
   document.querySelectorAll('.shelf-nav-item').forEach(el=>el.classList.remove('active'));
-  const map={all:'shelfNavAll',want:'shelfNavWant',read:'shelfNavRead'};
+  const map={all:'shelfNavAll',want:'shelfNavWant',reading:'shelfNavReading',read:'shelfNavRead',calendar:'shelfNavCalendar'};
   document.getElementById(map[shelfFilter])?.classList.add('active');
-  renderShelf();
+  _shelfRenderCurrent();
   renderShelfBadges();
   if(!silent) shelfUrlSync(shelfFilter,true);
 }
 
 function closeShelf(silent){
   document.getElementById('shelfView').classList.remove('active');
-  document.querySelectorAll('main > *').forEach(el=>el.style.display='');
+  switchTab(activeTab, true);
   if(!silent) shelfUrlClear(true);
 }
 
@@ -5022,11 +5726,26 @@ function switchShelf(filter,silent){
   shelfFilter=filter;
   shelfPage=1;
   document.querySelectorAll('.shelf-nav-item').forEach(el=>el.classList.remove('active'));
-  const map={all:'shelfNavAll',want:'shelfNavWant',read:'shelfNavRead'};
+  const map={all:'shelfNavAll',want:'shelfNavWant',reading:'shelfNavReading',read:'shelfNavRead',calendar:'shelfNavCalendar'};
   document.getElementById(map[filter])?.classList.add('active');
-  shelfPopulateGenres();
-  _renderShelfBooks();
+  _shelfRenderCurrent();
   if(!silent) shelfUrlSync(filter,true);
+}
+
+function _shelfRenderCurrent(){
+  const isCal=shelfFilter==='calendar';
+  document.getElementById('shelfToolbar').style.display=isCal?'none':'';
+  document.querySelector('.shelf-view-toggle').style.display=isCal?'none':'';
+  document.getElementById('shelfBooksContainer').style.display=isCal?'none':'';
+  document.getElementById('shelfCalendarContainer').style.display=isCal?'':'none';
+  renderShelfCounts();
+  if(isCal){
+    document.getElementById('shelfMainTitle').innerHTML='Calendario de lecturas';
+    renderReadingCalendar();
+  } else {
+    shelfPopulateGenres();
+    _renderShelfBooks();
+  }
 }
 
 function setShelfView(mode){
@@ -5038,8 +5757,12 @@ function setShelfView(mode){
 
 function shelfBaseBooks(){
   const wantBooks=allBooks.filter(b=>myReadingStatus[b.id]==='want');
+  const readingBooks=allBooks.filter(b=>myReadingStatus[b.id]==='reading');
   const readBooks=allBooks.filter(b=>myReadingStatus[b.id]==='read');
-  return shelfFilter==='want'?wantBooks:shelfFilter==='read'?readBooks:[...wantBooks,...readBooks];
+  if(shelfFilter==='want') return wantBooks;
+  if(shelfFilter==='reading') return readingBooks;
+  if(shelfFilter==='read') return readBooks;
+  return [...wantBooks,...readingBooks,...readBooks];
 }
 
 function shelfPopulateGenres(){
@@ -5072,18 +5795,18 @@ function shelfGoToPage(n){
   document.querySelector('.shelf-main')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-function renderShelf(){
+function renderShelfCounts(){
   const wantBooks=allBooks.filter(b=>myReadingStatus[b.id]==='want');
+  const readingBooks=allBooks.filter(b=>myReadingStatus[b.id]==='reading');
   const readBooks=allBooks.filter(b=>myReadingStatus[b.id]==='read');
-  document.getElementById('shelfCountAll').textContent=wantBooks.length+readBooks.length;
+  document.getElementById('shelfCountAll').textContent=wantBooks.length+readingBooks.length+readBooks.length;
   document.getElementById('shelfWantCount').textContent=wantBooks.length;
+  document.getElementById('shelfReadingCount').textContent=readingBooks.length;
   document.getElementById('shelfReadCount').textContent=readBooks.length;
-  shelfPopulateGenres();
-  _renderShelfBooks();
 }
 
 function _renderShelfBooks(){
-  const titleMap={all:'Todos los libros',want:'Quiero leer',read:'Leídos'};
+  const titleMap={all:'Todos los libros',want:'Quiero leer',reading:'Leyendo',read:'Leídos'};
   let books=shelfBaseBooks();
   const hadBooksBeforeFilters=books.length>0;
 
@@ -5104,7 +5827,7 @@ function _renderShelfBooks(){
     if(hadBooksBeforeFilters){
       container.innerHTML=`<div class="shelf-empty"><span class="shelf-empty-icon">🔍</span><p>Ningún libro coincide con tu búsqueda o filtro.</p></div>`;
     } else {
-      const msgs={all:'Tu estantería está vacía. ¡Añade libros desde el catálogo!',want:'Aún no tienes libros en «Quiero leer».',read:'Aún no has marcado ningún libro como leído.'};
+      const msgs={all:'Tu estantería está vacía. ¡Añade libros desde el catálogo!',want:'Aún no tienes libros en «Quiero leer».',reading:'Aún no tienes libros marcados como «Leyendo».',read:'Aún no has marcado ningún libro como leído.'};
       container.innerHTML=`<div class="shelf-empty"><span class="shelf-empty-icon">${shelfFilter==='read'?'✨':'📖'}</span><p>${msgs[shelfFilter]}</p></div>`;
     }
     return;
@@ -5135,9 +5858,11 @@ function _renderShelfBooks(){
       const r=ratingsMap[b.id]||{avg:0,count:0};
       const badge=myReadingStatus[b.id]==='want'
         ?`<span style="font-size:11px;color:var(--accent2)">＋ Quiero leer</span>`
+        :myReadingStatus[b.id]==='reading'
+        ?`<span style="font-size:11px;color:var(--gold)">📖 Leyendo</span>`
         :(()=>{
           const ra=myReadingReadAt[b.id];
-          const n=(myReadingLog[b.id]||[]).length;
+          const n=(myReadingLog[b.id]||[]).filter(e=>e.read_at).length;
           const dateStr=ra?new Date(ra).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}):'';
           const vecesStr=n>1?` · ${n} veces`:'';
           return `<span style="font-size:11px;color:${ra?'var(--teal)':'var(--gold)'}">✓ Leído${dateStr?' · '+dateStr:' · falta fecha'}${vecesStr}</span>`;
@@ -5175,6 +5900,132 @@ function _renderShelfBooks(){
   }
 
   container.innerHTML=html;
+}
+
+/* ══════════════════════════ CALENDARIO DE LECTURAS ══════════════════════════ */
+
+// Construye la lista de "periodos de lectura": un tramo start→end por cada entrada de reading_log con datos.
+// Si la lectura sigue en curso (sin read_at), el tramo se extiende hasta hoy.
+function buildReadingPeriods(){
+  const periods=[];
+  const todayISO=new Date().toISOString().slice(0,10);
+  Object.keys(myReadingLog).forEach(bookId=>{
+    const book=allBooks.find(b=>b.id===bookId);
+    if(!book) return;
+    // Si el libro ya no tiene ningún estado en la estantería (se quitó por completo),
+    // no lo mostramos en el calendario aunque conserve historial de lecturas antiguas.
+    if(!myReadingStatus[bookId]) return;
+    (myReadingLog[bookId]||[]).forEach(entry=>{
+      const startISO=entry.started_at?entry.started_at.slice(0,10):(entry.read_at?entry.read_at.slice(0,10):null);
+      if(!startISO) return;
+      const ongoing=!entry.read_at;
+      // Si la lectura sigue "abierta" (sin fecha de fin) pero el libro ya no está marcado como
+      // "Leyendo" en la estantería, fue retirada/abandonada: no la mostramos como activa hasta hoy indefinidamente.
+      if(ongoing && myReadingStatus[bookId]!=='reading') return;
+      const endISO=ongoing?todayISO:entry.read_at.slice(0,10);
+      periods.push({bookId,title:book.title,cover:book.cover,start:startISO,end:endISO,ongoing});
+    });
+  });
+  return periods;
+}
+
+function _calCoverThumbHTML(p){
+  const cls=p.ongoing?'dot-reading':'dot-read';
+  const t=p.title.replace(/"/g,'&quot;');
+  return p.cover
+    ?`<img class="cal-cover-thumb ${cls}" src="${p.cover}" alt="" title="${t}" loading="lazy">`
+    :`<div class="cal-cover-ph ${cls}" title="${t}">📖</div>`;
+}
+
+function renderReadingCalendar(){
+  const periods=buildReadingPeriods();
+  const container=document.getElementById('shelfCalendarContainer');
+  const monthNames=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const first=new Date(calYear,calMonth,1);
+  const startWeekday=(first.getDay()+6)%7; // lunes=0
+  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  const todayISO=new Date().toISOString().slice(0,10);
+
+  let cells='';
+  for(let i=0;i<startWeekday;i++) cells+=`<div class="cal-day empty-cell"></div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const dateStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const active=periods.filter(p=>p.start<=dateStr && dateStr<=p.end);
+    const isToday=dateStr===todayISO;
+    const isSelected=dateStr===calSelectedDay;
+    const covers=active.slice(0,3).map(p=>_calCoverThumbHTML(p)).join('');
+    const more=active.length>3?`<span class="cal-day-more">+${active.length-3}</span>`:'';
+    cells+=`<div class="cal-day${active.length?' has-books':''}${isToday?' is-today':''}${isSelected?' is-selected':''}" ${active.length?`onclick="calSelectDay('${dateStr}')"`:''}>
+      <span class="cal-day-num">${d}</span>
+      <div class="cal-day-covers">${covers}${more}</div>
+    </div>`;
+  }
+
+  const monthLabel=`${monthNames[calMonth]} ${calYear}`;
+
+  let panelHtml='';
+  if(calSelectedDay){
+    const active=periods.filter(p=>p.start<=calSelectedDay && calSelectedDay<=p.end);
+    if(active.length){
+      const dStr=new Date(calSelectedDay+'T12:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+      panelHtml=`<div class="cal-day-panel">
+        <div class="cal-day-panel-title">${dStr}</div>
+        ${active.map(p=>{
+          const rangeStr=`${new Date(p.start+'T12:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'short'})} → ${p.ongoing?'ahora':new Date(p.end+'T12:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'short'})}`;
+          const cov=p.cover?`<img class="cal-panel-cover" src="${p.cover}" alt="">`:`<div class="cal-panel-cover" style="display:flex;align-items:center;justify-content:center">📖</div>`;
+          return `<div class="cal-panel-book" onclick="openBook('${p.bookId}')">
+            ${cov}
+            <div class="cal-panel-info">
+              <div class="cal-panel-title">${p.title}</div>
+              <div class="cal-panel-range">${rangeStr}</div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>`;
+    }
+  }
+
+  container.innerHTML=`
+    <div class="cal-header">
+      <div class="cal-title">${monthLabel}</div>
+      <div class="cal-nav">
+        <button class="cal-nav-btn" onclick="calChangeMonth(-1)">‹</button>
+        <button class="cal-today-btn" onclick="calGoToday()">Hoy</button>
+        <button class="cal-nav-btn" onclick="calChangeMonth(1)">›</button>
+      </div>
+    </div>
+    <div class="cal-legend">
+      <span><span class="cal-dot dot-reading"></span> Leyendo</span>
+      <span><span class="cal-dot dot-read"></span> Terminado</span>
+    </div>
+    <div class="cal-grid">
+      <div class="cal-weekday">L</div><div class="cal-weekday">M</div><div class="cal-weekday">X</div><div class="cal-weekday">J</div><div class="cal-weekday">V</div><div class="cal-weekday">S</div><div class="cal-weekday">D</div>
+      ${cells}
+    </div>
+    ${panelHtml}
+    ${periods.length===0?`<p class="cal-empty-msg">Aún no hay lecturas registradas. Marca un libro como «Leyendo» o añade una fecha de lectura para verlo aquí 📖</p>`:''}
+  `;
+}
+
+function calChangeMonth(delta){
+  calMonth+=delta;
+  if(calMonth<0){calMonth=11;calYear--;}
+  if(calMonth>11){calMonth=0;calYear++;}
+  calSelectedDay=null;
+  renderReadingCalendar();
+}
+
+function calGoToday(){
+  const now=new Date();
+  calYear=now.getFullYear();
+  calMonth=now.getMonth();
+  calSelectedDay=now.toISOString().slice(0,10);
+  renderReadingCalendar();
+}
+
+function calSelectDay(dateStr){
+  calSelectedDay=(calSelectedDay===dateStr)?null:dateStr;
+  renderReadingCalendar();
 }
 
 /* ══════════════════════════ BINGO DE LECTURA ══════════════════════════ */
@@ -5269,12 +6120,20 @@ const HITO_CONFIG={
   }
 };
 
+function resetHitoPinImg(src){
+  const img=document.getElementById('hitoPinImg');
+  const fb=document.getElementById('hitoPinFallback');
+  img.style.display='';
+  fb.style.display='none';
+  img.src=src;
+}
+
 function showHitoModal(tipo){
   const cfg=HITO_CONFIG[tipo];
   const card=document.getElementById('hitoCard');
   card.className='hito-card '+tipo; // resetea clases
   document.getElementById('hitoRibbon').textContent=cfg.ribbon;
-  document.getElementById('hitoPinImg').src=cfg.img;
+  resetHitoPinImg(cfg.img);
   document.getElementById('hitoTitle').textContent=cfg.title;
   document.getElementById('hitoSubtitle').textContent=cfg.subtitle;
 
@@ -5384,7 +6243,7 @@ function showLogroHitoModal(logro){
   const card=document.getElementById('hitoCard');
   card.className='hito-card logro';
   document.getElementById('hitoRibbon').textContent='🏅 ¡Nuevo logro!';
-  document.getElementById('hitoPinImg').src='assets/logros/'+logro.icono;
+  resetHitoPinImg('assets/logros/'+logro.icono);
   document.getElementById('hitoTitle').textContent=logro.nombre;
   document.getElementById('hitoSubtitle').textContent=logro.descripcion||'Insignia conseguida';
   document.getElementById('hitoConfetti').innerHTML='';
@@ -5429,23 +6288,24 @@ async function checkNewLogros(){
 
 function renderLogrosGeneralGrid(){
   const grid=document.getElementById('logrosGeneralGrid');
-  if(!grid) return;
-  if(!logrosCatalog.length){
-    grid.innerHTML='<div class="logros-empty">Todavía no hay insignias disponibles.</div>';
-    return;
-  }
-  grid.innerHTML=logrosCatalog.map(l=>{
+  const gridLectura=document.getElementById('logrosLecturaGrid');
+  if(!grid||!gridLectura) return;
+  const badgeHtml=l=>{
     const got=userLogros.some(ul=>ul.logro_id===l.id);
     const tip=got?(l.descripcion||l.nombre):'Aún no conseguido';
     return `<div class="logros-general-badge ${got?'':'locked'}" title="${escHtml(tip)}">
-      <div class="logros-general-badge-imgbox"><img src="assets/logros/${l.icono}" alt="${escHtml(l.nombre)}"></div>
+      <div class="logros-general-badge-imgbox"><img src="assets/logros/${l.icono}" alt="${escHtml(l.nombre)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="logros-badge-fallback">🏅</span></div>
       <div class="logros-general-badge-name">${escHtml(l.nombre)}</div>
     </div>`;
-  }).join('');
+  };
+  const lectura=logrosCatalog.filter(l=>l.categoria==='lectura');
+  const resto=logrosCatalog.filter(l=>l.categoria!=='lectura');
+  gridLectura.innerHTML=lectura.length?lectura.map(badgeHtml).join(''):'<div class="logros-empty">Todavía no hay insignias de lectura disponibles.</div>';
+  grid.innerHTML=resto.length?resto.map(badgeHtml).join(''):'<div class="logros-empty">Todavía no hay insignias disponibles.</div>';
 }
 
 let _logrosPrevState=null;
-async function openLogrosModal(){
+async function openLogrosModal(silent){
   if(!currentUser){ openAuthModal(); return; }
   _logrosPrevState={
     home:document.body.classList.contains('home-active'),
@@ -5456,23 +6316,419 @@ async function openLogrosModal(){
   document.body.classList.remove('home-active');
   document.getElementById('homeNavBtn')?.classList.remove('active');
   document.getElementById('shelfView').classList.remove('active');
+  document.getElementById('statsView').classList.remove('active');
+  document.getElementById('cartasView').classList.remove('active');
   document.querySelectorAll('main > *').forEach(el=>el.style.display='none');
   document.getElementById('logrosView').classList.add('active');
   window.scrollTo({top:0});
+  document.getElementById('logrosLecturaGrid').innerHTML='<div class="logros-empty">Cargando…</div>';
   document.getElementById('logrosGeneralGrid').innerHTML='<div class="logros-empty">Cargando…</div>';
   document.getElementById('logrosModalBody').innerHTML='<div class="logros-empty">Cargando…</div>';
+  if(!silent) viewUrlSync('logros',true);
   await Promise.all([bingoLoadHitos(), bingoLoadAllChallenges(), loadLogrosCatalog(), loadUserLogros()]);
   renderLogrosGeneralGrid();
   renderLogrosModal();
   bingoUpdateNotifDot();
 }
 
-function closeLogrosModal(){
+function closeLogrosModal(silent){
   document.getElementById('logrosView').classList.remove('active');
   const prev=_logrosPrevState;
+  if(!silent) viewUrlClear(true);
   if(prev?.home){ showHome(); }
   else if(prev?.shelf){ openShelf(prev.shelfFilter,true); }
   else{ switchTab(activeTab, true); }
+}
+
+/* ── MIS ESTADÍSTICAS — dashboard personal de lectura ── */
+let _statsPrevState=null;
+async function openStatsModal(silent){
+  if(!currentUser){ openAuthModal(); return; }
+  _statsPrevState={
+    home:document.body.classList.contains('home-active'),
+    shelf:document.getElementById('shelfView').classList.contains('active'),
+    shelfFilter:shelfFilter
+  };
+  document.getElementById('homeView').classList.remove('active');
+  document.body.classList.remove('home-active');
+  document.getElementById('homeNavBtn')?.classList.remove('active');
+  document.getElementById('shelfView').classList.remove('active');
+  document.getElementById('logrosView').classList.remove('active');
+  document.getElementById('cartasView').classList.remove('active');
+  document.querySelectorAll('main > *').forEach(el=>el.style.display='none');
+  document.getElementById('statsView').classList.add('active');
+  window.scrollTo({top:0});
+  if(!silent) viewUrlSync('stats',true);
+  renderStatsView();
+}
+
+function closeStatsModal(silent){
+  document.getElementById('statsView').classList.remove('active');
+  const prev=_statsPrevState;
+  if(!silent) viewUrlClear(true);
+  if(prev?.home){ showHome(); }
+  else if(prev?.shelf){ openShelf(prev.shelfFilter,true); }
+  else{ switchTab(activeTab, true); }
+}
+
+/* ══════════════════════════════════
+   CARTAS DE AUTORA — colección desbloqueable
+   Cartas generadas proceduralmente (hash del nombre → PRNG semillado) para
+   cada autora con >3 libros. Una carta se "colecciona" en cuanto la usuaria
+   tiene ≥1 libro de esa autora marcado como leído (reading_status).
+══════════════════════════════════ */
+let _cartasPrevState=null;
+let cartasFilter='all';
+let cartasAuthorsCache=null;
+
+function cc_hashStr(s){let h=1779033703^s.length;for(let i=0;i<s.length;i++){h=Math.imul(h^s.charCodeAt(i),3432918353);h=h<<13|h>>>19}return (h^h>>>16)>>>0}
+function cc_mulberry32(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296}}
+
+function cc_tierFor(count){
+  if(count>=20) return {key:'legendaria', label:'Legendaria', text:'#e6c9ee', c1:'#da99de', c2:'#5bbcb0', bgtop:'linear-gradient(135deg,#241a2c,#17222a)'};
+  if(count>=12) return {key:'consagrada', label:'Consagrada', text:'#f0d9a0', c1:'#e0b45a', c2:'#c9975a', bgtop:'linear-gradient(135deg,#241d16,#1a1510)'};
+  if(count>=7)  return {key:'devota',     label:'Devota',     text:'#dadfe6', c1:'#b9bfc9', c2:'#8d93a0', bgtop:'linear-gradient(135deg,#1b1c22,#141419)'};
+  return              {key:'iniciada',   label:'Iniciada',   text:'#e0b088', c1:'#c9895a', c2:'#a56a3f', bgtop:'linear-gradient(135deg,#241813,#1a120e)'};
+}
+
+function cc_buildConstellation(rng, count, tier){
+  const n = Math.min(count, 12);
+  const pts = [];
+  for(let i=0;i<n;i++){ pts.push({x: 14+rng()*172, y: 12+rng()*88}); }
+  const order = pts.map((_,i)=>i).sort(()=>rng()-0.5);
+  let lines='';
+  for(let i=0;i<order.length-1;i++){
+    const a=pts[order[i]], b=pts[order[i+1]];
+    lines += `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="${tier.c1}" stroke-width="0.6" opacity="0.35"/>`;
+  }
+  let stars = pts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="${1.4+rng()*1.6}" fill="${tier.text}" opacity="${0.55+rng()*0.4}"/>`).join('');
+  return `<svg viewBox="0 0 200 118" preserveAspectRatio="none">${lines}${stars}</svg>`;
+}
+function cc_gemSVG(tier){ return `<svg viewBox="0 0 20 20"><polygon points="10,1 18,7 15,19 5,19 2,7" fill="none" stroke="${tier.text}" stroke-width="1.1" opacity="0.85"/><polygon points="10,1 18,7 10,10" fill="${tier.text}" opacity="0.5"/></svg>`; }
+function cc_sealSVG(tier){ return `<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.5" fill="none" stroke="${tier.text}" stroke-width="1"/><circle cx="10" cy="10" r="4.5" fill="none" stroke="${tier.text}" stroke-width="0.8"/></svg>`; }
+function cc_lockSVG(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="#f0eaf5" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>`; }
+
+// Agrupa allBooks por autora (>3 libros) y calcula estado de lectura por autora.
+function computeAuthorsCollection(){
+  const map={}; // name -> {name, books:[bookObjs]}
+  allBooks.forEach(b=>{
+    (b.authors||[]).forEach(name=>{
+      if(!name) return;
+      if(!map[name]) map[name]={name, books:[]};
+      map[name].books.push(b);
+    });
+  });
+  return Object.values(map)
+    .filter(a=>a.books.length>3)
+    .map(a=>{
+      const readBooks = currentUser ? a.books.filter(b=>myReadingStatus[b.id]==='read') : [];
+      const readCount = readBooks.length;
+      const count = a.books.length;
+      const locked = readCount===0;           // Por desbloquear · 0 leídos
+      const collected = readCount===count;    // Coleccionada · completa
+      const inProgress = !locked && !collected; // En proceso · parcial
+      return {
+        name:a.name,
+        count,
+        books:a.books,
+        readCount,
+        locked,
+        collected,
+        inProgress,
+        genre:(a.books[0].genres||[])[0]||'Romance',
+        trope:(a.books.flatMap(b=>b.tropes||[])[0])||null,
+        covers:a.books.filter(b=>b.cover).slice(0,3).map(b=>b.cover)
+      };
+    })
+    .sort((a,b)=> (b.collected-a.collected) || (b.inProgress-a.inProgress) || b.count-a.count || a.name.localeCompare(b.name));
+}
+
+function setCartasFilter(f){
+  cartasFilter=f;
+  document.querySelectorAll('.cartas-filter-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.cf===f));
+  renderCartasGrid();
+}
+
+function renderCartasProgress(authors){
+  const total=authors.length;
+  const collected=authors.filter(a=>a.collected).length;
+  const pct= total ? Math.round(collected/total*100) : 0;
+  document.getElementById('cartasProgressNum').innerHTML=`${collected}<span> / ${total} coleccionadas</span>`;
+  document.getElementById('cartasProgressFill').style.width=pct+'%';
+}
+
+function cc_cardHTML(a){
+  const seed=cc_hashStr(a.name);
+  const rng=cc_mulberry32(seed);
+  const tier=cc_tierFor(a.count);
+  const isLocked=a.locked;
+  const coversHTML=a.covers.map(u=>`<img src="${u}" loading="lazy" alt="">`).join('');
+  const nextThreshold = a.count>=20?null:(a.count>=12?20:(a.count>=7?12:7));
+  const prevThreshold = a.count>=20?20:(a.count>=12?12:(a.count>=7?7:4));
+  const pct = nextThreshold ? Math.min(100, Math.round((a.count-prevThreshold)/(nextThreshold-prevThreshold)*100)) : 100;
+  const readPct = a.count ? Math.round(a.readCount/a.count*100) : 0;
+
+  const titlesHTML=a.books.map(b=>{
+    const isRead = currentUser && myReadingStatus[b.id]==='read';
+    return `<li class="${isRead?'read':''}">${escHtml(b.title)}</li>`;
+  }).join('');
+
+  const backContent = isLocked
+    ? `<div class="cc-back-head"><div class="cc-back-name">${escHtml(a.name)}</div>${cc_sealSVG(tier)}</div>
+       <div class="cc-locked-msg">${currentUser?'Aún no has leído ningún libro de esta autora. Marca uno como leído para desbloquear su carta.':'Inicia sesión y marca un libro suyo como leído para desbloquear esta carta.'}</div>
+       <div class="cc-flip-hint">Toca para volver</div>`
+    : `<div class="cc-back-head"><div class="cc-back-name">${escHtml(a.name)}</div>${cc_sealSVG(tier)}</div>
+       <ul class="cc-back-titles">${titlesHTML}</ul>
+       <div class="cc-back-progress-label"><span>Has leído</span><span>${a.readCount}/${a.count}</span></div>
+       <div class="cc-back-progress2"><div class="cc-back-progress2-fill" style="width:${readPct}%"></div></div>
+       ${nextThreshold ? `
+       <div class="cc-back-progress-label"><span>Rango: ${tierFor_cc_next(nextThreshold)}</span><span>${a.count}/${nextThreshold}</span></div>
+       <div class="cc-back-progress"><div class="cc-back-progress-fill" style="width:${pct}%"></div></div>
+       ` : `<div class="cc-back-progress-label"><span>Rango máximo alcanzado</span><span>✦</span></div>`}
+       <div class="cc-flip-hint">Toca para volver</div>`;
+
+  return `
+  <div class="cc-scene ${tier.key} ${isLocked?'locked':''} ${a.inProgress?'inprogress':''}"
+       style="--tier-c1:${tier.c1};--tier-c2:${tier.c2};--tier-text:${tier.text};--tier-bgtop:${tier.bgtop}"
+       onclick="this.classList.toggle('flipped')">
+    <div class="cc-card">
+      <div class="cc-face cc-front">
+        <div class="cc-constellation">
+          ${cc_buildConstellation(rng, a.count, tier)}
+          <div class="cc-count">${a.count} libros</div>
+          <div class="cc-gem">${cc_gemSVG(tier)}</div>
+          ${isLocked?`<div class="cc-lock">${cc_lockSVG()}</div>`:''}
+        </div>
+        <div class="cc-namewrap">
+          <div class="cc-name">${escHtml(a.name)}</div>
+          <div class="cc-tier">${tier.label}</div>
+          ${!isLocked?`<div class="cc-read-badge">${a.readCount}/${a.count} leídos${a.inProgress?' · en proceso':''}</div>`:''}
+        </div>
+        <div class="cc-chips">
+          <span class="cc-chip">${escHtml(a.genre)}</span>
+          ${a.trope?`<span class="cc-chip">${escHtml(a.trope)}</span>`:''}
+        </div>
+        <div class="cc-covers">${coversHTML}</div>
+      </div>
+      <div class="cc-face cc-back">${backContent}</div>
+    </div>
+  </div>`;
+}
+function tierFor_cc_next(count){ return cc_tierFor(count).label; }
+
+function renderCartasGrid(){
+  const authors=cartasAuthorsCache||[];
+  const q=(document.getElementById('cartasSearch')?.value||'').trim().toLowerCase();
+  let list=authors;
+  if(q) list=list.filter(a=>a.name.toLowerCase().includes(q));
+
+  const grid=document.getElementById('cartasGrid');
+
+  if(cartasFilter==='all'){
+    const groups=[
+      {key:'collected',  label:'Coleccionadas',    items:list.filter(a=>a.collected)},
+      {key:'inprogress', label:'En proceso',       items:list.filter(a=>a.inProgress)},
+      {key:'locked',     label:'Por desbloquear',  items:list.filter(a=>a.locked)}
+    ].filter(g=>g.items.length);
+
+    if(!groups.length){
+      grid.className='cartas-grid';
+      grid.innerHTML='<div class="cartas-empty">No hay autoras que coincidan con este filtro.</div>';
+      return;
+    }
+
+    grid.className='cartas-groups';
+    grid.innerHTML=groups.map(g=>`
+      <div class="cartas-group">
+        <div class="cartas-group-header">
+          <span class="cartas-group-header-label">${g.label}</span>
+          <span class="cartas-group-header-count">${g.items.length}</span>
+        </div>
+        <div class="cartas-grid">${g.items.map(cc_cardHTML).join('')}</div>
+      </div>
+    `).join('');
+    return;
+  }
+
+  let filtered=list;
+  if(cartasFilter==='collected') filtered=filtered.filter(a=>a.collected);
+  else if(cartasFilter==='inprogress') filtered=filtered.filter(a=>a.inProgress);
+  else if(cartasFilter==='locked') filtered=filtered.filter(a=>a.locked);
+
+  grid.className='cartas-grid';
+  if(!filtered.length){ grid.innerHTML='<div class="cartas-empty">No hay autoras que coincidan con este filtro.</div>'; return; }
+  grid.innerHTML=filtered.map(cc_cardHTML).join('');
+}
+
+async function openCartasModal(silent){
+  if(!currentUser){ openAuthModal(); return; }
+  _cartasPrevState={
+    home:document.body.classList.contains('home-active'),
+    shelf:document.getElementById('shelfView').classList.contains('active'),
+    shelfFilter:shelfFilter
+  };
+  document.getElementById('homeView').classList.remove('active');
+  document.body.classList.remove('home-active');
+  document.getElementById('homeNavBtn')?.classList.remove('active');
+  document.getElementById('shelfView').classList.remove('active');
+  document.getElementById('logrosView').classList.remove('active');
+  document.getElementById('statsView').classList.remove('active');
+  document.querySelectorAll('main > *').forEach(el=>el.style.display='none');
+  document.getElementById('cartasView').classList.add('active');
+  window.scrollTo({top:0});
+  document.getElementById('cartasGrid').innerHTML='<div class="cartas-empty">Cargando…</div>';
+  cartasFilter='all';
+  document.querySelectorAll('.cartas-filter-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.cf==='all'));
+  const searchEl=document.getElementById('cartasSearch'); if(searchEl) searchEl.value='';
+  cartasAuthorsCache=computeAuthorsCollection();
+  renderCartasProgress(cartasAuthorsCache);
+  renderCartasGrid();
+  if(!silent) viewUrlSync('cartas',true);
+}
+
+function closeCartasModal(silent){
+  document.getElementById('cartasView').classList.remove('active');
+  const prev=_cartasPrevState;
+  if(!silent) viewUrlClear(true);
+  if(prev?.home){ showHome(); }
+  else if(prev?.shelf){ openShelf(prev.shelfFilter,true); }
+  else{ switchTab(activeTab, true); }
+}
+
+function computeReadingStats(){
+  const readIds=Object.keys(myReadingStatus).filter(id=>myReadingStatus[id]==='read');
+  const readBooks=readIds.map(id=>allBooks.find(b=>b.id===id)).filter(Boolean);
+
+  // Libros leídos por año: cada entrada del historial cuenta (una relectura suma al año en que se releyó)
+  const perYear={};
+  Object.values(myReadingLog).flat().forEach(entry=>{
+    const y=new Date(entry.read_at).getFullYear();
+    if(!isNaN(y)) perYear[y]=(perYear[y]||0)+1;
+  });
+
+  const totalPages=readBooks.reduce((s,b)=>s+(b.pages||0),0);
+
+  const myScores=readIds.map(id=>myRatings[id]).filter(Boolean);
+  const avgRating=myScores.length?myScores.reduce((a,b)=>a+b,0)/myScores.length:null;
+
+  // Spicy medio: prioriza mi propio voto; si no voté ese libro, usa el spicy del catálogo
+  const spicyVals=readBooks.map(b=>mySpicy[b.id]!=null?mySpicy[b.id]:(typeof b.spicy==='number'?b.spicy:null)).filter(v=>v!=null);
+  const avgSpicy=spicyVals.length?spicyVals.reduce((a,b)=>a+b,0)/spicyVals.length:null;
+
+  const tropeCounts={},dinCounts={};
+  readBooks.forEach(b=>{
+    (b.tropes||[]).forEach(t=>tropeCounts[t]=(tropeCounts[t]||0)+1);
+    (b.dinamicas||[]).forEach(d=>dinCounts[d]=(dinCounts[d]||0)+1);
+  });
+  const topTropes=Object.entries(tropeCounts).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const topDin=Object.entries(dinCounts).sort((a,b)=>b[1]-a[1]).slice(0,6);
+
+  // Ritmo de lectura por mes: para el mes récord y la racha de meses consecutivos leyendo
+  const perMonth={};
+  Object.values(myReadingLog).flat().forEach(entry=>{
+    const d=new Date(entry.read_at);
+    if(isNaN(d)) return;
+    const key=d.getFullYear()*12+d.getMonth(); // índice absoluto de mes, para detectar consecutivos
+    perMonth[key]=(perMonth[key]||0)+1;
+  });
+  const monthKeys=Object.keys(perMonth).map(Number).sort((a,b)=>a-b);
+  let bestMonth=null;
+  monthKeys.forEach(k=>{ if(!bestMonth || perMonth[k]>perMonth[bestMonth]) bestMonth=k; });
+  let longestStreak=0,curRun=0,prevK=null;
+  monthKeys.forEach(k=>{
+    curRun=(prevK!==null && k===prevK+1)?curRun+1:1;
+    longestStreak=Math.max(longestStreak,curRun);
+    prevK=k;
+  });
+
+  // Curiosidades: autora más leída, libro más largo y más corto leídos
+  const authorCounts={};
+  readBooks.forEach(b=>(b.authors||[]).forEach(a=>authorCounts[a]=(authorCounts[a]||0)+1));
+  const topAuthorEntry=Object.entries(authorCounts).sort((a,b)=>b[1]-a[1])[0]||null;
+  const withPages=readBooks.filter(b=>b.pages>0);
+  const longestBook=withPages.length?withPages.reduce((a,b)=>b.pages>a.pages?b:a):null;
+  const shortestBook=withPages.length?withPages.reduce((a,b)=>b.pages<a.pages?b:a):null;
+
+  return {readBooks,perYear,totalPages,avgRating,avgSpicy,topTropes,topDin,
+    bestMonth,bestMonthCount:bestMonth!=null?perMonth[bestMonth]:0,longestStreak,
+    topAuthorEntry,longestBook,shortestBook};
+}
+
+const MONTH_NAMES_ES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+function fmtMonthIdx(idx){ return `${MONTH_NAMES_ES[idx%12]} de ${Math.floor(idx/12)}`; }
+
+function renderStatsView(){
+  const s=computeReadingStats();
+
+  document.getElementById('statsSummary').innerHTML=`
+    <div class="mystat"><div class="mystat-n">${s.readBooks.length}</div><div class="mystat-l">Libros leídos</div></div>
+    <div class="mystat"><div class="mystat-n">${s.totalPages?s.totalPages.toLocaleString('es-ES'):'—'}</div><div class="mystat-l">Páginas leídas</div></div>
+    <div class="mystat"><div class="mystat-n">${s.avgRating?s.avgRating.toFixed(1)+' ★':'—'}</div><div class="mystat-l">Valoración media</div></div>
+    <div class="mystat"><div class="mystat-n">${s.avgSpicy!=null?s.avgSpicy.toFixed(1):'—'}</div><div class="mystat-l">Spicy medio ${s.avgSpicy!=null?SPICY_ICONS[Math.min(5,Math.round(s.avgSpicy))]:''}</div></div>
+  `;
+
+  const yearsEl=document.getElementById('statsYearChart');
+  const yearNoteEl=document.getElementById('statsYearNote');
+  const years=Object.keys(s.perYear).map(Number).sort((a,b)=>a-b);
+  if(!years.length){
+    yearsEl.innerHTML='<div class="logros-empty">Aún no tienes fechas de lectura registradas. Añádelas desde "Mi estantería" al marcar un libro como leído.</div>';
+    yearNoteEl.innerHTML='';
+  }else{
+    const max=Math.max(...years.map(y=>s.perYear[y]));
+    const bestYear=years.reduce((a,b)=>s.perYear[b]>s.perYear[a]?b:a);
+    yearsEl.innerHTML=`<div class="ryear-chart">${years.map(y=>`
+      <div class="ryear-col">
+        <span class="ryear-bar-n">${s.perYear[y]}</span>
+        <div class="ryear-bar-track"><div class="ryear-bar-fill" style="height:${Math.max(8,(s.perYear[y]/max)*100)}%"></div></div>
+        <div class="ryear-year ${y===bestYear?'is-best':''}">${y}</div>
+      </div>`).join('')}</div>`;
+    const totalLogged=years.reduce((a,y)=>a+s.perYear[y],0);
+    yearNoteEl.innerHTML=`Tu año más lector fue <strong style="color:var(--accent2)">${bestYear}</strong>, con ${s.perYear[bestYear]} libro${s.perYear[bestYear]===1?'':'s'}. Total registrado: ${totalLogged} lectura${totalLogged===1?'':'s'} desde ${years[0]}.`;
+  }
+
+  const streakEl=document.getElementById('statsStreakRow');
+  if(s.bestMonth==null){
+    streakEl.innerHTML='<div class="logros-empty">Aún no hay suficientes fechas de lectura para calcular tu ritmo.</div>';
+  }else{
+    streakEl.innerHTML=`
+      <div class="mystat"><div class="mystat-n">${fmtMonthIdx(s.bestMonth)}</div><div class="mystat-l">Tu mes récord (${s.bestMonthCount} libro${s.bestMonthCount===1?'':'s'})</div></div>
+      <div class="mystat"><div class="mystat-n">${s.longestStreak} mes${s.longestStreak===1?'':'es'}</div><div class="mystat-l">Racha más larga leyendo sin parar</div></div>
+    `;
+  }
+
+  const curioEl=document.getElementById('statsCurioGrid');
+  const curioCards=[];
+  if(s.topAuthorEntry){
+    curioCards.push(`<div class="curio-card"><span class="curio-icon">✍️</span><div class="curio-label">Autora más leída</div><div class="curio-value">${escHtml(s.topAuthorEntry[0])}</div><div class="curio-sub">${s.topAuthorEntry[1]} libro${s.topAuthorEntry[1]===1?'':'s'} leído${s.topAuthorEntry[1]===1?'':'s'}</div></div>`);
+  }
+  if(s.longestBook){
+    curioCards.push(`<div class="curio-card"><span class="curio-icon">📚</span><div class="curio-label">El más largo que leíste</div><div class="curio-value">${escHtml(s.longestBook.title)}</div><div class="curio-sub">${s.longestBook.pages.toLocaleString('es-ES')} páginas</div></div>`);
+  }
+  if(s.shortestBook && s.shortestBook!==s.longestBook){
+    curioCards.push(`<div class="curio-card"><span class="curio-icon">🪶</span><div class="curio-label">El más corto que leíste</div><div class="curio-value">${escHtml(s.shortestBook.title)}</div><div class="curio-sub">${s.shortestBook.pages.toLocaleString('es-ES')} páginas</div></div>`);
+  }
+  curioEl.innerHTML=curioCards.length?curioCards.join(''):'<div class="logros-empty">Aún no hay suficientes datos para calcular curiosidades.</div>';
+
+  const tagsEl=document.getElementById('statsTagsGrid');
+  const buildBars=(arr,color)=>{
+    if(!arr.length) return '<div class="dd-empty">Sin datos todavía</div>';
+    const max=arr[0][1];
+    return arr.map(([label,count])=>`
+      <div class="rtag-row">
+        <div class="rtag-label" title="${escHtml(label)}">${escHtml(label)}</div>
+        <div class="rtag-track"><div class="rtag-fill" style="width:${Math.max(10,(count/max)*100)}%;background:${color}"></div></div>
+        <div class="rtag-count">${count}</div>
+      </div>`).join('');
+  };
+  tagsEl.innerHTML=`
+    <div class="rtag-col">
+      <div class="rtag-col-title">Tus tropos favoritos</div>
+      ${buildBars(s.topTropes,'var(--accent)')}
+    </div>
+    <div class="rtag-col">
+      <div class="rtag-col-title">Tus dinámicas favoritas</div>
+      ${buildBars(s.topDin,'var(--rose)')}
+    </div>`;
 }
 
 // Pinta un renglón por cada edición de bingo (pasada o presente), con sus
