@@ -1402,6 +1402,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .shelf-btn.want{background:var(--accent-soft);border-color:rgba(192,111,196,.45);color:var(--accent2)}
 .shelf-btn.reading{background:var(--gold-soft);border-color:rgba(201,151,90,.45);color:var(--gold)}
 .shelf-btn.read{background:rgba(91,188,176,.12);border-color:rgba(91,188,176,.4);color:var(--teal)}
+.shelf-btn.dnf{background:var(--rose-soft);border-color:rgba(212,96,122,.45);color:var(--rose)}
 
 /* ── SHELF BUTTONS (tarjeta) ── */
 .card-shelf-btns{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
@@ -2183,6 +2184,10 @@ body.home-active .hero,body.home-active .main{display:none!important}
         <button class="shelf-nav-item" id="shelfNavRead" onclick="switchShelf('read')">
           <span>✓ Leídos</span>
           <span class="shelf-nav-count" id="shelfReadCount">0</span>
+        </button>
+        <button class="shelf-nav-item" id="shelfNavDnf" onclick="switchShelf('dnf')">
+          <span>✕ Lo dejé</span>
+          <span class="shelf-nav-count" id="shelfDnfCount">0</span>
         </button>
       </div>
       <div class="shelf-sidebar-section">
@@ -4694,7 +4699,7 @@ window.addEventListener('popstate', ()=>{
   }
   // Restaurar (o cerrar) la estantería personal según la URL
   const shelfParam=new URLSearchParams(location.search).get('myshelf');
-  if(shelfParam && currentUser && ['all','want','read'].includes(shelfParam)){
+  if(shelfParam && currentUser && ['all','want','reading','read','dnf'].includes(shelfParam)){
     openShelf(shelfParam, true);
     return;
   } else if(document.getElementById('shelfView').classList.contains('active')){
@@ -5550,6 +5555,7 @@ async function setReadingStatus(bookId, newStatus){
     const tieneFechas=(myReadingLog[bookId]||[]).some(e=>e.read_at);
     const msg=next==='want'?'Añadido a «Quiero leer» ＋'
       :next==='reading'?'Marcado como «Leyendo» 📖'
+      :next==='dnf'?'Marcado como «Lo dejé» ✕'
       :(tieneFechas?'Marcado como leído ✓':'Marcado como leído ✓ — indica la fecha en que lo terminaste');
     showToast(msg,'success');
     // Primera vez que se marca este libro como leído: ofrecer valorar + nivel spicy (opcional)
@@ -5599,12 +5605,15 @@ async function setLogStartDate(bookId, entryId, dateValue){
   showToast('Fecha de inicio guardada 📅','success');
 }
 
-async function addReadLogEntry(bookId, dateValue){
+async function addReadLogEntry(bookId, dateValue, startDateValue){
   if(!currentUser) return;
   if(!dateValue){ showToast('Elige una fecha primero 📅','error'); return; }
   if(!_isCompleteDateStr(dateValue)){ showToast('Completa el año de la fecha 📅','error'); return; }
   // dateValue es "YYYY-MM-DD", convertimos a ISO con hora mediodía para evitar desfases de zona horaria
   const isoDate=new Date(dateValue+'T12:00:00').toISOString();
+  const hasStart=startDateValue && _isCompleteDateStr(startDateValue);
+  if(hasStart && startDateValue>dateValue){ showToast('La fecha de inicio no puede ser posterior a la de fin 📅','error'); return; }
+  const isoStart=hasStart?new Date(startDateValue+'T09:00:00').toISOString():null;
   const openEntry=getOpenLogEntry(bookId);
   if(openEntry){
     // Completa la lectura en curso (conserva la fecha de inicio ya guardada)
@@ -5612,8 +5621,10 @@ async function addReadLogEntry(bookId, dateValue){
     if(error){ showToast('Error al guardar la fecha 😞','error'); console.error(error); return; }
     openEntry.read_at=isoDate;
   } else {
+    const payload={user_id:currentUser.id, book_id:bookId, read_at:isoDate};
+    if(isoStart) payload.started_at=isoStart;
     const {data,error}=await sb.from('reading_log')
-      .insert({user_id:currentUser.id, book_id:bookId, read_at:isoDate})
+      .insert(payload)
       .select('id,started_at,read_at').single();
     if(error){ showToast('Error al guardar la fecha 😞','error'); console.error(error); return; }
     if(!myReadingLog[bookId]) myReadingLog[bookId]=[];
@@ -5683,7 +5694,6 @@ function buildShelfButtonsHTML(bookId){
     </div>`;
   }).join('');
   const addLabel=completedLog.length?'+ Añadir relectura':'Guardar fecha';
-  const pickerHint=completedLog.length?'':'<span style="font-size:11px;color:var(--gold);display:flex;align-items:center;gap:.3em">📅 ¿Cuándo lo terminaste?</span>';
   // Fecha de inicio editable mientras hay una lectura abierta sin terminar ("Leyendo")
   const startDateBlock=openEntry?`
     <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.3rem">
@@ -5694,23 +5704,39 @@ function buildShelfButtonsHTML(bookId){
         onclick="event.stopPropagation()"
         onchange="event.stopPropagation();setLogStartDate('${bookId}','${openEntry.id}',this.value)">
     </div>`:'';
+  // Sin lectura abierta: al guardar la fecha de fin, permitimos indicar también la de inicio (ambas opcionales salvo la de fin)
+  const finishRow=openEntry?`
+    <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+      <span style="font-size:11px;color:var(--gold);display:flex;align-items:center;gap:.3em">📅 ¿Cuándo lo terminaste?</span>
+      <input type="date" id="readDateInput_${bookId}" max="${todayISO}"
+        style="padding:4px 8px;border-radius:8px;border:1px solid rgba(91,188,176,.4);background:var(--surface2);color:var(--text);font-size:11px;font-family:var(--font-body);cursor:pointer;outline:none"
+        onclick="event.stopPropagation()">
+      <button class="shelf-btn" style="padding:4px 10px;font-size:11px"
+        onclick="event.stopPropagation();addReadLogEntry('${bookId}',document.getElementById('readDateInput_${bookId}').value)">✓ Marcar como terminado</button>
+    </div>`:`
+    <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+      <span style="font-size:11px;color:var(--gold);display:flex;align-items:center;gap:.3em">📖 Empezado</span>
+      <input type="date" id="startDateNewInput_${bookId}" max="${todayISO}"
+        style="padding:4px 8px;border-radius:8px;border:1px solid rgba(201,151,90,.4);background:var(--surface2);color:var(--text);font-size:11px;font-family:var(--font-body);cursor:pointer;outline:none"
+        onclick="event.stopPropagation()">
+      <span style="font-size:11px;color:var(--gold);display:flex;align-items:center;gap:.3em">📅 ¿Cuándo lo terminaste?</span>
+      <input type="date" id="readDateInput_${bookId}" max="${todayISO}"
+        style="padding:4px 8px;border-radius:8px;border:1px solid rgba(91,188,176,.4);background:var(--surface2);color:var(--text);font-size:11px;font-family:var(--font-body);cursor:pointer;outline:none"
+        onclick="event.stopPropagation()">
+      <button class="shelf-btn" style="padding:4px 10px;font-size:11px"
+        onclick="event.stopPropagation();addReadLogEntry('${bookId}',document.getElementById('readDateInput_${bookId}').value,document.getElementById('startDateNewInput_${bookId}').value)">${addLabel}</button>
+    </div>`;
   const readDatePicker=(s==='read'||s==='reading')?`
     <div class="shelf-read-date" style="margin:.4rem 0 .2rem;display:flex;flex-direction:column;gap:.35rem">
       ${startDateBlock}
       ${historyHtml}
-      <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
-        ${pickerHint}
-        <input type="date" id="readDateInput_${bookId}" max="${todayISO}"
-          style="padding:4px 8px;border-radius:8px;border:1px solid rgba(91,188,176,.4);background:var(--surface2);color:var(--text);font-size:11px;font-family:var(--font-body);cursor:pointer;outline:none"
-          onclick="event.stopPropagation()">
-        <button class="shelf-btn" style="padding:4px 10px;font-size:11px"
-          onclick="event.stopPropagation();addReadLogEntry('${bookId}',document.getElementById('readDateInput_${bookId}').value)">${s==='reading'?'✓ Marcar como terminado':addLabel}</button>
-      </div>
+      ${finishRow}
     </div>`:'';
   return `<div class="shelf-btns" id="shelfBtns_${bookId}">
     <button class="shelf-btn${s==='want'?' want':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','want')">＋ Quiero leer</button>
     <button class="shelf-btn${s==='reading'?' reading':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','reading')">📖 Leyendo</button>
     <button class="shelf-btn${s==='read'?' read':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','read')">✓ Leído</button>
+    <button class="shelf-btn${s==='dnf'?' dnf':''}" onclick="event.stopPropagation();setReadingStatus('${bookId}','dnf')">✕ Lo dejé</button>
     ${readDatePicker}
   </div>`;
 }
@@ -5845,7 +5871,7 @@ function openShelf(filter,silent){
   document.querySelectorAll('main > *').forEach(el=>el.style.display='none');
   document.getElementById('shelfView').classList.add('active');
   document.querySelectorAll('.shelf-nav-item').forEach(el=>el.classList.remove('active'));
-  const map={all:'shelfNavAll',want:'shelfNavWant',reading:'shelfNavReading',read:'shelfNavRead',calendar:'shelfNavCalendar'};
+  const map={all:'shelfNavAll',want:'shelfNavWant',reading:'shelfNavReading',read:'shelfNavRead',dnf:'shelfNavDnf',calendar:'shelfNavCalendar'};
   document.getElementById(map[shelfFilter])?.classList.add('active');
   _shelfRenderCurrent();
   renderShelfBadges();
@@ -5862,7 +5888,7 @@ function switchShelf(filter,silent){
   shelfFilter=filter;
   shelfPage=1;
   document.querySelectorAll('.shelf-nav-item').forEach(el=>el.classList.remove('active'));
-  const map={all:'shelfNavAll',want:'shelfNavWant',reading:'shelfNavReading',read:'shelfNavRead',calendar:'shelfNavCalendar'};
+  const map={all:'shelfNavAll',want:'shelfNavWant',reading:'shelfNavReading',read:'shelfNavRead',dnf:'shelfNavDnf',calendar:'shelfNavCalendar'};
   document.getElementById(map[filter])?.classList.add('active');
   _shelfRenderCurrent();
   if(!silent) shelfUrlSync(filter,true);
@@ -5895,9 +5921,11 @@ function shelfBaseBooks(){
   const wantBooks=allBooks.filter(b=>myReadingStatus[b.id]==='want');
   const readingBooks=allBooks.filter(b=>myReadingStatus[b.id]==='reading');
   const readBooks=allBooks.filter(b=>myReadingStatus[b.id]==='read');
+  const dnfBooks=allBooks.filter(b=>myReadingStatus[b.id]==='dnf');
   if(shelfFilter==='want') return wantBooks;
   if(shelfFilter==='reading') return readingBooks;
   if(shelfFilter==='read') return readBooks;
+  if(shelfFilter==='dnf') return dnfBooks;
   return [...wantBooks,...readingBooks,...readBooks];
 }
 
@@ -5935,14 +5963,16 @@ function renderShelfCounts(){
   const wantBooks=allBooks.filter(b=>myReadingStatus[b.id]==='want');
   const readingBooks=allBooks.filter(b=>myReadingStatus[b.id]==='reading');
   const readBooks=allBooks.filter(b=>myReadingStatus[b.id]==='read');
+  const dnfBooks=allBooks.filter(b=>myReadingStatus[b.id]==='dnf');
   document.getElementById('shelfCountAll').textContent=wantBooks.length+readingBooks.length+readBooks.length;
   document.getElementById('shelfWantCount').textContent=wantBooks.length;
   document.getElementById('shelfReadingCount').textContent=readingBooks.length;
   document.getElementById('shelfReadCount').textContent=readBooks.length;
+  document.getElementById('shelfDnfCount').textContent=dnfBooks.length;
 }
 
 function _renderShelfBooks(){
-  const titleMap={all:'Todos los libros',want:'Quiero leer',reading:'Leyendo',read:'Leídos'};
+  const titleMap={all:'Todos los libros',want:'Quiero leer',reading:'Leyendo',read:'Leídos',dnf:'Lo dejé'};
   let books=shelfBaseBooks();
   const hadBooksBeforeFilters=books.length>0;
 
@@ -5963,8 +5993,8 @@ function _renderShelfBooks(){
     if(hadBooksBeforeFilters){
       container.innerHTML=`<div class="shelf-empty"><span class="shelf-empty-icon">🔍</span><p>Ningún libro coincide con tu búsqueda o filtro.</p></div>`;
     } else {
-      const msgs={all:'Tu estantería está vacía. ¡Añade libros desde el catálogo!',want:'Aún no tienes libros en «Quiero leer».',reading:'Aún no tienes libros marcados como «Leyendo».',read:'Aún no has marcado ningún libro como leído.'};
-      container.innerHTML=`<div class="shelf-empty"><span class="shelf-empty-icon">${shelfFilter==='read'?'✨':'📖'}</span><p>${msgs[shelfFilter]}</p></div>`;
+      const msgs={all:'Tu estantería está vacía. ¡Añade libros desde el catálogo!',want:'Aún no tienes libros en «Quiero leer».',reading:'Aún no tienes libros marcados como «Leyendo».',read:'Aún no has marcado ningún libro como leído.',dnf:'No has dejado ningún libro a medias (¡bien por ti! 🌸).'};
+      container.innerHTML=`<div class="shelf-empty"><span class="shelf-empty-icon">${shelfFilter==='read'?'✨':shelfFilter==='dnf'?'✕':'📖'}</span><p>${msgs[shelfFilter]}</p></div>`;
     }
     return;
   }
@@ -5996,6 +6026,8 @@ function _renderShelfBooks(){
         ?`<span style="font-size:11px;color:var(--accent2)">＋ Quiero leer</span>`
         :myReadingStatus[b.id]==='reading'
         ?`<span style="font-size:11px;color:var(--gold)">📖 Leyendo</span>`
+        :myReadingStatus[b.id]==='dnf'
+        ?`<span style="font-size:11px;color:var(--rose)">✕ Lo dejé</span>`
         :(()=>{
           const ra=myReadingReadAt[b.id];
           const n=(myReadingLog[b.id]||[]).filter(e=>e.read_at).length;
