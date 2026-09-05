@@ -3401,6 +3401,7 @@ function renderBookModal(){
         ${b.year?`<div class="meta-item"><span class="meta-key">Año</span><span class="meta-val">${b.year}</span></div>`:''}
         ${b.pages?`<div class="meta-item"><span class="meta-key">Páginas</span><span class="meta-val">${b.pages}</span></div>`:''}
         ${b.isbn?`<div class="meta-item"><span class="meta-key">ISBN</span><span class="meta-val">${b.isbn}</span></div>`:''}
+        ${b.pais_origen?`<div class="meta-item"><span class="meta-key">País de origen</span><span class="meta-val">${escHtml(b.pais_origen)}</span></div>`:''}
         ${(b.ship&&b.ship.length)?`<div class="meta-item"><span class="meta-key">Ship</span><span class="meta-val">${b.ship.join(' · ')}</span></div>`:''}
       </div>
       ${(b.content_warnings&&b.content_warnings.length)?`
