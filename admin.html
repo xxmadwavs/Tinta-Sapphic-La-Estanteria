@@ -231,6 +231,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .section-header-baihee .section-title{color:#f0a0a0}
 .section-header-asian .section-title{color:var(--gold)}
 .section-header-african .section-title{color:#8fd48f}
+.section-header-wattpad .section-title{color:#ff8a4c}
 .section-header-admin .section-count{font-size:11px;color:var(--muted);margin-left:auto}
 .section-sep{height:1px;background:var(--border2);margin:1.5rem 0}
 .source-chip-group{display:flex;gap:.4rem;margin-top:.4rem;flex-wrap:wrap}
@@ -242,6 +243,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .source-chip.active-baihee{background:rgba(212,96,96,0.12);border-color:#d46060;color:#f0a0a0}
 .source-chip.active-asian{background:rgba(201,151,90,0.15);border-color:var(--gold);color:var(--gold)}
 .source-chip.active-african{background:rgba(91,164,91,0.15);border-color:#5ba45b;color:#8fd48f}
+.source-chip.active-wattpad{background:rgba(255,80,10,0.15);border-color:#ff500a;color:#ff8a4c}
 
 /* ADMIN SEARCH / FILTER */
 .admin-filter-bar{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-bottom:1.2rem;padding:.9rem 1.1rem;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius)}
@@ -259,6 +261,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .admin-filter-chip.active-baihee{background:rgba(212,96,96,0.12);border-color:#d46060;color:#f0a0a0}
 .admin-filter-chip.active-asian{background:rgba(201,151,90,0.15);border-color:var(--gold);color:var(--gold)}
 .admin-filter-chip.active-african{background:rgba(91,164,91,0.15);border-color:#5ba45b;color:#8fd48f}
+.admin-filter-chip.active-wattpad{background:rgba(255,80,10,0.15);border-color:#ff500a;color:#ff8a4c}
 .admin-results-count{font-size:11.5px;color:var(--muted);white-space:nowrap}
 
 /* ── SAFICLUB admin ── */
@@ -538,6 +541,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           <button class="admin-filter-chip" id="afBaihee" onclick="setAdminFilter('baihee')">🐉 Baihee</button>
           <button class="admin-filter-chip" id="afAsian" onclick="setAdminFilter('asian')">🏮 Asiáticas</button>
           <button class="admin-filter-chip" id="afAfrican" onclick="setAdminFilter('african')">🪘 Africanas</button>
+          <button class="admin-filter-chip" id="afWattpad" onclick="setAdminFilter('wattpad')">📙 Wattpad</button>
         </div>
         <span class="admin-results-count" id="adminResultsCount"></span>
       </div>
@@ -850,6 +854,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
             <button class="source-chip" id="sourceBaihee" onclick="setSource('baihee')">🐉 Baihee</button>
             <button class="source-chip" id="sourceAsian" onclick="setSource('asian')">🏮 Asiáticas</button>
             <button class="source-chip" id="sourceAfrican" onclick="setSource('african')">🪘 Africanas</button>
+            <button class="source-chip" id="sourceWattpad" onclick="setSource('wattpad')">📙 Wattpad</button>
           </div>
         </div>
 
@@ -916,6 +921,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           <div class="form-section-title">Dónde comprar <span style="color:var(--muted);font-size:10px;text-transform:none;letter-spacing:0">(idioma · tienda · enlace)</span></div>
           <div id="editionsWrap" style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:.6rem"></div>
           <button class="btn small" onclick="addEdition()" type="button">+ Añadir edición</button>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title" style="color:#FF6B2C">📙 Wattpad <span style="color:var(--muted);font-size:10px;font-weight:400;text-transform:none;letter-spacing:0">(enlace a la historia, si está disponible gratis)</span></div>
+          <div class="form-row">
+            <input type="url" id="fWattpad" placeholder="https://www.wattpad.com/story/…">
+          </div>
         </div>
 
         <div class="form-section">
@@ -1302,7 +1314,7 @@ let authors = []; // array of strings
 let editions = []; // array of {lang, store, url}
 
 const ADMIN_PAGE_SIZE = 25;
-let adminPages = {thais:1, other:1, spanish:1, baihee:1, asian:1, african:1};
+let adminPages = {thais:1, other:1, spanish:1, baihee:1, asian:1, african:1, wattpad:1};
 
 /* ── AUTH ── */
 async function adminLogin() {
@@ -1498,8 +1510,8 @@ function setAdminFilter(section) {
   adminFilterSection = section;
   // Reset all pages when section filter changes
   Object.keys(adminPages).forEach(k=>adminPages[k]=1);
-  const chips = {all:'afAll',thais:'afThais',other:'afOther',spanish:'afSpanish',baihee:'afBaihee',asian:'afAsian',african:'afAfrican'};
-  const cls = {thais:'active-thais',other:'active-other',spanish:'active-spanish',baihee:'active-baihee',asian:'active-asian',african:'active-african'};
+  const chips = {all:'afAll',thais:'afThais',other:'afOther',spanish:'afSpanish',baihee:'afBaihee',asian:'afAsian',african:'afAfrican',wattpad:'afWattpad'};
+  const cls = {thais:'active-thais',other:'active-other',spanish:'active-spanish',baihee:'active-baihee',asian:'active-asian',african:'active-african',wattpad:'active-wattpad'};
   Object.entries(chips).forEach(([key,id]) => {
     const el = document.getElementById(id);
     if(!el) return;
@@ -1577,6 +1589,7 @@ function renderBookList() {
     {key:'baihee', icon:'🐉', label:'Baihee', cls:'section-header-baihee'},
     {key:'asian', icon:'🏮', label:'Asiáticas', cls:'section-header-asian'},
     {key:'african', icon:'🪘', label:'Africanas', cls:'section-header-african'},
+    {key:'wattpad', icon:'📙', label:'Wattpad', cls:'section-header-wattpad'},
   ];
 
   let html='';
@@ -1632,6 +1645,7 @@ function openEditModal(id) {
   document.getElementById('fSynopsis').value=b.synopsis||'';
   document.getElementById('fPages').value   =b.pages||'';
   document.getElementById('fIsbn').value    =b.isbn||'';
+  document.getElementById('fWattpad').value =b.wattpad||'';
   document.getElementById('fShip').value    =(b.ship&&b.ship.length)?b.ship.join(', '):'';
   const shipRow=document.getElementById('shipRow');
   if(shipRow) shipRow.style.display=(b.source==='thais')?'':'none';
@@ -1686,7 +1700,7 @@ function openEditModal(id) {
 }
 
 function clearForm() {
-  ['fTitle','fYear','fCover','fSynopsis','fPages','fIsbn','fSagaName','fSagaNum'].forEach(id=>document.getElementById(id).value='');
+  ['fTitle','fYear','fCover','fSynopsis','fPages','fIsbn','fWattpad','fSagaName','fSagaNum'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('dupWarning').classList.remove('show');
   document.getElementById('dupOk').classList.remove('show');
   authors=[];editions=[];
@@ -1944,8 +1958,8 @@ function renderSpicy(){
 function setSp(v){sel.spicy=(v==='null'||v===null)?null:parseInt(v);renderSpicy();}
 function setSource(v){
   sel.source=v;
-  const map={thais:'active-thais', other:'active-other', spanish:'active-spanish', baihee:'active-baihee', asian:'active-asian', african:'active-african'};
-  const ids={thais:'sourceThais', other:'sourceOther', spanish:'sourceSpanish', baihee:'sourceBaihee', asian:'sourceAsian', african:'sourceAfrican'};
+  const map={thais:'active-thais', other:'active-other', spanish:'active-spanish', baihee:'active-baihee', asian:'active-asian', african:'active-african', wattpad:'active-wattpad'};
+  const ids={thais:'sourceThais', other:'sourceOther', spanish:'sourceSpanish', baihee:'sourceBaihee', asian:'sourceAsian', african:'sourceAfrican', wattpad:'sourceWattpad'};
   Object.entries(ids).forEach(([key,id])=>{
     const el=document.getElementById(id);
     if(el) el.className='source-chip'+(key===v?' '+map[key]:'');
@@ -1970,6 +1984,7 @@ function saveBook() {
     synopsis:  document.getElementById('fSynopsis').value.trim()||null,
     pages:     parseInt(document.getElementById('fPages').value)||null,
     isbn:      document.getElementById('fIsbn').value.trim()||null,
+    wattpad:   document.getElementById('fWattpad').value.trim()||null,
     ship:      sel.source==='thais'
       ? document.getElementById('fShip').value.split(',').map(s=>s.trim()).filter(Boolean)
       : [],

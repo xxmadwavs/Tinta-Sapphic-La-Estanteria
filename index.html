@@ -587,6 +587,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .buy-lang{font-size:10px;font-weight:700;color:var(--muted);background:var(--surface3);padding:1px 6px;border-radius:10px}
 .buy-store{font-weight:500}
 .buy-arrow{color:var(--muted);font-size:11px}
+.wattpad-section{margin-bottom:1.2rem}
+.wattpad-link{display:flex;align-items:center;gap:.5rem;padding:9px 16px;border-radius:20px;background:rgba(255,80,10,0.12);border:1px solid rgba(255,80,10,0.35);text-decoration:none;color:#ff8a4c;font-size:13px;font-weight:500;transition:all .18s;width:fit-content}
+.wattpad-link:hover{background:rgba(255,80,10,0.2);border-color:#ff500a;color:#ffa06b}
+.wattpad-icon{font-size:15px}
 .rating-section{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.4rem}
 .rating-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem;font-weight:600}
 .community-rating{display:flex;align-items:center;gap:1rem;margin-bottom:.8rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
@@ -1022,6 +1026,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .section-tab.active-baihee{background:rgba(212,96,96,0.12);border-color:#d46060;color:#f0a0a0}
 .section-tab.active-asian{background:rgba(201,151,90,0.15);border-color:var(--gold);color:var(--gold)}
 .section-tab.active-african{background:rgba(91,164,91,0.15);border-color:#5ba45b;color:#8fd48f}
+.section-tab.active-wattpad{background:rgba(255,80,10,0.15);border-color:#ff500a;color:#ff8a4c}
 .section-tab .tab-count{font-size:10.5px;padding:1px 7px;border-radius:20px;font-weight:700;margin-left:1px}
 .section-tab.active-thais .tab-count{background:var(--accent);color:#fff}
 .section-tab.active-other .tab-count{background:var(--teal);color:var(--bg)}
@@ -1029,15 +1034,48 @@ body.home-active .hero,body.home-active .main{display:none!important}
 .section-tab.active-baihee .tab-count{background:#d46060;color:#fff}
 .section-tab.active-asian .tab-count{background:var(--gold);color:var(--bg)}
 .section-tab.active-african .tab-count{background:#5ba45b;color:#fff}
+.section-tab.active-wattpad .tab-count{background:#ff500a;color:#fff}
 .section-tab .tab-count.hidden{display:none}
+.section-select-mobile{display:none}
 @media(max-width:600px){
-  .section-tabs{
-    gap:.35rem;flex-wrap:nowrap;overflow-x:auto;
-    -webkit-overflow-scrolling:touch;scrollbar-width:none;
-    padding-bottom:2px;margin-bottom:.6rem;
+  .section-tabs{display:none}
+  .section-select-mobile{
+    display:block;position:relative;margin-bottom:.75rem;
   }
-  .section-tabs::-webkit-scrollbar{display:none}
-  .section-tab{padding:6px 14px;font-size:11.5px;flex:0 0 auto}
+  .section-select-btn{
+    width:100%;display:flex;align-items:center;gap:.5rem;
+    padding:11px 16px;border-radius:14px;border:1px solid var(--border2);
+    background:var(--surface);color:var(--text);
+    font-family:var(--font-body);font-size:13.5px;font-weight:500;cursor:pointer;
+  }
+  .section-select-count{
+    font-size:10.5px;padding:1px 7px;border-radius:20px;font-weight:700;
+    background:var(--accent);color:#fff;margin-left:auto;
+  }
+  .section-select-count.hidden{display:none}
+  .section-select-arrow{color:var(--muted);font-size:11px;transition:transform .18s;margin-left:.15rem}
+  .section-select-mobile.open .section-select-arrow{transform:rotate(180deg)}
+  .section-select-menu{
+    display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;
+    background:var(--surface);border:1px solid var(--border2);border-radius:14px;
+    padding:.4rem;z-index:20;box-shadow:0 16px 40px rgba(0,0,0,0.5);
+    max-height:60vh;overflow-y:auto;
+  }
+  .section-select-mobile.open .section-select-menu{display:block}
+  .section-select-item{
+    display:flex;align-items:center;gap:.5rem;width:100%;
+    padding:10px 12px;border-radius:10px;border:none;background:transparent;
+    color:var(--muted);font-family:var(--font-body);font-size:13px;font-weight:500;
+    cursor:pointer;text-align:left;
+  }
+  .section-select-item:active{background:var(--surface2)}
+  .section-select-item.active{color:var(--accent2);background:var(--accent-soft)}
+  .section-select-item-count{
+    margin-left:auto;font-size:10px;padding:1px 7px;border-radius:20px;
+    font-weight:700;background:var(--surface3);color:var(--muted);
+  }
+  .section-select-item-count.hidden{display:none}
+  .section-select-item.active .section-select-item-count{background:var(--accent);color:#fff}
 }
 
 /* FOOTER */
@@ -1788,6 +1826,23 @@ body.home-active .hero,body.home-active .main{display:none!important}
     <button class="section-tab" id="tabBaihee" onclick="switchSection('baihee')">🐉 Baihee <span class="tab-count hidden" id="countBaihee">0</span></button>
     <button class="section-tab" id="tabAsian" onclick="switchSection('asian')">🏮 Asiáticas <span class="tab-count hidden" id="countAsian">0</span></button>
     <button class="section-tab" id="tabAfrican" onclick="switchSection('african')">🪘 Africanas <span class="tab-count hidden" id="countAfrican">0</span></button>
+    <button class="section-tab" id="tabWattpad" onclick="switchSection('wattpad')">📙 Wattpad <span class="tab-count hidden" id="countWattpad">0</span></button>
+  </div>
+  <div class="section-select-mobile" id="sectionSelectMobile">
+    <button class="section-select-btn" id="sectionSelectBtn" onclick="toggleSectionMenu()" type="button">
+      <span id="sectionSelectLabel">Elección de categoría</span>
+      <span class="section-select-count hidden" id="sectionSelectCount">0</span>
+      <span class="section-select-arrow">▾</span>
+    </button>
+    <div class="section-select-menu" id="sectionSelectMenu">
+      <button class="section-select-item active" data-section="thais" onclick="switchSection('thais')" type="button">Libros Thais <span class="section-select-item-count" id="scountThais">0</span></button>
+      <button class="section-select-item" data-section="other" onclick="switchSection('other')" type="button">Libros Occidentales <span class="section-select-item-count hidden" id="scountOther">0</span></button>
+      <button class="section-select-item" data-section="spanish" onclick="switchSection('spanish')" type="button">Libros en Español <span class="section-select-item-count hidden" id="scountSpanish">0</span></button>
+      <button class="section-select-item" data-section="baihee" onclick="switchSection('baihee')" type="button">Baihee <span class="section-select-item-count hidden" id="scountBaihee">0</span></button>
+      <button class="section-select-item" data-section="asian" onclick="switchSection('asian')" type="button">Asiáticas <span class="section-select-item-count hidden" id="scountAsian">0</span></button>
+      <button class="section-select-item" data-section="african" onclick="switchSection('african')" type="button">Africanas <span class="section-select-item-count hidden" id="scountAfrican">0</span></button>
+      <button class="section-select-item" data-section="wattpad" onclick="switchSection('wattpad')" type="button">Wattpad <span class="section-select-item-count hidden" id="scountWattpad">0</span></button>
+    </div>
   </div>
   <div class="filter-shell">
     <div class="filter-top">
@@ -1796,7 +1851,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
         <input type="text" style="display:none" name="username" autocomplete="username">
         <input type="password" style="display:none" name="password" autocomplete="current-password">
         <span class="search-icon">🔍</span>
-        <input class="search-input" id="searchInput" type="search" placeholder="Buscar por título o autora…" oninput="applyFilters()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="q" readonly onfocus="this.removeAttribute('readonly')">
+        <input class="search-input" id="searchInput" type="search" placeholder="Buscar por título o autora…" oninput="applyFiltersDebounced()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="q" readonly onfocus="this.removeAttribute('readonly')">
       </div>
       <select class="sort-select" id="sortSel" onchange="applyFilters()">
         <option value="nuevo">✨ Recién añadidos</option>
@@ -2049,6 +2104,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
           <button class="ruleta-tipo-btn" data-src="baihee" onclick="ruletaSetSection('baihee')">🐉 Baihee</button>
           <button class="ruleta-tipo-btn" data-src="asian" onclick="ruletaSetSection('asian')">🏮 Asiáticas</button>
           <button class="ruleta-tipo-btn" data-src="african" onclick="ruletaSetSection('african')">🪘 Africanas</button>
+          <button class="ruleta-tipo-btn" data-src="wattpad" onclick="ruletaSetSection('wattpad')">📙 Wattpad</button>
         </div>
         <!-- Filtros propios: Género, Dinámica, Tropo -->
         <div class="ruleta-dd-row">
@@ -2224,7 +2280,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
       <div class="shelf-toolbar" id="shelfToolbar">
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
-          <input class="search-input" id="shelfSearchInput" type="search" placeholder="Buscar por título o autora…" oninput="shelfApplyFilters()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <input class="search-input" id="shelfSearchInput" type="search" placeholder="Buscar por título o autora…" oninput="shelfApplyFiltersDebounced()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         </div>
         <select class="sort-select" id="shelfGenreSelect" onchange="shelfApplyFilters()">
           <option value="">Todos los géneros</option>
@@ -2463,6 +2519,39 @@ let calMonth=new Date().getMonth(); // 0-11
 let calSelectedDay=null; // 'YYYY-MM-DD'
 let bingoChallenges=[], bingoActiveChallengeId=null, bingoProgress=[], bingoActiveCellIdx=null, bingoLinkMode='catalogo', bingoPendingBookId=null, bingoPendingBookTitle=null, bingoPendingBookCover=null, bingoManualConfirmed=false, bingoHitos=[];
 let activeSection='thais';
+const SECTION_META={
+  thais:{icon:'🌸',label:'Libros Thais'},
+  other:{icon:'🌍',label:'Libros Occidentales'},
+  spanish:{icon:'💜',label:'Libros en Español'},
+  baihee:{icon:'🐉',label:'Baihee'},
+  asian:{icon:'🏮',label:'Asiáticas'},
+  african:{icon:'🪘',label:'Africanas'},
+  wattpad:{icon:'📙',label:'Wattpad'},
+};
+const SECTION_TAB_IDS={thais:'tabThais',other:'tabOther',spanish:'tabSpanish',baihee:'tabBaihee',asian:'tabAsian',african:'tabAfrican',wattpad:'tabWattpad'};
+const SECTION_CLS={thais:'active-thais',other:'active-other',spanish:'active-spanish',baihee:'active-baihee',asian:'active-asian',african:'active-african',wattpad:'active-wattpad'};
+function syncSectionTabsUI(section){
+  Object.entries(SECTION_TAB_IDS).forEach(([key,id])=>{
+    const el=document.getElementById(id);
+    if(el) el.className='section-tab'+(key===section?' '+SECTION_CLS[key]:'');
+  });
+  document.querySelectorAll('.section-select-item').forEach(el=>{
+    el.classList.toggle('active', el.dataset.section===section);
+  });
+  closeSectionMenu();
+}
+function toggleSectionMenu(){
+  const el=document.getElementById('sectionSelectMobile');
+  if(el) el.classList.toggle('open');
+}
+function closeSectionMenu(){
+  const el=document.getElementById('sectionSelectMobile');
+  if(el) el.classList.remove('open');
+}
+document.addEventListener('click', e=>{
+  const wrap=document.getElementById('sectionSelectMobile');
+  if(wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) closeSectionMenu();
+});
 let authMode='login', pendingStar=0;
 let spicyMap={}, mySpicy={}, pendingSpicy=0;
 let communityTagsMap={}, myTags={};
@@ -2481,6 +2570,8 @@ const PAGE_SIZE=24;
 
 /* ── UTILIDADES ── */
 function debounce(fn,ms){let t;return(...args)=>{clearTimeout(t);t=setTimeout(()=>fn(...args),ms);};}
+const applyFiltersDebounced=debounce(()=>applyFilters(),180);
+const shelfApplyFiltersDebounced=debounce(()=>shelfApplyFilters(),180);
 
 /* ── URL STATE ── */
 function pushState(addEntry){
@@ -2584,9 +2675,7 @@ async function init(){
   buildDropdowns();
   loadState();   // restaurar filtros y página desde la URL
   // Pintar visualmente la sección activa restaurada
-  const _secTabs={thais:'tabThais',other:'tabOther',spanish:'tabSpanish',baihee:'tabBaihee',asian:'tabAsian',african:'tabAfrican'};
-  const _secCls={thais:'active-thais',other:'active-other',spanish:'active-spanish',baihee:'active-baihee',asian:'active-asian',african:'active-african'};
-  Object.entries(_secTabs).forEach(([key,id])=>{const el=document.getElementById(id);if(el)el.className='section-tab'+(key===activeSection?' '+_secCls[key]:'');});
+  syncSectionTabsUI(activeSection);
   renderAuthUI(); // re-aplicar estado auth tras cargar dropdowns
   applyFilters(false);
   updateDDCounts();renderActivePills();
@@ -3141,11 +3230,21 @@ function renderGrid(books, total, totalPages){
   const c=document.getElementById('booksContainer');
   // Update section tab counts (always from full filtered books before section split)
   const _all=[...allBooks];
-  [{id:'countThais',src:'thais'},{id:'countOther',src:'other'},{id:'countSpanish',src:'spanish'},{id:'countBaihee',src:'baihee'},{id:'countAsian',src:'asian'},{id:'countAfrican',src:'african'}].forEach(({id,src})=>{
+  [{id:'countThais',src:'thais'},{id:'countOther',src:'other'},{id:'countSpanish',src:'spanish'},{id:'countBaihee',src:'baihee'},{id:'countAsian',src:'asian'},{id:'countAfrican',src:'african'},{id:'countWattpad',src:'wattpad'}].forEach(({id,src})=>{
     const el=document.getElementById(id);
     if(!el) return;
     const n=_all.filter(b=>b.source===src).length;
     el.textContent=n; el.className='tab-count'+(n?'':' hidden');
+  });
+  // Mirror counts into the mobile section dropdown
+  Object.keys(SECTION_META).forEach(src=>{
+    const n=_all.filter(b=>b.source===src).length;
+    const sEl=document.getElementById('scount'+src.charAt(0).toUpperCase()+src.slice(1));
+    if(sEl){ sEl.textContent=n; sEl.className='section-select-item-count'+(n?'':' hidden'); }
+    if(src===activeSection){
+      const btnCount=document.getElementById('sectionSelectCount');
+      if(btnCount){ btnCount.textContent=n; btnCount.className='section-select-count'+(n?'':' hidden'); }
+    }
   });
   if(!total){c.innerHTML=`<div class="empty-state"><div class="empty-big">¿Dónde están?</div><p>Ningún libro coincide.</p></div>`;return;}
 
@@ -3153,7 +3252,7 @@ function renderGrid(books, total, totalPages){
     const r=ratingsMap[b.id]||{avg:0,count:0};
     const myScore=myRatings[b.id]||0;
     const authorStr=(b.authors||[]).join(', ')||'—';
-    const coverEl=b.cover?`<img class="book-cover" src="${b.cover}" alt="${b.title}" onerror="this.outerHTML='<div class=book-cover-ph>📖</div>'">`:`<div class="book-cover-ph">📖</div>`;
+    const coverEl=b.cover?`<img class="book-cover" src="${b.cover}" alt="${escHtml(b.title)}" loading="lazy" onerror="this.outerHTML='<div class=book-cover-ph>📖</div>'">`:`<div class="book-cover-ph">📖</div>`;
     const avgBadge=currentUser&&r.count>0?`<div class="avg-badge"><span style="color:var(--gold);font-size:11px">★</span><span style="font-size:11.5px;font-weight:600;color:var(--text)">${r.avg.toFixed(1)}</span><span style="font-size:10px;color:var(--muted)">(${r.count})</span></div>`:'';
     const spicyEff=effectiveSpicy(b);
     const spicyBadge=currentUser?((spicyEff!=null&&spicyEff>0)?`<div class="spicy-badge">${SPICY_ICONS[spicyEff]}</div>`:(spicyEff==null)?`<div class="spicy-badge" title="Nivel spicy desconocido" style="opacity:.65">${SPICY_UNKNOWN_ICON}</div>`:''):`<div class="spicy-badge" title="Regístrate para ver el nivel spicy" style="opacity:.5;cursor:pointer" onclick="event.stopPropagation();openAuthModal()">🔒</div>`;
@@ -3165,14 +3264,14 @@ function renderGrid(books, total, totalPages){
     const adaptTag=b.adaptacion&&b.adaptacion!=='Sin adaptación'?`<span class="tag tag-adaptacion">${b.adaptacion}</span>`:'';
     const cardSagaName=getSaga(b);
     const cardSagaNum=b.sagaNum!=null?' #'+b.sagaNum:'';
-    const cardSagaSub=cardSagaName?`<div class="card-saga-sub" onclick="event.stopPropagation();event.preventDefault();filterBySagaFromModal(decodeURIComponent('${encodeURIComponent(cardSagaName)}'))">${cardSagaName}${cardSagaNum}</div>`:'';
+    const cardSagaSub=cardSagaName?`<div class="card-saga-sub" onclick="event.stopPropagation();event.preventDefault();filterBySagaFromModal(decodeURIComponent('${encodeURIComponent(cardSagaName)}'))">${escHtml(cardSagaName)}${cardSagaNum}</div>`:'';
     const voteLabel=myScore>0?`${'★'.repeat(myScore)} Mi voto`:'Valorar';
     return `<div class="book-card" onclick="openBook('${b.id}')">
       <div class="book-cover-wrap">${spicyBadge}${coverEl}${avgBadge}</div>
       <div class="book-card-body">
-        <div class="book-title">${b.title}</div>
+        <div class="book-title">${escHtml(b.title)}</div>
         ${cardSagaSub}
-        <div class="book-author">${authorStr}</div>
+        <div class="book-author">${escHtml(authorStr)}</div>
         <div class="book-tags">${genreTags}${yearTag}</div>
         <div class="book-footer">
           ${currentUser
@@ -3239,9 +3338,9 @@ function renderBookModal(){
   const r=ratingsMap[b.id]||{avg:0,count:0};
   const myScore=myRatings[b.id]||0;
   const authorStr=(b.authors||[]).length
-    ? (b.authors).map(a=>`<button class="modal-author-link" onclick="filterByAuthorFromModal(decodeURIComponent('${encodeURIComponent(a)}'))">${a}</button>`).join(', ')
+    ? (b.authors).map(a=>`<button class="modal-author-link" onclick="filterByAuthorFromModal(decodeURIComponent('${encodeURIComponent(a)}'))">${escHtml(a)}</button>`).join(', ')
     : '—';
-  const coverEl=b.cover?`<div class="modal-cover-strip"><img src="${b.cover}" alt="${b.title}"></div>`:`<div class="modal-cover-ph">📖</div>`;
+  const coverEl=b.cover?`<div class="modal-cover-strip"><img src="${b.cover}" alt="${escHtml(b.title)}"></div>`:`<div class="modal-cover-ph">📖</div>`;
   const stars=avg=>[1,2,3,4,5].map(i=>`<span class="star ${i<=Math.round(avg)?'on':'off'}">★</span>`).join('');
   const communityRating=r.count>0
     ?`<div class="community-rating"><div class="avg-big">${r.avg.toFixed(1)}</div><div><div class="avg-stars-row">${stars(r.avg)}</div><div class="avg-votes">${r.count} valoración${r.count!==1?'es':''}</div></div></div>`
@@ -3282,13 +3381,13 @@ function renderBookModal(){
     ?`<button class="saga-map-trigger" onclick="openSagaMap(decodeURIComponent('${encodeURIComponent(b.sagaName)}'))">✦ orden de lectura</button>`
     :'';
   const sagaSubtitle=sagaName
-    ?`<p class="modal-saga-sub"><span class="modal-saga-row"><button class="modal-saga-link" onclick="filterBySagaFromModal(decodeURIComponent('${encodeURIComponent(sagaName)}'))">${sagaName}${sagaNumStr}</button>${sagaMapBtn}</span></p>`
+    ?`<p class="modal-saga-sub"><span class="modal-saga-row"><button class="modal-saga-link" onclick="filterBySagaFromModal(decodeURIComponent('${encodeURIComponent(sagaName)}'))">${escHtml(sagaName)}${sagaNumStr}</button>${sagaMapBtn}</span></p>`
     :'';
 
   document.getElementById('bookModalContent').innerHTML=`${coverEl}
     <div class="modal-body">
       <div class="modal-title-row">
-        <h2 class="modal-title">${b.title}</h2>
+        <h2 class="modal-title">${escHtml(b.title)}</h2>
       </div>
       ${sagaSubtitle}
       <p class="modal-author">por ${authorStr}</p>
@@ -3323,6 +3422,14 @@ function renderBookModal(){
             <span class="buy-arrow">↗</span>
           </a>`).join('')}
         </div>
+      </div>`:''}
+      ${b.wattpad?`
+      <div class="wattpad-section">
+        <a class="wattpad-link" href="${b.wattpad}" target="_blank" rel="noopener">
+          <span class="wattpad-icon">📙</span>
+          <span>Leer gratis en Wattpad</span>
+          <span class="buy-arrow">↗</span>
+        </a>
       </div>`:''}
       ${currentUser
         ? `<div class="rating-section" id="modalRatingSection"><div class="rating-title">Valoración de la comunidad</div>${communityRating}${voteArea}</div>`
@@ -3461,7 +3568,7 @@ function renderSagaMap(sagaName,books){
   const allY=[...mainChain,...branches].map(b=>b._y);
   const H=Math.max(...allY)+70;
 
-  const coverHtml=b=>b.cover?`<img src="${b.cover}" alt="">`:'📖';
+  const coverHtml=b=>b.cover?`<img src="${b.cover}" alt="" loading="lazy">`:'📖';
   const nodeHtml=b=>`<div class="sm-node${b._attach?' branch':''}" style="left:${b._x}%;top:${b._y}px" onclick="openSagaBook('${b.id}')">
       <div class="sm-node-ring"><div class="sm-node-ring-inner">${coverHtml(b)}</div></div>
       <div class="sm-node-num">${b.sagaNum}</div>
@@ -4092,7 +4199,7 @@ function updateHomeStats(){
     const extra=safiBooks.length-preview.length;
     coversEl.innerHTML=preview.map(b=>
       b.cover
-        ?`<img class="hv-safi-cover" src="${b.cover}" alt="${b.title}" title="${b.title}" onclick="event.stopPropagation();showCatalog('safi')" onerror="this.outerHTML='<div class=hv-safi-cover-ph>📖</div>'">`
+        ?`<img class="hv-safi-cover" src="${b.cover}" alt="${escHtml(b.title)}" title="${escHtml(b.title)}" loading="lazy" onclick="event.stopPropagation();showCatalog('safi')" onerror="this.outerHTML='<div class=hv-safi-cover-ph>📖</div>'">`
         :`<div class="hv-safi-cover-ph">📖</div>`
     ).join('')+(extra>0?`<span class="hv-safi-more">+${extra}</span>`:'');
   }
@@ -4142,12 +4249,12 @@ function renderSafi(){
           const authorStr=(b.authors||[]).join(', ')||'—';
           return `<div class="safi-item" onclick="openBook('${b.id}')">
             <div class="safi-item-cover">
-              ${b.cover?`<img src="${b.cover}" alt="${b.title}" onerror="this.outerHTML='<div class=safi-item-ph>📖</div>'">`:`<div class="safi-item-ph">📖</div>`}
+              ${b.cover?`<img src="${b.cover}" alt="${escHtml(b.title)}" loading="lazy" onerror="this.outerHTML='<div class=safi-item-ph>📖</div>'">`:`<div class="safi-item-ph">📖</div>`}
               ${avgBadge}
             </div>
             <div class="safi-item-body">
-              <div class="safi-item-title" title="${b.title}">${b.title}</div>
-              <div class="safi-item-author">${authorStr}</div>
+              <div class="safi-item-title" title="${escHtml(b.title)}">${escHtml(b.title)}</div>
+              <div class="safi-item-author">${escHtml(authorStr)}</div>
             </div>
           </div>`;
         }).join('')}
@@ -4284,12 +4391,7 @@ function switchSection(section,silent){
     if(key==='years'){ filters[key]=filters[key].filter(v=>sectionBooks.some(b=>String(b.year)===v)); return; }
     filters[key]=filters[key].filter(v=>sectionBooks.some(b=>(b[key]||[]).includes(v)));
   });
-  const tabs={thais:'tabThais',other:'tabOther',spanish:'tabSpanish',baihee:'tabBaihee',asian:'tabAsian',african:'tabAfrican'};
-  const cls={thais:'active-thais',other:'active-other',spanish:'active-spanish',baihee:'active-baihee',asian:'active-asian',african:'active-african'};
-  Object.entries(tabs).forEach(([key,id])=>{
-    const el=document.getElementById(id);
-    if(el) el.className='section-tab'+(key===section?' '+cls[key]:'');
-  });
+  syncSectionTabsUI(section);
   buildDropdowns();
   renderActivePills();
   applyFilters();
@@ -4322,7 +4424,7 @@ function renderTop10(){
 
   function coverEl(b,cls){
     return b.cover
-      ?`<img class="${cls}" src="${b.cover}" alt="${b.title}" onerror="this.outerHTML='<div class=\\'${cls}-ph\\'>📖</div>'">`
+      ?`<img class="${cls}" src="${b.cover}" alt="${escHtml(b.title)}" loading="lazy" onerror="this.outerHTML='<div class=\\'${cls}-ph\\'>📖</div>'">`
       :`<div class="${cls}-ph">📖</div>`;
   }
   function starsHtml(avg){
@@ -4342,8 +4444,8 @@ function renderTop10(){
       ${coverEl(b,'t10-cover')}
       <div class="t10-body">
         <div class="t10-pos">🥇 Primer puesto</div>
-        <div class="t10-title" onclick="openBook('${b.id}')">${b.title}</div>
-        <div class="t10-author">${(b.authors||[]).join(', ')||'—'}</div>
+        <div class="t10-title" onclick="openBook('${b.id}')">${escHtml(b.title)}</div>
+        <div class="t10-author">${escHtml((b.authors||[]).join(', ')||'—')}</div>
         <div class="t10-score">
           <span class="t10-avg">${r.avg.toFixed(1)}</span>
           <span class="t10-stars">${starsHtml(r.avg)}</span>
@@ -4367,8 +4469,8 @@ function renderTop10(){
         ${coverEl(b,'t10-cover')}
         <div class="t10-body">
           <div class="t10-pos ${posClass}">${medal} Puesto ${pos}</div>
-          <div class="t10-title">${b.title}</div>
-          <div class="t10-author">${(b.authors||[]).join(', ')||'—'}</div>
+          <div class="t10-title">${escHtml(b.title)}</div>
+          <div class="t10-author">${escHtml((b.authors||[]).join(', ')||'—')}</div>
           <div class="t10-score">
             <span class="t10-avg">${r.avg.toFixed(1)}</span>
             <span class="t10-stars">${starsHtml(r.avg)}</span>
@@ -4392,8 +4494,8 @@ function renderTop10(){
         <div class="t10-num">${pos}</div>
         ${coverEl(b,'t10-cover')}
         <div class="t10-info">
-          <div class="t10-title">${b.title}</div>
-          <div class="t10-author">${(b.authors||[]).join(', ')||'—'}</div>
+          <div class="t10-title">${escHtml(b.title)}</div>
+          <div class="t10-author">${escHtml((b.authors||[]).join(', ')||'—')}</div>
         </div>
         <div class="t10-right">
           <div class="t10-avg">${r.avg.toFixed(1)} <span style="color:var(--gold);font-size:13px">★</span></div>
@@ -4743,12 +4845,7 @@ window.addEventListener('popstate', ()=>{
   if(tab==='estanteria' && section!==activeSection){
     activeSection=section;
     currentPage=parseInt(params.get('page'))||1;
-    const tabs={thais:'tabThais',other:'tabOther',spanish:'tabSpanish',baihee:'tabBaihee',asian:'tabAsian',african:'tabAfrican'};
-    const cls={thais:'active-thais',other:'active-other',spanish:'active-spanish',baihee:'active-baihee',asian:'active-asian',african:'active-african'};
-    Object.entries(tabs).forEach(([key,id])=>{
-      const el=document.getElementById(id);
-      if(el) el.className='section-tab'+(key===section?' '+cls[key]:'');
-    });
+    syncSectionTabsUI(section);
     buildDropdowns();
     renderActivePills();
     applyFilters(false);
@@ -4962,7 +5059,7 @@ let ruletaSelectedBook = null;
 let ruletaAngle = 0;
 let ruletaExcludeValorados = false;
 let ruletaOnlyPendientes = false;
-let ruletaSection = 'all'; // 'all' | 'thais' | 'other' | 'spanish' | 'baihee' | 'asian' | 'african'
+let ruletaSection = 'all'; // 'all' | 'thais' | 'other' | 'spanish' | 'baihee' | 'asian' | 'african' | 'wattpad'
 
 // Filtros propios de la ruleta (independientes de los de la estantería)
 const ruletaFilters = { genres: [], dinamicas: [], tropes: [], subgenres: [], spicy: [], spicyUnknown: false };
@@ -5473,7 +5570,7 @@ function ruletaShowResult(book) {
   const myScore = myRatings[book.id] || 0;
   const authorStr = (book.authors || []).join(', ') || '—';
   const coverEl = book.cover
-    ? `<img class="ruleta-result-cover" src="${book.cover}" alt="${book.title}" onerror="this.outerHTML='<div class=ruleta-result-cover-ph>📖</div>'">`
+    ? `<img class="ruleta-result-cover" src="${book.cover}" alt="${escHtml(book.title)}" onerror="this.outerHTML='<div class=ruleta-result-cover-ph>📖</div>'">`
     : `<div class="ruleta-result-cover-ph">📖</div>`;
   const spicyEff = effectiveSpicy(book);
   const spicyTag = currentUser && spicyEff != null && spicyEff > 0
@@ -5482,8 +5579,8 @@ function ruletaShowResult(book) {
   const ratingTag = r.count > 0 ? `<span class="tag" style="background:rgba(201,151,90,0.12);color:var(--gold);border:1px solid rgba(201,151,90,0.2);font-size:11px">★ ${r.avg.toFixed(1)} (${r.count})</span>` : '';
   const myTag = myScore > 0 ? `<span class="tag" style="background:var(--accent-soft);color:var(--accent2);border:1px solid rgba(192,111,196,0.2);font-size:11px">${'★'.repeat(myScore)} Mi voto</span>` : '';
   bookEl.innerHTML = `${coverEl}<div class="ruleta-result-info">
-    <div class="ruleta-result-title">${book.title}</div>
-    <div class="ruleta-result-author">por ${authorStr}</div>
+    <div class="ruleta-result-title">${escHtml(book.title)}</div>
+    <div class="ruleta-result-author">por ${escHtml(authorStr)}</div>
     <div class="ruleta-result-tags">${genreTags}${spicyTag}${ratingTag}${myTag}</div>
   </div>`;
   el.style.display = '';
@@ -6007,19 +6104,19 @@ function _renderShelfBooks(){
   let html='';
   if(shelfViewMode==='grid'){
     html=`<div class="shelf-grid">${pageBooks.map(b=>{
-      const cov=b.cover?`<img src="${b.cover}" alt="${b.title}" loading="lazy">`:`<div class="shelf-book-cover-ph">📖</div>`;
+      const cov=b.cover?`<img src="${b.cover}" alt="${escHtml(b.title)}" loading="lazy">`:`<div class="shelf-book-cover-ph">📖</div>`;
       const auth=(b.authors||[]).join(', ');
       return `<div class="shelf-book" onclick="openBook('${b.id}')">
         <div class="shelf-book-cover">${cov}</div>
         <div class="shelf-book-body">
-          <div class="shelf-book-title">${b.title}</div>
-          <div class="shelf-book-author">${auth}</div>
+          <div class="shelf-book-title">${escHtml(b.title)}</div>
+          <div class="shelf-book-author">${escHtml(auth)}</div>
         </div>
       </div>`;
     }).join('')}</div>`;
   } else {
     html=`<div class="shelf-list">${pageBooks.map(b=>{
-      const cov=b.cover?`<img class="shelf-list-cover" src="${b.cover}" alt="${b.title}" loading="lazy">`:`<div class="shelf-list-cover-ph">📖</div>`;
+      const cov=b.cover?`<img class="shelf-list-cover" src="${b.cover}" alt="${escHtml(b.title)}" loading="lazy">`:`<div class="shelf-list-cover-ph">📖</div>`;
       const auth=(b.authors||[]).join(', ');
       const r=ratingsMap[b.id]||{avg:0,count:0};
       const badge=myReadingStatus[b.id]==='want'
@@ -6038,8 +6135,8 @@ function _renderShelfBooks(){
       return `<div class="shelf-list-item" onclick="openBook('${b.id}')">
         ${cov}
         <div class="shelf-list-info">
-          <div class="shelf-list-title">${b.title}</div>
-          <div class="shelf-list-author">${auth}</div>
+          <div class="shelf-list-title">${escHtml(b.title)}</div>
+          <div class="shelf-list-author">${escHtml(auth)}</div>
           ${badge}
         </div>
         <div class="shelf-list-right">
