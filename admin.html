@@ -861,7 +861,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="form-section">
           <div class="form-section-title">País de origen <span style="color:var(--muted);font-size:10px;font-weight:400;text-transform:none;letter-spacing:0">(dónde se escribió/publicó, no la ambientación)</span></div>
           <div class="chip-group" id="paisOrigenChips"></div>
-          <div class="chip-custom-add"><input type="text" id="customPaisOrigen" placeholder="Añadir otro país…" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomSingle('pais_origen','customPaisOrigen','gold');}"><button type="button" class="chip-custom-btn" onclick="addCustomSingle('pais_origen','customPaisOrigen','gold')">+ Añadir</button></div>
+          <div class="chip-custom-add"><input type="text" id="customPaisOrigen" placeholder="Añadir otro país…" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomChip('pais_origen','customPaisOrigen',false);}"><button type="button" class="chip-custom-btn" onclick="addCustomChip('pais_origen','customPaisOrigen',false)">+ Añadir</button></div>
         </div>
 
         <div class="form-section">
@@ -1309,7 +1309,7 @@ const CONTENT_WARNINGS = [
 // Books stored in memory (from JSON), votes in Supabase
 let books = [], editingId = null;
 let adminFilterSection = 'all'; // 'all' | 'thais' | 'other' | 'spanish' | 'baihee' | 'asian'
-let sel = {genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:null,formato:null,adaptacion:null,sagaName:'',sagaNum:'',source:'thais',edad:[],pais_cultura:[],pais_origen:null,content_warnings:[]};
+let sel = {genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:null,formato:null,adaptacion:null,sagaName:'',sagaNum:'',source:'thais',edad:[],pais_cultura:[],pais_origen:[],content_warnings:[]};
 let authors = []; // array of strings
 let editions = []; // array of {lang, store, url}
 
@@ -1668,7 +1668,7 @@ function openEditModal(id) {
   sel.tropes      =[...(b.tropes||[])];
   sel.edad        =[...(b.edad||[])];
   sel.pais_cultura=[...(b.pais_cultura||[])];
-  sel.pais_origen=b.pais_origen||null;
+  sel.pais_origen=Array.isArray(b.pais_origen)?[...b.pais_origen]:(b.pais_origen?b.pais_origen.split(',').map(s=>s.trim()).filter(Boolean):[]);
   sel.content_warnings=[...(b.content_warnings||[])];
   sel.spicy     =b.spicy||0;
   sel.formato   =b.formato||null;
@@ -1704,7 +1704,7 @@ function clearForm() {
   document.getElementById('dupWarning').classList.remove('show');
   document.getElementById('dupOk').classList.remove('show');
   authors=[];editions=[];
-  sel={genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:null,formato:null,adaptacion:null,sagaName:'',sagaNum:'',source:'thais',edad:[],pais_cultura:[],pais_origen:null,content_warnings:[]};
+  sel={genres:[],subgenres:[],identidades:[],characters:[],dinamicas:[],tropes:[],spicy:null,formato:null,adaptacion:null,sagaName:'',sagaNum:'',source:'thais',edad:[],pais_cultura:[],pais_origen:[],content_warnings:[]};
   setSource('thais');
   const p=document.getElementById('coverPreview');p.style.display='none';p.src='';
   document.getElementById('fCoverFile').value='';
@@ -1783,6 +1783,34 @@ function jumpTo(id){
 function toggleChipSection(hd){hd.closest('.chip-section').classList.toggle('collapsed');}
 
 /* ── AUTHORS with autocomplete ── */
+/* Busca en los libros ya existentes qué país de origen tiene esta autora (la más frecuente si hay varias) */
+function getAuthorCountry(name){
+  const counts={};
+  books.forEach(b=>{
+    if(!(b.authors||[]).includes(name) || !b.pais_origen) return;
+    // pais_origen puede ser array (formato nuevo) o string (formato antiguo, a veces combinado "España, Sudamérica")
+    const vals=Array.isArray(b.pais_origen)?b.pais_origen:b.pais_origen.split(',').map(s=>s.trim());
+    vals.filter(Boolean).forEach(v=>{ counts[v]=(counts[v]||0)+1; });
+  });
+  let best=null,bestN=0;
+  for(const k in counts){ if(counts[k]>bestN){best=k;bestN=counts[k];} }
+  return best;
+}
+
+/* Autocompleta sel.pais_origen si esta autora ya tiene país registrado en otros libros.
+   Como puede haber varias autoras de países distintos en un mismo libro, se AÑADE
+   el país de la nueva autora a la selección en vez de sobrescribirla. */
+function autoFillPaisOrigen(name){
+  const country=getAuthorCountry(name);
+  if(!country) return;
+  if(!sel.pais_origen) sel.pais_origen=[];
+  if(!sel.pais_origen.includes(country)){
+    sel.pais_origen.push(country);
+    renderAllChips();
+    showToast(`País de origen añadido: ${country}`,'success');
+  }
+}
+
 function handleAuthorInput(e) {
   if(e.key==='Enter'||e.key===','){
     e.preventDefault();
@@ -1790,7 +1818,7 @@ function handleAuthorInput(e) {
     if(focused){pickAuthorSug(focused.textContent.trim());return;}
     const val=e.target.value.trim().replace(/,$/,'').trim();
     e.target.value='';
-    if(val&&!authors.includes(val)){authors.push(val);renderAuthorPills();}
+    if(val&&!authors.includes(val)){authors.push(val);renderAuthorPills();autoFillPaisOrigen(val);}
     hideAuthorSuggestions();
   } else if(e.key==='Backspace'&&!e.target.value&&authors.length){
     authors.pop();renderAuthorPills();
@@ -1813,7 +1841,7 @@ function showAuthorSuggestions(val){
 }
 
 function pickAuthorSug(name){
-  if(name&&!authors.includes(name)){authors.push(name);renderAuthorPills();}
+  if(name&&!authors.includes(name)){authors.push(name);renderAuthorPills();autoFillPaisOrigen(name);}
   const inp=document.getElementById('authorInput');
   if(inp) inp.value='';
   hideAuthorSuggestions();
@@ -1848,6 +1876,7 @@ function renderAuthorPills() {
     if(parts.length>1){
       parts.forEach(p=>{if(!authors.includes(p)) authors.push(p);});
       renderAuthorPills();
+      parts.forEach(p=>autoFillPaisOrigen(p));
     } else {
       this.value=pasted;
       showAuthorSuggestions(pasted);
@@ -1873,7 +1902,7 @@ function renderAllChips() {
   renderChipGroup('warningChips',CONTENT_WARNINGS,'content_warnings',false);
   renderSingleChips('formatoChips',    FORMATOS,    'formato',    'teal');
   renderSingleChips('adaptacionChips', ADAPTACIONES,'adaptacion', 'lavender');
-  renderSingleChips('paisOrigenChips', PAIS_ORIGEN,'pais_origen', 'gold');
+  renderPaisOrigenChips('paisOrigenChips', PAIS_ORIGEN,'pais_origen');
   renderSpicy();
   // Update section badges
   [['badge-genres','genres'],['badge-subgenres','subgenres'],['badge-dinamicas','dinamicas'],
@@ -1895,6 +1924,19 @@ function renderChipGroup(cId,list,key,isRose){
     const isCustom=!list.includes(v);
     const cls=(active?(isRose?'chip-opt rose active':'chip-opt active'):'chip-opt')+(isCustom?' chip-custom':'');
     return `<button class="${cls}" onclick="toggleChip('${key}','${v.replace(/'/g,"\\'")}',${isRose})">${isCustom?'✎ ':''}${v}</button>`;
+  }).join('');
+}
+
+/* País de origen: multi-selección (varias autoras pueden ser de países distintos), estilo gold */
+function renderPaisOrigenChips(cId,list,key){
+  const cur=sel[key]||[];
+  const custom=cur.filter(v=>!list.includes(v));
+  const allVals=[...list,...custom];
+  document.getElementById(cId).innerHTML=allVals.map(v=>{
+    const active=cur.includes(v);
+    const isCustom=!list.includes(v);
+    const cls='chip-opt'+(active?' active gold':'')+(isCustom?' chip-custom':'');
+    return `<button class="${cls}" onclick="toggleChip('${key}','${v.replace(/'/g,"\\'")}',false)">${isCustom?'✎ ':''}${v}</button>`;
   }).join('');
 }
 
@@ -1996,7 +2038,7 @@ function saveBook() {
     tropes:      [...sel.tropes],
     edad:        [...(sel.edad||[])],
     pais_cultura:[...(sel.pais_cultura||[])],
-    pais_origen:sel.pais_origen||null,
+    pais_origen:(sel.pais_origen&&sel.pais_origen.length)?[...sel.pais_origen]:null,
     ambientacion:[...(sel.ambientacion||[])],
     content_warnings:[...(sel.content_warnings||[])],
     spicy:     sel.spicy===null?null:sel.spicy,
