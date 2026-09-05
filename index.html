@@ -2559,7 +2559,9 @@ const VALID_TAGS={
   trope:['Age Gap','Alpha/Beta/Omega','Arranged Marriage','Childhood Friends','Coming Out tardío','Destined Lovers','Enemies to Lovers','Fake Relationship','Forbidden Love','Forced Proximity','Found Family','Friends to Lovers','Friends with Benefits','Hurt/Comfort','Jealousy Trope','Lesbian Awakening','Love Triangle','Marriage of Convenience','Opposites Attract','Revenge Romance','Rich/Poor Romance','Rivals to Lovers','Road Trip','Second Chance Romance','Secret Relationship','Sex Toys / Juguetes Sexuales','Slow Burn','Strangers to Lovers','Student × Teacher','Toaster Oven','Unrequited Love','Vacation Romance','Workplace Romance'],
   dinamica:['Bodyguard × VIP','Boss × Employee','Butch × Femme','Dominante × Sumisa','Femme × Femme','Fría × Cálida','Grumpy × Sunshine','Ice Queen × Softie','Ice Queen × Sunshine','Jefa × Subordinada','Masc × Femme','Mentora × Aprendiz','Nerd × Popular','Protectora × Delicada','Realeza × Plebeya','Rich × Poor','Soft Butch × Femme','Switch × Switch','Top × Bottom','Vampira × Humana'],
   character:['Abogada','Actriz','Arqueóloga','Artista','Azafata','Bailarina','Bruja','CEO','Camarera','Cantante','Chef','Científica','Demonio','Deportista','Doctora / Médica','Empresaria','Escritora','Estudiante','Famosa','Femme','Florista','Futbolista','Granjera','Guardaespaldas','Ice Queen','Investigadora','Madre Soltera','Millonaria / Billonaria','Modelo','Mujer Lobo','Música','Piloto','Pirata','Policía','Política','Profesora','Psicóloga','Realeza','Reportera / Periodista','Sirena','Vampira','Veterinaria','Zombie','Ángel'],
-  identidad:['Asexual','Bisexual','Butch','Femme','Grumpy','Ice Queen','Introvertida','Lesbiana','Masc','Nerd','Queer','Soft Butch','Sunshine']
+  identidad:['Asexual','Bisexual','Butch','Femme','Grumpy','Ice Queen','Introvertida','Lesbiana','Masc','Nerd','Queer','Soft Butch','Sunshine'],
+  edad:['Young Adult (15–18)','New Adult (18–24)','25–39','+40'],
+  warning:['Abandono','Aborto','Abuso de Poder','Abuso Emocional / Gaslighting','Abuso Infantil','Abuso Sexual','Acoso / Hostigamiento','Acoso Cibernético','Acoso Sexual','Adopción Involuntaria','Adulto con Menor (relación)','Alcohol','Ansiedad / Ataques de Pánico','Anticoncepción sin Consentimiento','Autolesión','Bifobia','Bullying','Clasismo','Conflictos Familiares','Consentimiento Dudoso (Dub-Con)','Contenido Adulto (R18)','Crímenes de Odio','Crueldad Animal','Depresión','Disociación','Distanciamiento Familiar / Rechazo','Drogado sin Consentimiento','Drogas / Consumo de Sustancias','Embarazo Forzado','Enfermedad Mental','Enfermedad Terminal','Esclavitud','Esclavitud Sexual','Gordofobia / Fobia Corporal','Grooming','Guerra / Conflicto Armado','Homofobia','Hospitalización Psiquiátrica','Ideación Suicida','Incesto','Infantilización','Infertilidad / Pérdida Gestacional','Infidelidad','Islamofobia','Juego Patológico','Lesbofobia','Maltrato / Muerte de Animal','Maltrato Físico','Manipulación Psicológica','Matrimonio Forzado','Misoginia','Muerte','Muerte de un Ser Querido','Outing (revelar orientación sin consentimiento)','Parto / Complicaciones','Pensamientos Intrusivos / TOC','Persecución Religiosa','Pornografía de Venganza','Prostitución / Trabajo Sexual','PTSD / Trauma','Queerofobia / LGTBfobia','Racismo','Relación Tóxica','Secuestro / Cautiverio','Sin Consentimiento (Non-Con)','Sobredosis','Stalking','Suicidio / Intento de Suicidio','Terapia de Conversión','Terrorismo','Tráfico de Personas','Tráfico Sexual','Traición del Propio Cuerpo','Transfobia','Trastorno Bipolar','Trastornos Alimentarios','Trauma Mental','Trauma Religioso','Vergüenza Sexual (Slut Shaming)','Violación','Violación Grupal','Violencia Doméstica','Violencia Gráfica','Violencia sobre Personajes Secundarios']
 };
 const SPICY_MIN_VOTES=2;
 function emptyExcl(){return {genres:[],subgenres:[],dinamicas:[],tropes:[],characters:[],authors:[],years:[],sagas:[],edad:[],pais_cultura:[],pais_origen:[]};}
@@ -3175,7 +3177,7 @@ function applyFilters(resetPage=true){
     });
   }
   if(filters.sagas.length)     books=books.filter(b=>filters.sagas.includes(getSaga(b)));
-  if(filters.edad.length)       books=books.filter(b=>filters.edad.every(e=>(b.edad||[]).includes(e)));
+  if(filters.edad.length)       books=books.filter(b=>filters.edad.every(e=>[...(b.edad||[]),...((communityTagsMap[b.id]||{}).edad||[])].includes(e)));
   if(filters.pais_cultura.length) books=books.filter(b=>filters.pais_cultura.every(p=>(b.pais_cultura||[]).includes(p)));
   if(filters.pais_origen.length) books=books.filter(b=>filters.pais_origen.includes(b.pais_origen));
   // Exclusiones: fuera cualquier libro que tenga alguno de estos valores marcados como "no quiero verlo"
@@ -3188,7 +3190,7 @@ function applyFilters(resetPage=true){
   if(ex.authors.length)    books=books.filter(b=>!ex.authors.some(a=>(b.authors||[]).includes(a)));
   if(ex.years.length)      books=books.filter(b=>!ex.years.includes(String(b.year)));
   if(ex.sagas.length)      books=books.filter(b=>!ex.sagas.includes(getSaga(b)));
-  if(ex.edad.length)       books=books.filter(b=>!ex.edad.some(e=>(b.edad||[]).includes(e)));
+  if(ex.edad.length)       books=books.filter(b=>![...(b.edad||[]),...((communityTagsMap[b.id]||{}).edad||[])].some(e=>ex.edad.includes(e)));
   if(ex.pais_cultura.length) books=books.filter(b=>!ex.pais_cultura.some(p=>(b.pais_cultura||[]).includes(p)));
   if(ex.pais_origen.length) books=books.filter(b=>!ex.pais_origen.includes(b.pais_origen));
   if(filters.adaptacion==='serie') books=books.filter(b=>b.adaptacion==='Tiene serie');
@@ -3795,7 +3797,7 @@ async function deleteSpicyVote(){
 
 /* ── COMMUNITY TAGS ── */
 function getEffectiveTags(book, tagType){
-  const jsonKey={trope:'tropes',dinamica:'dinamicas',character:'characters',identidad:'identidades'}[tagType];
+  const jsonKey={trope:'tropes',dinamica:'dinamicas',character:'characters',identidad:'identidades',edad:'edad',warning:'content_warnings'}[tagType];
   const official=book[jsonKey]||[];
   const community=(communityTagsMap[book.id]||{})[tagType]||[];
   const merged=[...new Set([...official,...community])];
@@ -3809,7 +3811,9 @@ function buildCommunityTagsHTML(){
     {type:'trope',    label:'Tropos',      emoji:'🎭', filterKey:'tropes'},
     {type:'dinamica', label:'Dinámicas',   emoji:'💫', filterKey:'dinamicas'},
     {type:'character',label:'Personajes',  emoji:'👤', filterKey:'characters'},
-    {type:'identidad',label:'Identidades', emoji:'🏳️‍🌈', filterKey:'identidades'}
+    {type:'identidad',label:'Identidades', emoji:'🏳️‍🌈', filterKey:'identidades'},
+    {type:'edad',     label:'Edad',        emoji:'🎂', filterKey:'edad'},
+    {type:'warning',  label:'Advertencias',emoji:'⚠️', filterKey:null}
   ];
   const sectionHTMLs=sections.map(({type,label,emoji,filterKey})=>{
     const {official,community,merged}=getEffectiveTags(b,type);
@@ -3821,9 +3825,10 @@ function buildCommunityTagsHTML(){
       const isMyVote=myVotedHere.includes(tag);
       const baseClass=isOfficial?'tag-'+type.replace('dinamica','dinamica').replace('character','character').replace('identidad','identidad'):''
       const extraStyle=isCommunity?';border-style:dashed':'';
-      const tagClass=type==='trope'?'tag-trope':type==='dinamica'?'tag-dinamica':type==='character'?'tag-character':'tag-identidad';
+      const tagClass=type==='trope'?'tag-trope':type==='dinamica'?'tag-dinamica':type==='character'?'tag-character':type==='identidad'?'tag-identidad':type==='edad'?'tag-edad':'tag-warning';
       const removeBtn=isMyVote?`<button onclick="removeMyTag('${type}','${tag.replace(/'/g,"\\'")}',event)" style="background:transparent;border:none;color:inherit;cursor:pointer;font-size:10px;padding:0 0 0 3px;opacity:.6;line-height:1" title="Quitar mi voto">×</button>`:'';
-      return `<span class="tag ${tagClass}${isCommunity?' tag-comm-added':''}" style="cursor:pointer${extraStyle}" onclick="filterByTagFromModal('${filterKey}',decodeURIComponent('${encodeURIComponent(tag)}'))">${tag}${isCommunity?`<span class="tag-comm-dot"> ·com</span>`:''}${removeBtn}</span>`;
+      const clickAttr=filterKey?` onclick="filterByTagFromModal('${filterKey}',decodeURIComponent('${encodeURIComponent(tag)}'))"`:'';
+      return `<span class="tag ${tagClass}${isCommunity?' tag-comm-added':''}" style="cursor:${filterKey?'pointer':'default'}${extraStyle}"${clickAttr}>${tag}${isCommunity?`<span class="tag-comm-dot"> ·com</span>`:''}${removeBtn}</span>`;
     }).join('');
     const addSection=currentUser?buildTagAdderHTML(b.id,type,merged):'';
     return `<div class="ctags-section">
@@ -5245,7 +5250,7 @@ function getFilteredBooksForRuleta() {
     });
   }
   if (filters.sagas.length)     books = books.filter(b => filters.sagas.includes(getSaga(b)));
-  if (filters.edad.length)      books = books.filter(b => filters.edad.every(e => (b.edad||[]).includes(e)));
+  if (filters.edad.length)      books = books.filter(b => filters.edad.every(e => [...(b.edad||[]),...((communityTagsMap[b.id]||{}).edad||[])].includes(e)));
   if (filters.pais_cultura.length) books = books.filter(b => filters.pais_cultura.every(p => (b.pais_cultura||[]).includes(p)));
   if (filters.pais_origen.length) books = books.filter(b => filters.pais_origen.includes(b.pais_origen));
   if (filters.adaptacion === 'serie') books = books.filter(b => b.adaptacion === 'Tiene serie');
