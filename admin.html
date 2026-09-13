@@ -797,6 +797,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <!-- LEFT COL: datos básicos -->
       <div class="modal-col-left" id="modalColLeft">
 
+        <div class="paste-bar" style="margin-bottom:1.1rem" id="gbSearchBar">
+          <div class="paste-bar-label">🔎 Buscar en Google Books</div>
+          <div class="paste-bar-row" style="margin-bottom:0">
+            <input type="text" class="paste-bar-textarea" id="gbQuery" style="min-height:auto;height:40px" placeholder="Título (y autora, opcional)" onkeydown="if(event.key==='Enter'){event.preventDefault();searchGoogleBooks();}">
+            <button class="paste-bar-btn" onclick="searchGoogleBooks()">Buscar</button>
+          </div>
+          <div class="paste-bar-status" id="gbStatus"></div>
+          <div id="gbResults" style="display:none;flex-direction:column;gap:6px;margin-top:8px"></div>
+        </div>
+
         <div class="paste-bar" style="margin-bottom:1.1rem">
           <div class="paste-bar-label">⚡ Autocompletar</div>
           <div class="paste-bar-row" style="margin-bottom:0">
@@ -2254,6 +2264,123 @@ function getLine(text, label){
   var m=text.match(new RegExp(label+'\\s*:\\s*([^\\n]+)','i'));
   return m ? m[1] : '';
 }
+/* ── BUSCADOR GOOGLE BOOKS ── */
+let gbLastResults=[];
+
+async function searchGoogleBooks(){
+  const status=document.getElementById('gbStatus');
+  const resultsWrap=document.getElementById('gbResults');
+  const q=(document.getElementById('gbQuery').value||'').trim();
+  if(!q){status.className='paste-bar-status err';status.textContent='Escribe un título para buscar.';return;}
+
+  status.className='paste-bar-status';status.textContent='Buscando…';
+  resultsWrap.style.display='none';resultsWrap.innerHTML='';
+
+  try{
+    const url='https://www.googleapis.com/books/v1/volumes?q='+encodeURIComponent(q)+'&maxResults=5';
+    const res=await fetch(url);
+    const data=await res.json();
+    gbLastResults=data.items||[];
+
+    if(!gbLastResults.length){
+      status.className='paste-bar-status err';
+      status.textContent='Sin resultados. Prueba con otro título o añade la autora.';
+      return;
+    }
+
+    resultsWrap.innerHTML=gbLastResults.map((it,i)=>{
+      const vi=it.volumeInfo||{};
+      const thumb=vi.imageLinks?(vi.imageLinks.thumbnail||vi.imageLinks.smallThumbnail||''):'';
+      const autores=(vi.authors||[]).join(', ');
+      return `<div class="book-item" style="cursor:pointer" onclick="applyGoogleBooksResult(${i})">
+        ${thumb?`<img class="book-thumb" src="${escH(thumb.replace('http://','https://'))}" alt="">`:`<div class="book-thumb-ph">📕</div>`}
+        <div class="book-info">
+          <div class="book-name">${escH(vi.title||'(sin título)')}</div>
+          <div class="book-meta">${escH(autores||'Autora desconocida')}${vi.publishedDate?' · '+escH(vi.publishedDate.slice(0,4)):''}</div>
+        </div>
+      </div>`;
+    }).join('');
+    resultsWrap.style.display='flex';
+    status.className='paste-bar-status ok';
+    status.textContent='Elige un resultado para rellenar el formulario.';
+  }catch(err){
+    status.className='paste-bar-status err';
+    status.textContent='Error al buscar. Revisa tu conexión.';
+  }
+}
+
+function matchTagsFromText(text,list,target){
+  /* Igual que matchTagsLoose pero sobre texto libre (categorías/sinopsis), sin exigir hashtags */
+  const ct=cleanStr(text);
+  let n=0;
+  list.forEach(function(item){
+    const ci=cleanStr(item);
+    if(ci.length>=4 && ct.indexOf(ci)>=0 && target.indexOf(item)<0){target.push(item);n++;}
+  });
+  return n;
+}
+
+function applyGoogleBooksResult(i){
+  const it=gbLastResults[i];
+  if(!it) return;
+  const vi=it.volumeInfo||{};
+  let filled=0;
+
+  const fTitle=document.getElementById('fTitle');
+  if(vi.title && !fTitle.value.trim()){fTitle.value=vi.title;filled++;}
+
+  if(Array.isArray(vi.authors) && vi.authors.length && authors.length===0){
+    authors=vi.authors.slice();
+    renderAuthorPills();
+    filled++;
+  }
+
+  const fYear=document.getElementById('fYear');
+  if(vi.publishedDate && !fYear.value){
+    const y=vi.publishedDate.slice(0,4);
+    if(/^\d{4}$/.test(y)){fYear.value=y;filled++;}
+  }
+
+  const fPages=document.getElementById('fPages');
+  if(vi.pageCount && !fPages.value){fPages.value=vi.pageCount;filled++;}
+
+  const fIsbn=document.getElementById('fIsbn');
+  if(!fIsbn.value.trim() && Array.isArray(vi.industryIdentifiers)){
+    const isbn13=vi.industryIdentifiers.find(x=>x.type==='ISBN_13');
+    const isbn10=vi.industryIdentifiers.find(x=>x.type==='ISBN_10');
+    const isbn=(isbn13||isbn10||{}).identifier;
+    if(isbn){fIsbn.value=isbn;filled++;}
+  }
+
+  const fCover=document.getElementById('fCover');
+  if(!fCover.value.trim() && vi.imageLinks){
+    const cover=(vi.imageLinks.large||vi.imageLinks.medium||vi.imageLinks.thumbnail||vi.imageLinks.smallThumbnail||'').replace('http://','https://');
+    if(cover){fCover.value=cover;onCoverUrlInput(cover);filled++;}
+  }
+
+  const fSynopsis=document.getElementById('fSynopsis');
+  if(vi.description && !fSynopsis.value.trim()){fSynopsis.value=vi.description;filled++;}
+
+  /* Intentar casar categorías + sinopsis con las listas de géneros/subgéneros/tropos/etc */
+  const freeText=[(vi.categories||[]).join(' '), vi.description||''].join(' ');
+  if(freeText.trim()){
+    let chipsMatched=0;
+    chipsMatched+=matchTagsFromText(freeText, GENRES,      sel.genres);
+    chipsMatched+=matchTagsFromText(freeText, SUBGENRES,   sel.subgenres);
+    chipsMatched+=matchTagsFromText(freeText, TROPES,      sel.tropes);
+    chipsMatched+=matchTagsFromText(freeText, DINAMICAS,   sel.dinamicas);
+    chipsMatched+=matchTagsFromText(freeText, IDENTIDADES, sel.identidades);
+    chipsMatched+=matchTagsFromText(freeText, CHARACTERS,  sel.characters);
+    if(chipsMatched>0){renderAllChips();filled+=chipsMatched;}
+  }
+
+  document.getElementById('gbResults').style.display='none';
+  document.getElementById('gbQuery').value='';
+  const status=document.getElementById('gbStatus');
+  status.className='paste-bar-status ok';
+  status.textContent='Rellenados '+filled+' campo(s) desde Google Books. Revisa y completa lo que falte (categorías y sinopsis suelen venir en inglés).';
+}
+
 function runBookPaste(){
   var ta=document.getElementById('pasteInput');
   var status=document.getElementById('pasteStatus');
