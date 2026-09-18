@@ -3091,7 +3091,7 @@
     "year": 2025,
     "cover": "https://cdn-local.mebmarket.com/meb/server1/372308/Thumbnail/book_detail_large.gif?2",
     "synopsis": "Bell Lalita fue encarcelada por posesión de drogas que no eran suyas. A pesar de su inocencia, la evidencia era irrefutable y terminó cumpliendo quince meses de prisión.\n\nDentro de la cárcel, su vida se tornó peligrosa al convertirse en blanco de internas influyentes, mientras las autoridades ignoraban lo que ocurría. Sin salida, Bell recurrió a Claire Diecinueve Heridas, una temida reclusa a la que nadie se acercaba.\n\nCon el tiempo, entre la dureza del encierro y la lucha por sobrevivir, Bell descubrió la ternura en Claire, y Claire aprendió a comprender a través de ella. En medio de muros altos y fuerzas en contra, nació un amor inesperado.",
-    "pages": 9,
+    "pages": 343,
     "isbn": null,
     "ship": [
       "BleJie"
@@ -3122,6 +3122,7 @@
       "New Adult (18–24)"
     ],
     "pais_cultura": [],
+    "pais_origen": null,
     "ambientacion": [],
     "content_warnings": [],
     "spicy": 3,
@@ -59856,6 +59857,699 @@
     "sagaName": null,
     "sagaNum": null,
     "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1787936755477_egzqy",
+    "title": "Marigold",
+    "authors": [
+      "Melissa Brayden"
+    ],
+    "year": 2023,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1677266621i/123004856.jpg",
+    "synopsis": "Cuando los enemigos caen en la tentación, el amor saca a relucir el sabor más delicioso de todos.\n\nMarigold Lavender ilumina cada estancia en la que entra. Después, se queda sola para apagar las luces y volver a casa. Dura por dentro y luchadora por fuera, Marigold solo quiere asegurarse de que todos los demás estén bien antes de preocuparse por sí misma. Cuando una horrible crítica gastronómica de la gran ciudad destroza el nuevo restaurante de su hermana Aster, Marigold deja en suspenso su búsqueda de su propio «felices para siempre» para declararle la guerra a esa mujer, que resulta ser tan deliciosa como ácida.\n\nLa brutal honestidad de Alexis Wakefield es lo que la hace triunfar. Sus lectores confían en su criterio, y unas pocas pulsaciones de su teclado pueden hacer triunfar o fracasar a un nuevo restaurante. Cuando, por capricho, reseña un local de un pueblecito del que se habla mucho, la hermana del propietario lo sabotea todo, poniendo en peligro su carrera profesional. Marigold Lavender ha ido demasiado lejos y debe pagar por el daño que ha causado.",
+    "pages": 257,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Florista",
+      "Reportera / Periodista"
+    ],
+    "dinamicas": [
+      "Femme × Femme",
+      "Grumpy × Sunshine",
+      "Seria × Divertida",
+      "Feroz × Tierna",
+      "Fría × Cálida"
+    ],
+    "tropes": [
+      "Enemies to Lovers",
+      "Opposites Attract",
+      "Strangers to Lovers",
+      "Rivals to Lovers",
+      "Forced Proximity"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "pais_origen": "Estados Unidos",
+    "ambientacion": [],
+    "content_warnings": [
+      "Alcohol",
+      "Ansiedad / Ataques de Pánico",
+      "Conflictos Familiares",
+      "Enfermedad Mental"
+    ],
+    "spicy": 3,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1787937029575_lykog",
+    "title": "Impura",
+    "authors": [
+      "Lily Wilder"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1784362102i/255591619.jpg",
+    "synopsis": "Catalina Loyola Orbe lleva años perfeccionando el arte del control: sobre su cuerpo, sobre sus deseos, sobre las novicias que comparten su cama sin tocar jamás su alma. En el colegio Nuestra Señora de la Pureza y la Santa Obediencia, entre piedras centenaria y niebla perpetua, ha construido una existencia de penitencia y privilegio donde nada la alcanza realmente.\nHasta que Sara Navarro cruza la verja.\nUna condena disfrazada de beca y una sonrisa que desarma cualquier amenaza. Sara no baja la mirada y no tiembla bajo la lluvia cuando Catalina la obliga a arrodillarse sobre piedras frías. Debería ser una alumna más, otra interna del programa de reinserción que pasará desapercibida hasta graduarse, pero Catalina no puede dejar de mirarla ni dejar de castigarse por hacerlo. Y cuando se siente a punto de perder ese control que ha cultivado durante años, descubre algo aterrador: que quizás Sara nunca fue la presa.\n¿Cuánto estás dispuesta a perder cuando lo prohibido es lo único que te hace sentir viva?",
+    "pages": 170,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Drama",
+      "Contemporánea"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Monja"
+    ],
+    "dinamicas": [
+      "Femme × Femme",
+      "Mentora × Aprendiz"
+    ],
+    "tropes": [
+      "Age Gap",
+      "Forbidden Love",
+      "Forced Proximity"
+    ],
+    "edad": [
+      "Young Adult (15–18)",
+      "25–39"
+    ],
+    "pais_cultura": [
+      "España"
+    ],
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [
+      "Adulto con Menor (relación)",
+      "Abuso de Poder"
+    ],
+    "spicy": null,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1787937505182_cswkj",
+    "title": "Taken to the Deadlands",
+    "authors": [
+      "Elle Mae"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1738318736i/221034780.jpg",
+    "synopsis": "¿Quién iba a imaginar que fingir que veía fantasmas me enviaría directamente al infierno? Literalmente.\n\nEn un momento estaba en mi tienda, ocupándome de mis asuntos, y al siguiente una loca con alas me dejó inconsciente; cuando volví en mí, me encontraba en el reino de los demonios.\n\nResulta que los humanos con habilidades especiales son muy apreciados… porque saben mejor.\n\nCuando me obligaron a subir a ese escenario, estaba preparada para que me comieran. Para lo que no estaba preparada era para que una demonio guapa, aunque tremendamente pesada, me comprara.\n\nDice que quiere ayuda y que necesita mis poderes para conseguirla… pero, ¿qué pasará cuando descubra que todo es una mentira?",
+    "pages": 144,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Fantasía",
+      "Paranormal"
+    ],
+    "subgenres": [
+      "Dark Romance"
+    ],
+    "identidades": [],
+    "characters": [
+      "Demonio"
+    ],
+    "dinamicas": [
+      "Dominante × Sumisa"
+    ],
+    "tropes": [
+      "Enemies to Lovers",
+      "Slow Burn",
+      "Hurt/Comfort",
+      "Forced Proximity",
+      "Diferencia de altura"
+    ],
+    "edad": [],
+    "pais_cultura": [],
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [
+      "Agresión Sexual",
+      "Muerte",
+      "Trata de personas",
+      "Ideación y mención de canibalismo",
+      "Maltrato animal leve"
+    ],
+    "spicy": 4,
+    "formato": "Trilogía",
+    "adaptacion": null,
+    "sagaName": "Stolen Demon Brides",
+    "sagaNum": 1,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1787937802604_6vkw6",
+    "title": "Taken to the Shadow Realm",
+    "authors": [
+      "Elle Mae"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1735969861i/223241842.jpg",
+    "synopsis": "Durante toda mi vida me habían preparado para ser la esposa perfecta, sabiendo que algún día me venderían para crear un heredero aún más perfecto.\n\nY entonces me secuestraron.\n\nMe llevaron a un mundo de fantasía donde una demonio de las sombras, fría pero sensible, decidió comprarme para que fuera su compañera.\n\n¿Estaba mal que me alegrara de ser por fin libre?\n\n¿O que empezara a sentir algo por aquella fría demonio?\n\nEn cualquier caso, disfrutaría de mi libertad y, tal vez, si tenía suerte, podría convencer a mi nueva dueña de que hiciera uso de su adquisición.",
+    "pages": 114,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Fantasía",
+      "Paranormal"
+    ],
+    "subgenres": [
+      "Magia",
+      "Dark Romance"
+    ],
+    "identidades": [],
+    "characters": [
+      "Demonio"
+    ],
+    "dinamicas": [
+      "Dominante × Sumisa",
+      "Grumpy × Sunshine"
+    ],
+    "tropes": [
+      "Forced Proximity",
+      "Hurt/Comfort"
+    ],
+    "edad": [],
+    "pais_cultura": [],
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [
+      "Mención agresión sexual",
+      "Muerte",
+      "Trata de personas",
+      "Ideación y mención de canibalismo",
+      "Depresión"
+    ],
+    "spicy": 5,
+    "formato": "Trilogía",
+    "adaptacion": null,
+    "sagaName": "Stolen Demon Brides",
+    "sagaNum": 2,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1787938974155_ivtcy",
+    "title": "Her Pretty Knight",
+    "authors": [
+      "Mariah Rae Birch"
+    ],
+    "year": 2024,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1773082821i/220505767.jpg",
+    "synopsis": "Un romance prohibido y adictivo entre una princesa falsa y su guardaespaldas…\n\nTras perderlo todo hace diez años, Sir Galeon ha dedicado su vida a servir a su reino como caballero. Cuando el príncipe le confía la protección de su futura esposa en su matrimonio concertado, Galeon no espera que la enigmática princesa le robe el corazón.\n\nDella guarda más de un secreto mortal. No solo se hace pasar por la princesa Cordelia, sino que también es una bruja en un mundo donde la magia es tan peligrosa como ilegal. Su habilidad para manipular la muerte es la razón por la que está aquí, y su única salida. Lo último que desea es un caballero demasiado leal que la siga a todas partes.\nDella sabe que Galeon jamás podrá descubrir sus secretos. Y Galeon sabe que la prometida del príncipe es intocable.\n\nA medida que la reticencia inicial se transforma en una confianza vacilante, la atracción inicial se convierte en un deseo ardiente. Lo que debería haber sido sencillo se complica terriblemente.\n\nSin embargo, nada impedirá que Della cumpla el pacto que hizo para salvar a su hermana. Ni siquiera un bebé fénix en un momento inoportuno ni rumores de identidad falsa. Ni siquiera cadáveres asesinados en la biblioteca ni un príncipe celoso.\n\nNi siquiera un caballero apuesto.\n\nLa primera de una serie de historias independientes ambientadas en el mismo mundo, este romance queer apasionado y de desarrollo lento se inspira en los cuentos de hadas clásicos y la leyenda artúrica, donde el caballero resplandeciente es una mujer con cicatrices, la princesa es también la bruja y el príncipe es cualquier cosa menos encantador.\n\nEsta historia contiene dolor, violencia, lenguaje explícito y un final feliz garantizado.",
+    "pages": 247,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Fantasía"
+    ],
+    "subgenres": [
+      "Magia"
+    ],
+    "identidades": [
+      "Femme",
+      "Butch"
+    ],
+    "characters": [
+      "Bruja"
+    ],
+    "dinamicas": [
+      "Butch × Femme",
+      "Bruja × Mortal",
+      "Dominante × Sumisa",
+      "Caos × Control"
+    ],
+    "tropes": [
+      "Slow Burn",
+      "Forbidden Love",
+      "Secret Relationship",
+      "Second Chance Romance",
+      "Forced Proximity"
+    ],
+    "edad": [],
+    "pais_cultura": [
+      "Mundo fantástico"
+    ],
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [
+      "Infidelidad"
+    ],
+    "spicy": 3,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Sapphic Lady Knights",
+    "sagaNum": 1,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1787939396448_xh5a6",
+    "title": "Her Lovely Champion",
+    "authors": [
+      "Mariah Rae Birch"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1744468785i/231319976.jpg",
+    "synopsis": "Una dama caballero desilusionada y la princesa a la que nunca pensó rescatar…\n\nEncarcelada en la torre de una bruja hace dieciocho años, la princesa Eliza no esperaba seguir esperando. Ahora, con más de treinta años y varias canas inquietantes en el cabello, los intentos de rescate son cada vez más raros, y sus únicas compañías son unas cuantas estanterías muy queridas y su propia mente, cada vez más solitaria.\n\nDesamparado y sin opciones, Sir Kaylen acepta la misión condenada al fracaso (y la recompensa) del rey de Alludan para rescatar a su hija. Lo que se supone que es su último acto para ayudar a su familia sale mal cuando llega a la torre de la bruja y descubre, no a la mortal hidra que la espera, sino algo completamente distinto.\n\nJuntos, el curtido caballero y la princesa protegida se enfrentan a un peligroso viaje de regreso a través de las tierras exteriores infestadas de monstruos hasta la civilización, donde los monstruos se vuelven aún más humanos. A medida que surge una atracción inoportuna, los límites entre ellos se desdibujan.\n\nEliza y Kaylen tienen expectativas que los separan. Nunca debieron conocerse. ¿Podrá la dama caballero que salvó accidentalmente a la princesa quedarse con ella?",
+    "pages": 331,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Fantasía"
+    ],
+    "subgenres": [
+      "Magia"
+    ],
+    "identidades": [
+      "Femme",
+      "Butch"
+    ],
+    "characters": [
+      "Bruja",
+      "Madre Soltera"
+    ],
+    "dinamicas": [
+      "Butch × Femme",
+      "Bodyguard × VIP",
+      "Bruja × Mortal",
+      "Dominante × Sumisa"
+    ],
+    "tropes": [
+      "Slow Burn",
+      "Forbidden Love"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Mundo fantástico"
+    ],
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 3,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Sapphic Lady Knights",
+    "sagaNum": 2,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1787939653982_8r2nt",
+    "title": "Her Blushing Hero",
+    "authors": [
+      "Mariah Rae Birch"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1755884947i/240496714.jpg",
+    "synopsis": "Una bruja fugitiva hace un trato con una dama caballero retirada…\n\nTras una lesión que pone fin a su carrera y obliga a Sir Hildith a retirarse a regañadientes, se refugia en una cabaña aislada en el bosque para recuperarse, sin ninguna ilusión de paz y tranquilidad. Pero lo que descubre es a una hermosa panadera que le llena el estómago de mariposas en el estómago además de pan.\n\nHuyendo de un oscuro pasado, Lola se instala en un pequeño pueblo, ansiosa por ser olvidada, cocinar bien y mantener oculta su magia ilegal. La última persona a la que una bruja debería dejar acercarse es a una hermosa dama caballero mayor, por muy tentadores que sean sus rubores.\n\nCuando un secreto familiar trae peligro a la puerta de Lola, ella y su conejo de tres patas recurren a Sir Hildith en busca de protección. La mujer que podría destruir a Lola podría ser su única salvación, y ambas arriesgan más que sus corazones en el trato.",
+    "pages": 257,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Fantasía"
+    ],
+    "subgenres": [
+      "Magia",
+      "Small Town"
+    ],
+    "identidades": [
+      "Femme",
+      "Butch"
+    ],
+    "characters": [
+      "Bruja"
+    ],
+    "dinamicas": [
+      "Butch × Femme"
+    ],
+    "tropes": [
+      "Age Gap",
+      "Hurt/Comfort",
+      "Slow Burn"
+    ],
+    "edad": [
+      "+40",
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Mundo fantástico"
+    ],
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [
+      "Trauma Mental",
+      "Abuso pasado"
+    ],
+    "spicy": 3,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Sapphic Lady Knights",
+    "sagaNum": 3,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1787939926428_abxkk",
+    "title": "Her Valiant Maiden",
+    "authors": [
+      "Mariah Rae Birch"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1775982453i/250947910.jpg",
+    "synopsis": "Dos damas caballeros con personalidades opuestas deben colaborar para proteger su reino y a su heredero…\n\nDurante once años, Sir Lavinia, Dama de Larksmouth, ha servido como la guardia personal menos querida de la princesa heredera. Con su noble educación y su pequeña estatura, ansía demostrar su valía liderando una importante visita real al reino vecino. Pero su viaje da un giro inesperado cuando una emboscada mortal las separa de su convoy, obligando a Lavinia a formar una alianza a regañadientes con Sir Wren, la Bestia de Broadmoor.\n\nWren jamás esperó volver a un combate real después de que una espada le arrebatara un ojo. Sin embargo, sus planes para una temporada tranquila se ven truncados cuando una misión de última hora la obliga a huir a un reino extranjero con una dama caballero de carácter difícil, una princesa niña y un pequeño dragón polizón. Nadie, ni siquiera Wren, la habría elegido para semejante responsabilidad, pero ahora no se detendrá ante nada para protegerlas.\n\nMientras Lavinia lidia con el dolor y las consecuencias de la emboscada, Wren se enfrenta a sombras de su propio pasado. Juntos, los dos caballeros atraviesan montañas para poner a salvo a la princesa mientras se defienden de enemigos, monstruos y una atracción que no debería existir entre ellos. El peligro los pisa los talones. O tal vez el peligro no los siguió en absoluto, sino que comenzó más cerca de casa…",
+    "pages": 356,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Fantasía",
+      "Romance"
+    ],
+    "subgenres": [
+      "Traición"
+    ],
+    "identidades": [
+      "Femme",
+      "Butch"
+    ],
+    "characters": [
+      "Caballera"
+    ],
+    "dinamicas": [
+      "Grumpy × Sunshine",
+      "Protectora × Delicada",
+      "Butch × Femme"
+    ],
+    "tropes": [
+      "Hurt/Comfort",
+      "Slow Burn",
+      "Found Family",
+      "Secret Relationship"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Mundo fantástico"
+    ],
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 3,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Sapphic Lady Knights",
+    "sagaNum": 4,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1787940303993_7pi2x",
+    "title": "Una lección de tinta y venganza",
+    "authors": [
+      "Victoria Lee"
+    ],
+    "year": 2021,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1650442346i/60849878.jpg",
+    "synopsis": "Un thriller oscuro y retorcido sobre un internado centenario atormentado por su historia de brujería, y dos chicas muy cerca de desenterrar su pasado. El romance peligroso y el entorno atmosférico la convierten en una lectura perfecta para los fanáticos de las academias oscuras.\n\nFelicity Morrow está de vuelta en la escuela Dalloway. Ubicado en las montañas Catskill, el campus centenario y cubierto de hiedras fue su hogar hasta la trágica muerte de su novia. Ahora, un año más tarde, ha regresado para terminar la secundaria. Incluso tiene su antigua habitación en Casa Godwin, el dormitorio exclusivo que se rumorea que está embrujado por los espíritus de cinco estudiantes de Dalloway. que, según dicen, eran brujas. Las Cinco de Dalloway murieron de forma misteriosa, una tras otra, justo en los terrenos de Godwin.\n\nLa brujería está ligada al pasado de Dalloway. Las autoridades de la escuela no hablan al respecto, pero las estudiantes sí. En las habitaciones secretas y en los rincones oscuros, las chicas se reúnen. Y antes de que su novia muriera, Felicity se sentía atraída por la oscuridad. Ahora está decidida a dejar eso atrás, pero es difícil cuando la historia oculta de Dalloway está por todas partes. Y cuando la chica nueva no le permite olvidar.\n\nEs el primer año de Ellis Haley en Dalloway, y ya ha acumulado seguidores leales. Una novelista prodigio a los diecisiete años, Ellis es lo que se conoce como escritora de método. Es excéntrica y brillante, y Felicity no puede evitar sentirse atraída por ella. Por lo tanto, cuando Ellis le pide que la ayude a investigar a las Cinco de Dalloway para su segundo libro, Felicity no puede negarse. Dada su historia con lo arcano, Felicity es el recurso perfecto.\n\nY cuando la historia empiece a repetirse, Felicity tendrá que enfrentarse a la oscuridad en Dalloway. y en sí misma.",
+    "pages": 384,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Fantasía",
+      "Contemporánea"
+    ],
+    "subgenres": [
+      "Dark Academia",
+      "Magia"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Bruja",
+      "Escritora",
+      "Estudiante"
+    ],
+    "dinamicas": [
+      "Femme × Femme",
+      "Caos × Control",
+      "Fría × Cálida"
+    ],
+    "tropes": [
+      "Love Triangle",
+      "Opposites Attract",
+      "Slow Burn",
+      "Strangers to Lovers"
+    ],
+    "edad": [
+      "Young Adult (15–18)"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 3,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1787941148236_gbsr4",
+    "title": "El club de las almas perdidas",
+    "authors": [
+      "Carol Hurtado Duárez"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1776980026i/251398988.jpg",
+    "synopsis": "Winter ha reencarnado treces veces. Ha vivido guerras, finales del mundo y amores que se extinguieron con la misma rapidez que comenzaban. Pero ella es recuerda cada una de su vidas... y también cada una de sus pérdidas.\n\nDespués de siglos viendo desaparecer a quienes ama, Winter ha decidido rendirse. Hasta que aparece risas fáciles, sol en la piel y una mirada capaz de hacer tambalear todas las certezas.\n\nHaley está viviendo su primera vida. Winter está llegando al final de la última.\n\nMientras el tiempo se agota, ambas deberán descubrir si un amor recién nacido puede desafiar las reglas del universo... o si las almas, incluso las más cansadas, pueden elegir quedarse un poco más.\n\nUn libro sobre amor, destino y segundas oportunidades… incluso cuando ya no quedan más vidas por vivir.",
+    "pages": 333,
+    "isbn": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Fantasía",
+      "Fantasía Urbana",
+      "New Adult",
+      "Drama"
+    ],
+    "subgenres": [
+      "Reencarnación",
+      "Universidad"
+    ],
+    "identidades": [
+      "Andrógina",
+      "Femme"
+    ],
+    "characters": [
+      "Estudiante"
+    ],
+    "dinamicas": [
+      "Andrógina × Femme",
+      "Fría × Cálida",
+      "Ice Queen × Sunshine"
+    ],
+    "tropes": [
+      "Strangers to Lovers",
+      "Opposites Attract",
+      "Hurt/Comfort",
+      "Reencarnación",
+      "Destined Lovers",
+      "Soulmates",
+      "Slow Burn"
+    ],
+    "edad": [
+      "New Adult (18–24)"
+    ],
+    "pais_cultura": [],
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 1,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1787941689406_kfdlm",
+    "title": "Remain vol. 1",
+    "authors": [
+      "Flower of Memory"
+    ],
+    "year": 2025,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/359476/Thumbnail/book_detail_large.gif?6",
+    "synopsis": "Sé que esto nunca durará, pero mi corazón es...\ntraicionero. Aunque la realidad siempre me recuerda cuál es mi...\nsituación, estoy demasiado metida en esto, mi corazón no podría dejarte marchar...",
+    "pages": 321,
+    "isbn": null,
+    "ship": [
+      "AndaLookkaew"
+    ],
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [
+      "Amnesia"
+    ],
+    "identidades": [
+      "Femme",
+      "Masc",
+      "Lesbiana",
+      "Bisexual"
+    ],
+    "characters": [
+      "CEO",
+      "Empresaria",
+      "Militar",
+      "Diseñadora de joyas"
+    ],
+    "dinamicas": [
+      "Dominante × Sumisa",
+      "Masc × Femme",
+      "Protectora × Delicada"
+    ],
+    "tropes": [
+      "Destined Lovers",
+      "Hurt/Comfort",
+      "Strangers to Lovers",
+      "Love Triangle",
+      "Friends to Lovers",
+      "One Night Stand → More"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Tailandia"
+    ],
+    "pais_origen": "Tailandia",
+    "ambientacion": [],
+    "content_warnings": [
+      "Acoso / Hostigamiento",
+      "Conflictos Familiares",
+      "Consentimiento Dudoso (Dub-Con)",
+      "Contenido Adulto (R18)",
+      "Drogado sin Consentimiento",
+      "Infidelidad",
+      "Maltrato Físico",
+      "Violencia Gráfica",
+      "Conflicto armado",
+      "Amnesia Postraumática"
+    ],
+    "spicy": 5,
+    "formato": "Dúo",
+    "adaptacion": null,
+    "sagaName": "Remain",
+    "sagaNum": 1,
+    "source": "thais",
     "editions": [],
     "saficlub": false,
     "safi_categories": [],
