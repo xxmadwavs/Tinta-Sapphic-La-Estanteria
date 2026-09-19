@@ -6,7 +6,7 @@
 <title>TINTA SAPPHIC ~ La Estantería</title>
 <meta name="sb-url" content="https://fteitflirsmabcasmwij.supabase.co">
 <meta name="sb-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0ZWl0ZmxpcnNtYWJjYXNtd2lqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxMjM3MzIsImV4cCI6MjA5MjY5OTczMn0.n46OnfB74J8DN_dcDgTc-UmhZYO5SnKUQ69Gz90ybbA">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Instrument+Sans:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700&family=Pirata+One&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
@@ -1665,6 +1665,480 @@ body.home-active .hero,body.home-active .main{display:none!important}
   .main,.hero{overflow-x:hidden}
   img{max-width:100%}
 }
+
+/* ══════════════════════════════════════════════════════════════
+   TEMA HALLOWEEN — "Gothic editorial library"
+   Skin temporal y encapsulada. No toca estructura ni datos.
+   Activar/desactivar: se rige por la fecha (ver HALLOWEEN_THEME_OVERRIDE en el script).
+   ══════════════════════════════════════════════════════════════ */
+
+/* Helpers de visibilidad: elementos que SOLO existen con el tema activo */
+.hw-only{display:none}
+body.theme-halloween .hw-only{display:block}
+body.theme-halloween .hw-only-flex{display:flex}
+body.theme-halloween .hw-only-inline{display:inline-block}
+
+/* Paleta y tipografía: al vivir en variables CSS, redefinirlas aquí
+   recolorea automáticamente nav, botones, tarjetas, filtros, etc. */
+body.theme-halloween{
+  --bg:#09070a;--surface:#140f13;--surface2:#1c1417;--surface3:#241a1a;
+  --border:rgba(139,58,58,0.14);--border2:rgba(159,80,50,0.28);
+  --text:#ece3d6;--muted:#9c8c86;
+  --accent:#7a2333;--accent2:#a8442a;--accent-soft:rgba(122,35,51,0.16);
+  --rose:#7a2333;--rose-soft:rgba(122,35,51,0.14);
+  --gold:#b5652c;--gold-soft:rgba(181,101,44,0.16);
+  --teal:#5c4a3a;
+  --radius:6px;--radius-lg:8px;
+  --font-display:'Cinzel','Cormorant Garamond',Georgia,serif;
+  --hw-blood:#6e1423;
+  --hw-purple:#2a1a30;
+  font-family:var(--font-body);
+}
+body.theme-halloween::before{
+  background:
+    radial-gradient(ellipse at 12% -5%, rgba(122,35,51,0.16) 0%, transparent 52%),
+    radial-gradient(ellipse at 90% 10%, rgba(181,101,44,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(42,26,48,0.35) 0%, transparent 60%);
+}
+
+/* ── Topbar: tratamiento editorial oscuro ── */
+body.theme-halloween .topbar{
+  background:rgba(9,7,10,0.92);
+  border-bottom:1px solid var(--border2);
+}
+body.theme-halloween .logo-tinta{color:var(--text)}
+body.theme-halloween .logo em{color:var(--accent2);font-family:var(--font-display)}
+body.theme-halloween .btn-login,
+body.theme-halloween .home-nav-btn{
+  border-radius:2px;border:1px solid var(--border2);
+  letter-spacing:.05em;
+}
+
+/* ── Botones: menos píldora, más editorial/gótico ── */
+body.theme-halloween .hv-cta,
+body.theme-halloween .tab-btn,
+body.theme-halloween .section-tab,
+body.theme-halloween .dd-btn,
+body.theme-halloween .btn-login{
+  border-radius:2px;
+  font-family:var(--font-body);
+  letter-spacing:.03em;
+}
+body.theme-halloween .hv-cta-main{
+  background:var(--hw-blood);color:#f2e6da;
+  box-shadow:0 4px 18px rgba(110,20,35,.3);
+  border:1px solid rgba(181,101,44,.4);
+}
+body.theme-halloween .hv-cta-main:hover{background:#8a2a3c;box-shadow:0 8px 24px rgba(110,20,35,.42)}
+body.theme-halloween .tab-btn.active{
+  color:var(--gold);background:var(--accent-soft);border-color:var(--border2);
+}
+body.theme-halloween .section-tab.active-thais,
+body.theme-halloween .section-tab:hover{border-color:var(--border2)}
+
+/* ── Tarjetas de libros: sombras profundas y reflejo cobre/borgoña ── */
+body.theme-halloween .book-card{
+  border-color:var(--border);
+  box-shadow:0 10px 28px rgba(0,0,0,.5);
+  transition:all .28s;
+}
+body.theme-halloween .book-card:hover{
+  border-color:rgba(181,101,44,.35);
+  box-shadow:0 16px 36px rgba(110,20,35,.28),0 0 0 1px rgba(181,101,44,.18);
+  transform:translateY(-3px);
+}
+
+/* ── Hero: "Nuestra estantería" con dirección artística Halloween ── */
+body.theme-halloween .hero{
+  padding-top:5.5rem;padding-bottom:4rem;
+  position:relative;
+}
+body.theme-halloween .hero::before{
+  content:'';-webkit-text-stroke:1px rgba(181,101,44,0.05);color:transparent;
+}
+body.theme-halloween .hero-eyebrow{
+  color:var(--gold);letter-spacing:.3em;
+}
+body.theme-halloween .hero-title{
+  font-family:var(--font-display);font-weight:500;
+  text-shadow:0 0 40px rgba(122,35,51,.35);
+}
+body.theme-halloween .hero-title em{
+  color:var(--gold);font-style:normal;font-weight:600;
+}
+body.theme-halloween .hero-sub{color:var(--muted);font-style:italic;font-family:var(--font-display);font-size:16px}
+
+/* Decoración del hero — luna, ramas, partículas */
+.hw-hero-deco{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.hw-moon{
+  position:absolute;top:-4%;left:50%;transform:translateX(-50%);
+  width:min(46vw,420px);height:min(46vw,420px);border-radius:50%;
+  background:radial-gradient(circle at 42% 38%, rgba(236,227,214,.14), rgba(236,227,214,.02) 62%, transparent 72%);
+  filter:blur(1px);
+}
+.hw-branch{position:absolute;opacity:.5;color:rgba(181,101,44,.5)}
+.hw-branch svg{display:block}
+.hw-branch-l{top:-6%;left:-2%;width:min(34vw,300px)}
+.hw-branch-r{top:-6%;right:-2%;width:min(34vw,300px);transform:scaleX(-1)}
+.hw-particles{position:absolute;inset:0}
+.hw-spark{position:absolute;border-radius:50%;background:rgba(236,227,214,.55);box-shadow:0 0 4px rgba(236,227,214,.5)}
+.hw-cobweb{position:absolute;width:96px;height:96px;opacity:.4;color:rgba(236,227,214,.5)}
+.hw-cobweb-tl{top:0;left:0}
+.hw-cobweb-tr{top:0;right:0;transform:scaleX(-1)}
+.hw-spider{position:absolute;top:0;right:9%;display:flex;flex-direction:column;align-items:center}
+.hw-spider-thread{width:1px;height:64px;background:linear-gradient(rgba(236,227,214,.35),rgba(236,227,214,.05))}
+.hw-spider svg{width:16px;height:16px;color:rgba(20,14,16,.85)}
+.hw-candle{position:absolute;bottom:2%;left:6%;display:flex;flex-direction:column;align-items:center;opacity:.75}
+.hw-candle-flame{width:7px;height:11px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  background:radial-gradient(ellipse at 50% 70%, #ffd9a0 0%, var(--gold) 55%, transparent 80%);
+  transform-origin:50% 100%;margin-bottom:-1px;}
+.hw-candle-body{width:12px;height:34px;background:linear-gradient(#e9dfce,#cfc2a8);border-radius:2px 2px 1px 1px}
+.hw-moth{position:absolute;color:rgba(181,101,44,.55)}
+.hw-moth svg{width:14px;height:14px}
+
+/* Animaciones suaves — desactivadas por completo con prefers-reduced-motion */
+@media (prefers-reduced-motion: no-preference){
+  body.theme-halloween .hw-spark{animation:hwFloat 9s ease-in-out infinite}
+  body.theme-halloween .hw-spark:nth-child(2n){animation-duration:12s;animation-delay:-3s}
+  body.theme-halloween .hw-spark:nth-child(3n){animation-duration:7s;animation-delay:-5s}
+  body.theme-halloween .hw-candle-flame{animation:hwFlicker 2.6s ease-in-out infinite}
+  body.theme-halloween .hw-spider{animation:hwDescend 14s ease-in-out infinite}
+  body.theme-halloween .hw-moth{animation:hwFlutter 10s ease-in-out infinite}
+}
+@keyframes hwFloat{0%,100%{transform:translateY(0) translateX(0);opacity:.5}50%{transform:translateY(-16px) translateX(6px);opacity:.9}}
+@keyframes hwFlicker{0%,100%{transform:scale(1) rotate(-1deg);opacity:1}50%{transform:scale(.92,1.06) rotate(1deg);opacity:.85}}
+@keyframes hwDescend{0%,100%{transform:translateY(0)}50%{transform:translateY(18px)}}
+@keyframes hwFlutter{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-6px,-10px) rotate(-6deg)}}
+
+/* ── Sección especial: LA ESTANTERÍA PROHIBIDA ── */
+.hw-forbidden{
+  max-width:1180px;margin:0 auto;padding:.5rem 2rem 2rem;position:relative;z-index:1;
+}
+.hw-forbidden-head{text-align:center;margin-bottom:1.2rem}
+.hw-forbidden-eyebrow{font-size:10.5px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.hw-forbidden-title{
+  font-family:var(--font-display);font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:500;
+  color:var(--text);margin-bottom:.3rem;letter-spacing:.01em;
+}
+.hw-forbidden-title .hw-blackletter{
+  font-family:'Pirata One',var(--font-display);font-weight:400;color:var(--accent2);
+  letter-spacing:.02em;
+}
+.hw-forbidden-sub{color:var(--muted);font-style:italic;font-size:13px;max-width:460px;margin:0 auto}
+.hw-forbidden-grid-head{text-align:center;margin-top:1.1rem;margin-bottom:.2rem}
+.hw-forbidden-grid-title{font-family:var(--font-display);font-size:13.5px;letter-spacing:.08em;color:var(--gold)}
+.hw-forbidden-grid-sub{color:var(--muted);font-size:12px;margin-top:.1rem}
+.hw-forbidden-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:1rem;margin-top:1.8rem;
+}
+.hw-forbidden-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  overflow:hidden;cursor:pointer;transition:all .25s;position:relative;
+}
+.hw-forbidden-card:hover{
+  border-color:rgba(181,101,44,.4);box-shadow:0 14px 30px rgba(110,20,35,.3);transform:translateY(-3px);
+}
+.hw-forbidden-cover{width:100%;aspect-ratio:2/3;object-fit:cover;display:block;filter:saturate(.9) contrast(1.05)}
+.hw-forbidden-cover-ph{width:100%;aspect-ratio:2/3;display:flex;align-items:center;justify-content:center;background:var(--surface2);font-size:28px}
+.hw-forbidden-info{padding:.6rem .7rem .75rem}
+.hw-forbidden-book-title{font-size:12px;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:.2rem;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hw-forbidden-book-author{font-size:10.5px;color:var(--muted)}
+.hw-forbidden-empty{text-align:center;color:var(--muted);font-size:13px;padding:2rem 0}
+
+/* Vista previa compacta (3 libros) + «Ver más», que abre la ventana con toda la colección */
+.hw-forbidden-grid.hw-preview{grid-template-columns:repeat(3,minmax(0,110px));justify-content:center;gap:.7rem;margin-top:.9rem}
+.hw-preview .hw-forbidden-empty{grid-column:1/-1}
+.hw-preview .hw-forbidden-info{padding:.45rem .55rem .55rem}
+.hw-preview .hw-forbidden-book-title{font-size:11px}
+.hw-preview .hw-forbidden-book-author{font-size:10px}
+.hw-more-wrap{text-align:center;margin-top:.9rem}
+.info-modal.hw-collection-modal{max-width:920px}
+.hw-collection-modal .hw-blackletter{font-family:'Pirata One',var(--font-display);font-style:normal;font-weight:400;color:var(--accent2)}
+.hw-collection-modal .hw-forbidden-grid{margin-top:0}
+
+/* Interacción "¿Qué vas a leer esta noche?" */
+.hw-oracle{
+  margin-top:1.5rem;border:1px solid var(--border2);border-radius:var(--radius-lg);
+  background:linear-gradient(180deg, rgba(122,35,51,.06), rgba(20,15,19,.4));
+  padding:1.1rem 1.4rem;text-align:center;
+}
+.hw-oracle-title{font-family:var(--font-display);font-size:1.1rem;font-weight:500;color:var(--text);letter-spacing:.02em;margin-bottom:.25rem}
+.hw-oracle-sub{color:var(--muted);font-style:italic;font-size:12.5px;margin-bottom:.8rem}
+.hw-oracle-btn{
+  display:inline-flex;align-items:center;gap:.6em;padding:8px 20px;background:transparent;
+  border:1px solid var(--border2);border-radius:2px;color:var(--gold);
+  font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  cursor:pointer;transition:all .22s;
+}
+.hw-oracle-btn:hover{background:var(--accent-soft);border-color:var(--gold);color:var(--text)}
+.hw-oracle-result{
+  display:flex;gap:1.1rem;align-items:center;justify-content:center;text-align:left;
+  margin-top:1.6rem;max-width:420px;margin-left:auto;margin-right:auto;
+}
+.hw-oracle-cover{width:78px;height:117px;object-fit:cover;border-radius:4px;border:1px solid var(--border2);
+  box-shadow:0 10px 26px rgba(110,20,35,.32);flex-shrink:0}
+.hw-oracle-tag{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:.25rem}
+.hw-oracle-book-title{font-family:var(--font-display);font-size:16px;color:var(--text);margin-bottom:.25rem;line-height:1.25}
+.hw-oracle-book-author{font-size:12px;color:var(--muted)}
+
+@media (max-width:640px){
+  .hw-moon{width:64vw;height:64vw}
+  .hw-branch{width:44vw !important}
+  .hw-forbidden{padding:.5rem 1.1rem 1.6rem}
+  .hw-forbidden-grid{grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:.7rem}
+  .hw-oracle-result{flex-direction:column;text-align:center}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TEMA NAVIDAD — "Librería navideña nocturna"
+   Skin temporal y encapsulada, hermana del tema Halloween.
+   No toca estructura, datos ni lógica. Se activa por fecha
+   (ver XMAS_THEME_OVERRIDE en el script): 1 de diciembre → 7 de enero.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Helpers de visibilidad: elementos que SOLO existen con el tema activo */
+.xm-only{display:none}
+body.theme-christmas .xm-only{display:block}
+body.theme-christmas .xm-only-flex{display:flex}
+body.theme-christmas .xm-only-inline{display:inline-block}
+
+/* Paleta: fondo de noche de diciembre + borgoña, verde abeto y oro viejo.
+   Vive en las mismas variables CSS que usa toda la web, así que recolorea
+   automáticamente nav, botones, tarjetas y filtros sin tocar su lógica. */
+body.theme-christmas{
+  --bg:#0a0d0c;--surface:#121613;--surface2:#181f1a;--surface3:#1f2721;
+  --border:rgba(180,150,90,0.12);--border2:rgba(180,150,90,0.24);
+  --text:#efe6d8;--muted:#9a9086;
+  --accent:#6e1423;--accent2:#b8863c;--accent-soft:rgba(110,20,35,0.16);
+  --rose:#7a1f2e;--rose-soft:rgba(122,31,46,0.14);
+  --gold:#c9a04a;--gold-soft:rgba(201,160,74,0.14);
+  --teal:#2f5b45;
+  --radius:6px;--radius-lg:8px;
+  font-family:var(--font-body);
+}
+body.theme-christmas::before{
+  background:
+    radial-gradient(ellipse at 12% -5%, rgba(110,20,35,0.14) 0%, transparent 52%),
+    radial-gradient(ellipse at 90% 8%, rgba(201,160,74,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(47,91,69,0.22) 0%, transparent 60%);
+}
+
+/* ── Topbar ── */
+body.theme-christmas .topbar{
+  background:rgba(10,13,12,0.92);
+  border-bottom:1px solid var(--border2);
+  position:sticky;
+}
+body.theme-christmas .logo-tinta{color:var(--text)}
+body.theme-christmas .logo em{color:var(--accent2);font-family:var(--font-display)}
+body.theme-christmas .btn-login,
+body.theme-christmas .home-nav-btn{
+  border-radius:3px;border:1px solid var(--border2);letter-spacing:.04em;
+}
+
+/* ── Botones: editorial, cálido, discreto ── */
+body.theme-christmas .hv-cta,
+body.theme-christmas .tab-btn,
+body.theme-christmas .section-tab,
+body.theme-christmas .dd-btn,
+body.theme-christmas .btn-login{
+  border-radius:3px;font-family:var(--font-body);letter-spacing:.02em;
+}
+body.theme-christmas .hv-cta-main{
+  background:var(--accent);color:#f5ead8;
+  box-shadow:0 4px 18px rgba(110,20,35,.28);
+  border:1px solid rgba(201,160,74,.4);
+}
+body.theme-christmas .hv-cta-main:hover{background:#84192a;box-shadow:0 8px 24px rgba(110,20,35,.4)}
+body.theme-christmas .tab-btn.active{
+  color:var(--gold);background:var(--accent-soft);border-color:var(--border2);
+}
+body.theme-christmas .section-tab.active-thais,
+body.theme-christmas .section-tab:hover{border-color:var(--border2)}
+
+/* ── Tarjetas de libros: cada libro, un pequeño regalo ── */
+body.theme-christmas .book-card{
+  border-color:var(--border);
+  box-shadow:0 10px 26px rgba(0,0,0,.45);
+  transition:all .28s;
+}
+body.theme-christmas .book-card:hover{
+  border-color:rgba(201,160,74,.4);
+  box-shadow:0 16px 34px rgba(110,20,35,.24),0 0 0 1px rgba(201,160,74,.2);
+  transform:translateY(-3px);
+}
+/* Lacito dorado en la esquina de cada portada — puramente decorativo */
+body.theme-christmas .book-cover-wrap{position:relative}
+body.theme-christmas .book-cover-wrap::before{
+  content:'✦';position:absolute;top:8px;left:8px;z-index:2;
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(10,13,12,.72);border:1px solid rgba(201,160,74,.45);
+  color:var(--gold);font-size:10px;display:flex;align-items:center;justify-content:center;
+  opacity:.85;pointer-events:none;transition:transform .25s,opacity .25s;
+}
+body.theme-christmas .book-card:hover .book-cover-wrap::before{transform:rotate(18deg) scale(1.12);opacity:1}
+
+/* ── Badges y etiquetas: reinterpretadas en dorado / borgoña / verde botella / crema ── */
+body.theme-christmas .tag-genre{background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,160,74,.3)}
+body.theme-christmas .tag-trope{background:var(--rose-soft);color:#e2a3ad;border:1px solid rgba(122,31,46,.3)}
+body.theme-christmas .tag-dinamica{background:rgba(122,31,46,.18);color:#eab2ba;border:1px solid rgba(122,31,46,.4);font-weight:600}
+body.theme-christmas .tag-subgenre{background:rgba(47,91,69,.18);color:#8fd0ab;border:1px solid rgba(47,91,69,.4)}
+body.theme-christmas .tag-formato{background:rgba(47,91,69,.16);color:#8fd0ab;border:1px solid rgba(47,91,69,.35)}
+body.theme-christmas .tag-edad{background:var(--gold-soft);color:var(--gold);border:1px solid rgba(201,160,74,.3)}
+body.theme-christmas .tag-character,
+body.theme-christmas .tag-year{background:var(--surface3);color:var(--muted);border:1px solid var(--border)}
+
+/* ── Filtros y buscador: verde abeto / negro con detalle dorado ── */
+body.theme-christmas .search-wrap,
+body.theme-christmas .dd-btn{
+  border-color:var(--border);
+}
+body.theme-christmas .dd-btn:hover{border-color:var(--border2)}
+
+/* ── Hero: portada del especial navideño ── */
+body.theme-christmas .hero{padding-top:5.5rem;padding-bottom:4rem;position:relative}
+body.theme-christmas .hero-eyebrow{color:var(--gold);letter-spacing:.28em}
+body.theme-christmas .hero-title{
+  font-family:var(--font-display);font-weight:500;
+  text-shadow:0 0 40px rgba(110,20,35,.3);
+}
+body.theme-christmas .hero-title em{color:var(--gold);font-style:italic;font-weight:600}
+body.theme-christmas .hero-sub{color:var(--muted);font-style:italic;font-family:var(--font-display);font-size:16px}
+.xm-hero-note{
+  margin-top:.6rem;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);opacity:.75;
+}
+
+/* Decoración del hero — estrellas, vela, carta. Sin ramas ni marco. */
+.xm-hero-deco{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.xm-star{position:absolute;color:rgba(201,160,74,.7)}
+.xm-star svg{width:12px;height:12px}
+.xm-garland{position:absolute;top:2%;left:0;right:0;opacity:.6}
+.xm-garland svg{display:block;width:100%}
+.xm-candle{position:absolute;bottom:2%;right:7%;display:flex;flex-direction:column;align-items:center;opacity:.8}
+.xm-candle-flame{width:7px;height:11px;border-radius:50%/60% 60% 40% 40%;
+  background:radial-gradient(ellipse at 50% 70%, #ffdca0 0%, var(--gold) 55%, transparent 80%);
+  transform-origin:50% 100%;margin-bottom:-1px;}
+.xm-candle-body{width:12px;height:34px;background:linear-gradient(#e9dfce,#cfc2a8);border-radius:2px 2px 1px 1px}
+.xm-letter{
+  position:absolute;bottom:4%;left:6%;width:96px;padding:10px 12px;
+  background:linear-gradient(180deg,#efe3cc,#e6d7b8);color:#3a2c1a;border-radius:2px;
+  box-shadow:0 10px 24px rgba(0,0,0,.4);font-family:var(--font-display);font-size:9.5px;line-height:1.35;
+  transform:rotate(-4deg);opacity:.9;
+}
+.xm-letter::after{content:'✦';position:absolute;top:-7px;right:-7px;width:16px;height:16px;border-radius:50%;
+  background:var(--accent);color:#f5ead8;font-size:8px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.4);}
+/* Animaciones suaves y lentas — desactivadas con prefers-reduced-motion */
+@media (prefers-reduced-motion: no-preference){
+  .xm-candle-flame{animation:xmFlicker 2.8s ease-in-out infinite}
+  .xm-star{animation:xmTwinkle 4.5s ease-in-out infinite}
+  .xm-letter{animation:xmSway 6s ease-in-out infinite}
+}
+@keyframes xmFlicker{0%,100%{transform:scale(1) rotate(-1deg);opacity:1}50%{transform:scale(.92,1.06) rotate(1deg);opacity:.85}}
+@keyframes xmTwinkle{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes xmSway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(-1deg)}}
+
+/* ── Nieve — capa única, realista y discreta, cubre toda la ventana ──
+   Nada de iconos ni símbolos: son fragmentos difuminados con distinto
+   tamaño, nitidez, opacidad y velocidad para dar sensación de profundidad.
+   pointer-events:none siempre, para no interferir nunca con la navegación. */
+#xmSnowLayer{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.xm-flake{
+  position:absolute;top:-6%;border-radius:50%;
+  will-change:transform,opacity;
+  animation-name:xmSnowFall;animation-timing-function:linear;animation-iteration-count:infinite;
+}
+/* Capa lejana: puntos diminutos y borrosos, muy tenues */
+.xm-flake-far{
+  background:rgba(233,238,240,.55);filter:blur(1.1px);
+}
+/* Capa media: algo más definida */
+.xm-flake-mid{
+  background:radial-gradient(circle,rgba(240,244,246,.85) 0%,rgba(240,244,246,.3) 65%,transparent 100%);
+  filter:blur(.4px);
+}
+/* Capa cercana: fragmentos más grandes y nítidos, con un leve glow */
+.xm-flake-near{
+  background:radial-gradient(circle,rgba(245,248,250,.95) 0%,rgba(245,248,250,.35) 60%,transparent 100%);
+  box-shadow:0 0 3px rgba(235,240,245,.35);
+}
+/* Variante con destello cálido crema/dorado, muy poco frecuente */
+.xm-flake-warm{
+  background:radial-gradient(circle,rgba(255,240,205,.9) 0%,rgba(255,225,170,.3) 60%,transparent 100%);
+  box-shadow:0 0 4px rgba(255,225,170,.4);
+}
+@media (prefers-reduced-motion: no-preference){
+  .xm-flake{animation-play-state:running}
+}
+@media (prefers-reduced-motion: reduce){
+  .xm-flake{display:none}
+}
+@keyframes xmSnowFall{
+  0%{transform:translate(0,-8vh);opacity:0}
+  10%{opacity:var(--xm-op,.6)}
+  35%{transform:translate(calc(var(--xm-drift,12) * 1px),28vh)}
+  65%{transform:translate(calc(var(--xm-drift,12) * -0.7px),64vh)}
+  90%{opacity:var(--xm-op,.6)}
+  100%{transform:translate(calc(var(--xm-drift,12) * 0.4px),112vh);opacity:0}
+}
+
+/* ── Sección especial: LOS LIBROS BAJO EL ÁRBOL ── */
+.xm-collection{max-width:1180px;margin:0 auto;padding:.5rem 2rem 2rem;position:relative;z-index:1}
+.xm-collection-head{text-align:center;margin-bottom:1.2rem}
+.xm-collection-eyebrow{font-size:10.5px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.xm-collection-title{font-family:var(--font-display);font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:500;color:var(--text);margin-bottom:.3rem}
+.xm-collection-title em{color:var(--accent2);font-style:italic}
+.xm-collection-sub{color:var(--muted);font-style:italic;font-size:13px;max-width:460px;margin:0 auto}
+.xm-collection-grid-head{text-align:center;margin-top:1.1rem;margin-bottom:.2rem}
+.xm-collection-grid-title{font-family:var(--font-display);font-size:13.5px;letter-spacing:.06em;color:var(--gold)}
+.xm-collection-grid-sub{color:var(--muted);font-size:12px;margin-top:.1rem}
+.xm-collection-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:1rem;margin-top:1.8rem}
+.xm-collection-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:all .25s;position:relative}
+.xm-collection-card:hover{border-color:rgba(201,160,74,.4);box-shadow:0 14px 30px rgba(110,20,35,.26);transform:translateY(-3px)}
+.xm-collection-cover{width:100%;aspect-ratio:2/3;object-fit:cover;display:block}
+.xm-collection-cover-ph{width:100%;aspect-ratio:2/3;display:flex;align-items:center;justify-content:center;background:var(--surface2);font-size:28px}
+.xm-collection-info{padding:.6rem .7rem .75rem}
+.xm-collection-book-title{font-size:12px;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:.2rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.xm-collection-book-author{font-size:10.5px;color:var(--muted)}
+.xm-collection-empty{text-align:center;color:var(--muted);font-size:13px;padding:2rem 0}
+.xm-collection-grid.xm-preview{grid-template-columns:repeat(3,minmax(0,110px));justify-content:center;gap:.7rem;margin-top:.9rem}
+.xm-preview .xm-collection-empty{grid-column:1/-1}
+.xm-preview .xm-collection-info{padding:.45rem .55rem .55rem}
+.xm-preview .xm-collection-book-title{font-size:11px}
+.xm-preview .xm-collection-book-author{font-size:10px}
+.xm-more-wrap{text-align:center;margin-top:.9rem}
+.info-modal.xm-collection-modal{max-width:920px}
+.xm-collection-modal .xm-collection-grid{margin-top:0}
+
+/* Interacción "abre tu regalo literario" */
+.xm-gift{
+  margin-top:1.5rem;border:1px solid var(--border2);border-radius:var(--radius-lg);
+  background:linear-gradient(180deg, rgba(110,20,35,.06), rgba(15,18,16,.4));
+  padding:1.1rem 1.4rem;text-align:center;
+}
+.xm-gift-title{font-family:var(--font-display);font-size:1.1rem;font-weight:500;color:var(--text);margin-bottom:.25rem}
+.xm-gift-sub{color:var(--muted);font-style:italic;font-size:12.5px;margin-bottom:.8rem}
+.xm-gift-btn{
+  display:inline-flex;align-items:center;gap:.6em;padding:8px 20px;background:transparent;
+  border:1px solid var(--border2);border-radius:3px;color:var(--gold);
+  font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  cursor:pointer;transition:all .22s;
+}
+.xm-gift-btn:hover{background:var(--accent-soft);border-color:var(--gold);color:var(--text)}
+.xm-gift-result{display:flex;gap:1.1rem;align-items:center;justify-content:center;text-align:left;margin-top:1.6rem;max-width:420px;margin-left:auto;margin-right:auto}
+.xm-gift-cover{width:78px;height:117px;object-fit:cover;border-radius:4px;border:1px solid var(--border2);box-shadow:0 10px 26px rgba(110,20,35,.28);flex-shrink:0}
+.xm-gift-tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:.25rem}
+.xm-gift-book-title{font-family:var(--font-display);font-size:16px;color:var(--text);margin-bottom:.25rem;line-height:1.25}
+.xm-gift-book-author{font-size:12px;color:var(--muted)}
+
+@media (max-width:640px){
+  .xm-letter{width:78px;font-size:8.5px;left:4%}
+  .xm-collection{padding:.5rem 1.1rem 1.6rem}
+  .xm-collection-grid{grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:.7rem}
+  .xm-gift-result{flex-direction:column;text-align:center}
+}
 </style>
 </head>
 <body>
@@ -1793,9 +2267,38 @@ body.home-active .hero,body.home-active .main{display:none!important}
 </div><!-- /#homeView -->
 
 <section class="hero">
-  <div class="hero-eyebrow">📚 Libros Sapphic · F/F</div>
-  <h1 class="hero-title">Nuestra<br><em>estantería</em></h1>
-  <p class="hero-sub">Vota tus favoritos y descubre qué están leyendo las demás. El ranking lo construimos juntas.</p>
+  <div class="hw-hero-deco hw-only" aria-hidden="true">
+    <div class="hw-moon"></div>
+    <div class="hw-branch hw-branch-l"><svg viewBox="0 0 220 200" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M0 4C22 10 40 22 52 38c8 10 10 22 6 34M52 38C64 32 78 30 92 34M58 52C70 50 82 52 92 60M40 26C48 18 60 14 72 16M20 14C30 10 40 10 48 14"/></svg></div>
+    <div class="hw-branch hw-branch-r"><svg viewBox="0 0 220 200" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M0 4C22 10 40 22 52 38c8 10 10 22 6 34M52 38C64 32 78 30 92 34M58 52C70 50 82 52 92 60M40 26C48 18 60 14 72 16M20 14C30 10 40 10 48 14"/></svg></div>
+    <div class="hw-cobweb hw-cobweb-tl"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1"><path d="M0 0L100 40M0 0L70 100M0 0L20 100M0 0L100 8"/><path d="M6 6C20 14 26 30 24 46M6 6C24 10 40 22 44 40M6 6C10 24 20 40 34 50"/></svg></div>
+    <div class="hw-cobweb hw-cobweb-tr"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1"><path d="M0 0L100 40M0 0L70 100M0 0L20 100M0 0L100 8"/><path d="M6 6C20 14 26 30 24 46M6 6C24 10 40 22 44 40M6 6C10 24 20 40 34 50"/></svg></div>
+    <div class="hw-spider">
+      <div class="hw-spider-thread"></div>
+      <svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="13" rx="4" ry="5"/><circle cx="12" cy="6.5" r="2.4"/><path d="M8 11l-5-2M8 14l-5 1M8 17l-5 3M16 11l5-2M16 14l5 1M16 17l5 3" stroke="currentColor" stroke-width="1"/></svg>
+    </div>
+    <div class="hw-candle">
+      <div class="hw-candle-flame"></div>
+      <div class="hw-candle-body"></div>
+    </div>
+    <div class="hw-moth" style="top:22%;left:14%"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 6c-3-4-9-3-9 1 0 3 4 4 9 6 5-2 9-3 9-6 0-4-6-5-9-1Z"/></svg></div>
+    <div class="hw-moth" style="top:38%;right:20%"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 6c-3-4-9-3-9 1 0 3 4 4 9 6 5-2 9-3 9-6 0-4-6-5-9-1Z"/></svg></div>
+    <div class="hw-particles" id="hwParticles"></div>
+  </div>
+  <div class="xm-hero-deco xm-only" aria-hidden="true">
+    <div class="xm-star" style="top:10%;left:16%" title="Una historia para una noche fría."><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.6 6.4L20 10l-6.4 1.6L12 18l-1.6-6.4L4 10l6.4-1.6L12 2Z"/></svg></div>
+    <div class="xm-star" style="top:20%;right:20%;animation-delay:-2s" title="Abre una nueva historia."><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.6 6.4L20 10l-6.4 1.6L12 18l-1.6-6.4L4 10l6.4-1.6L12 2Z"/></svg></div>
+    <div class="xm-star" style="top:6%;left:46%;animation-delay:-3.4s"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.6 6.4L20 10l-6.4 1.6L12 18l-1.6-6.4L4 10l6.4-1.6L12 2Z"/></svg></div>
+    <div class="xm-candle" title="Una lectura bajo el árbol.">
+      <div class="xm-candle-flame"></div>
+      <div class="xm-candle-body"></div>
+    </div>
+    <div class="xm-letter" title="Quizá este sea tu regalo.">✦ TINTA SAPPHIC<br>Para: amantes de las letras<br>Una lectura para diciembre</div>
+  </div>
+  <div class="hero-eyebrow" id="heroEyebrow">📚 Libros Sapphic · F/F</div>
+  <h1 class="hero-title" id="heroTitle">Nuestra<br><em>estantería</em></h1>
+  <p class="hero-sub" id="heroSub">Vota tus favoritos y descubre qué están leyendo las demás. El ranking lo construimos juntas.</p>
+  <p class="xm-hero-note xm-only" id="xmHeroNote" aria-hidden="true">✦ Faltan pocas noches para Navidad ✦</p>
   <div class="hero-stats">
     <div class="stat-item"><div class="stat-num" id="statBooks"><em>—</em></div><div class="stat-label">Libros</div></div>
     <div class="stat-item" id="statVotesItem" style="display:none"><div class="stat-num" id="statVotes"><em>—</em></div><div class="stat-label">Valoraciones</div></div>
@@ -1819,6 +2322,58 @@ body.home-active .hero,body.home-active .main{display:none!important}
 
   <!-- PANEL ESTANTERÍA -->
   <div id="panelEstanteria">
+  <!-- LA COLECCIÓN DE OCTUBRE — sección especial de Halloween, oculta salvo con el tema activo.
+       Vive dentro del panel de Estantería para que no aparezca encima de las demás pestañas. -->
+  <section class="hw-forbidden hw-only" aria-hidden="true">
+    <div class="hw-forbidden-head">
+      <div class="hw-forbidden-eyebrow">Selección de octubre</div>
+      <h2 class="hw-forbidden-title">La colección <span class="hw-blackletter">de octubre</span></h2>
+      <p class="hw-forbidden-sub">Historias para perderse entre secretos, sombras y noches interminables.</p>
+    </div>
+    <div class="hw-forbidden-grid-head">
+      <div class="hw-forbidden-grid-title">✦ Los libros de esta noche ✦</div>
+      <p class="hw-forbidden-grid-sub">Una selección de historias reunidas para la noche de octubre.</p>
+    </div>
+    <div class="hw-forbidden-grid hw-preview" id="hwForbiddenGrid">
+      <div class="hw-forbidden-empty">Buscando historias en la oscuridad…</div>
+    </div>
+    <div class="hw-more-wrap" id="hwMoreWrap" style="display:none">
+      <button class="hw-oracle-btn" onclick="hwOpenCollection()">✦ Ver más ✦</button>
+    </div>
+
+    <div class="hw-oracle">
+      <div class="hw-oracle-title">¿Qué historia te espera esta noche?</div>
+      <p class="hw-oracle-sub">No elijas tú. Deja que la estantería decida.</p>
+      <button class="hw-oracle-btn" onclick="hwSurpriseMe()">✦ Invocar una lectura ✦</button>
+      <div class="hw-oracle-result" id="hwOracleResult" style="display:none"></div>
+    </div>
+  </section>
+  <!-- LOS LIBROS BAJO EL ÁRBOL — sección especial de Navidad, oculta salvo con el tema activo.
+       Vive dentro del panel de Estantería para que no aparezca encima de las demás pestañas. -->
+  <section class="xm-collection xm-only" aria-hidden="true">
+    <div class="xm-collection-head">
+      <div class="xm-collection-eyebrow">Selección de diciembre</div>
+      <h2 class="xm-collection-title">Los libros <em>bajo el árbol</em></h2>
+      <p class="xm-collection-sub">Historias para leer envueltas en una manta, con una taza caliente cerca.</p>
+    </div>
+    <div class="xm-collection-grid-head">
+      <div class="xm-collection-grid-title">✦ Una lectura para esta noche ✦</div>
+      <p class="xm-collection-grid-sub">Una pequeña selección reunida para las noches de diciembre.</p>
+    </div>
+    <div class="xm-collection-grid xm-preview" id="xmCollectionGrid">
+      <div class="xm-collection-empty">Envolviendo historias…</div>
+    </div>
+    <div class="xm-more-wrap" id="xmMoreWrap" style="display:none">
+      <button class="xm-gift-btn" onclick="xmOpenCollection()">✦ Ver más ✦</button>
+    </div>
+
+    <div class="xm-gift">
+      <div class="xm-gift-title">¿Qué historia te espera bajo el árbol?</div>
+      <p class="xm-gift-sub">No elijas tú. Deja que la estantería te haga un regalo.</p>
+      <button class="xm-gift-btn" onclick="xmSurpriseMe()">✦ Abrir un regalo literario ✦</button>
+      <div class="xm-gift-result" id="xmGiftResult" style="display:none"></div>
+    </div>
+  </section>
   <div class="section-tabs" id="sectionTabs">
     <button class="section-tab active-thais" id="tabThais" onclick="switchSection('thais')">Libros Thais <span class="tab-count" id="countThais">0</span></button>
     <button class="section-tab" id="tabOther" onclick="switchSection('other')">Libros Occidentales <span class="tab-count hidden" id="countOther">0</span></button>
@@ -2188,7 +2743,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
         </div>
         <button class="ruleta-spin-btn" id="ruletaSpinBtn" onclick="ruletaSpin()">
           <span class="ruleta-spin-icon">✦</span>
-          <span>Girar</span>
+          <span id="ruletaSpinLabel">Girar</span>
         </button>
       </div>
 
@@ -2666,11 +3221,396 @@ function getSaga(b){
   return m?m[1].trim():null;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   EDICIÓN DE HALLOWEEN — se activa sola en octubre de cada año
+   y desaparece automáticamente el 1 de noviembre.
+   Para forzarla manualmente (pruebas, etc.) puedes cambiar
+   HALLOWEEN_THEME_OVERRIDE a true o false; déjala en null para
+   que se rija por la fecha.
+   También puede forzarse desde la URL, sin tocar código, con
+   ?halloween=1 (activar) o ?halloween=0 (desactivar) — útil para
+   previsualizarlo cualquier mes del año.
+   ══════════════════════════════════════════════════════════════ */
+const HALLOWEEN_THEME_OVERRIDE = null; // null = automático por fecha · true/false = forzar
+
+function hwIsOctober(){
+  return new Date().getMonth() === 9; // 9 = octubre (0-indexado)
+}
+
+function hwUrlOverride(){
+  try{
+    const v=new URLSearchParams(location.search).get('halloween');
+    if(v==='1'||v==='true') return true;
+    if(v==='0'||v==='false') return false;
+  }catch(e){}
+  return null;
+}
+
+const HALLOWEEN_THEME = (()=>{
+  const urlOv=hwUrlOverride();
+  if(urlOv!==null) return urlOv;
+  return (HALLOWEEN_THEME_OVERRIDE===null) ? hwIsOctober() : !!HALLOWEEN_THEME_OVERRIDE;
+})();
+
+function hwApplyThemeClass(){
+  document.body.classList.toggle('theme-halloween', !!HALLOWEEN_THEME);
+}
+hwApplyThemeClass(); // aplicar cuanto antes para evitar parpadeo
+
+function hwCreateParticles(){
+  const wrap=document.getElementById('hwParticles');
+  if(!wrap || wrap.dataset.built) return;
+  wrap.dataset.built='1';
+  let html='';
+  for(let i=0;i<16;i++){
+    const size=(Math.random()*2.2+1).toFixed(1);
+    const top=(Math.random()*88+2).toFixed(1);
+    const left=(Math.random()*94+3).toFixed(1);
+    html+=`<span class="hw-spark" style="width:${size}px;height:${size}px;top:${top}%;left:${left}%"></span>`;
+  }
+  wrap.innerHTML=html;
+}
+
+const HW_KEYWORDS=['terror','horror','gótic','gotic','oscur','sobrenatural','thriller','misterio','paranorm','vampir','bruja','fantasma','maldici','macabro','siniestr','demoni','ocultismo','muerte'];
+
+function hwIsForbiddenBook(b){
+  const fields=[...(b.genres||[]),...(b.tropes||[]),...(b.subgenres||[])].join(' ').toLowerCase();
+  return HW_KEYWORDS.some(k=>fields.includes(k));
+}
+
+function hwForbiddenCoverHtml(b){
+  return b.cover
+    ?`<img class="hw-forbidden-cover" src="${b.cover}" alt="${escHtml(b.title)}" loading="lazy" onerror="this.outerHTML='<div class=hw-forbidden-cover-ph>📖</div>'">`
+    :`<div class="hw-forbidden-cover-ph">📖</div>`;
+}
+
+// Libros de la colección de octubre: los que encajan con las palabras clave de Halloween.
+function hwCollectionBooks(){
+  return allBooks.filter(hwIsForbiddenBook);
+}
+
+// n elementos al azar sin repetir (Fisher–Yates; sort(()=>Math.random()-.5) sesga el resultado
+// y con pocos elementos elegidos saldrían casi siempre los mismos).
+function hwPickRandom(arr,n){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a.slice(0,n);
+}
+
+// Tarjeta de libro. En la ventana de la colección primero se cierra la ventana y luego se abre la ficha.
+function hwForbiddenCardHtml(b,inModal){
+  const authorStr=(b.authors||[]).join(', ')||'—';
+  const go=inModal?`hwCloseCollection();openBook('${b.id}')`:`openBook('${b.id}')`;
+  return `<div class="hw-forbidden-card" onclick="${go}">
+      ${hwForbiddenCoverHtml(b)}
+      <div class="hw-forbidden-info">
+        <div class="hw-forbidden-book-title">${escHtml(b.title)}</div>
+        <div class="hw-forbidden-book-author">${escHtml(authorStr)}</div>
+      </div>
+    </div>`;
+}
+
+// Usa siempre libros reales del catálogo — nunca datos ficticios.
+// Vista previa: 3 libros al azar en cada carga; «Ver más» abre la colección completa.
+function hwRenderForbiddenShelf(){
+  const grid=document.getElementById('hwForbiddenGrid');
+  if(!grid || !allBooks.length) return;
+  const collection=hwCollectionBooks();
+  let picks=hwPickRandom(collection,3);
+  if(picks.length<3){ // colección muy corta: completamos con libros del catálogo para no dejar huecos
+    picks=picks.concat(hwPickRandom(allBooks.filter(b=>!picks.includes(b)),3-picks.length));
+  }
+  if(!picks.length){ grid.innerHTML='<div class="hw-forbidden-empty">La estantería prohibida está vacía… por ahora.</div>'; return; }
+  grid.innerHTML=picks.map(b=>hwForbiddenCardHtml(b,false)).join('');
+  const more=document.getElementById('hwMoreWrap');
+  if(more) more.style.display=collection.length>3?'':'none';
+}
+
+function hwOpenCollection(){
+  const modal=document.getElementById('hwCollectionModal');
+  const body=document.getElementById('hwCollectionBody');
+  if(!modal || !body) return;
+  const list=hwCollectionBooks();
+  const sub=document.getElementById('hwCollectionSub');
+  if(sub) sub.textContent=`${list.length} historia${list.length===1?'':'s'} para la noche de octubre`;
+  body.innerHTML=list.length
+    ?`<div class="hw-forbidden-grid">${list.map(b=>hwForbiddenCardHtml(b,true)).join('')}</div>`
+    :'<div class="hw-forbidden-empty">La colección está vacía… por ahora.</div>';
+  body.scrollTop=0;
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function hwCloseCollection(){
+  const modal=document.getElementById('hwCollectionModal');
+  if(!modal || !modal.classList.contains('open')) return; // no tocar el scroll si no está abierta
+  modal.classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') hwCloseCollection(); });
+
+// Selecciona al azar entre los libros reales ya cargados (no inventa datos).
+function hwSurpriseMe(){
+  if(!allBooks.length) return;
+  const pool=allBooks.filter(hwIsForbiddenBook);
+  const source=pool.length?pool:allBooks;
+  const b=source[Math.floor(Math.random()*source.length)];
+  const authorStr=(b.authors||[]).join(', ')||'—';
+  const cover=b.cover?`<img class="hw-oracle-cover" src="${b.cover}" alt="${escHtml(b.title)}" onerror="this.style.display='none'">`:'';
+  const result=document.getElementById('hwOracleResult');
+  if(!result) return;
+  result.innerHTML=`${cover}<div><div class="hw-oracle-tag">Tu lectura de esta noche</div><div class="hw-oracle-book-title">${escHtml(b.title)}</div><div class="hw-oracle-book-author">${escHtml(authorStr)}</div></div>`;
+  result.style.display='flex';
+  result.style.cursor='pointer';
+  result.onclick=()=>openBook(b.id);
+}
+
+function hwApplyTextOverrides(){
+  const setText=(id,txt)=>{const el=document.getElementById(id); if(el) el.textContent=txt;};
+  setText('tabEstanteria','Nuestra estantería');
+  setText('tabTop10','Las 10 de la noche en Tailandia');
+  setText('tabSafi','El aquelarre Safi');
+  setText('tabCanal','El rincón de la bruja');
+  setText('tabMyrec','Mi grimorio');
+  setText('tabSolicitudes','Invoca un libro');
+  setText('tabRuleta','La ruleta maldita');
+  setText('tabBingo','Bingo de Halloween');
+  setText('ruletaSpinLabel','Girar el destino');
+  setText('solFormSub','¿Quieres ver una historia en nuestra estantería? Invócala aquí.');
+  document.querySelectorAll('.sol-form-title').forEach(el=>el.textContent='Invoca tu próxima lectura');
+  const rLabel=document.querySelector('.ruleta-filtros-label');
+  if(rLabel) rLabel.textContent='🕯 Filtros del hechizo';
+  const rResult=document.querySelector('.ruleta-result-label');
+  if(rResult) rResult.textContent='Tu lectura de esta noche ✨';
+}
+
+function initHalloweenTheme(){
+  hwApplyThemeClass();
+  if(!HALLOWEEN_THEME) return;
+  const eyebrow=document.getElementById('heroEyebrow');
+  const title=document.getElementById('heroTitle');
+  const sub=document.getElementById('heroSub');
+  if(eyebrow) eyebrow.textContent='🕯️ Edición de octubre · Tinta Sapphic';
+  if(title) title.innerHTML='Nuestra<br><em>estantería</em>';
+  if(sub) sub.textContent='Una estantería para historias oscuras, secretos y un poco de peligro.';
+  hwApplyTextOverrides();
+  hwCreateParticles();
+  hwRenderForbiddenShelf();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EDICIÓN DE NAVIDAD — se activa sola del 1 de diciembre al 7 de
+   enero (ambos incluidos) y desaparece automáticamente después.
+   Para forzarla manualmente (pruebas, etc.) puedes cambiar
+   XMAS_THEME_OVERRIDE a true o false; déjala en null para que se
+   rija por la fecha.
+   También puede forzarse desde la URL, sin tocar código, con
+   ?navidad=1 (activar) o ?navidad=0 (desactivar) — útil para
+   previsualizarla cualquier mes del año.
+   ══════════════════════════════════════════════════════════════ */
+const XMAS_THEME_OVERRIDE = null; // null = automático por fecha · true/false = forzar
+
+function xmIsInSeason(){
+  const now=new Date();
+  const m=now.getMonth(); // 0-indexado
+  const d=now.getDate();
+  if(m===11 && d>=1) return true;   // diciembre desde el día 1
+  if(m===0 && d<=7) return true;    // enero hasta el día 7
+  return false;
+}
+
+function xmUrlOverride(){
+  try{
+    const v=new URLSearchParams(location.search).get('navidad');
+    if(v==='1'||v==='true') return true;
+    if(v==='0'||v==='false') return false;
+  }catch(e){}
+  return null;
+}
+
+const XMAS_THEME = (()=>{
+  const urlOv=xmUrlOverride();
+  if(urlOv!==null) return urlOv;
+  return (XMAS_THEME_OVERRIDE===null) ? xmIsInSeason() : !!XMAS_THEME_OVERRIDE;
+})();
+
+function xmApplyThemeClass(){
+  document.body.classList.toggle('theme-christmas', !!XMAS_THEME);
+}
+xmApplyThemeClass(); // aplicar cuanto antes para evitar parpadeo
+
+// Nieve realista de página completa — una sola capa fija con tres profundidades
+// (lejana/media/cercana), cada copo un simple punto difuminado, nunca un icono.
+// Pocas partículas, movimiento continuo, pointer-events:none: nunca bloquea clics.
+function xmMakeFlake(depth){
+  // depth: 'far' | 'mid' | 'near' — controla tamaño, nitidez, opacidad y velocidad
+  const cfg={
+    far:  {size:[1,1.7],  op:[.22,.4],  dur:[17,23], blurCls:'xm-flake-far'},
+    mid:  {size:[1.7,2.6],op:[.4,.62],  dur:[12,16], blurCls:'xm-flake-mid'},
+    near: {size:[2.6,4],  op:[.55,.85], dur:[8,11],  blurCls:'xm-flake-near'}
+  }[depth];
+  const rand=(a,b)=>Math.random()*(b-a)+a;
+  const size=rand(...cfg.size).toFixed(1);
+  const left=rand(0.5,99).toFixed(1);
+  const delay=rand(0,cfg.dur[1]).toFixed(1);
+  const dur=rand(...cfg.dur).toFixed(1);
+  const op=rand(...cfg.op).toFixed(2);
+  const drift=rand(-26,26).toFixed(0);
+  // Un copo cercano de cada varios sale con un destello cálido crema/dorado
+  const warm=depth==='near' && Math.random()<0.22;
+  const cls='xm-flake '+(warm?'xm-flake-warm':cfg.blurCls);
+  const style=`width:${size}px;height:${size}px;left:${left}%;`
+    +`--xm-op:${op};--xm-drift:${drift};`
+    +`animation-duration:${dur}s;animation-delay:-${delay}s`;
+  return `<span class="${cls}" style="${style}"></span>`;
+}
+
+function xmCreateSnowLayer(){
+  if(document.getElementById('xmSnowLayer')) return;
+  const wrap=document.createElement('div');
+  wrap.id='xmSnowLayer';
+  wrap.setAttribute('aria-hidden','true');
+  const mobile=window.innerWidth<640;
+  const counts=mobile?{far:8,mid:6,near:4}:{far:14,mid:11,near:8};
+  let html='';
+  for(let i=0;i<counts.far;i++) html+=xmMakeFlake('far');
+  for(let i=0;i<counts.mid;i++) html+=xmMakeFlake('mid');
+  for(let i=0;i<counts.near;i++) html+=xmMakeFlake('near');
+  wrap.innerHTML=html;
+  document.body.appendChild(wrap);
+}
+
+function xmForbiddenCoverHtml(b){
+  return b.cover
+    ?`<img class="xm-collection-cover" src="${b.cover}" alt="${escHtml(b.title)}" loading="lazy" onerror="this.outerHTML='<div class=xm-collection-cover-ph>🎁</div>'">`
+    :`<div class="xm-collection-cover-ph">🎁</div>`;
+}
+
+// Libros de la colección de diciembre: los que encajan con palabras clave navideñas
+// o de invierno/celebración. Si el catálogo no tiene ninguno (lo normal, dado el
+// tema del catálogo), la vista se completa con libros reales al azar — nunca datos ficticios.
+const XM_KEYWORDS=['navidad','navideñ','invierno','nieve','helad','frio','frío','fiesta','celebra','regalo','diciembre','año nuevo'];
+
+function xmIsCollectionBook(b){
+  const fields=[...(b.genres||[]),...(b.tropes||[]),...(b.subgenres||[])].join(' ').toLowerCase();
+  return XM_KEYWORDS.some(k=>fields.includes(k));
+}
+
+function xmCollectionBooks(){
+  return allBooks.filter(xmIsCollectionBook);
+}
+
+// n elementos al azar sin repetir (Fisher–Yates).
+function xmPickRandom(arr,n){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a.slice(0,n);
+}
+
+function xmForbiddenCardHtml(b,inModal){
+  const authorStr=(b.authors||[]).join(', ')||'—';
+  const go=inModal?`xmCloseCollection();openBook('${b.id}')`:`openBook('${b.id}')`;
+  return `<div class="xm-collection-card" onclick="${go}">
+      ${xmForbiddenCoverHtml(b)}
+      <div class="xm-collection-info">
+        <div class="xm-collection-book-title">${escHtml(b.title)}</div>
+        <div class="xm-collection-book-author">${escHtml(authorStr)}</div>
+      </div>
+    </div>`;
+}
+
+function xmRenderCollectionShelf(){
+  const grid=document.getElementById('xmCollectionGrid');
+  if(!grid || !allBooks.length) return;
+  const collection=xmCollectionBooks();
+  let picks=xmPickRandom(collection,3);
+  if(picks.length<3){ // colección muy corta: completamos con libros del catálogo para no dejar huecos
+    picks=picks.concat(xmPickRandom(allBooks.filter(b=>!picks.includes(b)),3-picks.length));
+  }
+  if(!picks.length){ grid.innerHTML='<div class="xm-collection-empty">Aún no hay regalos bajo el árbol… por ahora.</div>'; return; }
+  grid.innerHTML=picks.map(b=>xmForbiddenCardHtml(b,false)).join('');
+  const more=document.getElementById('xmMoreWrap');
+  if(more) more.style.display=collection.length>3?'':'none';
+}
+
+function xmOpenCollection(){
+  const modal=document.getElementById('xmCollectionModal');
+  const body=document.getElementById('xmCollectionBody');
+  if(!modal || !body) return;
+  const list=xmCollectionBooks();
+  const sub=document.getElementById('xmCollectionSub');
+  if(sub) sub.textContent=`${list.length} historia${list.length===1?'':'s'} para las noches de diciembre`;
+  body.innerHTML=list.length
+    ?`<div class="xm-collection-grid">${list.map(b=>xmForbiddenCardHtml(b,true)).join('')}</div>`
+    :'<div class="xm-collection-empty">La colección está vacía… por ahora.</div>';
+  body.scrollTop=0;
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function xmCloseCollection(){
+  const modal=document.getElementById('xmCollectionModal');
+  if(!modal || !modal.classList.contains('open')) return; // no tocar el scroll si no está abierta
+  modal.classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') xmCloseCollection(); });
+
+// Selecciona al azar entre los libros reales ya cargados (no inventa datos).
+function xmSurpriseMe(){
+  if(!allBooks.length) return;
+  const pool=allBooks.filter(xmIsCollectionBook);
+  const source=pool.length?pool:allBooks;
+  const b=source[Math.floor(Math.random()*source.length)];
+  const authorStr=(b.authors||[]).join(', ')||'—';
+  const cover=b.cover?`<img class="xm-gift-cover" src="${b.cover}" alt="${escHtml(b.title)}" onerror="this.style.display='none'">`:'';
+  const result=document.getElementById('xmGiftResult');
+  if(!result) return;
+  result.innerHTML=`${cover}<div><div class="xm-gift-tag">Tu regalo de esta noche</div><div class="xm-gift-book-title">${escHtml(b.title)}</div><div class="xm-gift-book-author">${escHtml(authorStr)}</div></div>`;
+  result.style.display='flex';
+  result.style.cursor='pointer';
+  result.onclick=()=>openBook(b.id);
+}
+
+function xmApplyTextOverrides(){
+  const setText=(id,txt)=>{const el=document.getElementById(id); if(el) el.textContent=txt;};
+  setText('tabEstanteria','Nuestra librería navideña');
+  setText('tabTop10','Las 10 mejores bajo el árbol');
+  setText('tabSafi','El salón de invierno');
+  setText('tabCanal','El rincón junto al fuego');
+  setText('tabMyrec','Mi colección de regalos');
+  setText('tabSolicitudes','Pide tu regalo');
+  setText('tabRuleta','La ruleta de los regalos');
+  setText('tabBingo','Bingo navideño');
+}
+
+function initChristmasTheme(){
+  xmApplyThemeClass();
+  if(!XMAS_THEME) return;
+  const eyebrow=document.getElementById('heroEyebrow');
+  const title=document.getElementById('heroTitle');
+  const sub=document.getElementById('heroSub');
+  if(eyebrow) eyebrow.textContent='✦ Edición especial · Una noche de diciembre';
+  if(title) title.innerHTML='Nuestra<br><em>estantería</em>';
+  if(sub) sub.textContent='Libros, historias y romances para leer bajo las luces del árbol.';
+  xmApplyTextOverrides();
+  xmCreateSnowLayer();
+  xmRenderCollectionShelf();
+}
+
 async function init(){
   const {data:{session}}=await sb.auth.getSession();
   if(session) currentUser=session.user;
   renderAuthUI();
   await loadBooks();
+  initHalloweenTheme();
+  initChristmasTheme();
   if(currentUser) await loadMyRatings();
   if(currentUser) await loadMyReadingStatus();
   if(currentUser){ await bingoLoadHitos(); bingoUpdateNotifDot(); checkNewLogros(); }
@@ -2772,7 +3712,11 @@ async function sbFetchAll(table, columns, applyFilters){
 
 async function loadBooks(){
   try{
-    const res=await fetch(DATA_URL);
+    // cache:'no-store' + un parámetro de versión evita que GitHub Pages, el
+    // navegador o un CDN sirvan una copia vieja de books_data.json cuando lo
+    // actualizas — si no, puedes ver datos "atrasados" (o vacíos, si el
+    // esquema cambió) aunque el archivo en el repo ya esté actualizado.
+    const res=await fetch(DATA_URL+'?v='+Date.now(),{cache:'no-store'});
     if(!res.ok) throw new Error();
     const data=await res.json();
     // Support both old (author: string) and new (authors: array) format
@@ -4254,7 +5198,9 @@ function renderSafi(){
   const c=document.getElementById('safiContainer');
   const safiData=allBooks.filter(b=>b.saficlub);
   if(!safiData.length){
-    c.innerHTML=`<div class="safi-empty">Aún no hay libros en el SafiClub. 🌹<br><br>Edítalos desde el admin para añadirlos.</div>`;
+    c.innerHTML=HALLOWEEN_THEME
+      ?`<div class="safi-empty">El aquelarre aún no tiene libros reunidos. 🕯️<br><br>Edítalos desde el admin para añadirlos.</div>`
+      :`<div class="safi-empty">Aún no hay libros en el SafiClub. 🌹<br><br>Edítalos desde el admin para añadirlos.</div>`;
     return;
   }
   const catMap=new Map();
@@ -4292,7 +5238,9 @@ function renderSafi(){
 function renderCanal(){
   const c=document.getElementById('canalContainer');
   const canalData=allBooks.filter(function(b){return b.canal_rec;});
-  const hero='<div class="canal-hero-strip"><div class="canal-hero-icon">📻</div><div class="canal-hero-text"><h2>Recomendaciones del <em>Canal</em></h2><p>Los libros que recomendamos mensualmente en el canal, organizados por mes.</p></div></div>';
+  const hero=HALLOWEEN_THEME
+    ?'<div class="canal-hero-strip"><div class="canal-hero-icon">🕯️</div><div class="canal-hero-text"><h2>El rincón de la <em>bruja</em></h2><p>Lecturas secretas que descubrimos cada mes, organizadas por temporada.</p></div></div>'
+    :'<div class="canal-hero-strip"><div class="canal-hero-icon">📻</div><div class="canal-hero-text"><h2>Recomendaciones del <em>Canal</em></h2><p>Los libros que recomendamos mensualmente en el canal, organizados por mes.</p></div></div>';
   if(!canalData.length){c.innerHTML=hero+'<div class="canal-empty">Aún no hay recomendaciones del canal. 📻<br><br>Márcalos desde el admin para añadirlos.</div>';return;}
   const monthMap=new Map();
   canalData.forEach(function(b){const month=b.canal_month||'Sin fecha';if(!monthMap.has(month))monthMap.set(month,[]);if(!monthMap.get(month).find(function(x){return x.id===b.id;}))monthMap.get(month).push(b);});
@@ -4328,7 +5276,9 @@ function getMyrecCatMap(){
 function renderMyrec(){
   const c=document.getElementById('myrecContainer');
   const catMap=getMyrecCatMap();
-  const hero='<div class="myrec-hero-strip"><div class="myrec-hero-icon">💌</div><div class="myrec-hero-text"><h2>Mis <em>Recomendaciones</em></h2><p>Libros que recomiendo personalmente, organizados por género y estilo.</p></div></div>';
+  const hero=HALLOWEEN_THEME
+    ?'<div class="myrec-hero-strip"><div class="myrec-hero-icon">📖</div><div class="myrec-hero-text"><h2>Mi <em>grimorio</em></h2><p>Las historias que has ido reuniendo, organizadas por género y estilo.</p></div></div>'
+    :'<div class="myrec-hero-strip"><div class="myrec-hero-icon">💌</div><div class="myrec-hero-text"><h2>Mis <em>Recomendaciones</em></h2><p>Libros que recomiendo personalmente, organizados por género y estilo.</p></div></div>';
   if(!catMap.size){c.innerHTML=hero+'<div class="myrec-empty">Aún no hay recomendaciones personales. 💌<br><br>Márcalos desde el admin para añadirlos.</div>';return;}
 
   // Resolve which category (if any) matches activeMyrecCat
@@ -4920,6 +5870,30 @@ init();
       <div class="info-modal-subtitle" id="infoModalSub"></div>
     </div>
     <div class="info-modal-body" id="infoModalBody"></div>
+  </div>
+</div>
+
+<!-- LA COLECCIÓN DE OCTUBRE — ventana con todos los libros (se abre desde «Ver más») -->
+<div id="hwCollectionModal" class="info-modal-bg" onclick="if(event.target.id==='hwCollectionModal')hwCloseCollection()">
+  <div class="info-modal hw-collection-modal" role="dialog" aria-modal="true" aria-labelledby="hwCollectionTitle">
+    <button class="info-modal-close" onclick="hwCloseCollection()" aria-label="Cerrar">✕</button>
+    <div class="info-modal-header">
+      <div class="info-modal-title" id="hwCollectionTitle">La colección <span class="hw-blackletter">de octubre</span></div>
+      <div class="info-modal-subtitle" id="hwCollectionSub"></div>
+    </div>
+    <div class="info-modal-body" id="hwCollectionBody"></div>
+  </div>
+</div>
+
+<!-- LOS LIBROS BAJO EL ÁRBOL — ventana con todos los libros (se abre desde «Ver más») -->
+<div id="xmCollectionModal" class="info-modal-bg" onclick="if(event.target.id==='xmCollectionModal')xmCloseCollection()">
+  <div class="info-modal xm-collection-modal" role="dialog" aria-modal="true" aria-labelledby="xmCollectionTitle">
+    <button class="info-modal-close" onclick="xmCloseCollection()" aria-label="Cerrar">✕</button>
+    <div class="info-modal-header">
+      <div class="info-modal-title" id="xmCollectionTitle">Los libros <em>bajo el árbol</em></div>
+      <div class="info-modal-subtitle" id="xmCollectionSub"></div>
+    </div>
+    <div class="info-modal-body" id="xmCollectionBody"></div>
   </div>
 </div>
 
@@ -5671,6 +6645,20 @@ async function setReadingStatus(bookId, newStatus){
         if(!myReadingLog[bookId]) myReadingLog[bookId]=[];
         myReadingLog[bookId].push({id:data.id, started_at:data.started_at, read_at:data.read_at});
       } else if(logErr) console.error('reading_log start error:',logErr);
+    }
+    // Al marcar "Leído" con una lectura en curso (venía de "Leyendo"), la cerramos con la fecha de hoy
+    if(next==='read'){
+      const openEntry=getOpenLogEntry(bookId);
+      if(openEntry){
+        const hoy=new Date();
+        const pad=n=>String(n).padStart(2,'0');
+        const isoDate=new Date(`${hoy.getFullYear()}-${pad(hoy.getMonth()+1)}-${pad(hoy.getDate())}T12:00:00`).toISOString();
+        const {error:endErr}=await sb.from('reading_log').update({read_at:isoDate}).eq('id',openEntry.id).eq('user_id',currentUser.id);
+        if(!endErr){
+          openEntry.read_at=isoDate;
+          myReadingReadAt[bookId]=isoDate;
+        } else console.error('reading_log end error:',endErr);
+      }
     }
     const tieneFechas=(myReadingLog[bookId]||[]).some(e=>e.read_at);
     const msg=next==='want'?'Añadido a «Quiero leer» ＋'
