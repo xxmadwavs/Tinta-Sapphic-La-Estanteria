@@ -1240,6 +1240,7 @@ body.home-active .hero,body.home-active .main{display:none!important}
 
 .bingo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.55rem;margin-bottom:1.5rem}
 .bingo-grid.size-16{grid-template-columns:repeat(4,1fr)}
+.bingo-grid.size-9{grid-template-columns:repeat(3,1fr)}
 .bingo-cell{position:relative;aspect-ratio:1/1;border-radius:12px;background:var(--surface2);border:1px solid var(--border2);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:.5rem .4rem;transition:all .18s;overflow:hidden}
 .bingo-cell:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,0.25)}
 .bingo-cell-label{font-size:10.5px;font-weight:600;line-height:1.25;color:var(--text);letter-spacing:.01em;position:relative;z-index:1}
@@ -7424,12 +7425,18 @@ function bingoEligibleBooks(){
   });
 }
 
+function bingoHoyISO(){
+  const d=new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
 async function bingoInit(){
   const wrap=document.getElementById('bingoWrap');
   wrap.innerHTML='<div class="loading"><div class="spinner"></div>Cargando bingo…</div>';
   try{
     const chData=await sbFetchAll('bingo_challenges','*',q=>q.eq('activo',true).order('fecha_inicio',{ascending:false}));
-    bingoChallenges=chData||[];
+    const hoy=bingoHoyISO();
+    bingoChallenges=(chData||[]).filter(c=>(!c.fecha_inicio||c.fecha_inicio<=hoy)&&(!c.fecha_fin||c.fecha_fin>=hoy));
   }catch(e){
     wrap.innerHTML='<div class="bingo-empty">No se ha podido cargar el bingo. Inténtalo de nuevo en un momento.</div>';
     return;
@@ -7564,7 +7571,7 @@ function renderShelfBadges(){
   // En la estantería solo mostramos un resumen de la edición de bingo activa
   // (bingoChallenges ya viene ordenado por fecha_inicio desc en bingoInit).
   const challenge=bingoChallenges.find(c=>c.id===bingoActiveChallengeId)||bingoChallenges[0];
-  const mine=(tipo)=>challenge && bingoHitos.some(h=>h.tipo===tipo && h.challenge_id===challenge.id);
+  const mine=(tipo)=>bingoHitos.some(h=>h.tipo===tipo && (!challenge || h.challenge_id===challenge.id));
   const badgesHtml=['linea','bingo'].map(tipo=>{
     const got=mine(tipo);
     const cfg=HITO_CONFIG[tipo];
@@ -7580,7 +7587,7 @@ let bingoAllChallenges=[];
 async function bingoLoadAllChallenges(){
   try{
     const data=await sbFetchAll('bingo_challenges','*',q=>q.order('fecha_inicio',{ascending:false}));
-    bingoAllChallenges=data||[];
+    bingoAllChallenges=(data||[]).filter(c=>!c.fecha_inicio||c.fecha_inicio<=bingoHoyISO());
   }catch(e){
     bingoAllChallenges=[];
   }
@@ -8163,6 +8170,9 @@ function bingoFmtDate(d){
 function bingoRender(){
   const wrap=document.getElementById('bingoWrap');
   const challenge=bingoGetActiveChallenge();
+  let stEl=document.getElementById('bingoThemeStyle');
+  if(!stEl){stEl=document.createElement('style');stEl.id='bingoThemeStyle';document.head.appendChild(stEl);}
+  stEl.textContent=challenge?.estilo_css||'';
   if(!challenge){ wrap.innerHTML='<div class="bingo-empty">Bingo no encontrado.</div>'; return; }
 
   if(!currentUser){
@@ -8215,7 +8225,7 @@ function bingoRender(){
       <div class="bingo-line-badge ${(hasLine&&!hasBingo)?'show':''}">✨ ¡Línea completada!</div>
     </div>`;
 
-  const sizeClass=total===16?'size-16':'';
+  const sizeClass=total===16?'size-16':total===9?'size-9':'';
   const gridHtml=`<div class="bingo-grid ${sizeClass}">`+casillas.map((c,i)=>{
     const isMarked=markedIdx.has(i);
     const entry=myProgress.find(p=>p.casilla_index===i);
