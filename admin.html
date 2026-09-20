@@ -561,6 +561,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
     </div>
 
+    <!-- THAI CLUB — admin -->
+    <div class="safi-admin-section" id="thaiAdminSection">
+      <div class="safi-admin-head">
+        <div>
+          <div class="safi-admin-title">Leídas del <span>Thai Club</span></div>
+          <div class="safi-admin-sub">Libros en Thai Club · <span id="thaiAdminCount">0</span> libro(s)</div>
+        </div>
+      </div>
+      <div class="safi-admin-body">
+        <div id="thaiCatsList"></div>
+      </div>
+    </div>
+
     <!-- CANAL REC — admin -->
     <div class="canal-admin-section" id="canalAdminSection">
       <div class="canal-admin-head">
@@ -798,10 +811,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div class="modal-col-left" id="modalColLeft">
 
         <div class="paste-bar" style="margin-bottom:1.1rem" id="gbSearchBar">
-          <div class="paste-bar-label">🔎 Buscar en Google Books</div>
+          <div class="paste-bar-label">🔎 Buscar libro (Google Books + Open Library + Hardcover)</div>
           <div class="paste-bar-row" style="margin-bottom:0">
-            <input type="text" class="paste-bar-textarea" id="gbQuery" style="min-height:auto;height:40px" placeholder="Título (y autora, opcional)" onkeydown="if(event.key==='Enter'){event.preventDefault();searchGoogleBooks();}">
-            <button class="paste-bar-btn" onclick="searchGoogleBooks()">Buscar</button>
+            <input type="text" class="paste-bar-textarea" id="gbQuery" style="min-height:auto;height:40px" placeholder="Título (y autora, opcional)" onkeydown="if(event.key==='Enter'){event.preventDefault();searchBooks();}">
+            <button class="paste-bar-btn" onclick="searchBooks()">Buscar</button>
           </div>
           <div class="paste-bar-status" id="gbStatus"></div>
           <div id="gbResults" style="display:none;flex-direction:column;gap:6px;margin-top:8px"></div>
@@ -950,6 +963,20 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
             <div class="safi-club-form">
               <label class="form-label" style="color:var(--rose)">Categorías (separadas por coma)</label>
               <input type="text" class="safi-club-cats-inp" id="fSafiCats" placeholder="Ej: Lectura del mes, Favoritas del club">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title" style="color:var(--rose)">🌺 Thai Club</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+            <input type="checkbox" id="fThaiClub" style="accent-color:var(--rose);width:16px;height:16px;cursor:pointer" onchange="document.getElementById('thaiCatField').style.display=this.checked?'block':'none'">
+            <label for="fThaiClub" style="font-size:13px;cursor:pointer;color:var(--muted)">Marcar como Thai Club</label>
+          </div>
+          <div id="thaiCatField" style="display:none">
+            <div class="safi-club-form">
+              <label class="form-label" style="color:var(--rose)">Categorías (separadas por coma)</label>
+              <input type="text" class="safi-club-cats-inp" id="fThaiCats" placeholder="Ej: Lectura actual, Próximas lecturas">
             </div>
           </div>
         </div>
@@ -1511,6 +1538,7 @@ function updateStats() {
   document.getElementById('sAuthors').innerHTML=`<em>${authorSet.size}</em>`;
   document.getElementById('sSafi').innerHTML =`<em>${safiCount}</em>`;
   renderSafiAdmin();
+  renderThaiAdmin();
   renderCanalAdmin();
   renderMyrecAdmin();
   renderAdminSolicitudes();
@@ -1694,6 +1722,10 @@ function openEditModal(id) {
   document.getElementById('fSafiClub').checked=!!b.saficlub;
   document.getElementById('safiCatField').style.display=b.saficlub?'block':'none';
   document.getElementById('fSafiCats').value=(b.safi_categories||[]).join(', ');
+  // Thai Club
+  document.getElementById('fThaiClub').checked=!!b.thaiclub;
+  document.getElementById('thaiCatField').style.display=b.thaiclub?'block':'none';
+  document.getElementById('fThaiCats').value=(b.thai_categories||[]).join(', ');
   // Canal Rec
   document.getElementById('fCanalRec').checked=!!b.canal_rec;
   document.getElementById('canalRecField').style.display=b.canal_rec?'block':'none';
@@ -1724,6 +1756,9 @@ function clearForm() {
   document.getElementById('fSafiClub').checked=false;
   document.getElementById('safiCatField').style.display='none';
   document.getElementById('fSafiCats').value='';
+  document.getElementById('fThaiClub').checked=false;
+  document.getElementById('thaiCatField').style.display='none';
+  document.getElementById('fThaiCats').value='';
   document.getElementById('fCanalRec').checked=false;
   document.getElementById('canalRecField').style.display='none';
   document.getElementById('fCanalMonth').value='';
@@ -2064,6 +2099,10 @@ function saveBook() {
           ? document.getElementById('fSafiCats').value.split(',').map(s=>s.trim()).filter(Boolean)
           : ['Sin categoría'])
       : [],
+    thaiclub: document.getElementById('fThaiClub').checked,
+    thai_categories: document.getElementById('fThaiClub').checked
+      ? (v=>v.length?v:['Sin categoría'])(document.getElementById('fThaiCats').value.split(',').map(s=>s.trim()).filter(Boolean))
+      : [],
     canal_rec: document.getElementById('fCanalRec').checked,
     canal_month: document.getElementById('fCanalRec').checked
       ? (document.getElementById('fCanalMonth').value.trim()||'Sin fecha')
@@ -2264,121 +2303,319 @@ function getLine(text, label){
   var m=text.match(new RegExp(label+'\\s*:\\s*([^\\n]+)','i'));
   return m ? m[1] : '';
 }
-/* ── BUSCADOR GOOGLE BOOKS ── */
+/* ── BUSCADOR DE LIBROS: Google Books + Open Library (fallback cruzado) ── */
 let gbLastResults=[];
 
-async function searchGoogleBooks(){
+/* URL de tu Cloudflare Worker que hace de proxy a Hardcover (oculta el token).
+   Despliega el worker.js que te di aparte y pega aquí la URL que te da Cloudflare. */
+const HARDCOVER_PROXY_URL='https://TU-WORKER.workers.dev';
+
+/* Normaliza un item de Hardcover (recibido ya simplificado desde el proxy) */
+function normalizeHardcoverItem(it){
+  return {
+    source:'Hardcover',
+    title: it.title||'',
+    authors: it.authors||[],
+    year: it.year||'',
+    pages: it.pages||null,
+    isbn: it.isbn||'',
+    cover: '', /* Hardcover no da portada en la búsqueda rápida; se pide al elegir el resultado */
+    description: it.description||'',
+    categories: [...(it.genres||[]), ...(it.tags||[])],
+    _workKey: null,
+    _hcSlug: it.slug||''
+  };
+}
+
+async function fetchFromHardcover(q){
+  if(!HARDCOVER_PROXY_URL || HARDCOVER_PROXY_URL.indexOf('TU-WORKER')>=0) return [];
+  try{
+    const res=await fetch(HARDCOVER_PROXY_URL+'/search?q='+encodeURIComponent(q));
+    const data=await res.json();
+    return (data.items||[]).map(normalizeHardcoverItem);
+  }catch(err){
+    return [];
+  }
+}
+
+/* Normaliza un item de Google Books al formato común */
+function normalizeGoogleBooksItem(it){
+  const vi=it.volumeInfo||{};
+  const isbn13=(vi.industryIdentifiers||[]).find(x=>x.type==='ISBN_13');
+  const isbn10=(vi.industryIdentifiers||[]).find(x=>x.type==='ISBN_10');
+  const cover=vi.imageLinks?(vi.imageLinks.large||vi.imageLinks.medium||vi.imageLinks.thumbnail||vi.imageLinks.smallThumbnail||''):'';
+  return {
+    source:'Google Books',
+    title: vi.title||'',
+    authors: vi.authors||[],
+    year: vi.publishedDate ? vi.publishedDate.slice(0,4) : '',
+    pages: vi.pageCount||null,
+    isbn: (isbn13||isbn10||{}).identifier||'',
+    cover: cover ? cover.replace('http://','https://') : '',
+    description: vi.description||'',
+    categories: vi.categories||[],
+    _workKey: null
+  };
+}
+
+/* Normaliza un item de Open Library al formato común */
+function normalizeOpenLibraryItem(d){
+  return {
+    source:'Open Library',
+    title: d.title||'',
+    authors: d.author_name||[],
+    year: d.first_publish_year ? String(d.first_publish_year) : '',
+    pages: d.number_of_pages_median||null,
+    isbn: (d.isbn && d.isbn[0]) || '',
+    cover: d.cover_i ? ('https://covers.openlibrary.org/b/id/'+d.cover_i+'-L.jpg') : '',
+    description: '', /* Open Library no la da en la búsqueda; se pide al elegir el resultado */
+    categories: d.subject ? d.subject.slice(0,10) : [],
+    _workKey: d.key || null
+  };
+}
+
+async function fetchFromGoogleBooks(q){
+  const params='&maxResults=8&country=US'; /* country=US evita que Google filtre resultados según la IP del visitante */
+  try{
+    const url='https://www.googleapis.com/books/v1/volumes?q='+encodeURIComponent(q)+params;
+    const res=await fetch(url);
+    const data=await res.json();
+    let items=(data.items||[]).map(normalizeGoogleBooksItem);
+
+    /* Si la búsqueda amplia no encuentra nada (frecuente con títulos con palabras
+       muy genéricas, tipo "Her Spell That Binds Me"), reintentamos pidiendo
+       coincidencia de título exacto con intitle: */
+    if(items.length===0){
+      const url2='https://www.googleapis.com/books/v1/volumes?q='+encodeURIComponent('intitle:'+q)+params;
+      const res2=await fetch(url2);
+      const data2=await res2.json();
+      items=(data2.items||[]).map(normalizeGoogleBooksItem);
+    }
+    return items;
+  }catch(err){
+    return [];
+  }
+}
+
+async function fetchFromOpenLibrary(q){
+  try{
+    const url='https://openlibrary.org/search.json?q='+encodeURIComponent(q)+'&limit=5&fields=title,author_name,first_publish_year,number_of_pages_median,isbn,cover_i,subject,key';
+    const res=await fetch(url);
+    const data=await res.json();
+    return (data.docs||[]).map(normalizeOpenLibraryItem);
+  }catch(err){
+    return [];
+  }
+}
+
+async function searchBooks(){
   const status=document.getElementById('gbStatus');
   const resultsWrap=document.getElementById('gbResults');
   const q=(document.getElementById('gbQuery').value||'').trim();
   if(!q){status.className='paste-bar-status err';status.textContent='Escribe un título para buscar.';return;}
 
-  status.className='paste-bar-status';status.textContent='Buscando…';
+  status.className='paste-bar-status';status.textContent='Buscando en Google Books, Open Library y Hardcover…';
   resultsWrap.style.display='none';resultsWrap.innerHTML='';
 
-  try{
-    const url='https://www.googleapis.com/books/v1/volumes?q='+encodeURIComponent(q)+'&maxResults=5';
-    const res=await fetch(url);
-    const data=await res.json();
-    gbLastResults=data.items||[];
+  const [gResults, olResults, hcResults]=await Promise.all([fetchFromGoogleBooks(q), fetchFromOpenLibrary(q), fetchFromHardcover(q)]);
+  gbLastResults=[...gResults, ...olResults, ...hcResults];
 
-    if(!gbLastResults.length){
-      status.className='paste-bar-status err';
-      status.textContent='Sin resultados. Prueba con otro título o añade la autora.';
-      return;
-    }
-
-    resultsWrap.innerHTML=gbLastResults.map((it,i)=>{
-      const vi=it.volumeInfo||{};
-      const thumb=vi.imageLinks?(vi.imageLinks.thumbnail||vi.imageLinks.smallThumbnail||''):'';
-      const autores=(vi.authors||[]).join(', ');
-      return `<div class="book-item" style="cursor:pointer" onclick="applyGoogleBooksResult(${i})">
-        ${thumb?`<img class="book-thumb" src="${escH(thumb.replace('http://','https://'))}" alt="">`:`<div class="book-thumb-ph">📕</div>`}
-        <div class="book-info">
-          <div class="book-name">${escH(vi.title||'(sin título)')}</div>
-          <div class="book-meta">${escH(autores||'Autora desconocida')}${vi.publishedDate?' · '+escH(vi.publishedDate.slice(0,4)):''}</div>
-        </div>
-      </div>`;
-    }).join('');
-    resultsWrap.style.display='flex';
-    status.className='paste-bar-status ok';
-    status.textContent='Elige un resultado para rellenar el formulario.';
-  }catch(err){
+  if(!gbLastResults.length){
     status.className='paste-bar-status err';
-    status.textContent='Error al buscar. Revisa tu conexión.';
+    status.textContent='Sin resultados en ninguna de las fuentes. Prueba con otro título o añade la autora.';
+    return;
   }
+
+  resultsWrap.innerHTML=gbLastResults.map((it,i)=>{
+    const thumb=it.cover;
+    const autores=(it.authors||[]).join(', ');
+    const badgeBg=it.source==='Google Books'?'#4285F4':(it.source==='Open Library'?'#8B5A2B':'#6366F1');
+    return `<div class="book-item" style="cursor:pointer;position:relative" onclick="applyBookResult(${i})">
+      ${thumb?`<img class="book-thumb" src="${escH(thumb)}" alt="">`:`<div class="book-thumb-ph">📕</div>`}
+      <div class="book-info">
+        <div class="book-name">${escH(it.title||'(sin título)')}</div>
+        <div class="book-meta">${escH(autores||'Autora desconocida')}${it.year?' · '+escH(it.year):''}</div>
+      </div>
+      <span style="position:absolute;top:4px;right:6px;font-size:10px;padding:2px 6px;border-radius:8px;background:${badgeBg};color:#fff;opacity:.85">${it.source}</span>
+    </div>`;
+  }).join('');
+  resultsWrap.style.display='flex';
+  status.className='paste-bar-status ok';
+  status.textContent='Elige un resultado para rellenar el formulario ('+gResults.length+' de Google Books, '+olResults.length+' de Open Library, '+hcResults.length+' de Hardcover).';
 }
 
-function matchTagsFromText(text,list,target){
-  /* Igual que matchTagsLoose pero sobre texto libre (categorías/sinopsis), sin exigir hashtags */
+/* ── Diccionario inglés → español para el matching de categorías/sinopsis ──
+   Google Books y Open Library devuelven categorías y sinopsis casi siempre
+   en inglés, mientras que nuestras listas de géneros/etc están en español.
+   Sin esto, matchTagsFromText solo encuentra palabras que se escriben igual
+   en ambos idiomas (Romance, Horror, Drama...) y se pierde casi todo. */
+const GENRE_SYNONYMS = {
+  'Acción':['action'],
+  'Aventura':['adventure'],
+  'Biografía':['biography','memoir'],
+  'Ciencia Ficción':['science fiction','sci-fi','scifi'],
+  'Comedia Romántica':['romantic comedy','romcom'],
+  'Contemporánea':['contemporary'],
+  'Distopía':['dystopian','dystopia'],
+  'Ensayo':['essay'],
+  'Fantasía':['fantasy'],
+  'Fantasía Urbana':['urban fantasy'],
+  'Filosofía':['philosophy'],
+  'Gótico':['gothic'],
+  'Histórica':['historical fiction','historical romance','regency era','regency romance'],
+  'Juvenil':['young adult'],
+  'Misterio':['mystery'],
+  'No Ficción':['nonfiction','non-fiction'],
+  'Paranormal':['paranormal'],
+  'Psicológico':['psychological'],
+  'YA':['young adult fiction']
+};
+const SUBGENRE_SYNONYMS = {
+  'Amnesia':['amnesia'],
+  'Autodescubrimiento':['self-discovery'],
+  'Bisexual':['bisexual'],
+  'Bullying':['bullying'],
+  'Celebridad':['celebrity'],
+  'Crimen':['crime'],
+  'Dark Romance':['dark romance'],
+  'Deporte':['sports'],
+  'Erótica':['erotic','erotica'],
+  'Familia':['family'],
+  'Feminismo':['feminism'],
+  'Interracial':['interracial'],
+  'Mafia':['mafia','mob'],
+  'Magia':['magic','magical'],
+  'Mitología':['mythology','mythological'],
+  'Música':['music','musician'],
+  'Navidad':['christmas','holiday romance'],
+  'No Binarie':['nonbinary','non-binary'],
+  'Poliamor':['polyamory','polyamorous'],
+  'Reencarnación':['reincarnation'],
+  'Segunda Oportunidad':['second chance'],
+  'Sobrenatural':['supernatural'],
+  'Trans':['transgender'],
+  'Universidad':['college','university'],
+  'Viaje en el Tiempo':['time travel']
+};
+const CHARACTER_SYNONYMS = {
+  'Bruja':['witch'],
+  'Vampira':['vampire'],
+  'Sirena':['mermaid','siren'],
+  'Hada':['fairy'],
+  'Mujer Lobo':['werewolf'],
+  'Diosa':['goddess'],
+  'Demonio':['demon'],
+  'Ángel':['angel'],
+  'Doctora / Médica':['doctor','physician'],
+  'Policía':['police officer','cop'],
+  'Detective':['detective'],
+  'Pirata':['pirate'],
+  'Reportera / Periodista':['journalist','reporter'],
+  'Profesora':['professor','teacher'],
+  'Millonaria / Billonaria':['billionaire','millionaire'],
+  'Realeza':['royal','princess','queen','prince royalty'],
+  'Cambiaformas':['shapeshifter'],
+  'Espíritu / Fantasma':['ghost','spirit'],
+  'Zombie':['zombie']
+};
+
+function matchTagsFromText(text,list,target,synonyms){
+  /* Igual que matchTagsLoose pero sobre texto libre (categorías/sinopsis), sin exigir hashtags.
+     Comprueba primero el nombre tal cual, y si no encaja, prueba sus sinónimos en inglés. */
   const ct=cleanStr(text);
   let n=0;
   list.forEach(function(item){
+    if(target.indexOf(item)>=0) return;
     const ci=cleanStr(item);
-    if(ci.length>=4 && ct.indexOf(ci)>=0 && target.indexOf(item)<0){target.push(item);n++;}
+    let hit=(ci.length>=4 && ct.indexOf(ci)>=0);
+    if(!hit && synonyms && synonyms[item]){
+      hit=synonyms[item].some(function(syn){
+        const cs=cleanStr(syn);
+        return cs.length>=3 && ct.indexOf(cs)>=0;
+      });
+    }
+    if(hit){target.push(item);n++;}
   });
   return n;
 }
 
-function applyGoogleBooksResult(i){
+async function applyBookResult(i){
   const it=gbLastResults[i];
   if(!it) return;
-  const vi=it.volumeInfo||{};
+
+  const status=document.getElementById('gbStatus');
+
+  /* Open Library no trae sinopsis en la búsqueda: se pide el detalle de la obra al elegirla */
+  if(it.source==='Open Library' && !it.description && it._workKey){
+    status.className='paste-bar-status';
+    status.textContent='Obteniendo sinopsis de Open Library…';
+    try{
+      const res=await fetch('https://openlibrary.org'+it._workKey+'.json');
+      const wd=await res.json();
+      let desc=wd.description;
+      if(desc && typeof desc==='object') desc=desc.value;
+      if(desc) it.description=desc;
+    }catch(err){ /* si falla, seguimos sin sinopsis */ }
+  }
+
+  /* Hardcover no trae portada en la búsqueda rápida: se pide el detalle (portada + sinopsis + autores) al elegirlo */
+  if(it.source==='Hardcover' && it._hcSlug && (!it.cover || !it.description)){
+    status.className='paste-bar-status';
+    status.textContent='Obteniendo detalles de Hardcover…';
+    try{
+      const res=await fetch(HARDCOVER_PROXY_URL+'/book?slug='+encodeURIComponent(it._hcSlug));
+      const d=await res.json();
+      if(d.image && !it.cover) it.cover=d.image;
+      if(d.description && !it.description) it.description=d.description;
+      if(Array.isArray(d.authors) && d.authors.length && (!it.authors || !it.authors.length)) it.authors=d.authors;
+    }catch(err){ /* si falla, seguimos con lo que ya teníamos */ }
+  }
+
   let filled=0;
 
   const fTitle=document.getElementById('fTitle');
-  if(vi.title && !fTitle.value.trim()){fTitle.value=vi.title;filled++;}
+  if(it.title && !fTitle.value.trim()){fTitle.value=it.title;filled++;}
 
-  if(Array.isArray(vi.authors) && vi.authors.length && authors.length===0){
-    authors=vi.authors.slice();
+  if(Array.isArray(it.authors) && it.authors.length && authors.length===0){
+    authors=it.authors.slice();
     renderAuthorPills();
     filled++;
   }
 
   const fYear=document.getElementById('fYear');
-  if(vi.publishedDate && !fYear.value){
-    const y=vi.publishedDate.slice(0,4);
-    if(/^\d{4}$/.test(y)){fYear.value=y;filled++;}
-  }
+  if(it.year && !fYear.value && /^\d{4}$/.test(it.year)){fYear.value=it.year;filled++;}
 
   const fPages=document.getElementById('fPages');
-  if(vi.pageCount && !fPages.value){fPages.value=vi.pageCount;filled++;}
+  if(it.pages && !fPages.value){fPages.value=it.pages;filled++;}
 
   const fIsbn=document.getElementById('fIsbn');
-  if(!fIsbn.value.trim() && Array.isArray(vi.industryIdentifiers)){
-    const isbn13=vi.industryIdentifiers.find(x=>x.type==='ISBN_13');
-    const isbn10=vi.industryIdentifiers.find(x=>x.type==='ISBN_10');
-    const isbn=(isbn13||isbn10||{}).identifier;
-    if(isbn){fIsbn.value=isbn;filled++;}
-  }
+  if(!fIsbn.value.trim() && it.isbn){fIsbn.value=it.isbn;filled++;}
 
   const fCover=document.getElementById('fCover');
-  if(!fCover.value.trim() && vi.imageLinks){
-    const cover=(vi.imageLinks.large||vi.imageLinks.medium||vi.imageLinks.thumbnail||vi.imageLinks.smallThumbnail||'').replace('http://','https://');
-    if(cover){fCover.value=cover;onCoverUrlInput(cover);filled++;}
-  }
+  if(!fCover.value.trim() && it.cover){fCover.value=it.cover;onCoverUrlInput(it.cover);filled++;}
 
   const fSynopsis=document.getElementById('fSynopsis');
-  if(vi.description && !fSynopsis.value.trim()){fSynopsis.value=vi.description;filled++;}
+  if(it.description && !fSynopsis.value.trim()){fSynopsis.value=it.description;filled++;}
 
-  /* Intentar casar categorías + sinopsis con las listas de géneros/subgéneros/tropos/etc */
-  const freeText=[(vi.categories||[]).join(' '), vi.description||''].join(' ');
+  /* Intentar casar categorías + sinopsis con las listas de géneros/subgéneros/tropos/etc
+     (usando sinónimos en inglés, porque Google Books/Open Library casi siempre devuelven
+     el texto en inglés aunque el libro sea en español) */
+  const freeText=[(it.categories||[]).join(' '), it.description||''].join(' ');
   if(freeText.trim()){
     let chipsMatched=0;
-    chipsMatched+=matchTagsFromText(freeText, GENRES,      sel.genres);
-    chipsMatched+=matchTagsFromText(freeText, SUBGENRES,   sel.subgenres);
+    chipsMatched+=matchTagsFromText(freeText, GENRES,      sel.genres,      GENRE_SYNONYMS);
+    chipsMatched+=matchTagsFromText(freeText, SUBGENRES,   sel.subgenres,   SUBGENRE_SYNONYMS);
     chipsMatched+=matchTagsFromText(freeText, TROPES,      sel.tropes);
     chipsMatched+=matchTagsFromText(freeText, DINAMICAS,   sel.dinamicas);
     chipsMatched+=matchTagsFromText(freeText, IDENTIDADES, sel.identidades);
-    chipsMatched+=matchTagsFromText(freeText, CHARACTERS,  sel.characters);
+    chipsMatched+=matchTagsFromText(freeText, CHARACTERS,  sel.characters,  CHARACTER_SYNONYMS);
     if(chipsMatched>0){renderAllChips();filled+=chipsMatched;}
   }
 
   document.getElementById('gbResults').style.display='none';
   document.getElementById('gbQuery').value='';
-  const status=document.getElementById('gbStatus');
   status.className='paste-bar-status ok';
-  status.textContent='Rellenados '+filled+' campo(s) desde Google Books. Revisa y completa lo que falte (categorías y sinopsis suelen venir en inglés).';
+  status.textContent='Rellenados '+filled+' campo(s) desde '+it.source+'. Revisa y completa lo que falte (categorías y sinopsis pueden venir en inglés).';
 }
 
 function runBookPaste(){
@@ -2484,6 +2721,53 @@ function removeFromSafi(id){
   renderSafiAdmin();
   updateStats();
   showToast('Quitado de las SafiClub');
+}
+
+/* ── THAI CLUB admin ── */
+function renderThaiAdmin() {
+  const thaiData = books.filter(b=>b.thaiclub);
+  document.getElementById('thaiAdminCount').textContent = thaiData.length;
+  const allCats = new Set();
+  thaiData.forEach(b=>(b.thai_categories||['Sin categoría']).forEach(c=>allCats.add(c)));
+  const list = document.getElementById('thaiCatsList');
+  if(!thaiData.length){
+    list.innerHTML='<div class="safi-admin-empty">Ningún libro marcado como lectura del Thai Club todavía.<br>Edita un libro y activa la opción "Thai Club".</div>';
+    return;
+  }
+  list.innerHTML=[...allCats].sort().map(cat=>{
+    const items=thaiData.filter(b=>(b.thai_categories||['Sin categoría']).includes(cat));
+    const itemsHtml=items.map(b=>{
+      const cover=b.cover
+        ?`<img src="${b.cover}" onerror="this.style.display='none'">`
+        :`<div class="safi-admin-item-ph">📖</div>`;
+      const authorStr=(b.authors||[]).join(', ')||'—';
+      return `<div class="safi-admin-item">
+        ${cover}
+        <div class="safi-admin-item-info">
+          <div class="safi-admin-item-title" title="${b.title}">${b.title}</div>
+          <div class="safi-admin-item-sec">${authorStr}</div>
+        </div>
+        <button class="safi-admin-item-remove" onclick="removeFromThai('${b.id}')" title="Quitar del Thai Club">✕</button>
+      </div>`;
+    }).join('');
+    return `<div class="safi-cat-group">
+      <div class="safi-cat-head">
+        <span class="safi-cat-name">${cat}</span>
+        <span class="safi-cat-count">${items.length} libro${items.length!==1?'s':''}</span>
+      </div>
+      <div class="safi-cat-items">${itemsHtml}</div>
+    </div>`;
+  }).join('');
+}
+
+function removeFromThai(id){
+  const b=books.find(x=>x.id===id);
+  if(!b) return;
+  b.thaiclub=false;
+  b.thai_categories=[];
+  renderThaiAdmin();
+  updateStats();
+  showToast('Quitado del Thai Club');
 }
 
 /* ── CANAL ADMIN ── */
