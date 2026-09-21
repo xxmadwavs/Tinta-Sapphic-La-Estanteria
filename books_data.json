@@ -46331,6 +46331,7 @@
     "synopsis": "Courtney Fields y Nicole Dawson eran rivales en el instituto y creían que nunca más tendrían que verse. Ocho años después de graduarse, se reencuentran en un viaje a Cabo con sus dos mejores amigas.\n\nDurante el viaje, pronto descubren que se irritan mutuamente en más de un sentido. Cuando la química sexual entre ellos se vuelve demasiado fuerte como para ignorarla, deciden avivar la llama. Acostarse con tu enemigo no es tan mala idea cuando nunca más lo volverás a ver, ¿verdad?",
     "pages": 191,
     "isbn": null,
+    "wattpad": null,
     "ship": [],
     "genres": [
       "Romance",
@@ -46354,6 +46355,7 @@
     "pais_cultura": [
       "Estados Unidos"
     ],
+    "pais_origen": null,
     "ambientacion": [],
     "content_warnings": [],
     "spicy": 4,
@@ -46363,8 +46365,12 @@
     "sagaNum": null,
     "source": "other",
     "editions": [],
-    "saficlub": false,
-    "safi_categories": [],
+    "saficlub": true,
+    "safi_categories": [
+      "2026"
+    ],
+    "thaiclub": false,
+    "thai_categories": [],
     "canal_rec": false,
     "canal_month": null,
     "my_rec": false,
@@ -54529,6 +54535,7 @@
     "synopsis": "La querida cantante de country Juliet Jacobs ha pasado casi una década construyendo su reputación. Desde su debut a los diecisiete años, ha tocado discos, giras y una imagen perfectamente elaborada.\n\nDarcy Kincaid es la estrella revelación de la industria. Audaz, magnética e imposible de ignorar, ahora es la obsesión de todos, y el objeto de la envidia de Juliet.\n\nIncluso antes de conocerse, su rivalidad mutua se vuelve rápidamente infame. Pero cuando Darcy y Juliet tienen que colaborar en persona, la tensión entre ellas estalla.\n\nSi no pueden mantener las manos alejadas la una de la otra, entonces tendrán que ponerse de acuerdo en dos cosas: mantenerlo casual y en secreto. Cualquier\n\ncosa más allá podría destruir sus carreras. ¿Lo único más peligroso que tener un encuentro clandestino con tu némesis? Desarrollar sentimientos reales por ella.\n\nLas medias verdades ocultas en las letras venden discos... pero la verdad completa podría arruinarlo todo.",
     "pages": 607,
     "isbn": null,
+    "wattpad": null,
     "ship": [],
     "genres": [
       "Romance"
@@ -54553,6 +54560,7 @@
     "pais_cultura": [
       "Estados Unidos"
     ],
+    "pais_origen": null,
     "ambientacion": [],
     "content_warnings": [
       "Queerofobia / LGTBfobia"
@@ -54566,8 +54574,10 @@
     "editions": [],
     "saficlub": false,
     "safi_categories": [],
-    "canal_rec": false,
-    "canal_month": null,
+    "thaiclub": false,
+    "thai_categories": [],
+    "canal_rec": true,
+    "canal_month": "2026",
     "my_rec": false,
     "my_rec_categories": []
   },
