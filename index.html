@@ -7482,7 +7482,7 @@ async function bingoTryClaimHito(challengeId,tipo){
   await bingoLoadHitos();
   bingoUpdateNotifDot();
   renderShelfBadges();
-  showHitoModal(tipo);
+  showHitoModal(tipo,challengeId);
 }
 
 const HITO_CONFIG={
@@ -7500,6 +7500,19 @@ const HITO_CONFIG={
   }
 };
 
+// Stickers propios por edición (clave: tema-año de fecha_inicio). Si una edición
+// no tiene entrada aquí, se usan los genéricos de HITO_CONFIG.
+const HITO_IMG_EDICION={
+  'halloween-2026':{
+    linea:'assets/logros/sticker-linea-halloween-2026.png',
+    bingo:'assets/logros/sticker-bingo-halloween-2026.png'
+  }
+};
+function hitoImg(tipo,ch){
+  const k=(ch&&ch.tema&&ch.fecha_inicio)?ch.tema+'-'+String(ch.fecha_inicio).slice(0,4):'';
+  return (HITO_IMG_EDICION[k]&&HITO_IMG_EDICION[k][tipo])||HITO_CONFIG[tipo].img;
+}
+
 function resetHitoPinImg(src){
   const img=document.getElementById('hitoPinImg');
   const fb=document.getElementById('hitoPinFallback');
@@ -7508,12 +7521,13 @@ function resetHitoPinImg(src){
   img.src=src;
 }
 
-function showHitoModal(tipo){
+function showHitoModal(tipo,challengeId){
   const cfg=HITO_CONFIG[tipo];
+  const ch=bingoChallenges.find(c=>c.id===challengeId)||bingoAllChallenges.find(c=>c.id===challengeId);
   const card=document.getElementById('hitoCard');
   card.className='hito-card '+tipo; // resetea clases
   document.getElementById('hitoRibbon').textContent=cfg.ribbon;
-  resetHitoPinImg(cfg.img);
+  resetHitoPinImg(hitoImg(tipo,ch));
   document.getElementById('hitoTitle').textContent=cfg.title;
   document.getElementById('hitoSubtitle').textContent=cfg.subtitle;
 
@@ -7569,7 +7583,7 @@ function renderShelfBadges(){
   const badgesHtml=['linea','bingo'].map(tipo=>{
     const got=mine(tipo);
     const cfg=HITO_CONFIG[tipo];
-    return `<img class="shelf-badge ${got?'':'locked'}" src="${cfg.img}" title="${got?cfg.title:'Aún no conseguido'}">`;
+    return `<img class="shelf-badge ${got?'':'locked'}" src="${hitoImg(tipo,challenge)}" title="${got?cfg.title:'Aún no conseguido'}">`;
   }).join('');
   row.innerHTML=badgesHtml+`<button class="shelf-badges-more" onclick="openLogrosModal()">Ver historial completo →</button>`;
 }
@@ -8123,7 +8137,7 @@ function renderLogrosModal(){
     const badgesHtml=['linea','bingo'].map(tipo=>{
       const got=bingoHitos.some(h=>h.challenge_id===ch.id && h.tipo===tipo);
       const cfg=HITO_CONFIG[tipo];
-      return `<div class="logros-badge-mini-imgbox"><img class="logros-badge-mini ${got?'':'locked'}" src="${cfg.img}" title="${got?cfg.title:'Aún no conseguido en esta edición'}"></div>`;
+      return `<div class="logros-badge-mini-imgbox"><img class="logros-badge-mini ${got?'':'locked'}" src="${hitoImg(tipo,ch)}" title="${got?cfg.title:'Aún no conseguido en esta edición'}"></div>`;
     }).join('');
     return `<div class="logros-edition">
       <div class="logros-edition-info">
@@ -8240,6 +8254,8 @@ function bingoRender(){
 // Comprueba si hay alguna fila/columna/diagonal completa (solo aplica a grids cuadradas 5x5 o 4x4)
 function bingoCheckLine(casillas,markedIdx){
   const n=casillas.length;
+  // Grid 3×2 (6 casillas): una línea es una fila completa de 3.
+  if(n===6) return [0,1,2].every(i=>markedIdx.has(i)) || [3,4,5].every(i=>markedIdx.has(i));
   const size=Math.sqrt(n);
   if(size!==Math.floor(size)) return false;
   for(let r=0;r<size;r++){
