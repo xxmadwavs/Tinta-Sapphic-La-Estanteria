@@ -991,6 +991,7 @@
       "Violencia sobre Personajes Secundarios"
     ],
     "spicy": 2,
+    "rapidez_romance": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
     "sagaName": "4 Elements",
@@ -1108,6 +1109,7 @@
       "Consentimiento Dudoso (Dub-Con)"
     ],
     "spicy": 2,
+    "rapidez_romance": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
     "sagaName": "4 Elements",
@@ -1214,6 +1216,7 @@
     "ambientacion": [],
     "content_warnings": [],
     "spicy": 2,
+    "rapidez_romance": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
     "sagaName": "4 Elements",
@@ -1304,6 +1307,7 @@
     "ambientacion": [],
     "content_warnings": [],
     "spicy": 2,
+    "rapidez_romance": 2,
     "formato": "Saga",
     "adaptacion": "Tiene serie",
     "sagaName": "4 Elements",
@@ -1396,6 +1400,7 @@
     "ambientacion": [],
     "content_warnings": [],
     "spicy": 4,
+    "rapidez_romance": 3,
     "formato": "Trilogía",
     "adaptacion": "Tiene serie",
     "sagaName": "WHALE",
@@ -1689,6 +1694,7 @@
       "Drogado sin Consentimiento"
     ],
     "spicy": 5,
+    "rapidez_romance": 4,
     "formato": "Dúo",
     "adaptacion": "Tiene serie",
     "sagaName": "Pls Love",
@@ -2076,6 +2082,7 @@
     "ambientacion": [],
     "content_warnings": [],
     "spicy": 4,
+    "rapidez_romance": 5,
     "formato": "Único",
     "adaptacion": "Tiene serie",
     "sagaName": null,
@@ -6786,6 +6793,7 @@
     "ambientacion": [],
     "content_warnings": [],
     "spicy": 3,
+    "rapidez_romance": 2,
     "formato": "Saga",
     "adaptacion": null,
     "sagaName": "REVERSE 4 YOU",
@@ -24864,8 +24872,10 @@
     "sagaNum": null,
     "source": "spanish",
     "editions": [],
-    "saficlub": false,
-    "safi_categories": [],
+    "saficlub": true,
+    "safi_categories": [
+      "2026"
+    ],
     "thaiclub": false,
     "thai_categories": [],
     "canal_rec": false,
@@ -33475,7 +33485,11 @@
     "canal_month": null,
     "my_rec": true,
     "my_rec_categories": [
-      "Enemies to Lovers"
+      "Enemies to Lovers",
+      "Destined Lovers",
+      "Forced Proximity",
+      "Brujas",
+      "Erótica (+5 escenas)"
     ]
   },
   {
@@ -47171,8 +47185,13 @@
     "thai_categories": [],
     "canal_rec": false,
     "canal_month": null,
-    "my_rec": false,
-    "my_rec_categories": []
+    "my_rec": true,
+    "my_rec_categories": [
+      "Vampiras",
+      "Brujas",
+      "Fantasía",
+      "Erótica (+5 escenas)"
+    ]
   },
   {
     "id": "b_1780387147638_c9xde",
@@ -63304,7 +63323,8 @@
     "my_rec": true,
     "my_rec_categories": [
       "Friends to Lovers",
-      "Vampiras"
+      "Vampiras",
+      "Erótica (+5 escenas)"
     ]
   },
   {
@@ -72791,8 +72811,10 @@
     "thai_categories": [],
     "canal_rec": false,
     "canal_month": null,
-    "my_rec": false,
-    "my_rec_categories": []
+    "my_rec": true,
+    "my_rec_categories": [
+      "Paranormal"
+    ]
   },
   {
     "id": "b_1784369204713_fnpzz",
@@ -73968,8 +73990,13 @@
     "thai_categories": [],
     "canal_rec": false,
     "canal_month": null,
-    "my_rec": false,
-    "my_rec_categories": []
+    "my_rec": true,
+    "my_rec_categories": [
+      "Destined Lovers",
+      "Forced Proximity",
+      "Brujas",
+      "Erótica (+5 escenas)"
+    ]
   },
   {
     "id": "b_1785593657712_i75l3",
@@ -74794,6 +74821,7 @@
       "Muerte de un Ser Querido"
     ],
     "spicy": 5,
+    "rapidez_romance": 3,
     "formato": null,
     "adaptacion": null,
     "sagaName": null,
@@ -79588,6 +79616,7 @@
       "Bullying"
     ],
     "spicy": 2,
+    "rapidez_romance": 4,
     "formato": null,
     "adaptacion": null,
     "sagaName": null,
@@ -79606,8 +79635,11 @@
     "thai_categories": [],
     "canal_rec": false,
     "canal_month": null,
-    "my_rec": false,
-    "my_rec_categories": []
+    "my_rec": true,
+    "my_rec_categories": [
+      "Thais",
+      "Forbidden Love"
+    ]
   },
   {
     "id": "b_1789313586433_sne58",
@@ -81484,6 +81516,7 @@
       "Violencia sobre Personajes Secundarios"
     ],
     "spicy": 5,
+    "rapidez_romance": 4,
     "formato": null,
     "adaptacion": null,
     "sagaName": null,
@@ -81717,7 +81750,7 @@
       "Eva Gonzay"
     ],
     "year": 2026,
-    "cover": null,
+    "cover": "https://m.media-amazon.com/images/I/71qLPcyF8EL._SL1500_.jpg",
     "synopsis": "Cupido se equivocó de festividad, pero no de flechazo.\nHollis Warren lleva una vida ordenada y predecible y lo último que espera en una fiesta de Halloween en Nueva York es quedarse sin aliento por una desconocida disfrazada de diablesa.\nMegan Palmer dejó Savannah persiguiendo una carrera y se quedó en Nueva York cazando historias, y ahora es incapaz de apartar los ojos de la morena que la mira desde el borde de la pista como si acabara de descubrir algo que no sabía que existía.\nUna desaparición inesperada. Una acusación precipitada. Una denuncia sin fundamento. Y entre las dos, una conexión tan intensa que ninguna consigue olvidar, por mucho que lo intente.",
     "pages": null,
     "isbn": "213",
@@ -81909,8 +81942,12 @@
     "thai_categories": [],
     "canal_rec": false,
     "canal_month": null,
-    "my_rec": false,
-    "my_rec_categories": []
+    "my_rec": true,
+    "my_rec_categories": [
+      "Deporte",
+      "Rivals to Lovers",
+      "Forbidden Love"
+    ]
   },
   {
     "id": "b_1791200909501_wd5wf",
@@ -82012,8 +82049,12 @@
     "thai_categories": [],
     "canal_rec": false,
     "canal_month": null,
-    "my_rec": false,
-    "my_rec_categories": []
+    "my_rec": true,
+    "my_rec_categories": [
+      "Erótica (+5 escenas)",
+      "Workplace Romance",
+      "Age Gap"
+    ]
   },
   {
     "id": "b_1791201574745_lj2bm",
@@ -82493,12 +82534,826 @@
     "ambientacion": [],
     "content_warnings": [],
     "spicy": 4,
+    "rapidez_romance": 4,
     "formato": "Dúo",
     "adaptacion": null,
     "sagaName": "Hometown Romance",
     "sagaNum": 2,
     "source": "thais",
     "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "thaiclub": false,
+    "thai_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1792085953961_ke4fm",
+    "title": "Último curso",
+    "authors": [
+      "Marta Rivas"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/I/71eGLluy6uL._SL1500_.jpg",
+    "synopsis": "Naia Arístegui lleva toda la vida siendo observada. Campeona, estrella del tenis y referente para miles de personas, está acostumbrada a que cada paso despierte admiración, expectativas y juicios. Por eso, cuando decide matricularse en Psicología del Deporte a los treinta y cuatro años, lo último que espera es encontrarse con alguien que parece completamente inmune a su fama.\n\nLeire Alzaga, profesora universitaria brillante y exigente, la trata exactamente igual que al resto de sus alumnos. Sin privilegios. Sin admiración. Sin concesiones.\n\nLo que comienza como una relación marcada por la distancia, los choques de carácter y las diferencias de perspectiva, pronto se convierte en algo mucho más complejo. Mientras Naia intenta descubrir quién es más allá de las pistas y los títulos, Leire se enfrenta a una presencia capaz de desordenar el equilibrio que lleva años construyendo.\n\nEntre aulas, entrenamientos y conversaciones que cada vez significan más de lo que deberían, ambas descubrirán que algunas personas tienen la extraña capacidad de derribar las defensas que creíamos inquebrantables.",
+    "pages": 166,
+    "isbn": null,
+    "wattpad": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Contemporánea"
+    ],
+    "subgenres": [
+      "Deporte"
+    ],
+    "identidades": [],
+    "characters": [
+      "Profesora",
+      "Tenista",
+      "Deportista"
+    ],
+    "dinamicas": [],
+    "tropes": [
+      "Forbidden Love",
+      "Slow Burn",
+      "Opposites Attract"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [],
+    "ubicaciones": [
+      {
+        "pais": "España",
+        "region": "Comunidad de Madrid",
+        "ciudad": "Madrid",
+        "localidad": null,
+        "lugares": []
+      }
+    ],
+    "epoca": "Contemporánea",
+    "periodo": null,
+    "tipo_mundo": "Realista",
+    "entornos": [],
+    "idioma_original": "Español",
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 3,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "spanish",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "thaiclub": false,
+    "thai_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1792087685493_stpca",
+    "title": "The Spare Room",
+    "authors": [
+      "Andrea Bartz"
+    ],
+    "year": 2023,
+    "cover": "https://m.media-amazon.com/images/I/81s3fPEd1cL._SL1500_.jpg",
+    "synopsis": "La nueva vida de Kelly en Filadelfia se ha convertido en una pesadilla: no tiene amigos ni trabajo, y el confinamiento la tiene atrapada en un pisito con el hombre por el que lo dejó todo, quien acaba de cancelar su boda. El único rayo de esperanza es la amistad que acaba de reavivar con su amiga de la infancia, Sabrina, ahora una glamurosa autora de best-sellers con un marido guapo y de alto nivel.\n\nCuando Sabrina y Nathan le ofrecen a Kelly una vía de escape, cediéndole la habitación libre de su apartada mansión de Virginia, ella aprovecha la oportunidad para huir de su antigua vida. Allí, Kelly se da cuenta en secreto de que se está enamorando de sus dos encantadores anfitriones, hasta que una noche, un trío salvaje e inesperado lleva a la pareja a abrir su matrimonio para ella.\n\nAl principio, a Kelly le encanta formar parte de este nuevo y atrevido mundo. Pero cuando descubre que la última mujer a la que invitaron a formar parte de su matrimonio ha desaparecido, empieza a preguntarse si podrían ser peligrosos… y si ella podría ser la siguiente.",
+    "pages": 336,
+    "isbn": null,
+    "wattpad": null,
+    "ship": [],
+    "genres": [
+      "Misterio",
+      "Thriller",
+      "Contemporánea",
+      "Drama"
+    ],
+    "subgenres": [
+      "Suspense",
+      "FFM",
+      "Bisexual",
+      "Autodescubrimiento"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Desempleo",
+      "Escritora"
+    ],
+    "dinamicas": [],
+    "tropes": [
+      "Bi Awakening",
+      "Friends to Lovers",
+      "Forced Proximity"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ubicaciones": [
+      {
+        "pais": "Estados Unidos",
+        "region": null,
+        "ciudad": "Deerbrook",
+        "localidad": null,
+        "lugares": []
+      },
+      {
+        "pais": "Estados Unidos",
+        "region": null,
+        "ciudad": "Washington D. C.",
+        "localidad": null,
+        "lugares": []
+      }
+    ],
+    "epoca": "Contemporánea",
+    "periodo": null,
+    "tipo_mundo": "Realista",
+    "entornos": [],
+    "idioma_original": "Inglés",
+    "pais_origen": [
+      "Estados Unidos"
+    ],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 3,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "thaiclub": false,
+    "thai_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1792088335892_ds7si",
+    "title": "As I Descended",
+    "authors": [
+      "Robin Talley"
+    ],
+    "year": 2016,
+    "cover": "https://m.media-amazon.com/images/I/51qidTFwK0L.jpg",
+    "synopsis": "María Lyon y Lily Boiten son la pareja más influyente de su colegio, pero hay algo que se interpone entre ellas y su futuro perfecto: la superestrella del campus, Delilah Dufrey. Delilah, la niña prodigio, es toda una leyenda en la exclusiva Academia Acheron y la favorita para ganar el prestigioso Premio Cawdor Kingsley.\n\nPero Delilah no sabe que Lily y María están dispuestas a hacer cualquier cosa —absolutamente cualquier cosa— para arrebatarle la beca. Al fin y al cabo, eso garantizaría la admisión de María en Stanford y les aseguraría a ella y a Lily cuatro años más compartiendo habitación en la residencia.\n\nJuntas, María y Lily aprovechan el poder oscuro del que se rumorea desde hace tiempo que está presente en la antigua plantación que alberga su colegio. Pero cuando las disputas se convierten en muertes y la locura empieza a difuminar la distinción entre lo real y lo imaginario, las chicas deben intentar poner fin a la escalofriante serie de acontecimientos que han desencadenado accidentalmente.",
+    "pages": 370,
+    "isbn": null,
+    "wattpad": null,
+    "ship": [],
+    "genres": [
+      "Horror",
+      "Fantasía"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Estudiante"
+    ],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Secret Relationship",
+      "Hurt/Comfort"
+    ],
+    "edad": [
+      "Young Adult (15–18)"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ubicaciones": [
+      {
+        "pais": "Estados Unidos",
+        "region": "Virginia",
+        "ciudad": null,
+        "localidad": null,
+        "lugares": []
+      }
+    ],
+    "epoca": "Contemporánea",
+    "periodo": null,
+    "tipo_mundo": "Realista",
+    "entornos": [],
+    "idioma_original": "Inglés",
+    "pais_origen": [
+      "Estados Unidos"
+    ],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 2,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "thaiclub": false,
+    "thai_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1792089083865_b1fcl",
+    "title": "A Thousand Monstrous Forms",
+    "authors": [
+      "Saratoga Schaefer"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/I/91rhQYTVKhL._SL1500_.jpg",
+    "synopsis": "A la artista Poppy Reed no le importa que los demás piensen que su matrimonio con Celia Marie Fox, una acaudalada marchante de arte, es impulsivo. Es cierto que solo se conocen desde hace seis meses y que Celia tiene una reputación romántica bastante notoria, pero Poppy está rebosante de ilusión cuando se muda al otro lado del país, a la casa de Celia: una mansión imponente, aislada y repleta de obras de arte llamada Busirane.\n\nMientras Poppy intenta celebrar sus primeras semanas de matrimonio y disfrutar de su nuevo hogar, Busirane parece empeñada en frustrar todos sus intentos por instalarse. Ruidos extraños y sucesos desconcertantes llevan a Poppy a creer que la casa está encantada, una sospecha que se ve agravada por la insistencia de Celia en que Poppy evite el sótano cerrado con llave.\n\nCuando Celia se marcha en un viaje de trabajo, Poppy se queda sola en la casa y acaba quedándose aislada por la nieve. Rodeada de secretos, acechada por estatuas sin rostro y acosada por susurros incorpóreos, le cuesta confiar en su esposa… y en su propia mente. Cuando Poppy acaba sintiéndose atraída por el sótano prohibido, unas oscuras verdades hacen añicos todo lo que creía saber, sumiéndola en una desesperada lucha por la supervivencia.",
+    "pages": 336,
+    "isbn": null,
+    "wattpad": null,
+    "ship": [],
+    "genres": [
+      "Gótico",
+      "Horror"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Marchante de arte",
+      "Enfermera"
+    ],
+    "dinamicas": [
+      "Femme × Femme",
+      "Rich × Poor"
+    ],
+    "tropes": [
+      "Age Gap",
+      "Opposites Attract",
+      "Forced Proximity"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ubicaciones": [
+      {
+        "pais": "Estados Unidos",
+        "region": null,
+        "ciudad": null,
+        "localidad": null,
+        "lugares": []
+      }
+    ],
+    "epoca": "Contemporánea",
+    "periodo": null,
+    "tipo_mundo": null,
+    "entornos": [],
+    "idioma_original": "Inglés",
+    "pais_origen": [
+      "Estados Unidos"
+    ],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 3,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "thaiclub": false,
+    "thai_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1792090043943_hwimr",
+    "title": "Edging Sanity",
+    "authors": [
+      "Kestrel Martin"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/I/71xy7AGMReL._SL1238_.jpg",
+    "synopsis": "¿Qué harías si una infame asesina en serie se propusiera doblegarte?\n\nRowan Aberdeen es la jefa de seguridad del centro psiquiátrico Raven Wood. Está acostumbrada a lidiar con personas peligrosas y mentalmente inestables. Recibir pacientes de la prisión de la ciudad es un proceso habitual. El procedimiento estándar. Hasta que, tras una milagrosa declaración de demencia, Delilah Watson —la asesina en serie más letal que haya conocido jamás el centro— es trasladada y puesta bajo la supervisión directa de Rowan.\n\nEn cuestión de días, queda claro un hecho evidente de la nueva situación de Rowan: Delilah se ha fijado en ella. El único objetivo de Rowan ahora gira en torno a controlar la obsesión de Delilah y manipularla en su beneficio. Sobre todo cuando queda claro que Delilah está acostumbrada a conseguir lo que quiere. Y no se detendrá ante nada para hacerse con Rowan.",
+    "pages": 182,
+    "isbn": null,
+    "wattpad": null,
+    "ship": [],
+    "genres": [
+      "Contemporánea",
+      "Romance",
+      "Thriller",
+      "Psicológico"
+    ],
+    "subgenres": [
+      "Crimen"
+    ],
+    "identidades": [
+      "Femme",
+      "Masc"
+    ],
+    "characters": [
+      "Jefa de seguridad",
+      "Asesina en serie"
+    ],
+    "dinamicas": [
+      "Masc × Femme",
+      "Caos × Control"
+    ],
+    "tropes": [
+      "Forced Proximity",
+      "Slow Burn",
+      "Jealousy Trope",
+      "Secret Relationship",
+      "Forbidden Love"
+    ],
+    "edad": [],
+    "pais_cultura": [],
+    "ubicaciones": [],
+    "epoca": "Contemporánea",
+    "periodo": null,
+    "tipo_mundo": "Mundo ficticio",
+    "entornos": [],
+    "idioma_original": "Inglés",
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 4,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "thaiclub": false,
+    "thai_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1792066621339_0fccs",
+    "title": "Hers to break",
+    "authors": [
+      "Lily X"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/I/81ZtsNeGZ4L._SL1500_.jpg",
+    "synopsis": "Cruza la línea.\nLleva la marca.\nNo te metas con las hermanas Silvestri.\nHace seis meses, la sargento Mira Menon traicionó a una de las hermanas Silvestri y se salió con la suya…\n\n…o eso creía ella.\n\nAhora, con un agujero de bala en el hombro y la espalda acuchillada, no está muy segura de si sobrevivirá a la noche.\n\nAhora la tienen en su poder. Si quiere escapar, tendrá que ser… creativa.\n\n«Hers to Break» es una novela romántica oscura y obscena con lesbianas que se desprecian mutuamente, pero que no pueden resistirse a follar por odio.",
+    "pages": 286,
+    "isbn": null,
+    "wattpad": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Contemporánea",
+      "Thriller"
+    ],
+    "subgenres": [
+      "Dark Romance",
+      "Crimen"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Policía",
+      "Criminal"
+    ],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Jealousy Trope",
+      "Hurt/Comfort",
+      "Forced Proximity"
+    ],
+    "edad": [
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Mundo fantástico"
+    ],
+    "ubicaciones": [],
+    "epoca": "Contemporánea",
+    "periodo": null,
+    "tipo_mundo": "Mundo ficticio",
+    "entornos": [],
+    "idioma_original": "Inglés",
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 5,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "thaiclub": false,
+    "thai_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1792067039319_3geu6",
+    "title": "Eternally Ruined",
+    "authors": [
+      "Luna Lawson"
+    ],
+    "year": 2023,
+    "cover": "https://m.media-amazon.com/images/I/81GATj4gzpL._SL1500_.jpg",
+    "synopsis": "No confío en mi padre. Ha cambiado desde la muerte de mi madre, y su obsesión por las rutas comerciales controladas por la poderosa familia Galata lo está consumiendo... Ya casi ni lo reconozco.\n\nEstá tramando algo, y estoy decidida a descubrir de qué se trata. La verdad está enterrada en algún lugar de nuestro pasado: la razón por la que él cree que nuestra familia debería controlar esos beneficios comerciales. La única forma de descubrir la verdad está escondida en un libro, en un rincón secreto de los Archivos Reales de Evermore.\n\nAutumn es lo único que se interpone entre mí y la información que busco... Si no consigo convencerla de que me ayude, quién sabe lo que podrá pasar.",
+    "pages": 144,
+    "isbn": null,
+    "wattpad": null,
+    "ship": [],
+    "genres": [
+      "Paranormal",
+      "Romance",
+      "Histórica",
+      "Fantasía"
+    ],
+    "subgenres": [
+      "Sobrenatural"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Vampira"
+    ],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Forbidden Love",
+      "Slow Burn",
+      "Hurt/Comfort",
+      "Secret Relationship"
+    ],
+    "edad": [
+      "+40"
+    ],
+    "pais_cultura": [],
+    "ubicaciones": [],
+    "epoca": null,
+    "periodo": null,
+    "tipo_mundo": "Mundo ficticio",
+    "entornos": [],
+    "idioma_original": "Inglés",
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 5,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "thaiclub": false,
+    "thai_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1792332824537_4ck7l",
+    "title": "Everything She Does Is Magic",
+    "authors": [
+      "Bridget Morrissey"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/I/91GzjePrDzL._SL1500_.jpg",
+    "synopsis": "En la encantadora localidad de Fableview, todos los días es Halloween.\n\nA Darcy Keller, el rayo de sol del pueblo y la princesa del espíritu local, le encantan cada uno de los momentos de las fiestas de otoño de Fableview. Pero también está más que preparada para irse a la universidad el año que viene, aunque sus padres esperan que se quede y se haga cargo de su imperio de Halloween.\n\nEntra en escena la nueva y taciturna Anya Doyle, una bruja de verdad y casi miembro de pleno derecho de su aquelarre. Para ser iniciada, tiene que elegir a una aliada mortal que actúe como su «protectora». Pero, como se ha mudado tantas veces, Anya no tiene ni un solo amigo. Así que hace lo que haría cualquier adolescente casi bruja que se precie: miente y le dice a su aquelarre que su amor secreto, Darcy, está dispuesta a asumir el papel.\n\n¿La solución? Trabajar juntas, por supuesto. Las chicas acuerdan ayudarse mutuamente y asisten juntas a todo tipo de eventos, desde un desfile de disfraces hasta una fiesta en un huerto de calabazas o un concurso de pescar manzanas con la boca. Pero con los poderes mágicos de Anya y la futura independencia de Darcy en juego, lo último que necesitan es la complicación añadida de unos sentimientos molestos…",
+    "pages": 288,
+    "isbn": null,
+    "wattpad": null,
+    "ship": [],
+    "genres": [
+      "Romance",
+      "Fantasía"
+    ],
+    "subgenres": [
+      "Magia",
+      "Small Town"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Bruja",
+      "Estudiante",
+      "Artista"
+    ],
+    "dinamicas": [
+      "Grumpy × Sunshine",
+      "Bruja × Mortal"
+    ],
+    "tropes": [
+      "Slow Burn",
+      "Opposites Attract"
+    ],
+    "edad": [
+      "Young Adult (15–18)"
+    ],
+    "pais_cultura": [
+      "Estados Unidos"
+    ],
+    "ubicaciones": [
+      {
+        "pais": "Estados Unidos",
+        "region": null,
+        "ciudad": null,
+        "localidad": null,
+        "lugares": []
+      }
+    ],
+    "epoca": "Contemporánea",
+    "periodo": null,
+    "tipo_mundo": "Ciudad ficticia",
+    "entornos": [],
+    "idioma_original": "Inglés",
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 1,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "thaiclub": false,
+    "thai_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1792333078722_u4s54",
+    "title": "The Isle in the Silver Sea",
+    "authors": [
+      "Tasha Suri"
+    ],
+    "year": 2025,
+    "cover": "https://m.media-amazon.com/images/I/91CVt99I0hL._SL1500_.jpg",
+    "synopsis": "En una Gran Bretaña impulsada por las historias, la caballera y la bruja están destinadas a enamorarse y a condenarse mutuamente una y otra vez, en el mismo relato que se repite a lo largo de cientos de vidas.\n\nSimran es una bruja del bosque. Vina es una caballera de la corte de la reina. Cuando las dos mujeres comienzan a enamorarse, ¿cómo pueden rendirse a sus deseos, si ceder significa destruirse la una a la otra?\n\nMientras buscan una forma de romper el ciclo, un misterioso asesino empieza a atacar historias como la suya. Para sobrevivir, ambas tendrán que escribir una historia más fuerte que la que el destino les ha deparado.\n\nPero, ¿qué historia es más fuerte que «El caballero y la bruja»?",
+    "pages": 484,
+    "isbn": null,
+    "wattpad": null,
+    "ship": [],
+    "genres": [
+      "Fantasía",
+      "Romance"
+    ],
+    "subgenres": [],
+    "identidades": [
+      "Femme",
+      "Andrógina"
+    ],
+    "characters": [
+      "Bruja",
+      "Caballera"
+    ],
+    "dinamicas": [
+      "Bruja × Mortal",
+      "Andrógina × Femme"
+    ],
+    "tropes": [
+      "Destined Lovers",
+      "Reencarnación",
+      "Soulmates",
+      "Slow Burn",
+      "Forbidden Love",
+      "Opposites Attract"
+    ],
+    "edad": [],
+    "pais_cultura": [
+      "Reino Unido"
+    ],
+    "ubicaciones": [
+      {
+        "pais": "Reino Unido",
+        "region": null,
+        "ciudad": "Londres",
+        "localidad": null,
+        "lugares": []
+      }
+    ],
+    "epoca": "Histórica",
+    "periodo": null,
+    "tipo_mundo": "Fantasía",
+    "entornos": [],
+    "idioma_original": "Inglés",
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 3,
+    "formato": null,
+    "adaptacion": null,
+    "sagaName": null,
+    "sagaNum": null,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "thaiclub": false,
+    "thai_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1792333873771_jxs4w",
+    "title": "Accidentally Falling",
+    "authors": [
+      "Shannon O'Connor"
+    ],
+    "year": 2026,
+    "cover": "https://m.media-amazon.com/images/I/81wN6LozDvL._SL1500_.jpg",
+    "synopsis": "Una madre soltera, su nueva niñera y un intento por ocultar sus sentimientos.\n\nHATTIE:\nLo mejor que me ha pasado nunca, aparte de tener a mi hijo Ollie, fue mudarme a Sapphire Falls Orchard. Ahora, casi ocho años después, el hombre que me dejó embarazada y sola llama a mi puerta con ganas de conocer a su hijo. Es lo último que quiero, pero ¿quién soy yo para negarle a mi hijo su familia? Por supuesto, esto llega en el momento más ajetreado de mi carrera, así que lo más lógico sería contratar a la niñera más cualificada… hasta que ella cruza el umbral de mi casa…\n\nEMMY:\nSolo me falta un año para graduarme y tendré mi máster en educación infantil. Pero tras la muerte inesperada de mi padre y al tener que destinar el dinero de la matrícula a pagar su funeral, estoy buscando a toda costa una forma de pagar la universidad. Cuando se abre una vacante de niñera muy bien remunerada, soy la primera en presentar mi solicitud. Pero cuando llego a la casa, me resulta sorprendentemente familiar, ya que resulta ser la casa de la mujer con la que pasé el fin de semana anterior.",
+    "pages": 260,
+    "isbn": null,
+    "wattpad": null,
+    "ship": [],
+    "genres": [
+      "Contemporánea",
+      "Romance"
+    ],
+    "subgenres": [
+      "Small Town"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [
+      "Estudiante",
+      "Madre Soltera"
+    ],
+    "dinamicas": [
+      "Femme × Femme",
+      "Boss × Employee",
+      "Jefa × Subordinada"
+    ],
+    "tropes": [
+      "Age Gap",
+      "One Night Stand → More",
+      "Forced Proximity",
+      "Slow Burn",
+      "Sex Toys / Juguetes Sexuales",
+      "Hurt/Comfort"
+    ],
+    "edad": [
+      "New Adult (18–24)",
+      "25–39"
+    ],
+    "pais_cultura": [],
+    "ubicaciones": [
+      {
+        "pais": "Estados Unidos",
+        "region": null,
+        "ciudad": null,
+        "localidad": null,
+        "lugares": []
+      }
+    ],
+    "epoca": "Contemporánea",
+    "periodo": null,
+    "tipo_mundo": "Realista",
+    "entornos": [],
+    "idioma_original": "Inglés",
+    "pais_origen": null,
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 5,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Sapphire Falls Orchard",
+    "sagaNum": 2,
+    "source": "other",
+    "editions": [],
+    "saficlub": false,
+    "safi_categories": [],
+    "thaiclub": false,
+    "thai_categories": [],
+    "canal_rec": false,
+    "canal_month": null,
+    "my_rec": false,
+    "my_rec_categories": []
+  },
+  {
+    "id": "b_1792052652031_xzbxx",
+    "title": "Ferry Wheel",
+    "authors": [
+      "reallyb"
+    ],
+    "year": 2022,
+    "cover": "https://cdn-local.mebmarket.com/meb/server1/401749/Thumbnail/book_detail_large.gif?3",
+    "synopsis": "Ayudar a una chica de instituto que resultó herida en un pequeño accidente en la acera a principios de diciembre también marca el comienzo de un nuevo capítulo en la vida de Air. La chica dice con toda seriedad que su madre le enseñó que, cuando alguien te trata con amabilidad, debes corresponderle.\n\n«¿Podrías dejar que mi madre te invite a comer como agradecimiento?»\n\nSi Air no hubiera aceptado la invitación, ahora mismo no habría podido encontrar un nuevo hogar, y su celebración de fin de año habría sido igual que en los últimos años.\n\nHan pasado tres años desde que la persona que la amaba estuvo a su lado. Han sido tres años en los que el mes de diciembre ha inundado su corazón de soledad. En medio de la alegre celebración, la sensación de aislamiento que experimentaba como consecuencia de la soledad la hizo derramar lágrimas. Sin embargo, este diciembre, la vida de la mujer que aún no puede superar la ruptura con su exnovio está experimentando cambios significativos. Y el cambio más notable es...\n\n… esta Navidad, no tiene que celebrarla sola, pensando en Pure, como ha venido haciendo hasta ahora.\n\n«Sería un placer que te unieras a nosotros para celebrar la Navidad, si aún no tienes otros planes».\n\nEste año, Air tendrá a alguien con quien celebrar la Navidad.",
+    "pages": 371,
+    "isbn": null,
+    "wattpad": null,
+    "ship": [],
+    "genres": [
+      "Romance"
+    ],
+    "subgenres": [
+      "GL Thai 🇹🇭",
+      "Queer"
+    ],
+    "identidades": [
+      "Femme"
+    ],
+    "characters": [],
+    "dinamicas": [
+      "Femme × Femme"
+    ],
+    "tropes": [
+      "Age Gap",
+      "Hurt/Comfort",
+      "Found Family"
+    ],
+    "edad": [
+      "+40",
+      "25–39"
+    ],
+    "pais_cultura": [
+      "Tailandia"
+    ],
+    "ubicaciones": [
+      {
+        "pais": "Tailandia",
+        "region": null,
+        "ciudad": "Bangkok",
+        "localidad": null,
+        "lugares": []
+      }
+    ],
+    "epoca": "Contemporánea",
+    "periodo": null,
+    "tipo_mundo": "Realista",
+    "entornos": [],
+    "idioma_original": "Tailandés",
+    "pais_origen": [
+      "Tailandia"
+    ],
+    "ambientacion": [],
+    "content_warnings": [],
+    "spicy": 3,
+    "formato": "Saga",
+    "adaptacion": null,
+    "sagaName": "Theme Park universe",
+    "sagaNum": 2,
+    "source": "thais",
+    "editions": [
+      {
+        "lang": "EN",
+        "store": "MEB",
+        "url": "https://www.mebmarket.com/ebook-401749-Ferris-Wheel-English-Version"
+      }
+    ],
     "saficlub": false,
     "safi_categories": [],
     "thaiclub": false,
